@@ -1,0 +1,190 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="row">
+    <div class="col-md-12">
+    <div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+    <form th:action="@{/user/logbook/export}" th:object="${exportForm}" method="post" style="width: 99%">
+
+<!--        <div class="form-group">-->
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-label-group required">
+                            <input type="date" th:field="*{startDate}" class="form-control" id="startDate"
+                                   th:classappend="${#fields.hasErrors('startDate') ? 'is-invalid' : ''}"
+                                   placeholder="Start date"
+                                   autofocus="autofocus">
+                            <label for="startDate">Start date*</label>
+                            <p th:if="${#fields.hasErrors('startDate')}" class="label text-danger "
+                               th:errors="*{startDate}"></p>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-label-group required">
+                            <input type="date" th:field="*{endDate}" class="form-control" id="endDate"
+                                   th:classappend="${#fields.hasErrors('endDate') ? 'is-invalid' : ''}"
+                                   placeholder="End date"
+                                   autofocus="autofocus">
+                            <label for="endDate">End date*</label>
+                            <p th:if="${#fields.hasErrors('endDate')}" class="label text-danger "
+                               th:errors="*{endDate}"></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <div class="mb-10">
+                    <div class="form-group">
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox"
+                                   th:field="*{location}"
+                                   id="location">
+                            <label for="location">
+                                Location
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-10">
+                    <div class="form-group">
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox"
+                                   th:field="*{createdBy}"
+                                   id="createdBy">
+                            <label for="createdBy">
+                                Created By
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-10">
+                    <div class="form-group">
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox"
+                                   th:field="*{status}"
+                                   id="status">
+                            <label for="status">
+                                Status
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-10">
+                    <div class="form-group">
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox"
+                                   th:field="*{createdAt}"
+                                   id="createdAt">
+                            <label for="createdAt">
+                                Created At
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-10">
+                    <div class="form-group">
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox"
+                                   th:field="*{visitorName}"
+                                   id="visitorName">
+                            <label for="visitorName">
+                                Visitor Name
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-10">
+                    <div class="form-group">
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox"
+                                   th:field="*{companyName}"
+                                   id="companyName">
+                            <label for="companyName">
+                                Company Name
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-10">
+                    <div class="form-group">
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox"
+                                   th:field="*{email}"
+                                   id="email">
+                            <label for="email">
+                                Visitor Email
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-10">
+                    <div class="form-group">
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox"
+                                   th:field="*{host}"
+                                   id="host">
+                            <label for="host">
+                                Host Name
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--            <div class="form-group">-->
+<!--                <div class="form-row">-->
+<!--                    <div class="col-md-12">-->
+<!--                        <div class="form-label-group required">-->
+<!--&lt;!&ndash;                            <p for="visitors">Location*</p>&ndash;&gt;-->
+<!--                            <select  class="form-control" th:field="*{location}" id="visitors">-->
+<!--                                <option th:value="${''}">Select Location</option>-->
+<!--                                <option th:each="type : ${@serviceUtil.getAllLocationByCompany(company)}"-->
+<!--                                        th:value="${{type}}"-->
+<!--                                        th:text="${type.locationName}"></option>-->
+<!--                                </option>-->
+<!--                            </select>-->
+<!--                            <p th:if="${#fields.hasErrors('location')}" class="label text-danger "-->
+<!--                               th:errors="*{location}"></p>-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+
+
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <div class="mb-10">
+                    <input type="submit" class="btn btn-primary btn-xs" onclick="cnfbox.close();">
+                </div>
+            </div>
+        </div>
+
+
+<!--        </div>-->
+
+    </form>
+    </div>
+</div>

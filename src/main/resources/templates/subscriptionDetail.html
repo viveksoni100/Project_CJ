@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}" lang="en">
+
+<th:block layout:fragment="subheader">
+    <div class="ereaders-subheader">
+        <div class="ereaders-subheader-text">
+            <span class="ereaders-subheader-transparent"></span>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 style="margin-top: 10px;">Subscription Detail</h1>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="ereaders-breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul>
+                            <li><a href="index.html">Homepage</a></li>
+                            <li class="active">Login</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+</th:block>
+
+<body style="color: #000;" onload="recalculateCart()">
+
+<th:block layout:fragment="content">
+
+    <div th:if="${orderHistory.empty}" class="gtd-inrdatablk">
+        <div class="container">
+            <div class="row gtd-inr-nodata">
+                <div class="gtd-inr-nodata-txt">
+                    <label>No subscription yet</label>
+                </div>
+                <!--<img th:src="@{/front/images/order_not_found_photo.png}" alt="order not found image" style="box-shadow: 0px 12px 51px 0px rgba(18, 18, 18, 0.20)">-->
+                <img th:src="@{/front/images/no_subscription_img.PNG}" class="gtd-nosub-img">
+            </div>
+        </div>
+    </div>
+
+    <div class="shopping-cart container ord-sub-cnt-blk" style="margin-bottom: 350px; margin-top: 1rem;" th:if="${!orderHistory.empty}">
+
+        <ul class="nav nav-tabs sub-tb-menu">
+            <li class="nav-item">
+                <a class="nav-link active" id="customsData" onclick="dataEvent()" href="#" style="font-weight: bold;">Customs Data</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="webServices" onclick="apiEvent()" href="#">Web Services</a>
+            </li>
+        </ul>
+
+        <!--DATA-Table-->
+        <!--<label style="position: relative; top: 28rem; left: 89%; font-size: 20px; width: 11%; font-weight: bold;">Customs Data</label>-->
+        <div id="dataDiv" style="width: 100%; display: block;">
+            <table class="table" id="dataTable" width="100%" cellspacing="0"
+                   data-toolbar="#toolbar"
+                   data-search="true"
+                   data-toggle="table"
+                   data-search-align="left"
+                   data-minimum-count-columns="2"
+                   data-pagination="true"
+                   data-page-size="10"
+                   data-sortable="true"
+                   data-page-list="[10, 25, 50, All]"
+                   data-side-pagination="client"
+                   data-show-extended-pagination="true"
+                   data-buttons-class="btn btn-info">
+                <thead>
+                <tr>
+                    <!--<th>-</th>-->
+                    <th data-sortable="true" data-searchable="true">ItemCode</th>
+                    <!--<th data-sortable="true" data-searchable="true">ProductId</th>-->
+                    <th data-sortable="true" data-searchable="true">Product Name</th>
+                    <th data-sortable="true" data-searchable="true">Qty</th>
+                    <th data-sortable="true" data-searchable="true">Price</th>
+                    <!--<th data-sortable="true" data-searchable="true">Net Price</th>-->
+                    <!--<th data-sortable="true" data-searchable="true">Remaining API Calls</th>-->
+                    <th data-sortable="true" data-searchable="true">Last Updated On</th>
+                    <th data-sortable="true" data-searchable="true">Expiry date</th>
+                    <!--<th data-sortable="true" data-searchable="true">Product</th>
+                    <th data-sortable="true" data-searchable="true">Version</th>
+                    <th data-sortable="true" data-searchable="true">Quantity</th>-->
+                    <!--<th data-sortable="true" data-searchable="true">Expiry Date</th>-->
+                    <th style="text-align: center">Status</th>
+                    <th style="text-align: right">Actions</th>
+                </tr>
+                </thead>
+                <tbody class="marktext">
+                <tr th:each="orderdetail : ${productDataList}">
+                    <td th:text="${orderdetail.product.productId}"/>
+                    <td th:text="${orderdetail.productName}"/>
+                    <td th:text="${orderdetail.productQty}"/>
+                    <td th:text="${'$ ' + #numbers.formatDecimal(orderdetail.originalPrice,0,'COMMA',0,'POINT')}"/>
+                    <!--<td th:text="${orderdetail.netPrice}"/>-->
+                    <!--<td th:text="1"/>-->
+
+                    <td th:text="${#temporals.day(orderdetail.product.updatedAt) + '-' + #temporals.monthNameShort(orderdetail.product.updatedAt) + '-' +
+                    #temporals.year(orderdetail.product.updatedAt)}"/>
+                    <td th:text="${#temporals.day(orderdetail.productExpiryDate) + '-' + #temporals.monthNameShort(orderdetail.productExpiryDate) + '-' +
+                    #temporals.year(orderdetail.productExpiryDate)}"/>
+                    <td th:if="${@serviceUtil.isExpiryDatePassed(orderdetail.product.id) == true}">
+                        <a style="color: darkblue; font-weight: bold;"
+                        th:href="@{'/addtocartrenew/' +${orderdetail.product.id}}">Renew</a>
+                    </td>
+                    <td th:if="${@serviceUtil.isExpiryDatePassed(orderdetail.product.id) == false}">
+                        <a style="color: darkgreen; font-weight: bold;">Active</a>
+                    </td>
+                    <td th:if="${orderdetail.product.dataFileName!=null and @serviceUtil.isExpiryDatePassed(orderdetail.product.id) == false}">
+                        <a th:href="@{'/downloadRequest/'+${orderdetail.product.id}}" class="btn btn-primary" style="background-color: #06469E;">Download</a>
+                    </td>
+                    <td th:if="${orderdetail.product.dataFileName!=null and @serviceUtil.isExpiryDatePassed(orderdetail.product.id) == true}">
+                        <a>-</a>
+                    </td>
+                    <td th:if="${orderdetail.product.dataFileName==null and @serviceUtil.isExpiryDatePassed(orderdetail.product.id) == false}">
+                        <a th:href="@{'/daas/downloadRequest/'+${orderdetail.product.id}}" class="btn btn-primary" style="background-color: #06469E;">Download</a>
+                    </td>
+                    <td th:if="${orderdetail.product.dataFileName==null and @serviceUtil.isExpiryDatePassed(orderdetail.product.id) == true}">
+                        <a>-</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--API-Table-->
+        <!--<label style="position: relative; top: 5rem; left: 89%; font-size: 20px; width: 11%; font-weight: bold;">Web Services</label>-->
+        <div id="apiDiv" style="100%; display: none;">
+            <table class="table" id="apiTable" width="100%" cellspacing="0"
+                   data-toolbar="#toolbar"
+                   data-search="true"
+                   data-toggle="table"
+                   data-search-align="left"
+                   data-minimum-count-columns="2"
+                   data-pagination="true"
+                   data-page-size="10"
+                   data-sortable="true"
+                   data-page-list="[10, 25, 50, All]"
+                   data-side-pagination="client"
+                   data-show-extended-pagination="true"
+                   data-buttons-class="btn btn-info">
+                <thead>
+                <tr>
+                    <!--<th>-</th>-->
+                    <th data-sortable="true" data-searchable="true">ItemCode</th>
+                    <!--<th data-sortable="true" data-searchable="true">ProductId</th>-->
+                    <th data-sortable="true" data-searchable="true">Product Name</th>
+                    <th data-sortable="true" data-searchable="true">Qty</th>
+                    <th data-sortable="true" data-searchable="true">Price</th>
+                    <!--<th data-sortable="true" data-searchable="true">Net Price</th>-->
+                    <th data-sortable="true" data-searchable="true">Remaining API Calls</th>
+                    <th data-sortable="true" data-searchable="true">Last Updated On</th>
+                    <th data-sortable="true" data-searchable="true">Expiry date</th>
+                    <!--<th data-sortable="true" data-searchable="true">Product</th>
+                    <th data-sortable="true" data-searchable="true">Version</th>
+                    <th data-sortable="true" data-searchable="true">Quantity</th>-->
+                    <!--<th data-sortable="true" data-searchable="true">Expiry Date</th>-->
+                    <th style="text-align: center">Status</th>
+                    <th style="text-align: right">Actions</th>
+                </tr>
+                </thead>
+                <tbody class="marktext">
+                <tr th:each="orderdetail : ${productApiList}">
+                    <td th:text="${orderdetail.product.productId}"/>
+                    <td th:text="${orderdetail.productName}"/>
+                    <td th:text="${orderdetail.productQty}"/>
+                    <td th:text="${'$ ' + #numbers.formatDecimal(orderdetail.originalPrice,0,'COMMA',0,'POINT')}"/>
+                    <!--<td th:text="${'$ ' + orderdetail.originalPrice}"/>-->
+                    <!--<td th:text="${orderdetail.netPrice}"/>-->
+                    <td th:text="${@serviceUtil.getRemainingApiCalls(orderdetail.id)}"/>
+                    <td th:text="${#temporals.day(orderdetail.product.updatedAt) + '-' + #temporals.monthNameShort(orderdetail.product.updatedAt) + '-' +
+                    #temporals.year(orderdetail.product.updatedAt)}"/>
+                    <td th:text="${#temporals.day(orderdetail.productExpiryDate) + '-' + #temporals.monthNameShort(orderdetail.productExpiryDate) + '-' +
+                    #temporals.year(orderdetail.productExpiryDate)}"/>
+
+                    <td th:if="${@serviceUtil.isExpiryDatePassed(orderdetail.product.id) == true}">
+                        <a style="color: darkblue; font-weight: bold;"
+                           th:href="@{'/addtocartrenew/' +${orderdetail.product.id}}">Renew</a>
+                    </td>
+                    <td th:if="${@serviceUtil.isExpiryDatePassed(orderdetail.product.id) == false}">
+                        <a style="color: darkgreen; font-weight: bold;">Active</a>
+                    </td>
+                    <td th:if="${orderdetail.product.dataFileName!=null and @serviceUtil.isExpiryDatePassed(orderdetail.product.id) == false}">
+                        <a th:href="@{'/downloadRequest/'+${orderdetail.product.id}}" class="btn btn-primary" style="background-color: #06469E;">Download</a>
+                    </td>
+                    <td th:if="${orderdetail.product.dataFileName!=null and @serviceUtil.isExpiryDatePassed(orderdetail.product.id) == true}">
+                        <a>-</a>
+                    </td>
+                    <td th:if="${orderdetail.product.dataFileName==null and @serviceUtil.isExpiryDatePassed(orderdetail.product.id) == false}">
+                        <a th:href="@{'/daas/downloadRequest/'+${orderdetail.product.id}}" class="btn btn-primary" style="background-color: #06469E;">Download</a>
+                    </td>
+                    <td th:if="${orderdetail.product.dataFileName==null and @serviceUtil.isExpiryDatePassed(orderdetail.product.id) == true}">
+                        <a>-</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--@serviceUtil.isExpiryDatePassed-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script th:src="@{/front/script/cartpage.js}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#dataTable").bootstrapTable();
+        });
+
+        function dataEvent() {
+            console.log("i'm the storm...");
+            document.getElementById("apiDiv").style.display = "none";
+            document.getElementById("dataDiv").style.display = "block";
+            document.getElementById("customsData").style.fontWeight = "bold";
+            document.getElementById("webServices").style.fontWeight = "500";
+        }
+
+        function apiEvent() {
+            console.log("i'm the best...");
+            document.getElementById("apiDiv").style.display = "block";
+            document.getElementById("dataDiv").style.display = "none";
+            document.getElementById("customsData").style.fontWeight = "500";
+            document.getElementById("webServices").style.fontWeight = "bold";
+        }
+    </script>
+    <!--    <script>-->
+    <!--        function btnCheckout() {-->
+    <!--            console.log("stripe payment integration comes here...")-->
+    <!--        }-->
+    <!--    </script>-->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" th:href="@{/front/css/orderpage.css}">
+
+</th:block>
+
+</body>
+
+</html>

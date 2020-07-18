@@ -1,0 +1,30 @@
+.gradle
+.idea
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+c:/
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+/src/main/resources/application-dve.yml
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+*.sql
+*.log
+/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/

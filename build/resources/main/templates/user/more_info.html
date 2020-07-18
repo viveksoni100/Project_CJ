@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link rel="stylesheet" th:href="@{/static/front/css/style.css}">
+</head>
+
+<body>
+
+    <hr style="margin-bottom: 10px; border: 0; border-top: 1px solid #eee; margin-top: 0px;">
+
+    <ul style="list-style-type:none">
+        <b style="display: inline;">Product Name : </b>&nbsp;&nbsp;
+        <li th:text="${product.getProductName()}"
+            style="list-style-type:none; display: inline; font-weight: bold;"></li>
+        <br>
+
+        <b style="display: inline;">Product Price : </b>&nbsp;&nbsp;
+        <li th:text="${'$'+#numbers.formatDecimal(product.getProductPrice(),0,'COMMA',0,'POINT')}"
+            style="list-style-type:none; display: inline; font-weight: bold;"></li>
+        <br>
+        <b>Product Description : </b><br><li th:utext="${product.getProductDescription()}" style="list-style-type:none"></li>
+
+    </ul>
+
+</body>
+
+</html>

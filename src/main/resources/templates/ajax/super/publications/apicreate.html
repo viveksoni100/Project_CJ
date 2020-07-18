@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="row">
+    <div class="col-md-12">
+
+
+        <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>
+
+        <form id="publicationsForm" th:action="@{/super/publications/submit}" th:object="${daasproduct}" method="post"
+              th:if="${!success}" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-2">
+
+                        <label style="margin-top: 8px; font-size: 13px;">Product ID*</label>
+
+                    </div>
+                    <div class="col-md-4">
+
+                        <input type="text" th:attr="data-control='hue'" th:field="*{productId}"
+                               class="form-control  minicolors-input" id="productId"
+                               th:classappend="${#fields.hasErrors('productId') ? 'is-invalid' : ''}"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('productId')}" class="label text-danger "
+                           th:errors="*{productId}"></p>
+                    </div>
+                    <div class="col-md-2">
+
+                        <label style="margin-top: 8px; font-size: 13px;">Product Name*</label>
+
+                    </div>
+                    <div class="col-md-4">
+
+                        <input type="text" th:field="*{productName}" class="form-control colorpicker"
+                               id="productName"
+                               th:classappend="${#fields.hasErrors('productName') ? 'is-invalid' : ''}"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('productName')}" class="label text-danger "
+                           th:errors="*{productName}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+
+                    <div class="col-md-2">
+                        <label style="margin-top: 8px; font-size: 13px;">Version No</label>
+                    </div>
+
+                    <div class="col-md-4">
+                        <input type="text" th:attr="data-control='hue'"
+                               class="form-control  minicolors-input" id="productVersion" name="productVersion"
+                               placeholder="Product Version*"
+                               autofocus="autofocus" th:value="${productVersion}" readonly>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label style="margin-top: 8px; font-size: 13px;">Category*</label>
+                    </div>
+
+                    <div class="col-md-4">
+                        <select class="form-control" name="categories" id="categories" style="margin-top:0px;">
+                            <!--th:field="${productCategoryDetail}"-->
+                            <option th:each="type : ${categories}" th:if="${!categories.empty}"
+                                    th:value="${type.getId()}"
+                                    th:text="${type.getProductCategory().getProductCategoryName()}"
+                                    th:selected="${daasproduct.productCategoryDetail!=null && daasproduct.productCategoryDetail.id==type.id}"></option>
+                            </option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('productCategoryDetail')}" class="label text-danger "
+                           th:errors="*{productCategoryDetail}"></p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!--<div class="form-group">
+                <div class="form-row">
+
+
+
+                    <div class="col-md-6">
+
+                    </div>
+
+                </div>
+            </div>-->
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="summernote">
+                            <textarea type="text" th:attr="data-control='hue'" th:field="*{productDescription}"
+                                      class="form-control  minicolors-input" id="productDescription"
+                                      th:classappend="${#fields.hasErrors('productDescription') ? 'is-invalid' : ''}"
+                                      autofocus="autofocus" rows="10" cols="100" th:text="${prductDescription}"></textarea>
+                            <p th:if="${#fields.hasErrors('productDescription')}" class="label text-danger "
+                               th:errors="*{productDescription}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <!--
+                                        <div class="col-md-6">
+
+                                            <input type="text" th:attr="data-control='hue'" th:field="*{price}"
+                                                   class="form-control  minicolors-input" id="price"
+                                                   th:classappend="${#fields.hasErrors('price') ? 'is-invalid' : ''}"
+                                                   placeholder="Price*"
+                                                   autofocus="autofocus">
+
+                                            <p th:if="${#fields.hasErrors('price')}" class="label text-danger "
+                                               th:errors="*{price}"></p>
+                                        </div>
+                    -->
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+
+                    <!--<div class="col-md-6">
+                        <input type="text" th:attr="data-control='hue'"
+                               class="form-control  minicolors-input" id="productVersion" name="productVersion"
+                               placeholder="Product Version*"
+                               autofocus="autofocus" th:value="${productVersion}" readonly>
+
+                        &lt;!&ndash;                        <p th:if="${#fields.hasErrors('productVersions')}" class="label text-danger "
+                                                   th:errors="*{productVersions}"></p>&ndash;&gt;
+
+
+                    </div>-->
+
+                    <!--<div class="col-md-6">
+                        <select class="form-control" name="categories" id="categories" style="margin-top:0px;">
+                            &lt;!&ndash;th:field="${productCategoryDetail}"&ndash;&gt;
+                            <option th:each="type : ${categories}" th:if="${!categories.empty}"
+                                    th:value="${type.getId()}"
+                                    th:text="${type.getProductCategory().getProductCategoryName()}"
+                                    th:selected="${daasproduct.productCategoryDetail!=null && daasproduct.productCategoryDetail.id==type.id}"></option>
+                            </option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('productCategoryDetail')}" class="label text-danger "
+                           th:errors="*{productCategoryDetail}"></p>
+                    </div>-->
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="form-row">
+                    <!--
+                    <div class="col-md-6">
+                        <div class="custom-file mb-3">
+                            <input type="file" th:attr="data-control='hue'" name="lImage"
+                                   class="form-control  custom-file-input" id="labelPublicationOriginalImage"
+                                   th:classappend="${#fields.hasErrors('labelPublicationOriginalImage') ? 'is-invalid' : ''}"
+                                   placeholder="Upload pdf file*"
+                                   autofocus="autofocus">
+                            <label class="custom-file-label" for="labelPublicationOriginalImage">Upload pdf
+                                file*</label>
+                            <p th:if="${#fields.hasErrors('labelPublicationOriginalImage')}" class="label text-danger "
+                               th:errors="*{labelPublicationOriginalImage}"></p>
+                        </div>
+                    </div>
+                    -->
+                    <div class="col-md-6">
+                        <div class="custom-file mb-3">
+                            <input type="file" th:attr="data-control='hue'" name="dataFile"
+                                   class="form-control  custom-file-input" id="dataFile"
+                                   th:classappend="${#fields.hasErrors('dataFileName') ? 'is-invalid' : ''}"
+                                   placeholder="Upload documentation file*"
+                                   autofocus="autofocus" multiple="multiple">
+                            <label style="margin-top: 38px; font-style: italic;">Only .pdf allowed.</label>
+                            <label class="custom-file-label" for="dataFile">Upload documentation file*</label>
+                            <p th:if="${#fields.hasErrors('dataFileName')}" class="label text-danger "
+                               th:errors="*{dataFileName}"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="custom-file mb-3">
+                            <input type="file" name="productThumbnail"
+                                   class="form-control custom-file-input"
+                                   id="productThumbnail"
+                                   th:classappend="${#fields.hasErrors('productThumbnailName') ? 'is-invalid' : ''}"
+                                   placeholder="Upload thumbnail"
+                                   autofocus="autofocus">
+                            <label style="margin-top: 38px; font-style: italic;">Only .png/.jpg/.jpeg allowed<br>Max upload image size : 500KB</label>
+                            <label class="custom-file-label" for="productThumbnail">Upload thumbnail</label>
+                            <p th:if="${#fields.hasErrors('productThumbnailName')}" class="label text-danger "
+                               th:errors="*{productThumbnailName}"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--
+                        <div class="form-group">
+                            <div class="form-row">
+                                &lt;!&ndash;                    <div class="col-md-6">
+                                                        <div class="custom-file mb-3">
+                                                            <input type="file" name="tImage"
+                                                                   class="form-control custom-file-input"
+                                                                   id="labelPublicationUploadToc"
+                                                                   th:classappend="${#fields.hasErrors('labelPublicationUploadToc') ? 'is-invalid' : ''}"
+                                                                   placeholder="Upload toc file*"
+                                                                   autofocus="autofocus">
+                                                            <label class="custom-file-label" for="labelPublicationUploadToc">Upload toc file*</label>
+                                                            <p th:if="${#fields.hasErrors('labelPublicationUploadToc')}" class="label text-danger "
+                                                               th:errors="*{labelPublicationUploadToc}"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>&ndash;&gt;
+                            </div>
+                        </div>
+            -->
+
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <p>Enter Slab Rates*</p>
+                    </div>
+                </div>
+
+                <div class="form-row">
+
+                    <table class="table" id="apislabtable">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col-sm-1">#</th>
+                            <th scope="col-sm-4">Lower Limit</th>
+                            <th scope="col-sm-4">Upper Limit</th>
+                            <th scope="col">Price ($)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <div th:field="*{productSlab}">
+                            <input th:field="*{productSlab.id}" hidden readonly></input>
+                            <tr th:each="slab,i:*{productSlab.productSlabDetailList}">
+
+                                <td><INPUT type="checkbox" name="chk" th:disabled="${i.index==0}"/></td>
+                                <!--<td><INPUT type="checkbox" name="chk" th:disabled="${i.index + 1}"/></td>-->
+                                <td scope="col-sm-4"><input type="text" th:id="'lowerlimit_' + ${i.index + 1}"
+                                                            th:field="*{productSlab.productSlabDetailList[__${i.index}__].slabLowerLimit}"
+                                                            readonly></td>
+                                <td scope="col-sm-4"><input type="text" th:id="'upperlimit_' + ${i.index + 1}"
+                                                            th:field="*{productSlab.productSlabDetailList[__${i.index}__].slabUpperLimit}">
+                                </td>
+                                <td scope="col-sm-4"><input type="text" id="apiprice"
+                                                            th:field="*{productSlab.productSlabDetailList[__${i.index}__].slabRate}">
+                                </td>
+                                <input type="text" id="id"
+                                       th:field="*{productSlab.productSlabDetailList[__${i.index}__].id}" hidden
+                                       readonly>
+                            </tr>
+                        </div>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <INPUT type="button" style="width: 90%" class="btn btn-primary btn-sm pull-right" value="Add Row" onclick="addRow('apislabtable')"/>
+                    </div>
+                    <div class="col-md-2">
+                        <INPUT type="button" style="width: 100%" class="btn btn-primary btn-sm pull-right" value="Delete Row" onclick="deleteRow('apislabtable')"/>
+                    </div>
+                </div>
+                <div class="form-row"></div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="form-row">
+
+
+                    <!--         <div class="col-md-6">
+
+                                 <input type="checkbox" th:field="*{documentInSplitFormat}" data-toggle="toggle"
+                                        class="tCheckbox" data-on="Split format" data-off="No split format" data-height="40">
+                                 <p th:if="${#fields.hasErrors('documentInSplitFormat')}" class="label text-danger "
+                                    th:errors="*{documentInSplitFormat}"></p>
+                             </div>
+         -->
+                    <div class="col-md-6">
+                        <!--<input type="checkbox" th:field="*{status}" data-toggle="toggle" class="tCheckbox"
+                               data-on="Enable" data-off="Disable" data-height="40">
+                        <p th:if="${#fields.hasErrors('status')}" class="label text-danger"
+                           th:errors="*{status}"></p>-->
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}">
+    </div>
+</div>
+
+<!--for summernote-full-->
+<!--<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.js"/>-->
+
+<!--for summernote-lite-->
+<!--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>-->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+<script th:src="@{/front/nimda/js/ajax.js}"></script>
+<script th:src="@{/front/nimda/js/paging.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+
+        document.getElementById("lowerlimit_1").defaultValue = "1";
+
+        setTimeout(function () {
+            $('#productDescription').summernote({
+                height: 150,
+                toolbar: [
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['view', ['fullscreen']]
+                ]
+            });
+        }, 100);
+    });
+</script>
+
+<script language="javascript">
+    function addRow(tableID) {
+
+        console.log("inside... addRow Function...");
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
+        console.log(rowCount);
+        //
+        var str = "upperlimit_" + (rowCount - 1).toString();
+        console.log(str);
+        var oldPrice = parseInt(document.getElementById(str).value);
+        console.log(oldPrice);
+        var newPrice = oldPrice + 1;
+        //
+
+        var row = table.insertRow(rowCount);
+        console.log(rowCount);
+        var cell1 = row.insertCell(0);
+        var element1 = document.createElement("input");
+        element1.type = "checkbox";
+        element1.name = "chkbox[]";
+        /*element1.disabled = "disabled";*/
+        cell1.appendChild(element1);
+
+
+        var cell2 = row.insertCell(1);
+        var element3 = document.createElement("input");
+        element3.type = "text";
+        element3.id = "lowerlimit_" + rowCount;
+        element3.value = newPrice;
+        element3.readOnly = "readOnly";
+        element3.name = "productSlab.productSlabDetailList[" + (rowCount - 1) + "].slabLowerLimit";
+
+        console.log(element3);
+        cell2.appendChild(element3);
+
+        var cell3 = row.insertCell(2);
+        var element2 = document.createElement("input");
+        element2.type = "text";
+        element2.id = "upperlimit_" + rowCount;
+        element2.placeholder = "Enter value > " + newPrice.toString();
+        element2.name = "productSlab.productSlabDetailList[" + (rowCount - 1) + "].slabUpperLimit";
+        element2.onkeyup = function(){
+            var newNewPrice = parseInt(element2.value);
+            var newNewPriceLEN = newNewPrice.toString().length;
+            var newPriceLEN = newPrice.toString().length;
+            if(newNewPriceLEN == newPriceLEN){
+                if(newNewPrice < newPrice){
+                    /*alert("Price should be greater than " + newPrice);*/
+                    priceAlert();
+                    element2.value = newPrice+1;
+                }
+            }
+        };
+        element2.onblur = function(){
+            var newNewPrice = parseInt(element2.value);
+            if(newNewPrice < newPrice){
+                /*alert("Price should be greater than " + newPrice);*/
+                priceAlert();
+                element2.value = newPrice+1;
+            }
+        };
+        cell3.appendChild(element2);
+
+        var cell4 = row.insertCell(3);
+        var element4 = document.createElement("input");
+        element4.type = "text";
+        element4.name = "productSlab.productSlabDetailList[" + (rowCount - 1) + "].slabRate";
+        cell4.appendChild(element4);
+
+        function priceAlert(){
+            cnfbox = $.confirm({
+                title : "Invalid Input!",
+                content : "Price should be greater than " + newPrice,
+                columnClass : "medium",
+                backgroundDismiss : false,
+                closeIcon : true,
+                buttons : {
+                    Ok : { }
+                }
+            });
+        }
+
+    }
+
+    function deleteRow(tableID) {
+        try {
+            var table = document.getElementById(tableID);
+            var rowCount = table.rows.length;
+            var rowForDelete = table.rows[rowCount - 1];
+            var chkboxForDelete = rowForDelete.cells[0].childNodes[0];
+
+            if(null != chkboxForDelete && true == chkboxForDelete.checked){
+                if (rowCount != 2) {
+                    for (var i = 0; i < rowCount; i++) {
+                        var row = table.rows[i];
+                        var chkbox = row.cells[0].childNodes[0];
+                        if (null != chkbox && true == chkbox.checked) {
+                            table.deleteRow(i);
+                            rowCount--;
+                            i--;
+                        }
+                    }
+                }
+            } else {
+                console.log("any middle checkbox is checked...");
+                /*alert("Sorry, you can't delete row from middle. Kindly select last row for delete.");*/
+                deleteAlert();
+            }
+        } catch (e) {
+            alert(e);
+        }
+    }
+
+    function deleteAlert(){
+        cnfbox = $.confirm({
+            title : "Invalid Deletion Performed!",
+            content : "You can't delete row from middle. Kindly select last row for delete.",
+            columnClass : "medium",
+            backgroundDismiss : false,
+            closeIcon : true,
+            buttons : {
+                Ok : { }
+            }
+        });
+    }
+
+</script>
+
+
+</html>

@@ -1,0 +1,157 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="dataTables_wrapper dt-bootstrap4">
+    <div class="row">
+        <Div class="col-sm-12">
+            <form th:action="@{${pagingUrl}}"
+                  th:attr="data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace'"
+                  id="visitorsList" class="paging">
+                <table class="table " id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>
+                            <!--<div class="checkbox checkbox-primary">
+                                <input type="checkbox" id="checkall" >
+                                <input type="hidden" id="start" name="start"
+                                       th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd 00:00:00')}">
+                                <label for="checkall"></label>
+                            </div>-->
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('firstName')}">
+                            <a href="javascript:void(0)"
+                               th:value="${firstName}"
+                               th:attr="data-sort='firstName',data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace',data-page='1',
+                    data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                Visitor</a>
+                        </th>
+
+                        <th th:with="order=${pageable.getSort().getOrderFor('state')}">
+                            <a href="javascript:void(0)">
+                                Company</a>
+                        </th>
+                        <th>
+                            <a href="javascript:void(0)">
+                                City</a>
+                        </th>
+
+                        <th th:with="order=${pageable.getSort().getOrderFor('state')}">
+                            <a href="javascript:void(0)">
+                                State</a>
+                        </th>
+                        <th>
+                            <a href="javascript:void(0)">
+                                Country</a>
+                        </th>
+<!--                        <th>-->
+<!--                            <a href="javascript:void(0)"-->
+<!--                            >Group</a>-->
+<!--                        </th>-->
+                        <th>
+
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>-</th>
+
+                        <th>
+                            <input type="text" name="first_name" placeholder="First name" th:value="${firstName}"
+                                   class="mark1" autocomplete="off">
+                        </th>
+<!--                        <th>-->
+<!--                            <input type="text" name="last_name" placeholder="Last name" th:value="${lastName}"-->
+<!--                                   class="mark1" autocomplete="nope">-->
+<!--                        </th>-->
+
+                        <th>
+                            <input type="text" name="company" placeholder="Company" th:value="${company}"
+                                   class="mark1" autocomplete="nope">
+                        </th>
+
+                        <th>
+                            <input type="text" name="city" placeholder="City" th:value="${city}"
+                                   class="mark1" autocomplete="nope">
+                        </th>
+
+                        <th>
+                            <input type="text" name="state" placeholder="State" th:value="${state}"
+                                   class="mark1" autocomplete="nope">
+                        </th>
+                        <th>
+                            <input type="text" name="country" placeholder="Country" th:value="${country}"
+                                   class="mark1" autocomplete="nope">
+                        </th>
+
+                        <th>
+                            <input type="submit" class="btn btn-primary btn-xs" style="display: none;">
+                        </th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="visitor : ${visitors}" th:if="${!visitors.empty}">
+                        <td>
+                            <!--<div class="checkbox checkbox-primary">
+                                <input type="checkbox" th:id="${'c'+visitorStat.index}" class="lcheckbox">
+                                <label th:for="${'c'+visitorStat.index}"></label>
+                            </div>-->
+                        </td>
+                        <td>
+                            <a th:href="@{'/logbook/address/' + ${@pathVariableEnc.encrypt(visitor.id)}}"
+                               class=""
+                            >
+                                <i class="far fa-user ico-user"></i><span th:remove="tag"
+                                                                          th:text="${visitor.firstName + ' ' + visitor.lastName}"></span>
+                            </a>
+                        </td>
+                        <td th:text="${visitor.cmpny}"></td>
+                        <td th:text="${visitor.city}"></td>
+                        <td th:text="${visitor.state}"></td>
+                        <td th:text="${visitor.country.name}"></td>
+<!--                        <td th:text="''"></td>-->
+                        <td class="text-center">
+
+                            <button class="btn btn-xs btn-primary edit-visitor" type="button"
+                                    th:if="${@serviceUtil.hasPrivilege(T(com.easelobby.constants.Constants).ROLE_VISITORS_CREATE)}"
+                                    th:attr="data-title='Edit '+${visitor.firstName},data-submiturl='/ajax/visitor/create/'+${@pathVariableEnc.encrypt(visitor.id)},data-url='/ajax/visitor/form/'+${@pathVariableEnc.encrypt(visitor.id)},data-onload=getCounries,data-after=getCounries,data-close=closeCreateVisitor"
+
+                            ><i class="fas fa-pen"></i> Edit
+                            </button>
+
+                            <button class="btn btn-xs btn-primary add-phone" type="button"
+                                    th:if="${@serviceUtil.hasPrivilege(T(com.easelobby.constants.Constants).ROLE_VISITORS_CREATE)}"
+                                    th:attr="data-title='Edit '+${visitor.firstName}+'\'s phones',data-url='/ajax/visitor/phone/form?vi='+${@pathVariableEnc.encrypt(visitor.id)},
+                                        data-submiturl='/ajax/visitor/phone/create',data-size='small',
+                                        data-after='',data-before='',data-replacediv='', data-close='emailPhoneAdded'"
+
+                            ><i class="fas fa-phone"></i>
+                            </button> <button class="btn btn-xs btn-primary add-email" type="button"
+                                              th:if="${@serviceUtil.hasPrivilege(T(com.easelobby.constants.Constants).ROLE_VISITORS_CREATE)}"
+                                              th:attr="data-url='/ajax/visitor/email/form?vi='+${@pathVariableEnc.encrypt(visitor.id)},
+                                        data-submiturl='/ajax/visitor/email/create',data-size='small',
+                                        data-after='',data-before='',data-replacediv='',data-title='Edit '+${visitor.firstName}+'\'s emails',, data-close='emailPhoneAdded'"
+
+                        ><i class="fas fa-envelope"></i>
+                        </button>
+
+
+                        </td>
+                    </tr>
+                    <tr th:if="${visitors.empty}">
+                        <td colspan="7">
+                            <div class="alert alert-danger">There are no records matching your
+                                search
+                            </div>
+                        </td>
+
+                    </tr>
+                    </tbody>
+
+                </table>
+            </form>
+        </Div>
+    </div>
+    <div th:include="base/paging :: paging" th:remove="tag"
+         th:with="pageObj=${visitors},replaceDiv='replace',formName='visitorsList', pagingUrl=${pagingUrl}"></div>
+</div>

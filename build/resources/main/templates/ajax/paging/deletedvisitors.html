@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="dataTables_wrapper dt-bootstrap4">
+    <div class="row">
+        <Div class="col-sm-12">
+            <form th:action="@{${pagingUrl}}"
+                  th:attr="data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace'"
+                  id="visitorsList" class="paging">
+                <table class="table " id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>
+                            <a href="javascript:void(0)">
+                                Name</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('state')}">
+                            <a href="javascript:void(0)">
+                                Email</a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="visitor : ${visitorDeletedProfiles}"
+                        th:if="${!visitorDeletedProfiles.empty}">
+
+                        <td th:text="${visitor.name}"></td>
+                        <td th:text="${visitor.email}"></td>
+                    </tr>
+                    <tr th:if="${visitorDeletedProfiles.empty}">
+                        <td colspan="7">
+                            <div class="alert alert-danger">There are no records
+                                matching your
+                                search
+                            </div>
+                        </td>
+
+                    </tr>
+                    </tbody>
+
+                </table>
+            </form>
+        </Div>
+    </div>
+    <div th:include="base/paging :: paging" th:remove="tag"
+         th:with="pageObj=${visitorDeletedProfiles},replaceDiv='replace',formName='visitorsList', pagingUrl=${pagingUrl}"></div>
+</div>

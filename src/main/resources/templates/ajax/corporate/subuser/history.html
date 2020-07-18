@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<table class="table " id="dataTable" width="100%" cellspacing="0">
+    <thead>
+    <tr>
+
+        <th>Transaction ID</th>
+        <th>Expiry date</th>
+        <th>Subscription date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="sUser : ${transactions}">
+
+        <td th:text="${sUser.transactionId}"></td>
+        <td th:text="${sUser.expiryDate}"></td>
+        <td th:text="${sUser.subscriptionDate}"></td>
+    </tr>
+    </tbody>
+</table>

@@ -1,0 +1,110 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="dataTables_wrapper dt-bootstrap4">
+    <div class="row m-0">
+        <Div class="col-sm-12">
+            <form th:action="@{${pagingUrl}}"
+                  th:attr="data-baseurl=${pagingUrl},data-formname='notificationList',data-replacediv='replace'"
+                  id="notificationList" class="paging" autocomplete="off">
+                <table class="table " id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>-</th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('taskId')}">
+                            <a href="javascript:void(0)"
+                               th:value="${taskId}"
+                               th:attr="data-sort='taskId',data-baseurl=${pagingUrl},data-formname='notificationList',data-replacediv='replace',data-page='1',
+                            data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                Task name</a>
+                        </th>
+                        <th>
+                            Email ?
+                        </th>
+                        <th>
+                            SMS ?
+                        </th>
+                        <th style="text-align: center">
+                            Status
+                        </th>
+                        <th style="text-align: right">
+                            Edit
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>-</th>
+
+                        <th>
+                            <input type="text" name="taskId"
+                                   placeholder="Task name" th:value="${taskId}"
+                                   class="mark1" autocomplete="off">
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+
+                        </th>
+
+                        <th>
+                            <input type="submit" style="display: none;">
+                        </th>
+                        <tH>
+
+                        </tH>
+
+
+
+                    </tr>
+                    </thead>
+                    <tbody class="marktext">
+                    <tr th:each="notification : ${notifications}">
+                        <td th:text="${notificationStat.index+1}"></td>
+                        <td th:width="'300px'" th:text="${notification.taskId}"></td>
+
+                        <td th:width="200px" style="text-align: center">
+                            <form method="post" th:id="${'formstatuse'+notificationStat.index}">
+                                <i class="fa fa-3x notificationStatus"
+                                   th:attr="data-id=${@pathVariableEnc.encrypt(notification.id)},data-after='notificationStatusSave',data-type='e',
+                                                            data-ele=${'formstatuse'+notificationStat.index}"
+                                   th:classappend="${(!notification.email) ? 'fa-toggle-off text-danger' : 'fa-toggle-on text-success'}"></i>
+                            </form>
+                        </td>
+                        <td th:width="200px" style="text-align: center">
+                            <form method="post" th:id="${'formstatusm'+notificationStat.index}">
+                                <i class="fa fa-3x notificationStatus"
+                                   th:attr="data-id=${@pathVariableEnc.encrypt(notification.id)},data-after='notificationStatusSave',data-type='m',
+                                                            data-ele=${'formstatusm'+notificationStat.index}"
+                                   th:classappend="${(!notification.sms) ? 'fa-toggle-off text-danger' : 'fa-toggle-on text-success'}"></i>
+                            </form>
+                        </td>
+
+                        <td th:width="200px" style="text-align: center">
+                            <form method="post" th:id="${'formstatuss'+notificationStat.index}">
+                                <i class="fa fa-3x notificationStatus"
+                                   th:attr="data-id=${@pathVariableEnc.encrypt(notification.id)},data-after='notificationStatusSave',data-type='s',
+                                                            data-ele=${'formstatuss'+notificationStat.index}"
+                                   th:classappend="${(!notification.status) ? 'fa-toggle-off text-danger' : 'fa-toggle-on text-success'}"></i>
+                            </form>
+                        </td>
+                        <td>
+                            <a
+                                    th:href="'javascript:void(0)'"
+                                    class="btn btn-primary btn-sm pull-right notification-create"
+                                    th:attr="data-after='tCheckbox',data-onload='tCheckbox',data-title=${'Edit ' + notification.taskId},data-size='large',data-url='/ajax/super/notification/form/'+${@pathVariableEnc.encrypt(notification.id)}, data-submiturl='/ajax/super/notification/create/'+${@pathVariableEnc.encrypt(notification.id)}, data-close='notificationCreated',data-reload='true'"
+                            >Edit</a>
+
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </form>
+        </div>
+    </Div>
+    <div th:remove="tag" th:include="layouts/paging :: paging"
+         th:with="pageObj=${notifications},replaceDiv='replace',formName='notificationList', pagingUrl=${pagingUrl}"></div>
+
+</div>

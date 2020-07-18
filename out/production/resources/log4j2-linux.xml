@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="log-path">/opt/pub/logs</Property>
+        <Property name="api-path">/opt/pub/logs/api/</Property>
+        <Property name="task-path">/opt/pub/logs/task/</Property>
+        <Property name="hibernate-path">/opt/pub/logs/jpa/</Property>
+        <Property name="mail-path">/opt/pub/logs/mail/</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} (%F:%L) - %msg%n"/>
+        </Console>
+        <!-- File Appender -->
+
+        <RollingFile name="mail-trace" fileName="${mail-path}/mail-trace.log"
+                     filePattern="${mail-path}/mail-trace-%d{yyyy-MM-dd-HH-mm-ss-SSS}.log.gz">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!--<TimeBasedTriggeringPolicy interval="1" modulate="true"/>-->
+                <SizeBasedTriggeringPolicy size="25MB"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${mail-path}" maxDepth="2">
+                    <IfFileName glob="mail-trace*.log.gz"/>
+                    <IfLastModified age="5d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="mail-error" fileName="${mail-path}/mail-error.log"
+                     filePattern="${mail-path}/mail-error-%d{yyyy-MM-dd-HH-mm-ss-SSS}.log.gz">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!--<TimeBasedTriggeringPolicy interval="1" modulate="true"/>-->
+                <SizeBasedTriggeringPolicy size="25MB"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${mail-path}" maxDepth="2">
+                    <IfFileName glob="mail-error*.log.gz"/>
+                    <IfLastModified age="5d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <!-- File Appender -->
+        <RollingFile name="TaskFile" fileName="${task-path}/task-trace.log"
+                     filePattern="${task-path}/task-trace-%d{yyyy-MM-dd-HH-mm-ss-SSS}.log.gz">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!--<TimeBasedTriggeringPolicy interval="1" modulate="true"/>-->
+                <SizeBasedTriggeringPolicy size="25MB"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${task-path}" maxDepth="2">
+                    <IfFileName glob="task-trace*.log.gz"/>
+                    <IfLastModified age="5d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="api-trace" fileName="${api-path}/api-trace.log"
+                     filePattern="${api-path}/api-trace-%d{yyyy-MM-dd-HH-mm-ss-SSS}.log.gz">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!--<TimeBasedTriggeringPolicy interval="1" modulate="true"/>-->
+                <SizeBasedTriggeringPolicy size="25MB"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${aip-path}" maxDepth="2">
+                    <IfFileName glob="aip-trace*.log.gz"/>
+                    <IfLastModified age="5d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="api-error" fileName="${api-path}/api-error.log"
+                     filePattern="${api-path}/api-error-%d{yyyy-MM-dd-HH-mm-ss-SSS}.log.gz">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!--<TimeBasedTriggeringPolicy interval="1" modulate="true"/>-->
+                <SizeBasedTriggeringPolicy size="25MB"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${aip-path}" maxDepth="2">
+                    <IfFileName glob="aip-error*.log.gz"/>
+                    <IfLastModified age="5d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="sms-trace" fileName="${log-path}/sms-trace.log"
+                     filePattern="${log-path}/sms-trace-%d{yyyy-MM-dd-HH-mm-ss-SSS}.log.gz">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!--<TimeBasedTriggeringPolicy interval="1" modulate="true"/>-->
+                <SizeBasedTriggeringPolicy size="25MB"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${log-path}" maxDepth="2">
+                    <IfFileName glob="sms-trace*.log.gz"/>
+                    <IfLastModified age="15d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+
+        <RollingFile name="hibernate-error" fileName="${hibernate-path}/hibernate-error.log"
+                     filePattern="${hibernate-path}/hibernate-error-%d{yyyy-MM-dd-HH-mm-ss-SSS}.log.gz">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!--<TimeBasedTriggeringPolicy interval="1" modulate="true"/>-->
+                <SizeBasedTriggeringPolicy size="25MB"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${hibernate-path}" maxDepth="2">
+                    <IfFileName glob="hibernate-error*.log.gz"/>
+                    <IfLastModified age="5d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+
+        <RollingFile name="hibernate-trace" fileName="${hibernate-path}/hibernate-trace.log"
+                     filePattern="${hibernate-path}/hibernate-trace-%d{yyyy-MM-dd-HH-mm-ss-SSS}.log.gz">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!--<TimeBasedTriggeringPolicy interval="1" modulate="true"/>-->
+                <SizeBasedTriggeringPolicy size="25MB"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${hibernate-path}" maxDepth="2">
+                    <IfFileName glob="hibernate-trace*.log.gz"/>
+                    <IfLastModified age="5d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <RollingFile name="trace-log" fileName="${log-path}/app-trace.log"
+                     filePattern="${log-path}/app-trace-%d{yyyy-MM-dd-HH-mm-ss-SSS}.log.gz">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!--<TimeBasedTriggeringPolicy interval="1" modulate="true"/>-->
+                <SizeBasedTriggeringPolicy size="1024KB"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${log-path}" maxDepth="2">
+                    <IfFileName glob="app-trace*.log.gz"/>
+                    <IfLastModified age="10d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+            <!--<DefaultRolloverStrategy max="91">
+                <Delete basePath="${baseDir}" maxDepth="2">
+                    <IfFileName glob="*/app-trace*.log.gz">
+                        <IfLastModified age="60d">
+                            <IfAny>
+                                <IfAccumulatedFileSize exceeds="1 GB"/>
+                                <IfAccumulatedFileCount exceeds="10"/>
+                            </IfAny>
+                        </IfLastModified>
+                    </IfFileName>
+                </Delete>
+            </DefaultRolloverStrategy>-->
+        </RollingFile>
+        <RollingFile name="error-log" fileName="${log-path}/app-error.log"
+                     filePattern="${log-path}/app-error-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} (%F:%L) - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${log-path}" maxDepth="2">
+                    <IfFileName glob="app-error*.log.gz"/>
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+
+        <AsyncLogger name="org.hibernate" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+        </AsyncLogger>
+
+
+        <!-- Log SQL statements -->
+        <AsyncLogger name="org.hibernate.SQL" level="debug" additivity="false">
+            <!--<AppenderRef ref="Console"/>-->
+            <AppenderRef ref="hibernate-trace" level="trace"/>
+            <AppenderRef ref="hibernate-error" level="error"/>
+        </AsyncLogger>
+
+        <!-- Log JDBC bind parameters -->
+        <AsyncLogger name="org.hibernate.type.descriptor.sql" level="trace" additivity="false">
+            <!--<AppenderRef ref="Console" />-->
+            <AppenderRef ref="hibernate-trace" level="trace"/>
+            <AppenderRef ref="hibernate-error" level="error"/>
+        </AsyncLogger>
+
+        <AsyncLogger name="org.springframework.security.oauth2" level="trace" additivity="false">
+            <!--<AppenderRef ref="Console" />-->
+            <AppenderRef ref="hibernate-trace" level="trace"/>
+            <AppenderRef ref="hibernate-error" level="error"/>
+        </AsyncLogger>
+
+        <AsyncLogger name="com.daas.task" level="trace" additivity="true">
+            <AppenderRef ref="TaskFile" level="trace"/>
+        </AsyncLogger>
+        <AsyncLogger name="com.daas.services.impl.EmailService" level="trace" additivity="true">
+            <AppenderRef ref="mail-trace" level="trace"/>
+            <AppenderRef ref="mail-error" level="error"/>
+        </AsyncLogger>
+
+
+        <AsyncLogger name="com.daas.api" level="debug" additivity="false" includeLocation="true">
+            <AppenderRef ref="api-trace" level="trace"/>
+            <AppenderRef ref="api-error" level="error"/>
+        </AsyncLogger>
+
+
+        <!-- Log custom packages -->
+        <!--<AsyncLogger name="com.boraji.tutorial.hibernate" level="debug" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="File" />
+        </AsyncLogger>-->
+
+        <AsyncLogger name="com.daas" level="debug" additivity="true" includeLocation="true">
+            <appender-ref ref="trace-log" level="debug"/>
+            <appender-ref ref="error-log" level="error"/>
+            <!--<appender-ref ref="Console" level="debug"/>-->
+        </AsyncLogger>
+        <Root level="info" additivity="false" includeLocation="true">
+            <AppenderRef ref="File"/>
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

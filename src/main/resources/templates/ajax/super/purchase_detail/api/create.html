@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="row">
+    <div class="col-md-12">
+
+
+        <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>
+        <form th:action="@{/super/config/submit}" th:object="${orderDetail}" method="post" th:if="${!success}">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+
+                        <input type="text" th:attr="data-control='hue'" th:field="*{sbuCode}" class="form-control  minicolors-input" id="sbuCode"
+                               th:classappend="${#fields.hasErrors('sbuCode') ? 'is-invalid' : ''}"
+                               placeholder="SBU Code*"
+                               autofocus="autofocus">
+                        
+                        <p th:if="${#fields.hasErrors('sbuCode')}" class="label text-danger "
+                           th:errors="*{sbuCode}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+
+                        <input type="text" th:field="*{usedApiCallCount}" class="form-control colorpicker" id="usedApiCallCount"
+                               th:classappend="${#fields.hasErrors('usedApiCallCount') ? 'is-invalid' : ''}"
+                               placeholder="Used API Call Count*"
+                               autofocus="autofocus">
+                        
+                        <p th:if="${#fields.hasErrors('usedApiCallCount')}" class="label text-danger "
+                           th:errors="*{usedApiCallCount}"></p>
+                    </div>
+
+                    <!--<div class="col-md-12">
+                        <p></p>
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox" checked th:field="*{status}" data-toggle="toggle" class="tCheckbox"
+                                   data-on="Enable" data-off="Disable" data-height="40" id="status" name="status">
+                            <label for="status">Enabled ?</label>
+                        </div>
+
+                        <p th:if="${#fields.hasErrors('status')}" class="label text-danger "
+                           th:errors="*{status}"></p>
+                    </div>-->
+                </div>
+            </div>
+
+        </form>
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}">
+    </div>
+</div>
+</html>

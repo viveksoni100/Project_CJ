@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="dataTables_wrapper dt-bootstrap4">
+    <div class="row m-0">
+        <Div class="col-sm-12">
+            <form th:action="@{${pagingUrl}}"
+                  th:attr="data-baseurl=${pagingUrl},data-formname='configList',data-replacediv='replace'"
+                  id="configList" class="paging" autocomplete="off">
+                <table class="table " id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>-</th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('configName')}">
+                            <a href="javascript:void(0)"
+                               th:value="${configName}"
+                               th:attr="data-sort='configName',data-baseurl=${pagingUrl},data-formname='configList',data-replacediv='replace',data-page='1',
+                            data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                Config name</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('configValue')}">
+                            <a href="javascript:void(0)"
+                               th:value="${configValue}"
+                               th:attr="data-sort='configValue',data-baseurl=${pagingUrl},data-formname='configList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort"
+                            >Config value</a>
+                        </th>
+                        <th colspan="3">
+
+                        </th>
+
+
+                    </tr>
+                    <tr>
+                        <th>-</th>
+
+                        <th>
+                            <input type="text" name="configName" placeholder="Config name" th:value="${configName}"
+                                   class="mark1" autocomplete="off">
+                        </th>
+                        <th>
+                            <input type="text" name="configValue" placeholder="Config value"
+                                   class="mark1" autocomplete="nope" th:value="${configValue}">
+                            <input type="submit" style="display: none;">
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+
+
+                    </tr>
+                    </thead>
+                    <tbody class="marktext">
+                    <tr th:each="config : ${configs}">
+                        <td th:text="${configStat.index+1}"></td>
+                        <td th:text="${config.configName}"></td>
+                        <td th:text="${config.configValue}"></td>
+                        <td >
+                                                    <span><i th:attr="data-id=${@pathVariableEnc.encrypt(config.id)},data-after='configSave',
+                                                    data-ele=${'form'+configStat.index}, data-inputid=${'configVal'+configStat.index}"
+                                                             class="fa fa-2x fa-sync configValReload"></i></span>
+                        </td>
+                        <td th:width="200px" style="text-align: center">
+                            <form method="post" th:id="${'formstatus'+configStat.index}">
+                                <i class="fa fa-3x configValStatus"
+                                   th:attr="data-id=${@pathVariableEnc.encrypt(config.id)},data-after='configStatusSave',
+                                                            data-ele=${'form'+configStat.index}"
+                                   th:classappend="${(!config.status) ? 'fa-toggle-off text-danger' : 'fa-toggle-on text-success'}"></i>
+                            </form>
+                        </td>
+                        <td>
+                            <a
+                                    th:href="'javascript:void(0)'"
+                                    class="btn btn-primary btn-sm pull-right config-create"
+                                    th:attr="data-onload='editConfig',data-title=${'Edit ' + config.configName},data-size='medium',data-url='/ajax/super/config/form/'+${@pathVariableEnc.encrypt(config.id)}, data-submiturl='/ajax/super/config/create/'+${@pathVariableEnc.encrypt(config.id)}, data-close='configCreated',data-reload='true'"
+                            >Edit</a>
+
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </form>
+        </div>
+    </Div>
+    <div th:remove="tag" th:include="layouts/paging :: paging"
+         th:with="pageObj=${configs},replaceDiv='replace',formName='configList', pagingUrl=${pagingUrl}"></div>
+
+</div>

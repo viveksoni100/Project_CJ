@@ -1,0 +1,402 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+
+>
+<div class="row visitcreatepage">
+
+    <div class="col-md-12">
+        <div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+        <form th:action="@{/register}" th:object="${visitForm}" method="post" style="width: 99%" th:if="${!success}">
+
+            <div class="form-group">
+
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-11">
+
+
+                            <!--<input name="visitors" placeholder="Start typing.."  autofocus class="form-control">-->
+                            <input name="tags" placeholder="Type visitors name here .."
+                                   th:classappend="${#fields.hasErrors('visitors') ? 'is-invalid' : ''}"
+                                   class="form-control visitortags" th:value="${visitorsStringValue}">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p th:if="${#fields.hasErrors('visitors')}" class="label text-danger "
+                               th:errors="*{visitors}"></p>
+
+                            <div id="replacevisitors">
+                                <select multiple="multiple" class=" width-100 rvisitors" data-actions-box="true"
+                                        name="visitors" id="visitors"
+                                        th:classappend="${#fields.hasErrors('visitors') ? 'is-invalid' : ''}"
+                                        style="display: none;"
+                                >
+                                    <th:block th:each="type : ${@serviceUtil.getAllVisitors()}">
+                                        <th:block th:if="${!@serviceUtil.isColleague() || type.shareInAddressBook}">
+
+                                            <option th:value="${{type}}"
+                                                    th:attr="data-typeid=${type.id},data-hostid=${visitForm.host!=null ? visitForm.host.id : ''}"
+                                                    th:text="${type.firstName + ' ' + type.lastName}"
+                                                    th:selected="${visitorIds!=null && visitorIds.contains(type.id)}"
+                                            ></option>
+                                        </th:block>
+
+
+                                        <th:block th:if="${@serviceUtil.isColleague() && !type.shareInAddressBook}">
+                                            <th:block th:if="${type.host!=null && @serviceUtil.getCurrentColleague().getId() == type.host.id}">
+                                                <option th:value="${{type}}"
+                                                        th:attr="data-typeid=${type.id},data-hostid=${visitForm.host!=null ? visitForm.host.id : ''}"
+                                                        th:text="${type.firstName + ' ' + type.lastName}"
+                                                        th:selected="${visitorIds!=null && visitorIds.contains(type.id)}"
+                                                ></option>
+                                            </th:block>
+
+                                        </th:block>
+                                        <!--<option th:if="${type.shareInAddressBook}"
+                                                th:value="${{type}}"
+                                                th:attr="data-typeid=${type.id},data-hostid=${visitForm.host!=null ? visitForm.host.id : ''}"
+                                                th:text="${type.firstName + ' ' + type.lastName}"
+                                                th:selected="${visitorIds!=null && visitorIds.contains(type.id)}"
+                                        ></option>
+                                        <option th:if="${!type.shareInAddressBook && (@serviceUtil.getCurrentUser().getId() == type.getOwner().getId())}"
+                                                th:value="${{type}}"
+                                                th:attr="data-typeid=${type.id},data-hostid=${visitForm.host!=null ? visitForm.host.id : ''}"
+                                                th:text="${type.firstName + ' ' + type.lastName}"
+                                                th:selected="${visitorIds!=null && visitorIds.contains(type.id)}"
+                                        ></option>-->
+                                    </th:block>
+
+
+                                </select>
+                            </div>
+
+                            <!--<i class="fas fa-exclamation-triangle"></i>-->
+                            <!--<p th:if="${#fields.hasErrors('visitors')}" class="label text-danger "
+                               th:errors="*{visitors}"></p>-->
+
+
+                        </div>
+                        <div class="col-md-1">
+                            <button
+                                    style="padding:8px 12px; margin-top:5px;"
+                                    type="button" class="btn btn-sm btn-primary add-visitors "
+                                    th:attr="data-after='loadVisitors',data-onload='getCounries', data-close='visitorCreated'"
+
+                            ><i class="fas fa-plus"
+                                style="margin-right:0px;"></i>
+                            </button>
+                        </div>
+
+                        <div class="col-md-11 visitors-group" style="display: none; margin-top:15px;">
+
+                            <input type="text" th:field="*{title}" class="form-control" id="title"
+                                   th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}"
+                                   placeholder="Group"
+                            >
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p th:if="${#fields.hasErrors('title')}" class="label text-danger "
+                               th:errors="*{title}"></p>
+
+
+                        </div>
+                        <div class="col-md-1">
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-11">
+
+                            <input name="tagshost" id="tagsHost" placeholder="Type host name here .."
+                                   th:classappend="${(#fields.hasErrors('host')) ? 'is-invalid' : ''}"
+                                   class="form-control hosttags"
+                                   th:value="${(visitForm.host!=null) ? visitForm.host.firstName + ' ' +visitForm.host.lastName : ''}">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p th:if="${#fields.hasErrors('host')}" class="label text-danger "
+                               th:errors="*{host}"></p>
+                            <div id="replacehosts">
+                                <select class="form-control rhosts" th:field="*{host}"
+                                        style="margin-top:0px;display: none;"
+                                        th:classappend="${(#fields.hasErrors('host')) ? 'is-invalid' : ''}"
+                                >
+                                    <option th:value="''">Select host</option>
+                                    <option th:each="type : ${@serviceUtil.getAllColleagues()}"
+                                            th:value="${{type}}"
+
+                                            th:selected="${visitForm.host!=null && visitForm.host.id==type.id}"
+                                            th:text="${type.firstName + ' ' + type.lastName}"></option>
+                                    </option>
+                                </select><i class="fas fa-exclamation-triangle"></i>
+                                <p th:if="${#fields.hasErrors('host')}" class="label text-danger "
+                                   th:errors="*{host}"></p>
+
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <button
+                                    style="padding:8px 12px; margin-top:5px;"
+                                    type="button"
+                                    class="btn btn-sm btn-primary add-colleague"
+                                    th:attr="data-url='/ajax/colleague/form',data-close='loadhosts',data-onload='getLocationsColleagues',data-after='getLocationsColleagues'"
+
+                            ><i class="fas fa-plus"
+                                style="margin-right:0px;"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <i id="tzone" class="hide fa fa-clock"></i>
+                        <div class="col-md-11">
+                            <div class="form-label-group required">
+
+
+                                <input name="tagslocation" placeholder="Type location name .." autofocus
+                                       th:classappend="${#fields.hasErrors('location') ? 'is-invalid' : ''}"
+                                       class="form-control locationtags"
+                                       th:value="${(visitForm.location!=null) ? visitForm.location.locationName : ''}">
+                                <i class="fas fa-exclamation-triangle"></i>
+
+                                <p th:if="${#fields.hasErrors('location')}" class="label text-danger "
+                                   th:errors="*{location}" style="top: -10px;left: auto;padding: 5px !important;"></p>
+
+                                <div id="replace-locations">
+                                    <select class="form-control" th:field="*{location}" style="display: none">
+                                        <option value=""></option>
+                                        <option th:each="type : ${@serviceUtil.getAllLocationByCompany(company)}"
+                                                th:attr="data-hostids=${@sessionUtil.getLocationsHost(type.id)},data-tzone=${type.zoneId!=null ? type.zoneId.getZoneName() : 'No time zone selected for this location'}"
+                                                th:value="${{type}}"
+                                                th:text="${type.locationName}"></option>
+                                        </option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <button
+                                    style="padding:8px 12px; margin-top:5px;"
+                                    th:if="${@serviceUtil.hasPrivilege(T(com.easelobby.constants.Constants).ROLE_LOCATIONS_CREATE)}"
+                                    type="button" class="btn btn-sm btn-primary add-location "
+                                    th:attr="data-title='Add location', data-onload='getCounries',data-after='getCounries',data-size='medium',data-url='/ajax/location/form', data-submiturl='/ajax/location/create', data-close='setLocations'"
+
+                            ><i class="fas fa-plus"
+                                style="margin-right:0px;"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group meeting-time">
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-label-group required">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <br/>
+                                        <p class="mb-0">Meeting from*</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <input type="date" th:field="*{appointmentDate}" class="form-control mar-0"
+                                               id="appointmentDate"
+                                               th:classappend="${(#fields.hasErrors('appointmentDateTime') || #fields.hasErrors('appointmentDate')) ? 'is-invalid' : ''}"
+                                               placeholder="Meeting time"
+                                               th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+                                        ><i class="fas fa-exclamation-triangle"></i>
+                                        <p th:if="${#fields.hasErrors('appointmentDate')}" class="label text-danger "
+                                           th:errors="*{appointmentDate}"></p>
+                                        <p th:if="${#fields.hasErrors('appointmentDateTime')}"
+                                           class="label text-danger "
+                                           th:errors="*{appointmentDateTime}"></p>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select th:field="*{appointment_hour}" class="form-control mar-0"
+                                                th:classappend="${#fields.hasErrors('appointmentDateTime') ? 'is-invalid' : ''}">
+                                            <option th:each="i : ${#numbers.sequence( 0, 11)}"
+                                                    th:value="${(i<10) ? '0'+i : i}"
+                                                    th:text="${(i<10) ? '0'+i + ' AM'  : i + ' AM'}"></option>
+                                            <option th:each="i : ${#numbers.sequence( 0, 11)}"
+                                                    th:value="${(i<9) ? (i+12) : (i+12)}"
+                                                    th:text="${(i<10) ? '0'+i + ' PM'  : i + ' PM'}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select th:field="*{appointment_minutes}" class="form-control mar-0"
+                                                th:classappend="${#fields.hasErrors('appointmentDateTime') ? 'is-invalid' : ''}">
+                                            <option th:each="i : ${#numbers.sequence( 0, 11)}" th:with="v=${i*5}"
+                                                    th:value="${(v<=9) ? '0'+v : v}"
+                                                    th:text="${(v<=9) ? '0'+v : v}"></option>
+                                        </select>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="form-label-group required">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <br/>
+                                            <p class="mb-0">Meeting to*</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+
+                                            <input type="date" th:field="*{checkInDate}" class="form-control mar-0"
+                                                   th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+                                                   id="checkInDate"
+                                                   th:classappend="${(#fields.hasErrors('checkInDateTime') || #fields.hasErrors('checkInDate')) ? 'is-invalid' : ''}"
+                                                   placeholder="Meeting to"
+                                            ><i class="fas fa-exclamation-triangle"></i>
+                                            <p th:if="${#fields.hasErrors('checkInDate')}" class="label text-danger "
+                                               th:errors="*{checkInDate}"></p>
+                                            <p th:if="${#fields.hasErrors('checkInDateTime')}"
+                                               class="label text-danger "
+                                               th:errors="*{checkInDateTime}"></p>
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select th:field="*{appointment_end_hour}"
+                                                    th:classappend="${#fields.hasErrors('checkInDateTime') ? 'is-invalid' : ''}"
+                                                    class="form-control mar-0">
+                                                <option th:value="''">HH</option>
+                                                <option th:each="i : ${#numbers.sequence( 0, 11)}"
+                                                        th:value="${(i<10) ? '0'+i : i}"
+                                                        th:text="${(i<10) ? '0'+i + ' AM'  : i + ' AM'}"></option>
+                                                <option th:each="i : ${#numbers.sequence( 0, 11)}"
+                                                        th:value="${(i<9) ? (i+12) : (i+12)}"
+                                                        th:text="${(i<10) ? '0'+i + ' PM'  : i + ' PM'}"></option>
+                                            </select></div>
+                                        <div class="col-md-3">
+                                            <select th:field="*{appointment_end_minutes}"
+                                                    th:classappend="${#fields.hasErrors('checkInDateTime') ? 'is-invalid' : ''}"
+                                                    class="form-control mar-0">
+
+                                                <option th:each="i : ${#numbers.sequence( 0, 11)}" th:with="v=${i*5}"
+                                                        th:value="${(v<=9) ? '0'+v : v}"
+                                                        th:text="${(v<=9) ? '0'+v : v}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="cloned"></div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <th:block th:if="${editVisit == null}">
+                                <a class="btn-copy btn btn-xs btn-primary btn-vsm " href="javascript:void(0);">Add
+                                    more</a>
+                                <a class="btn-remove btn btn-xs btn-primary btn-vsm  ml-2" href="javascript:void(0);">Remove</a>
+                            </th:block>
+                        </div>
+
+                        <div class="col-md-6">
+                            <a th:if="${!customFields.empty}" class="pull-right btn btn-xs btn-vsm  btn-primary"
+                               th:href="'javascript:void(0);'" onclick="$('#more').slideToggle();">Advance option</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group mt-2">
+                        <!--<a class="pull-right" th:href="'javascript:void(0);'" onclick="$('#more').slideToggle();">More...</a>-->
+                        <br/>
+                        <div id="more" style="display: none;" class="col-md-12">
+                            <div th:each="f : ${customFields}">
+                                <th:block th:switch="${f.type.value}">
+                                    <div th:case="'Multiple Choice'">
+
+                                    </div>
+                                    <div th:case="'Free Text'">
+                                        <p th:text="${f.name + ((f.required) ? '*' : '')}"></p>
+                                        <input class="form-control" type="text" th:name="${f.name}"
+                                               th:value="${(visit!=null) ? (@serviceUtil.getCustomFieldValue(visit, f)) : (f.defaultValue)}"/>
+                                    </div>
+                                    <div th:case="'Date'">
+                                        <p th:text="${f.name + ((f.required) ? '*' : '')}"></p>
+                                        <input class="form-control" type="date" th:name="${f.name}"
+                                               th:value="${(visit!=null) ? (@serviceUtil.getCustomFieldValue(visit, f)) : (f.defaultValue)}"/>
+                                    </div>
+                                    <div th:case="'Yes/No'">
+                                        <p th:text="${f.name + ((f.required) ? '*' : '')}"></p>
+                                        <div class="form-group">
+                                            <div class="checkbox checkbox-primary">
+                                                <input type="radio" th:name="${f.name}"
+                                                       th:id="'defaultValue1'+${fStat.index}" value="Yes"
+                                                       th:checked="${f.defaultValue=='Yes' ? true : false}">
+                                                <label th:for="'defaultValue1'+${fStat.index}">Yes
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="checkbox checkbox-primary">
+                                                <input type="radio" th:name="${f.name}"
+                                                       th:id="'defaultValue2'+${fStat.index}" value="No"
+                                                       th:checked="${f.defaultValue=='No' ? true : false}">
+                                                <label th:for="'defaultValue2'+${fStat.index}">No
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="checkbox checkbox-primary">
+                                                <input type="radio" th:name="${f.name}"
+                                                       th:checked="${f.defaultValue=='None' ? true : false}"
+                                                       th:id="'defaultValue3'+${fStat.index}" value="None">
+                                                <label th:for="'defaultValue3'+${fStat.index}">None
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}">
+        <input type="hidden" id="conflictpopup" th:value="${conflict ? 'true' : 'false'}">
+
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".btn-remove").hide();
+            $(".btn-copy").on('click', function () {
+
+                // var ele = $(this).closest('.meeting-time').clone(true);
+                // $(this).closest('.meeting-time').after(ele);
+                $(".meeting-time").clone().removeClass('meeting-time').appendTo(".cloned");
+                $(".btn-remove").show();
+            });
+
+            $(".btn-remove").on('click', function () {
+                $('.cloned').children().last().remove();
+                if ($(".cloned").children().length == 0) {
+                    $(".btn-remove").hide();
+                }
+            });
+        })
+
+    </script>
+
+</div>

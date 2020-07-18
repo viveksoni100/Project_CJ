@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<form th:action="@{${pagingUrl}}"
+      th:attr="data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace'"
+      id="visitorsList" class="paging">
+    <div class="card-header">
+        <div class="">
+            <th:block th:include="logbook/subpart/statuses :: statuses"></th:block>
+        </div>
+    </div>
+    <div class="card-body" th:style="'padding-top:0px;'">
+        <div class="row mar-0" id="replace">
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox" id="checkall">
+                            <input type="hidden" id="start" name="start"
+                                   th:value="${start}">
+                            <label for="checkall"></label>
+                        </div>
+                    </th>
+                    <th width="140">
+
+                        <i class="fas fa-check ico-user"></i>
+
+                        Status
+                    </th>
+                    <th>
+
+                        <i class="far fa-user ico-user"></i>
+
+                        Visitor
+                    </th>
+                    <th>Check-In</th>
+                    <th>Check-Out</th>
+                    <th>Host</th>
+                    <th>Company</th>
+                    <th>Group</th>
+                    <th>Share Link</th>
+                    <th th:each="f : ${customFields}" th:class="${'cfi' + fStat.index}" style="display: none;"
+                        th:text="${f.name}">
+
+                    </th>
+
+                </tr>
+                <tr>
+
+
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+                        <input type="text" name="title" placeholder="group" class="mark1" autocomplete="nope">
+
+                    </th>
+                    <th>
+                        <input type="submit" class="btn btn-primary btn-xs" style="display: none;">
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+
+
+                <tr th:each="vvisit : ${visitVisitors}">
+                    <td>
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox" th:id="${'c'+vvisitStat.index}" class="lcheckbox">
+                            <label th:for="${'c'+vvisitStat.index}"></label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="btn-group visit-status">
+                            <th:block th:include="logbook/subpart/options :: options"></th:block>
+                        </div>
+
+                    </td>
+
+                    <td>
+
+                        <a href="javascript:void(0)" th:attr="data-url=@{'/ajax/visitor/info/'+ ${@pathVariableEnc.encrypt(vvisit.visitor.id)}+'/'+${@pathVariableEnc.encrypt(vvisit.visit.id)}},
+                                            data-title=false,data-size='large',data-pclose='visitorInfoClose'"
+                           class="view-visitor"
+                        >
+                            <i class="far fa-user ico-user" th:if="${vvisit.visitor.image==null || vvisit.visitor.image==''}"></i>
+                            <img class="ico-user" th:if="${vvisit.visitor.image!=null && vvisit.visitor.image!=''}"
+                                 th:src="@{'/ajax/visitor/image/' +${@pathVariableEnc.encrypt(vvisit.visitor.id)}}"
+
+                                 style="padding: 0"
+                            /><span th:remove="tag"
+                                                                      th:text="${vvisit.visitor.firstName + ' ' + vvisit.visitor.lastName}"></span>
+                        </a>
+                    </td>
+                    <td th:text="${#temporals.format(vvisit.visit.appointmentDateTime, 'hh:mm a')}"></td>
+                    <td th:text="${#temporals.format(vvisit.visit.checkInDateTime, 'hh:mm a')}"></td>
+                    <td th:text="${vvisit.visit.host.firstName + ' ' + vvisit.visit.host.lastName}">
+
+                    </td>
+                    <td th:text="${vvisit.visitor.cmpny}"></td>
+                    <td th:text="${vvisit.visit.title}">
+
+                    </td>
+
+                    <td>
+                        <a href="#" class="btn btn-primary btn-vsm send-qrcode" role="button"
+                           th:attr="data-content-type='json',data-after=sendQrCode, data-vvisitid=${@pathVariableEnc.encrypt(vvisit.id)}"
+                        >
+                            <i class="fas fa-envelope"></i> Send Link
+                        </a>
+                    </td>
+
+                    <td th:class="${'cfi' + fStat.index}" th:each="f : ${customFields}" style="display: none;"
+                        th:text="${@serviceUtil.getCustomFieldValue(vvisit.visit, f)}">
+
+                    </td>
+                </tr>
+                <tr th:if="${visitVisitors.empty}">
+                    <td colspan="9">
+                        <div class="alert alert-danger">
+                            There are no records..
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</form>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}" lang="en">
+<th:block layout:fragment="subheader">
+
+    <div class="ereaders-subheader" th:if="!${orderHistory.empty}">
+        <div class="ereaders-subheader-text">
+            <span class="ereaders-subheader-transparent"></span>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 style="margin-top: 10px">Order History</h1>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="ereaders-breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul>
+                            <li><a href="index.html">Homepage</a></li>
+                            <li class="active">Login</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+</th:block>
+
+<body style="color: #000; min-height: 576px;" onload="recalculateCart()">
+
+
+
+<th:block layout:fragment="content">
+
+    <div th:if="${orderHistory.empty}" >
+        <script>
+            $(document).ready(function () {
+                $('#ereaders-footer').css({
+                    "bottom" : "0",
+                    "position" : "fixed"
+                });
+            });
+        </script>
+    </div>
+
+    <div th:if="${orderHistory.empty}" class="gtd-inrdatablk">
+
+        <div class="container">
+            <div class="row gtd-inr-nodata">
+                <div class="gtd-inr-nodata-txt gtd-ord-nodta-txt">
+                    <label>Looks like you haven't made</label>
+                    <label>your order yet</label>
+                </div>
+                <!--<img th:src="@{/front/images/order_not_found_photo.png}" alt="order not found image" style="box-shadow: 0px 12px 51px 0px rgba(18, 18, 18, 0.20)">-->
+                <img th:src="@{/front/images/order_not_found_phot_custom_text.png}" alt="order not found image" class="order-nt-fnd-img" />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="shopping-cart container ord-sub-cnt-blk"
+         style="margin-bottom: 260px;"
+         th:if="${!orderHistory.empty}">
+        <!--<div class="column-labels">
+
+            <label class="product-quantity" style=" padding-left: 15px; ">Order Id</label>
+            <label class="product-date">Purchase Date</label>
+            <label class="product-details">Product</label>
+            <label class="product-quantity">Version</label>
+            <label class="product-quantity">Quantity</label>
+            <label class="product-date" style="padding-left: 10px;">Expiry Date</label>
+            <label class="product-price">Original Price</label>
+            <label class="product-price">Net Price</label>
+            <label class="product-details"></label>
+        </div>-->
+        <!--<table class="table " id="dataTable" width="100%" cellspacing="0"
+               data-toolbar="#toolbar"
+               data-search="true"
+               data-toggle="table"
+               data-search-align="left"
+               data-minimum-count-columns="2"
+               data-pagination="true"
+               data-page-size="10"
+               data-sortable="true"
+               data-page-list="[10, 25, 50, All]"
+               data-side-pagination="client"
+               data-show-extended-pagination="true"
+               data-buttons-class="btn btn-info">
+            <thead>
+            <tr>
+                &lt;!&ndash;<th>-</th>&ndash;&gt;
+                <th data-sortable="true" data-searchable="true">Order ID</th>
+                <th data-sortable="true" data-searchable="true">Transaction Number</th>
+                <th data-sortable="true" data-searchable="true">Purchase Date</th>
+                <th data-sortable="true" data-searchable="true">Product Count</th>
+                <th data-sortable="true" data-searchable="true">Amount Paid</th>
+                &lt;!&ndash;<th data-sortable="true" data-searchable="true">Product</th>
+                <th data-sortable="true" data-searchable="true">Version</th>
+                <th data-sortable="true" data-searchable="true">Quantity</th>&ndash;&gt;
+                &lt;!&ndash;<th data-sortable="true" data-searchable="true">Expiry Date</th>&ndash;&gt;
+                <th style="text-align: right">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="marktext">
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"/>
+                    <td th:text="${order.getTransactionNumber()}"/>
+                    <td th:text="${#temporals.day(order.purchaseDate) + '-' + #temporals.monthNameShort(order.purchaseDate) + '-' +
+                    #temporals.year(order.purchaseDate)}"/>
+                    <td th:text="${order.getOrderDetailList().size()}"/>
+                    <td th:text="${'$ ' + #numbers.formatDecimal(order.netPrice,0,'COMMA',0,'POINT')}"/>
+                    &lt;!&ndash;<td th:text="${'$ ' + order.netPrice}"/>&ndash;&gt;
+                    <td colspan="2">
+                        <a th:href="@{'/orderdetail?orderId=' + ${order.id}}" class="btn btn-warning">More Info</a>&lt;!&ndash;<input type="button"  onclick="downloadInvoice()" value="Invoice">&ndash;&gt;&lt;!&ndash; onclick="location.href = BASE_URL + '/download/invoice/'"&ndash;&gt;
+                        <a class="btn btn-primary invoice-button"
+                           href="javascript:void(0);"
+                           th:id="${order.id}"
+                           th:attr="orderId=${order.id}">Invoice</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>-->
+
+        <table class="table " id="dataTable" width="100%" cellspacing="0"
+               data-toolbar="#toolbar"
+               data-search="true"
+               data-toggle="table"
+               data-search-align="left"
+               data-minimum-count-columns="2"
+               data-pagination="true"
+               data-page-size="10"
+               data-sortable="true"
+               data-page-list="[10, 25, 50, All]"
+               data-side-pagination="client"
+               data-show-extended-pagination="true"
+               data-buttons-class="btn btn-info">
+            <thead>
+            <tr>
+                <!--<th>-</th>-->
+                <th data-sortable="true" data-searchable="true">Order ID</th>
+                <th data-sortable="true" data-searchable="true">Transaction ID</th>
+                <th data-sortable="true" data-searchable="true">Product Name</th>
+                <th data-sortable="true" data-searchable="true">Qty</th>
+                <th data-sortable="true" data-searchable="true">Price</th>
+                <th data-sortable="true" data-searchable="true">Final Price</th>
+                <th data-sortable="true" data-searchable="true">Purchase Date</th>
+                <th data-sortable="true" data-searchable="true">Expiry Date</th>
+                <!--<th data-sortable="true" data-searchable="true">Product</th>
+                <th data-sortable="true" data-searchable="true">Version</th>
+                <th data-sortable="true" data-searchable="true">Quantity</th>-->
+                <!--<th data-sortable="true" data-searchable="true">Expiry Date</th>-->
+                <th style="text-align: right">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="marktext">
+            <tr th:each="order : ${orderWithDetails}">
+                <td th:text="${order.id}"/>
+                <td th:text="${order.getTransactionNumber()}"/>
+                <td th:text="${order.getProductName()}"/>
+                <td th:text="${order.getProductQty()}"/>
+                <td th:text="${'$ ' + #numbers.formatDecimal(order.getOriginalPrice(),0,'COMMA',0,'POINT')}"/>
+                <td th:text="${'$ ' + #numbers.formatDecimal(order.getNetPrice(),0,'COMMA',0,'POINT')}"/>
+                <td th:text="${#temporals.day(order.purchaseDate) + '-' + #temporals.monthNameShort(order.purchaseDate) + '-' +#temporals.year(order.purchaseDate)}"/>
+                <td th:text="${#temporals.day(order.productExpiryDate) + '-' + #temporals.monthNameShort(order.productExpiryDate) + '-' +#temporals.year(order.productExpiryDate)}"/>
+                <!--<td th:text="${'$ ' + order.netPrice}"/>-->
+                <td colspan="2">
+                    <!--<a th:href="@{'/orderdetail?orderId=' + ${order.id}}" class="btn btn-warning">More Info</a>-->
+                    <!--<input type="button"  onclick="downloadInvoice()" value="Invoice">--><!-- onclick="location.href = BASE_URL + '/download/invoice/'"-->
+
+                    <!--<a class="btn btn-primary invoice-button" style="background-color: #06469E;"
+                       href="javascript:void(0);"
+                       th:id="${order.id}"
+                       th:attr="orderId=${order.id}">Download Invoice</a>-->
+
+                    <a class="btn btn-primary invoice-button" style="background-color: #06469E;"
+                       th:href="@{'/download/invoiceNew/' + ${order.getId().toString()}}"
+                       >Download Invoice</a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!--<ul style="list-style-type: none;">
+            <li th:each="order : ${order}" style="list-style-type: none;">
+            <li th:each="orderedItems : ${orderHistory}" style="list-style-type: none;">
+                <div class="product">
+                    <div class="product-quantity" style=" padding-left: 21px; " th:text="${order.id}"></div>
+                    <div class="product-date" th:text="${order.purchaseDate}"></div>
+                    <div class="product-details" th:text="${orderedItems.productName}"></div>
+                    <div class="product-quantity" th:text="${orderedItems.dataVersion}"></div>
+                    <div class="product-quantity" th:text="${orderedItems.productQty}"></div>
+                    <div class="product-date"  style="padding-left: 10px;" th:text="${orderedItems.productExpiryDate}"></div>
+
+                    <div class="product-price" th:text="${orderedItems.originalPrice}"></div>
+                    <div class="product-price" style="width: 70px;" th:text="${orderedItems.netPrice}"></div>
+                    <a class="ereaders-simple-btn ereaders-bgcolor product-title"
+                       style="margin-top: 0px; padding-left: 30px; margin-left: 100px;  width: 100px;">Invoice</a>
+
+
+                    &lt;!&ndash;                    <div class="product-line-price" th:text="${productListItems.productPrice}"></div>&ndash;&gt;
+                </div>
+            </li>
+        </ul>-->
+
+
+        <!--        <div class="totals">-->
+        <!--            <div class="totals-item">-->
+        <!--                <label style="font-size: larger;">Subtotal</label>-->
+        <!--                <div style="font-size: larger;" class="totals-value" id="cart-subtotal">71.97</div>-->
+        <!--            </div>-->
+        <!--            <div class="totals-item">-->
+        <!--                <label style="font-size: larger;">Tax (0%)</label>-->
+        <!--                <div style="font-size: larger;" class="totals-value" id="cart-tax">0.00</div>-->
+        <!--            </div>-->
+        <!--            <div class="totals-item">-->
+        <!--                <label style="font-size: larger;">Shipping</label>-->
+        <!--                <div style="font-size: larger;" class="totals-value" id="cart-shipping">00.00</div>-->
+        <!--            </div>-->
+        <!--            <div class="totals-item totals-item-total">-->
+        <!--                <label style="font-size: larger; font-family: 'Lato', sans-serif;">Grand Total</label>-->
+        <!--                <div style="font-size: larger; font-family: 'Lato', sans-serif;" class="totals-value" id="cart-total">90.57</div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+        <!--<button class="checkout" onclick="btnCheckout">Checkout</button>-->
+        <!--        <a class="checkout" th:href="@{'/stripe/getSCheckoutPage'}">Checkout</a>-->
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script th:src="@{/front/script/html2canvas.min.js}"></script>
+    <script th:src="@{/front/script/cartpage.js}"></script>
+    <script th:src="@{/front/script/daas.js}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#dataTable").bootstrapTable();
+        });
+
+        function downloadInvoice() {
+            console.log("Ajax will be called")
+            $.ajax({
+                type:'GET',
+                url : BASE_URL + "/download/invoice",
+                /*success: function(data) {
+                    console.log('success',data);
+                },
+                error:function(exception){alert('Exeption:'+exception);}*/
+            });
+            e.preventDefault();
+        }
+
+        $(document).on("click", ".invoice-button", function (e) {
+
+            var orderId = $(this).attr("orderId");
+            location.href='download/invoice/' + orderId;
+            console.log("invoice is downloded...");
+        });
+
+        $('input').on('click', function () {
+
+            $.ajax({
+                type:'POST',
+                url : BASE_URL + "/invoice",
+                success: function(data) {
+                    console.log('success',data);
+                },
+                error:function(exception){alert('Exeption:'+exception);}
+            });
+            e.preventDefault();
+        });
+    </script>
+    <!--    <script>-->
+    <!--        function btnCheckout() {-->
+    <!--            console.log("stripe payment integration comes here...")-->
+    <!--        }-->
+    <!--    </script>-->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" th:href="@{/front/css/orderpage.css}">
+
+</th:block>
+
+</body>
+
+</html>

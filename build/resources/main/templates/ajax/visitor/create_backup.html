@@ -1,0 +1,269 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="row">
+
+    <div class="col-md-12">
+        <div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+        <form th:action="@{/register}" th:object="${visitor}" method="post" style="width: 99%" th:if="${!success}">
+            <div class="form-group">
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+
+                            <input type="text" th:field="*{firstName}" class="form-control" id="firstName"
+                                   th:classappend="${#fields.hasErrors('firstName') ? 'is-invalid' : ''}"
+                                   placeholder="First name*"
+                                   autofocus="autofocus"><i
+                                class="fas fa-exclamation-triangle"></i>
+
+                            <p th:if="${#fields.hasErrors('firstName')}" class="label text-danger "
+                               th:errors="*{firstName}"></p>
+
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <input type="text" th:field="*{lastName}" class="form-control"
+                                   placeholder="Last name*" id="lastName"
+                                   th:classappend="${#fields.hasErrors('lastName') ? 'is-invalid' : ''}"
+                            >
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p th:if="${#fields.hasErrors('lastName')}" class="label text-danger"
+                               th:errors="*{lastName}"></p>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-12">
+
+                            <input type="text" th:field="*{company}" class="form-control" id="company"
+                                   th:classappend="${#fields.hasErrors('company') ? 'is-invalid' : ''}"
+                                   placeholder="Company"
+                                   autofocus="autofocus"><i class="fas fa-exclamation-triangle"></i>
+
+                            <p th:if="${#fields.hasErrors('company')}" class="label text-danger "
+                               th:errors="*{company}"></p>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-12">
+
+                            <input type="text" th:field="*{address1}" class="form-control" id="address1"
+                                   th:classappend="${#fields.hasErrors('address1') ? 'is-invalid' : ''}"
+                                   placeholder="Address 1*"
+                                   autofocus="autofocus">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p th:if="${#fields.hasErrors('address1')}" class="label text-danger "
+                               th:errors="*{address1}"></p>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-8">
+
+                            <input type="text" th:field="*{address2}" class="form-control"
+                                   placeholder="Address 2" id="address2"
+                                   th:classappend="${#fields.hasErrors('address2') ? 'is-invalid' : ''}"
+                            >
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p th:if="${#fields.hasErrors('address2')}" class="label text-danger"
+                               th:errors="*{address2}"></p>
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <input type="text" th:field="*{postalCode}" class="form-control"
+                                   placeholder="Postal code*" id="postalCode"
+                                   th:classappend="${#fields.hasErrors('postalCode') ? 'is-invalid' : ''}"
+                            >
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p th:if="${#fields.hasErrors('postalCode')}" class="label text-danger"
+                               th:errors="*{postalCode}"></p>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+
+                            <input type="text" th:field="*{city}" class="form-control" id="city"
+                                   th:classappend="${#fields.hasErrors('city') ? 'is-invalid' : ''}"
+                                   placeholder="City*"
+                                   autofocus="autofocus">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p th:if="${#fields.hasErrors('city')}" class="label text-danger "
+                               th:errors="*{city}"></p>
+
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <input type="text" th:field="*{state}" class="form-control"
+                                   placeholder="State*" id="state"
+                                   th:classappend="${#fields.hasErrors('state') ? 'is-invalid' : ''}"
+                            >
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p th:if="${#fields.hasErrors('state')}" class="label text-danger"
+                               th:errors="*{state}"></p>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-12">
+
+                            <input name="tagscountry" placeholder="Type country name .." autofocus
+                                   th:classappend="${#fields.hasErrors('country') ? 'is-invalid' : ''}"
+                                   class="form-control countrytags"
+                                   th:value="${(visitor.country!=null) ? visitor.country.name : ''}">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p th:if="${#fields.hasErrors('country')}" class="label text-danger "
+                               th:errors="*{country}"></p>
+                            <div id="countrySelect" style="display: none;">
+                                <select class="form-control" name="country" id="country" style="margin-top:0px;">
+
+                                    <th:block th:if="${visitor.country==null}">
+
+                                        <option th:each="type : ${@serviceUtil.getAllCountries()}"
+                                                th:value="${{type}}"
+                                                th:selected="${type.getCode2()=='US'}"
+                                                th:text="${type.name}"></option>
+
+                                    </th:block>
+                                    <th:block th:if="${visitor.country!=null}">
+                                        <option th:each="type : ${@serviceUtil.getAllCountries()}"
+                                                th:value="${{type}}"
+                                                th:selected="${type.id==visitor.country.id}"
+                                                th:text="${type.name}"></option>
+                                    </th:block>
+
+                                    </option>
+                                </select>
+                                <!--<label for="country">Country</label>-->
+
+                                <p th:if="${#fields.hasErrors('country')}" class="label text-danger"
+                                   th:errors="*{country}"></p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <th:block th:if="${type=='edit'}">
+                            <div class="col-md-8">
+                                <th:block th:each="phone : ${phones}">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" name="phonecode[]"
+
+                                                   th:classappend="${errorPhoneClass}"
+                                                   style="padding: 15px 1px 15px 0px;text-align: center;width: 47px;" ;
+                                                   th:value="${phone.getCountry().getCalling_code()}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="phone[]"
+                                                   th:classappend="${errorPhoneClass}"
+                                                   th:value="${phone.getPhone()}">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button style="padding:8px 12px; margin-top:5px;" type="button"
+                                                    class="btn btn-sm btn-primary add-inline-phone "
+                                                    data-after="loadVisitors" data-onload="getCounries"><i
+                                                    class="fas fa-plus" style="margin-right:0px;"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </div>
+                            <div class="col-md-4">
+                                <th:block th:each="email : ${emails}">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <input type="text" name="email[]" th:classappend="${errorEmailClass}" th:value="${email.getEmail()}">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button style="padding:8px 12px; margin-top:5px;" type="button"
+                                                    class="btn btn-sm btn-primary add-inline-phone "
+                                                    data-after="loadVisitors" data-onload="getCounries"><i
+                                                    class="fas fa-plus" style="margin-right:0px;"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </th:block>
+                        <th:block th:if="${type=='create'}">
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" name="phonecode"
+                                       placeholder="Code"
+                                       th:classappend="${errorPhoneClass}"
+                                       style="text-align: center;" ;
+                                >
+
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" name="phone"
+                                       th:classappend="${errorPhoneClass}"
+                                       placeholder="Primary phone">
+                            </div>
+                            <div class="col-md-5">
+
+                                <input class="form-control" type="text" name="email"
+                                       th:classappend="${errorEmailClass}"
+                                       placeholder="Primary email">
+
+                            </div>
+
+                        </th:block>
+                        </th:block>
+                    </div>
+
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+
+    <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}">
+    <input type="hidden" id="ajaxvisitorsList" th:value="${visitorsList}">
+    <input type="hidden" id="createdVisitor"
+           th:value="${visitor.firstName +' '+visitor.lastName + '::'+@pathVariableEnc.encrypt(visitor.id)}"
+           th:if="${success}">
+
+    <div id="replace-visitors">
+        <select multiple="multiple" class=" width-100" data-actions-box="true"
+                name="visitors" id="visitors"
+                style="display: none;"
+        >
+
+            <option th:each="type : ${@serviceUtil.getAllVisitors()}"
+                    th:value="${{type}}"
+                    th:text="${type.firstName + ' ' + type.lastName}"
+            ></option>
+            </option>
+        </select>
+    </div>
+</div>

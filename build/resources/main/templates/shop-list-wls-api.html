@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Ereaders Shop List WLS</title>
+
+    <!-- Css Files -->
+    <link href="front/css/bootstrap.css" rel="stylesheet">
+    <link href="front/css/font-awesome.css" rel="stylesheet">
+    <link href="front/css/flaticon.css" rel="stylesheet">
+    <link href="front/css/slick-slider.css" rel="stylesheet">
+    <link href="front/css/fancybox.css" rel="stylesheet">
+    <link href="front/css/style.css" rel="stylesheet">
+    <link href="front/css/color.css" rel="stylesheet">
+    <link href="front/css/responsive.css" rel="stylesheet">
+    <link href="front/css/apislabformat.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+    https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css
+    <![endif]-->
+</head>
+<body>
+<th:block layout:fragment="content">
+
+    <!--// Main Wrapper \\-->
+    <div class="ereaders-main-wrapper">
+
+        <!--// SubHeader \\-->
+        <div class="ereaders-subheader">
+            <div class="ereaders-subheader-text">
+                <span class="ereaders-subheader-transparent"></span>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 style="margin-top: 10px">API List</h1>
+                            <!--<p style="margin-top: -12px;">Ut porta massa in risus maximus, eget sodales massa malesuada.
+                                Fusce et neque aliquet.</p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="ereaders-breadcrumb">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul>
+                                <li><a href="home.html">Homepage</a></li>
+                                <li class="active">Shop List W/L/Sidebar</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+        <!--// SubHeader \\-->
+
+        <!--// Main Content \\-->
+        <div class="ereaders-main-content" style="padding: 0px 0px 60px 0px;">
+
+            <!--// Main Section \\-->
+            <div class="ereaders-main-section">
+                <div class="container">
+                    <div class="row">
+
+                        <!--// Sidebar \\-->
+                        <aside class="col-md-3">
+
+                            <!--// Widget Search \\-->
+                            <!--<div class="widget widget_search">
+                                <form>
+                                    <input value="Search" onblur="if(this.value == '') { this.value ='Search'; }"
+                                           onfocus="if(this.value =='Search') { this.value = ''; }" tabindex="0"
+                                           type="text">
+                                    <label><input type="submit" value=""></label>
+                                </form>
+                            </div>-->
+                            <!--// Widget Search \\-->
+
+                            <!--// Widget Cetagories \\-->
+                            <div class="widget widget_cetagories widget_border" style="margin-top: 30px;">
+                                <h2 class="ereaders-widget-title">Categories</h2>
+                                <ul>
+                                    <li>
+                                        <a th:href="@{'/daas/api-as-service/all'}" th:text="All"></a>
+                                    </li>
+                                    <li th:each="category:${apicategories}">
+                                        <a th:href="@{'/daas/api-as-service/' +${category.id}}"
+                                           th:text="${category.productCategory.productCategoryName}"></a>
+                                    </li>
+
+                                </ul>
+
+
+                                <!--                                <ul>
+                                                                    <li><a href="404.html">Business<span>19</span></a></li>
+                                                                    <li><a href="404.html">Technology<span>21</span></a></li>
+                                                                    <li><a href="404.html">Web Design<span>07</span></a></li>
+                                                                    <li><a href="404.html">Inspiration<span>13</span></a></li>
+                                                                    <li><a href="404.html">Photoshop<span>05</span></a></li>
+                                                                </ul>-->
+                            </div>
+                            <!--// Widget Cetagories \\-->
+                            <div class="widget widget_cetagories widget_border" style="margin-top: 30px;">
+                                <h2 class="ereaders-widget-title">Added</h2>
+                                <form th:action="@{/daas/api-as-service/all}">
+                                    <select class="form-control" name="timeAdded" id="timeAdded"
+                                            onchange="this.form.submit()">
+                                        <option value="week">This Week</option>
+                                        <option value="month">This Month</option>
+                                        <option value="year">This Year</option>
+                                        <option value="all" selected="selected">All Time</option>
+                                    </select>
+                                </form>
+                            </div>
+
+
+                        </aside>
+                        <!--// Sidebar \\-->
+
+                        <div class="col-md-9">
+                            <div class="ereaders-shop-filter" style="padding: 40px 18px 0px 30px; margin-top: 30px;">
+
+                                <div class="widget widget_search">
+                                    <form>
+                                        <form th:action="@{${pagingUrl}}" th:object="${productSearch}">
+                                            <input value="Search"
+                                                   onblur="if(this.value == '') { this.value ='Search'; }"
+                                                   onfocus="if(this.value =='Search') { this.value = ''; }" tabindex="0"
+                                                   type="text" style="width: 780px;"
+                                                   th:field="${productSearch.productName}">
+                                            <label><input type="submit" value=""></label>
+                                        </form>
+                                    </form>
+                                </div>
+                                <div class="widget widget_sort_price">
+                                    <form th:action="@{${pagingUrl}}">
+                                        <div class="row">
+                                            <label>Sort by:</label>
+                                            <select class="form-control" name="sortProductBy" id="sortProductBy"
+                                                    onchange="this.form.submit()">
+                                                <option value="createdAt">Newest Added</option>
+                                                <option value="updatedAt">Last Updated</option>
+                                                <option value="none" selected="selected">None</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+
+
+                                <!--<span>Showing 1-12 of 30 results</span>-->
+                                <!-- Nav tabs -->
+                                <!--<ul class="nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#home" aria-controls="home"
+                                                                              role="tab" data-toggle="tab"><i
+                                            class="icon ereaders-list-interface-symbol"></i>
+                                        <span>List</span></a></li>
+                                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab"
+                                                               data-toggle="tab"><i class="icon ereaders-3x3-grid"></i>
+                                        <span>Grid</span></a></li>
+                                </ul>-->
+                                <!-- Tab panes -->
+                                <!--<form>
+                                    <div class="ereaders-search-select">
+                                        <select>
+                                            <option value="Default Sorting">Default Sorting</option>
+                                            <option value="Default Sorting">Default Sorting</option>
+                                            <option value="Default Sorting">Default Sorting</option>
+                                            <option value="Default Sorting">Default Sorting</option>
+                                        </select>
+                                    </div>
+                                </form>-->
+                            </div>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="home">
+                                    <div class="ereaders-shop ereaders-shop-list" id="productPage">
+
+                                        <ul class="row" th:each="daasData : ${daasapilist}"
+                                            style="border: 1px solid #ececec; padding: 20px 20px 0px 20px;"
+                                            th:object="${addApitoCart}" sec:authorize="isAnonymous()">
+                                            <!--<li th:if="${daasapilist.empty}" style="font-weight: bold; margin-left: 40px;" th:text="${'Sorry! No items to show in this category.'}"/>-->
+                                            <li class="col-md-8"
+                                                style="list-style: none;">
+                                                <figure>
+                                                    <!--<a href="shop-detail.html">-->
+                                                    <img
+                                                            style="width: 267px; height: 270px;"
+                                                            th:if="${@serviceUtil.isThumbnailNull(daasData) == true}"
+                                                            th:src="@{/front/images/product_img_default_new.png}"
+                                                            alt="">
+                                                    <img
+                                                            style="width: 267px; height: 270px;"
+                                                            th:if="${@serviceUtil.isThumbnailNull(daasData) == false}"
+                                                            th:src="@{${'/daas/downloadFile/' + daasData.productId + '/' + daasData.productThumbnailName}}"
+                                                            alt="">
+                                                    <!--</a>-->
+                                                    <figcaption>
+                                                        <!--<a href="#" class="icon ereaders-add" data-toggle="tooltip"
+                                                           title="Add To Wishlist"></a>-->
+                                                        <a th:attr="data-url='/moreinfo/api/' + ${daasData.id}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
+                                                           href="javascript:void(0);"
+                                                           class="icon ereaders-idea"
+                                                           data-toggle="tooltip"
+                                                           title="More Info"></a>
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="ereaders-shop-list-text">
+                                                    <h2 th:text="${daasData.productName}"/>
+                                                    <!--<span th:text="${'$' + daasData.productPrice}"/>-->
+                                                    <br>
+                                                    <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),20)}"/>
+                                                    <a th:attr="data-url='/moreinfo/api/' + ${daasData.id}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
+                                                       href="javascript:void(0);" class="readmore">read more</a>
+                                                    <br><br>
+
+                                                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                                                        <font size="1">
+                                                            <div>Product Pricing</div>
+                                                            <table id="productSlab" class="display" style="width: 100%">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th scope="col">#</th>
+                                                                    <th scope="col">Slabs (Quantity)</th>
+                                                                    <th scope="col">Price per API Call($)</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr th:each="slab,i : ${daasData.productSlab.productSlabDetailList}">
+                                                                    <td th:text="${i.index+1}"></td>
+                                                                    <td th:text="${slab.slabLowerLimit}+'-'+${slab.slabUpperLimit}"></td>
+                                                                    <td th:text="${slab.slabRate}"></td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </font>
+                                                    </div>
+
+                                                </div>
+                                            </li>
+                                            <li class="col-md-4">
+                                                <br/><br/><br/>
+                                                <br/>
+                                                <form th:id="cartForm+${daasDataStat.index}"
+                                                      th:action="@{'/apiaddtocart/'+${daasData.id}}" method="post">
+                                                    <div>
+                                                        <input type="number"
+                                                               value="10"
+                                                               class="form-control  minicolors-input"
+                                                               id="productquantity"
+                                                               onchange="if($(this).val()>0) { document.getElementById('btn').removeAttribute('disabled'); }"
+                                                               placeholder="Quantity" name="productquantity"
+                                                               style="width: 100%;">
+                                                    </div>
+                                                    <br/>
+                                                    <div>
+                                                        <!--<a th:href="@{'/login'}" id="btn"
+                                                           class="btn btn-primary"
+                                                           style="width: 100%"
+                                                        >Add To Cart
+                                                            &lt;!&ndash; <i class="icon ereaders-shopping-bag"></i>&ndash;&gt;</a>-->
+                                                        <input type="submit" value="Add to Cart"
+                                                               class="btn btn-primary"
+                                                               style="width: 100%;"
+                                                               name="addtocartapiAddToCart">
+                                                    </div>
+                                                </form>
+
+                                            </li>
+                                        </ul>
+                                        <br>
+
+
+                                        <ul class="row" th:each="daasData : ${daasapilist}"
+                                            style="border: 1px solid #ececec; padding: 20px 20px 0px 20px;"
+                                            th:object="${addApitoCart}" sec:authorize="isAuthenticated()">
+
+                                            <li class="col-md-8"
+                                                style="list-style: none;">
+                                                <figure>
+                                                    <!--<span>sale</span>-->
+                                                    <!--<a href="shop-detail.html">-->
+                                                    <img
+                                                            style="width: 267px; height: 270px;"
+                                                            th:if="${@serviceUtil.isThumbnailNull(daasData) == true}"
+                                                            th:src="@{/front/images/product_img_default_new.png}"
+                                                            alt="">
+                                                    <img
+                                                            style="width: 267px; height: 270px;"
+                                                            th:if="${@serviceUtil.isThumbnailNull(daasData) == false}"
+                                                            th:src="@{${'/daas/downloadFile/' + daasData.productId + '/' + daasData.productThumbnailName}}"
+                                                            alt="">
+                                                    <!--</a>-->
+                                                    <figcaption>
+                                                        <!--NOt Applicable for API product-->
+                                                        <!--                                                        <a href="#" class="icon ereaders-link" data-toggle="tooltip"
+                                                                                                                   title="Add To Cart"></a>-->
+                                                        <!--<a href="#" class="icon ereaders-add" data-toggle="tooltip"
+                                                           title="Add To Wishlist"></a>-->
+                                                        <a th:attr="data-url='/moreinfo/api/' + ${daasData.id}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
+                                                           href="javascript:void(0);"
+                                                           class="icon ereaders-idea"
+                                                           data-toggle="tooltip"
+                                                           title="More Info"></a>
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="ereaders-shop-list-text">
+                                                    <h2 th:text="${daasData.productName}"/>
+                                                    <br>
+                                                    <!--<span th:text="${'$' + daasData.productPrice}"/>-->
+                                                    <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),20)}"/>
+                                                    <a th:attr="data-url='/moreinfo/api/' + ${daasData.id}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
+                                                       href="javascript:void(0);" class="readmore">read more</a>
+                                                    <br><br>
+
+                                                    <div class="table-wrapper-scroll-y my-custom-scrollbar"
+                                                         style="height: 150px; overflow-x: auto;">
+                                                        <font size="1">
+                                                            <div>Product Pricing</div>
+                                                            <table id="productSlab" class="display"
+                                                                   style="width: 100%;">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th scope="col">#</th>
+                                                                    <th scope="col">Slabs (Quantity)</th>
+                                                                    <th scope="col">Price per API Call($)</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr th:each="slab,i : ${daasData.productSlab.productSlabDetailList}">
+                                                                    <td th:text="${i.index+1}"></td>
+                                                                    <td th:text="${slab.slabLowerLimit}+'-'+${slab.slabUpperLimit}"></td>
+                                                                    <td th:text="${slab.slabRate}"></td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </font>
+                                                    </div>
+
+                                                </div>
+                                            </li>
+                                            <li class="col-md-4">
+                                                <br/><br/><br/>
+                                                <!--                                                <div>
+                                                                                                    <label class="form-control  minicolors-input" id="totalPrice"
+
+                                                                                                           placeholder="Total Price" readonly>Total Price</label>
+                                                                                                </div>-->
+
+                                                <br/>
+
+
+                                                <form th:id="cartForm+${daasDataStat.index}"
+                                                      name="formAddToCart"
+                                                      onsubmit="submitTheForm();"
+                                                      th:action="@{'/apiaddtocart/'+${daasData.id}}" method="post">
+                                                    <div>
+                                                        <input type="number"
+                                                               value="10"
+                                                               class="form-control  minicolors-input"
+                                                               style="width: 100%;"
+                                                               id="productquantity"
+                                                               placeholder="Quantity" name="productquantity">
+                                                    </div>
+                                                    <br/>
+                                                    <div>
+                                                        <input type="submit" value="Add to Cart"
+                                                               class="btn btn-primary"
+                                                               style="width: 100%;"
+                                                               name="addtocartapiAddToCart">
+                                                    </div>
+                                                </form>
+
+                                            </li>
+
+                                            <!--<li class="col-md-12">
+                                                <figure>
+                                                    <span>sale</span>
+                                                    <a href="shop-detail.html"><img
+                                                            th:src="@{/front/extra-images/shop-list-img1.jpg}"
+                                                            alt=""></a>
+                                                    <figcaption>
+                                                        <a href="#" class="icon ereaders-link" data-toggle="tooltip"
+                                                           title="Add To Cart"></a>
+                                                        <a href="#" class="icon ereaders-heart" data-toggle="tooltip"
+                                                           title="Add To Wishlist"></a>
+                                                        <a href="#" class="icon ereaders-reload" data-toggle="tooltip"
+                                                           title="More Info"></a>
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="ereaders-shop-list-text">
+                                                    <h2><a href="shop-detail.html">Cover Book MockUp</a></h2>
+                                                    <span>$200.00</span>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+                                                        accumsan si amet risus sed auctor. Ut non imperdiet quam. Nullam
+                                                        sed lacus ut mi ornare consectetur id sed urna. Praesent
+                                                        vestibulum eget ante nec semper.Ut ulla mcorper sodales tortor
+                                                        vel mattis.</p>
+                                                    <a href="event-detail.html"
+                                                       class="ereaders-simple-btn ereaders-bgcolor">Add To Cart <i
+                                                            class="icon ereaders-shopping-bag"></i></a>
+                                                </div>
+                                            </li>
+
+                                            <li class="col-md-12">
+                                                <figure>
+                                                    <span>sale</span>
+                                                    <a href="shop-detail.html"><img
+                                                            th:src="@{/front/extra-images/shop-list-img1.jpg}"
+                                                            alt=""></a>
+                                                    <figcaption>
+                                                        <a href="#" class="icon ereaders-link" data-toggle="tooltip"
+                                                           title="Add To Cart"></a>
+                                                        <a href="#" class="icon ereaders-heart" data-toggle="tooltip"
+                                                           title="Add To Wishlist"></a>
+                                                        <a href="#" class="icon ereaders-reload" data-toggle="tooltip"
+                                                           title="More Info"></a>
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="ereaders-shop-list-text">
+                                                    <h2><a href="shop-detail.html">Cover Book MockUp</a></h2>
+                                                    <span>$200.00</span>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+                                                        accumsan si amet risus sed auctor. Ut non imperdiet quam. Nullam
+                                                        sed lacus ut mi ornare consectetur id sed urna. Praesent
+                                                        vestibulum eget ante nec semper.Ut ulla mcorper sodales tortor
+                                                        vel mattis.</p>
+                                                    <a href="event-detail.html"
+                                                       class="ereaders-simple-btn ereaders-bgcolor">Add To Cart <i
+                                                            class="icon ereaders-shopping-bag"></i></a>
+                                                </div>
+                                            </li>-->
+
+                                        </ul>
+                                        <br>
+                                    </div>
+                                    <!--// Pagination \\****************************************************************-->
+
+                                    <div class="ereaders-pagination">
+                                        <ul class="page-numbers">
+                                            <li th:if="${daasapilist.hasPrevious()}"><a class="previous page-numbers"
+                                                                                        th:href="@{${pagingUrl}(size=${daasapilist.size}, page=${daasapilist.number-1})}"
+                                            ><span aria-label="Next"><i class="icon ereaders-arrow-point-to-right"></i></span></a>
+                                            </li>
+                                            <li class="page-numbers" th:if="${daasapilist.totalPages>0}"
+                                                th:each="pageNumber : ${pageNumbers}">
+                                                <a th:class="${pageNumber==daasapilist.number + 1} ? active"
+                                                   th:th:text="${pageNumber}"
+                                                   th:href="@{${pagingUrl}(size=${daasapilist.size}, page=${pageNumber-1})}"
+                                                ></a>
+                                            </li>
+
+
+                                            <li th:if="${daasapilist.hasNext()}"><a class="next page-numbers"
+                                                                                    th:href="@{${pagingUrl}(size=${daasapilist.size}, page=${daasapilist.number+1})}"
+                                            ><span aria-label="Next"><i class="icon ereaders-arrow-point-to-right"></i></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+
+                                    <!--// Pagination \\-->
+                                </div>
+                                <!--
+                                                                <div role="tabpanel" class="tab-pane" id="profile">
+                                                                    <div class="ereaders-shop ereaders-shop-grid">
+                                                                        <ul class="row">
+                                                                            <li class="col-md-4">
+                                                                                <figure>
+                                                                                    <span>sale</span>
+                                                                                    <a href="shop-detail.html"><img
+                                                                                            src="extra-images/shop-grid-img1.jpg" alt=""></a>
+                                                                                    <figcaption>
+                                                                                        <a href="#" class="icon ereaders-shopping-bag"
+                                                                                           data-toggle="tooltip" title="Add To Cart"></a>
+                                                                                        <a href="#" class="icon ereaders-heart" data-toggle="tooltip"
+                                                                                           title="Add To Wishlist"></a>
+                                                                                        <a href="#" class="icon ereaders-reload" data-toggle="tooltip"
+                                                                                           title="Reload"></a>
+                                                                                    </figcaption>
+                                                                                </figure>
+                                                                                <div class="ereaders-shop-grid-text">
+                                                                                    <h2><a href="shop-detail.html">Cover Book MockUp</a></h2>
+                                                                                    <span>$200.00 <del>$300.00</del></span>
+                                                                                    <div class="star-rating"><span class="star-rating-box"
+                                                                                                                   style="width:60%"></span></div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="col-md-4">
+                                                                                <figure>
+                                                                                    <a href="shop-detail.html"><img
+                                                                                            src="extra-images/shop-grid-img7.jpg" alt=""></a>
+                                                                                    <figcaption>
+                                                                                        <a href="#" class="icon ereaders-shopping-bag"
+                                                                                           data-toggle="tooltip" title="Add To Cart"></a>
+                                                                                        <a href="#" class="icon ereaders-heart" data-toggle="tooltip"
+                                                                                           title="Add To Wishlist"></a>
+                                                                                        <a href="#" class="icon ereaders-reload" data-toggle="tooltip"
+                                                                                           title="Reload"></a>
+                                                                                    </figcaption>
+                                                                                </figure>
+                                                                                <div class="ereaders-shop-grid-text">
+                                                                                    <h2><a href="shop-detail.html">Cover Book MockUp</a></h2>
+                                                                                    <span>$200.00 <del>$300.00</del></span>
+                                                                                    <div class="star-rating"><span class="star-rating-box"
+                                                                                                                   style="width:60%"></span></div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="col-md-4">
+                                                                                <figure>
+                                                                                    <span>sale</span>
+                                                                                    <a href="shop-detail.html"><img
+                                                                                            src="extra-images/shop-grid-img2.jpg" alt=""></a>
+                                                                                    <figcaption>
+                                                                                        <a href="#" class="icon ereaders-shopping-bag"
+                                                                                           data-toggle="tooltip" title="Add To Cart"></a>
+                                                                                        <a href="#" class="icon ereaders-heart" data-toggle="tooltip"
+                                                                                           title="Add To Wishlist"></a>
+                                                                                        <a href="#" class="icon ereaders-reload" data-toggle="tooltip"
+                                                                                           title="Reload"></a>
+                                                                                    </figcaption>
+                                                                                </figure>
+                                                                                <div class="ereaders-shop-grid-text">
+                                                                                    <h2><a href="shop-detail.html">Cover Book MockUp</a></h2>
+                                                                                    <span>$200.00 <del>$300.00</del></span>
+                                                                                    <div class="star-rating"><span class="star-rating-box"
+                                                                                                                   style="width:60%"></span></div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="col-md-4">
+                                                                                <figure>
+                                                                                    <a href="shop-detail.html"><img
+                                                                                            src="extra-images/shop-grid-img3.jpg" alt=""></a>
+                                                                                    <figcaption>
+                                                                                        <a href="#" class="icon ereaders-shopping-bag"
+                                                                                           data-toggle="tooltip" title="Add To Cart"></a>
+                                                                                        <a href="#" class="icon ereaders-heart" data-toggle="tooltip"
+                                                                                           title="Add To Wishlist"></a>
+                                                                                        <a href="#" class="icon ereaders-reload" data-toggle="tooltip"
+                                                                                           title="Reload"></a>
+                                                                                    </figcaption>
+                                                                                </figure>
+                                                                                <div class="ereaders-shop-grid-text">
+                                                                                    <h2><a href="shop-detail.html">Cover Book MockUp</a></h2>
+                                                                                    <span>$200.00 <del>$300.00</del></span>
+                                                                                    <div class="star-rating"><span class="star-rating-box"
+                                                                                                                   style="width:60%"></span></div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="col-md-4">
+                                                                                <figure>
+                                                                                    <span>sale</span>
+                                                                                    <a href="shop-detail.html"><img
+                                                                                            src="extra-images/shop-grid-img4.jpg" alt=""></a>
+                                                                                    <figcaption>
+                                                                                        <a href="#" class="icon ereaders-shopping-bag"
+                                                                                           data-toggle="tooltip" title="Add To Cart"></a>
+                                                                                        <a href="#" class="icon ereaders-heart" data-toggle="tooltip"
+                                                                                           title="Add To Wishlist"></a>
+                                                                                        <a href="#" class="icon ereaders-reload" data-toggle="tooltip"
+                                                                                           title="Reload"></a>
+                                                                                    </figcaption>
+                                                                                </figure>
+                                                                                <div class="ereaders-shop-grid-text">
+                                                                                    <h2><a href="shop-detail.html">Cover Book MockUp</a></h2>
+                                                                                    <span>$200.00 <del>$300.00</del></span>
+                                                                                    <div class="star-rating"><span class="star-rating-box"
+                                                                                                                   style="width:60%"></span></div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="col-md-4">
+                                                                                <figure>
+                                                                                    <a href="shop-detail.html"><img
+                                                                                            src="extra-images/shop-grid-img5.jpg" alt=""></a>
+                                                                                    <figcaption>
+                                                                                        <a href="#" class="icon ereaders-shopping-bag"
+                                                                                           data-toggle="tooltip" title="Add To Cart"></a>
+                                                                                        <a href="#" class="icon ereaders-heart" data-toggle="tooltip"
+                                                                                           title="Add To Wishlist"></a>
+                                                                                        <a href="#" class="icon ereaders-reload" data-toggle="tooltip"
+                                                                                           title="Reload"></a>
+                                                                                    </figcaption>
+                                                                                </figure>
+                                                                                <div class="ereaders-shop-grid-text">
+                                                                                    <h2><a href="shop-detail.html">Cover Book MockUp</a></h2>
+                                                                                    <span>$200.00 <del>$300.00</del></span>
+                                                                                    <div class="star-rating"><span class="star-rating-box"
+                                                                                                                   style="width:60%"></span></div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="col-md-4">
+                                                                                <figure>
+                                                                                    <a href="shop-detail.html"><img
+                                                                                            src="extra-images/shop-grid-img6.jpg" alt=""></a>
+                                                                                    <figcaption>
+                                                                                        <a href="#" class="icon ereaders-shopping-bag"
+                                                                                           data-toggle="tooltip" title="Add To Cart"></a>
+                                                                                        <a href="#" class="icon ereaders-heart" data-toggle="tooltip"
+                                                                                           title="Add To Wishlist"></a>
+                                                                                        <a href="#" class="icon ereaders-reload" data-toggle="tooltip"
+                                                                                           title="Reload"></a>
+                                                                                    </figcaption>
+                                                                                </figure>
+                                                                                <div class="ereaders-shop-grid-text">
+                                                                                    <h2><a href="shop-detail.html">Cover Book MockUp</a></h2>
+                                                                                    <span>$200.00 <del>$300.00</del></span>
+                                                                                    <div class="star-rating"><span class="star-rating-box"
+                                                                                                                   style="width:60%"></span></div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="col-md-4">
+                                                                                <figure>
+                                                                                    <span>sale</span>
+                                                                                    <a href="shop-detail.html"><img
+                                                                                            src="extra-images/shop-grid-img7.jpg" alt=""></a>
+                                                                                    <figcaption>
+                                                                                        <a href="#" class="icon ereaders-shopping-bag"
+                                                                                           data-toggle="tooltip" title="Add To Cart"></a>
+                                                                                        <a href="#" class="icon ereaders-heart" data-toggle="tooltip"
+                                                                                           title="Add To Wishlist"></a>
+                                                                                        <a href="#" class="icon ereaders-reload" data-toggle="tooltip"
+                                                                                           title="Reload"></a>
+                                                                                    </figcaption>
+                                                                                </figure>
+                                                                                <div class="ereaders-shop-grid-text">
+                                                                                    <h2><a href="shop-detail.html">Cover Book MockUp</a></h2>
+                                                                                    <span>$200.00 <del>$300.00</del></span>
+                                                                                    <div class="star-rating"><span class="star-rating-box"
+                                                                                                                   style="width:60%"></span></div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="col-md-4">
+                                                                                <figure>
+                                                                                    <span>sale</span>
+                                                                                    <a href="shop-detail.html"><img
+                                                                                            src="extra-images/shop-grid-img8.jpg" alt=""></a>
+                                                                                    <figcaption>
+                                                                                        <a href="#" class="icon ereaders-shopping-bag"
+                                                                                           data-toggle="tooltip" title="Add To Cart"></a>
+                                                                                        <a href="#" class="icon ereaders-heart" data-toggle="tooltip"
+                                                                                           title="Add To Wishlist"></a>
+                                                                                        <a href="#" class="icon ereaders-reload" data-toggle="tooltip"
+                                                                                           title="Reload"></a>
+                                                                                    </figcaption>
+                                                                                </figure>
+                                                                                <div class="ereaders-shop-grid-text">
+                                                                                    <h2><a href="shop-detail.html">Cover Book MockUp</a></h2>
+                                                                                    <span>$200.00 <del>$300.00</del></span>
+                                                                                    <div class="star-rating"><span class="star-rating-box"
+                                                                                                                   style="width:60%"></span></div>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    &lt;!&ndash;// Pagination \\&ndash;&gt;
+                                                                    <div class="ereaders-pagination">
+                                                                        <ul class="page-numbers">
+                                                                            <li><a class="previous page-numbers" href="404.html"><span
+                                                                                    aria-label="Next"><i class="icon ereaders-arrow-point-to-right"></i></span></a>
+                                                                            </li>
+                                                                            <li><span class="page-numbers current">01</span></li>
+                                                                            <li><a class="page-numbers" href="404.html">02</a></li>
+                                                                            <li><a class="page-numbers" href="404.html">03</a></li>
+                                                                            <li><a class="page-numbers" href="404.html">04</a></li>
+                                                                            <li><a class="next page-numbers" href="404.html"><span aria-label="Next"><i
+                                                                                    class="icon ereaders-arrow-point-to-right"></i></span></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                -->
+                                <!--// Pagination \\-->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--// Main Section \\-->
+
+    </div>
+    <!--// Main Content \\-->
+
+    <div class="clearfix"></div>
+
+    </div>
+    <!--// Main Wrapper \\-->
+
+    <!-- jQuery (necessary for JavaScript plugins) -->
+    <script type="text/javascript" src="script/jquery.js"></script>
+    <script type="text/javascript" src="script/jquery-ui.js"></script>
+    <script type="text/javascript" src="script/bootstrap.min.js"></script>
+    <script type="text/javascript" src="script/slick.slider.min.js"></script>
+    <script type="text/javascript" src="script/fancybox.pack.js"></script>
+    <script type="text/javascript" src="script/isotope.min.js"></script>
+    <script type="text/javascript" src="script/progressbar.js"></script>
+    <script type="text/javascript" src="script/jquery.countdown.min.js"></script>
+    <script type="text/javascript" src="script/circle-chart.js"></script>
+    <script type="text/javascript" src="script/numscroller.js"></script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs_m2ywm-bE8z9YM_WmtPaIQNIosN4Dxo&callback=initMap"></script>
+    <script type="text/javascript" src="script/functions.js"></script>
+
+    <script type="text/javascript">
+        document.getElementById("productQuantity").addEventListener("keyup", function () {
+            var productqty = document.getElementById('productquantity').value;
+            if (productqty > 0) {
+                document.getElementById('addtocartapi').removeAttribute("disabled");
+            } else {
+                document.getElementById('addtocartapi').setAttribute("disabled", null);
+            }
+        });
+
+    </script>
+
+    <script>
+
+        function submitTheForm() {
+            document.formAddToCart.addtocartapiAddToCart.value = 'Adding . . .';
+            return true;
+        }
+
+    </script>
+
+</th:block>
+</body>
+
+
+</html>

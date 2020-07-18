@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<form th:action="@{'/corporate/charge'}" method='POST' id='checkout-form'>
+    <input type='hidden' th:value='${amount}' name='amount'/>
+    <!-- NOTE: data-key/data-amount/data-currency will be rendered by Thymeleaf -->
+    <input type="hidden" name="type" th:value="${type}">
+    <input type="hidden" name="totalUsers" th:value="${totalUsers}">
+    <script
+            src="https://checkout.stripe.com/checkout.js"
+            class="stripe-button"
+            th:attr="data-key=${@environment.getProperty('stripe.public.key')}, data-amount=${amount}, data-currency=${currency},
+                                                    data-name='OCR Publications',
+                                                    data-description='OCR course checkout',data-label='Pay Subscription',
+                                                    data-image
+                                                            ='http://www.baeldung.com/wp-content/themes/baeldung/favicon/android-chrome-192x192.png',
+                                                    data-locale='auto',
+                                                    data-users=${totalUsers},
+                                                    data-type=${type},
+                                                    data-zip-code='false'">
+    </script>
+</form>

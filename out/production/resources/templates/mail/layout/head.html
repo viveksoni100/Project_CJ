@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <th:block th:fragment="mailHead">
+        <head>
+            <title>Email</title>
+
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+            <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css' />
+            <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet" />
+
+
+            <!-- use the font -->
+            <style>
+                body {
+                    font-family: Arial;
+                    font-size: 48px;
+                }
+
+                .mailicon {
+                    position: absolute;
+                    margin-top: -80px;
+                }
+                h4{
+                    color:#1097dd;
+                }
+                .title{
+                    color: #007bff;
+                }
+                .btn{
+                    padding: 8px 24px !important;
+                    font-size: 13px !important;
+                    border-radius: 30px  !important;
+                    height: auto !important;
+                    color: #fff !important;
+                    background-color: #007bff !important;
+                    text-decoration: none !important;
+                }
+
+            </style>
+        </head>
+
+    </th:block>

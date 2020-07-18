@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/main}" lang="en">
+
+<th:block layout:fragment="subheader">
+    <div class="ereaders-subheader">
+        <div class="ereaders-subheader-text">
+            <span class="ereaders-subheader-transparent"></span>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Message Sent</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="ereaders-breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul>
+                            <li><a href="index.html">Homepage</a></li>
+                            <li class="active">Login</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+    <div>
+        <script>
+            $(document).ready(function () {
+                $('#ereaders-footer').css({
+                    "bottom": "0",
+                    "position": "fixed"
+                });
+            });
+        </script>
+    </div>
+</th:block>
+
+<body style="color: #000;">
+
+<th:block layout:fragment="content">
+
+    <!--// Main Content \\-->
+    <div class="ereaders-main-content">
+
+        <!--// Main Section \\-->
+        <div class="ereaders-main-section">
+            <div class="container">
+                <div class="row">
+                    <center>
+                        <img th:src="@{/front/images/sendMSG.jpg}" alt="Message Sent" style="width: 35%">
+                    </center>
+                </div>
+            </div>
+        </div>
+        <!--// Main Section \\-->
+    </div>
+    <!--// Main Content \\-->
+
+</th:block>
+
+</body>
+
+</html>

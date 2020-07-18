@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block layout:fragment="content">
+    <!--// Main Content \\-->
+
+    <link rel="stylesheet" th:href="@{/front/css/loader.css}">
+
+    <script src="https://js.stripe.com/v3"></script>
+    <script th:if="${sessionId != '' && sessionId != null}">
+        var stripe = Stripe('[[${stripePublicKey}]]');
+        stripe.redirectToCheckout({
+            sessionId: "[[${sessionId.id}]]"
+        }).then(function (result) {
+            console.log("result" + result);
+        });
+    </script>
+
+    <center>
+    <!--loader-->
+    <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+    </svg>
+    </center>
+
+    <!--// Main Content \\-->
+</th:block>
+
+</html>

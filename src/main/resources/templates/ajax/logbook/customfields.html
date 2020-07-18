@@ -1,0 +1,140 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="row">
+
+    <div class="col-md-12">
+        <div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+        <form th:action="@{/register}" th:object="${logbookCustomField}" method="post" style="width: 99%"
+              th:if="${!success}">
+            <div class="form-group">
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-12">
+
+                            <input type="text" th:field="*{name}" class="form-control" id="name"
+                                   th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
+                                   placeholder="Name*"
+                                   autofocus="autofocus"><i
+                                class="fas fa-exclamation-triangle"></i>
+
+                            <p th:if="${#fields.hasErrors('name')}" class="label text-danger "
+                               th:errors="*{name}"></p>
+
+
+                        </div>
+
+                        <div class="col-md-12" style="margin-top:10px;">
+
+                            <select th:field="*{type}" id="type" class="selectpicker">
+                                <option th:each="t : ${T(com.easelobby.entities.enums.CustomFieldType).values()}"
+                                        th:value="${t}"
+                                        th:text="${t}"
+                                ></option>
+                            </select>
+                            <i class="fas fa-exclamation-triangle"></i>
+
+
+                        </div>
+
+                        <div class="col-md-12" style="margin-top:10px;"
+                             th:classappend="${(logbookCustomField.type.value!='Yes/No') ? '' : 'hide'}"
+                        >
+
+                            <input type="text" id="defaultValue" class="form-control" th:field="*{defaultValue}"
+                                   placeholder="Default value"
+                                   th:classappend="${#fields.hasErrors('defaultValue') ? 'is-invalid' : ''}"
+                            ><i
+                                class="fas fa-exclamation-triangle"></i>
+
+                            <p th:if="${#fields.hasErrors('defaultValue')}" class="label text-danger "
+                               th:errors="*{defaultValue}"></p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group yesno "
+                     th:classappend="${(logbookCustomField.type.value=='Yes/No') ? '' : 'hide'}">
+                    <label>Default value</label>
+                    <div
+                            th:classappend="${#fields.hasErrors('defaultValue') ? 'is-invalid' : ''}"
+                    >
+                        <div class="form-group">
+                            <div class="checkbox checkbox-primary">
+                                <input type="radio" th:field="*{defaultValue}"
+                                       id="defaultValue1" value="Yes">
+                                <label for="defaultValue1">Yes
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox checkbox-primary">
+                                <input type="radio" th:field="*{defaultValue}"
+                                       id="defaultValue2" value="No">
+                                <label for="defaultValue2">No
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox checkbox-primary">
+                                <input type="radio" th:field="*{defaultValue}"
+                                       id="defaultValue3" value="None">
+                                <label for="defaultValue3">None
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div th:if="${#fields.hasErrors('defaultValue')}" class="label text-danger "
+                         th:errors="*{defaultValue}"></div>
+                </div>
+
+                <div class="form-group multiplechoice "
+                     th:classappend="${(logbookCustomField.type.value=='Multiple Choice') ? '' : 'hide'}">
+                    <div class="form-group">
+                        <label>Values </label>
+                        <textarea id="multichoicedefault" class="form-control" placeholder="Comma separated"
+                                  th:field="*{fieldValues}">
+
+                        </textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group" style="border-top:1px solid lightgray; margin-top :10px;padding-top:10px;">
+                <div class="checkbox checkbox-primary">
+                    <input type="checkbox" th:field="*{required}"
+                           id="required" value="5">
+                    <label for="required">Required ?</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox checkbox-primary">
+                    <input type="checkbox" th:field="*{saveInVisitorProfile}"
+                           id="saveInVisitorProfile" value="5">
+                    <label for="saveInVisitorProfile">Save to profile ?</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox checkbox-primary">
+                    <input type="checkbox" th:field="*{active}"
+                           id="active" value="5">
+                    <label for="active">Active ? </label>
+                </div>
+            </div>
+
+
+
+    </form>
+</div>
+
+
+<input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}">
+
+<script type="text/javascript">
+
+
+
+</script>
+
+</div>

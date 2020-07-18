@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                Visitors list
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item"
+                        th:if="${visitVisitors!=null && visitVisitors.size() > 0}"
+                        th:each="visitVisitor : ${visitVisitors}">
+                        <span style="font-weight: bold;" th:text="${visitVisitor.visitor.firstName + ' ' + visitVisitor.visitor.lastName}"></span><br/>
+                        <span th:text="${visitVisitor.visitor.address1 + ' ' + visitVisitor.visitor.address2 + ' ' + visitVisitor.visitor.address3}"></span><br/>
+                        <span th:text="${visitVisitor.visitor.city + ' ' + visitVisitor.visitor.state + ' ' + visitVisitor.visitor.country.getCode2()}"></span><br/>
+                    </li>
+                    <li class="list-group-item"
+                        th:if="${visitVisitors==null || visitVisitors.size()<=0}">
+                        <div class="alert alert-danger">
+                            There are no visitor available for this visit
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</div>

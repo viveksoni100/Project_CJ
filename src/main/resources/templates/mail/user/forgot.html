@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Email Verification</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+    <!-- build:maincss -->
+    <!--<link href="css/style.css" rel="stylesheet" type="text/css" />-->
+
+    <!-- endbuild -->
+    <!--[if mso]>
+    <style>
+        table { border-collapse: collapse; }
+        .o_col { float: left; }
+    </style>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+</head>
+<body class="o_body o_bg-light"
+      style="background-color: #dbe5ea;">
+<!-- preview-text -->
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <!--<td class="o_hide" align="center">Email Summary (Hidden)</td>-->
+    </tr>
+    </tbody>
+</table>
+<!-- header -->
+<table width="60%" cellspacing="0" cellpadding="0" border="0" role="presentation" style="margin-left: 20%">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs o_pt-lg o_xs-pt-xs"
+            style="background-color: #dbe5ea; padding-left: 8px; padding-right: 8px; padding-top: 32px; padding-top: 8px !important;" align="center">
+            <!--[if mso]><table width="800" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]-->
+            <table class="o_block-lg"
+                   style="max-width: 800px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-dark o_px o_py-md o_br-t o_sans o_text"
+                        style="background-color: #06469E; padding-left: 16px; padding-right: 16px; padding-top: 24px; padding-bottom: 24px; border-radius: 4px 4px 0px 0px; font-family: 'Roboto', sans-serif !important; font-size: 16px; line-height: 24px;" align="center">
+                        <p style="width: 35%; float: right;"><a class="o_text-white"
+                              style="color: #ffffff; text-decoration: none; font-size: 25px;" href="#">Global Trade Data
+                            <!--<img src="/front/images/global_trade_data_logo.png" width="136" height="36" alt="GTD Logo" style="max-width: 136px;">-->
+                        </a></p>
+                        <img data-th-src="|cid:${daasLogo}|" style="width: 150px; float: left;" />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- hero-icon-lines -->
+<table width="60%" cellspacing="0" cellpadding="0" border="0" role="presentation" style="margin-left: 20%">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs"
+            style="background-color: #dbe5ea; padding-left: 8px; padding-right: 8px;" align="center">
+            <!--[if mso]><table width="800" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]-->
+            <table class="o_block-lg"
+                   style="max-width: 800px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-ultra_light o_px-md o_py-xl o_xs-py-md"
+                        style="background-color: #ebf5fa; padding-left: 24px; padding-right: 24px; padding-top: 64px; padding-bottom: 64px; padding-top: 24px !important; padding-bottom: 24px !important;" align="center">
+                        <!--[if mso]><table width="584" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td align="center"><![endif]-->
+                        <div class="o_col-6s o_center o_sans o_text-md o_text-light"
+                             style="max-width: 584px; text-align: center; font-family: 'Roboto', sans-serif !important; font-size: 19px; line-height: 28px; color: #82899a;">
+                            <table class="o_center"
+                                   style="text-align: center; margin-left: 38%;" role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <!--email div-->
+                                <tbody>
+                                <tr>
+                                    <td class="o_bb-primary"
+                                        style="border-bottom: 1px solid #126de5;" height="40" width="32">&nbsp; </td>
+                                    <td rowspan="2" class="o_sans o_text o_text-secondary o_px o_py"
+                                        style="font-family: 'Roboto', sans-serif !important; font-size: 12px; line-height: 19px; color: #424651; padding-left: 16px; padding-right: 16px; padding-top: 16px; padding-bottom: 16px;" align="center">
+                                        <!--<img src="images/email-48-primary.png" width="48" height="48" alt="" style="max-width: 48px;">-->
+                                        <p style="padding: 0px 0px 0px 0px; font-size: 50px;">🔑</p>
+                                    </td>
+                                    <td class="o_bb-primary"
+                                        style="border-bottom: 1px solid #126de5;"
+                                        height="40" width="32">&nbsp; </td>
+                                </tr>
+                                <tr>
+                                    <td height="40">&nbsp; </td>
+                                    <td height="40">&nbsp; </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 8px; line-height: 8px; height: 8px;">&nbsp; </td>
+                                    <td style="font-size: 8px; line-height: 8px; height: 8px;">&nbsp; </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p class="o_heading o_text-dark o_mb-xxs"
+                               style="font-size: 30px; line-height: 39px; font-weight: bold; margin-top: 0px; color: #242b3d; margin-bottom: 4px;">Forgot Your Password?</p>
+                            <p style="font-size: 20px; line-height: 39px;  margin-top: 0px; margin-bottom: 15px;">
+                                Click the below given link to reset your password</p>
+                            <!--<p>Cantankerously some hence this hey slept mastodon</p>-->
+                        </div>
+                        <!--[if mso]></td></tr></table><![endif]-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- spacer -->
+<table width="60%" cellspacing="0" cellpadding="0" border="0" role="presentation" style="margin-left: 20%">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs"
+            style="background-color: #dbe5ea; padding-left: 8px; padding-right: 8px;" align="center">
+            <!--[if mso]><table width="800" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]-->
+            <table class="o_block-lg"
+                   style="max-width: 800px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-white" style="font-size: 24px; line-height: 24px; height: 24px; background-color: #ffffff;">&nbsp; </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- label-xs -->
+<table width="60%" cellspacing="0" cellpadding="0" border="0" role="presentation" style="margin-left: 20%">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs"
+            style="background-color: #dbe5ea; padding-left: 8px; padding-right: 8px;" align="center">
+            <!--[if mso]><table width="800" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]-->
+            <table class="o_block-lg"
+                   style="max-width: 800px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-white o_px-md o_py o_sans o_text-xs o_text-light"
+                        style="background-color: #ffffff; padding-left: 24px; padding-right: 24px; padding-top: 16px; padding-bottom: 16px; font-family: 'Roboto', sans-serif !important; font-size: 14px; line-height: 21px; color: #82899a;" align="center">
+                        <p class="o_mb" style="margin-bottom: 16px;"><strong th:text="${'Hi ' + firstName + ','}"></strong></p>
+                        <!--<p class="o_mb" style="margin-bottom: 16px;"><strong>username</strong></p>-->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                            <tr>
+                                <!--<td width="284" class="o_bg-ultra_light o_br o_text-xs o_sans o_px-xs o_py"
+                                    style="background-color: #ebf5fa; border-radius: 4px; font-size: 14px; line-height: 21px; font-family: 'Roboto', sans-serif !important; padding-left: 8px; padding-right: 8px; border-radius: 4px;" align="center">
+                                    <p class="o_text-dark" style="color: #242b3d; border-radius: 5px;"><strong th:text="${email}"></strong></p>
+                                </td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- button-primary -->
+<table width="60%" cellspacing="0" cellpadding="0" border="0" role="presentation" style="margin-left: 20%">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs"
+            style="background-color: #dbe5ea; padding-left: 8px; padding-right: 8px;" align="center">
+            <!--[if mso]><table width="800" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]-->
+            <table class="o_block-lg"
+                   style="max-width: 800px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-white o_px-md o_py-xs"
+                        style="background-color: #ffffff; padding-left: 24px; padding-right: 24px; padding-top: 8px; padding-bottom: 8px;" align="center">
+                        <table align="center" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                            <tbody>
+                            <tr>
+                                <td width="300" height="50" class="o_btn o_bg-primary o_br o_heading o_text"
+                                    style="height: 3rem; border-radius: 4px; mso-padding-alt: 12px 24px; background-color: #126de5; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px;" align="center">
+                                    <a class="o_text-white"
+                                       style="display: block; padding: 12px 24px; mso-text-raise: 3px; color: #ffffff; text-decoration: none;"
+                                       th:href="${baseUrl}+'/forgot/password/token?token='+${verificationToken}">Reset My Password
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- spacer -->
+<table width="60%" cellspacing="0" cellpadding="0" border="0" role="presentation" style="margin-left: 20%">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs"
+            style="background-color: #dbe5ea; padding-left: 8px; padding-right: 8px;" align="center">
+            <!--[if mso]><table width="800" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]-->
+            <table class="o_block-lg"
+                   style="max-width: 800px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-white" style="font-size: 24px; line-height: 24px; height: 24px; background-color: #ffffff;">&nbsp; </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- content -->
+<table width="60%" cellspacing="0" cellpadding="0" border="0" role="presentation" style="margin-left: 20%">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs"
+            style="background-color: #dbe5ea; padding-left: 8px; padding-right: 8px; " align="center">
+            <!--[if mso]><table width="800" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]-->
+            <table class="o_block-lg"
+                   style="max-width: 800px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-white o_px-md o_py"
+                        style="background-color: #ffffff; padding-left: 24px; padding-right: 24px; padding-top: 16px; padding-bottom: 16px;" align="center">
+                        <!--[if mso]><table width="584" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td align="center"><![endif]-->
+                        <div class="o_col-6s o_sans o_text o_text-secondary o_center"
+                             style="max-width: 584px; font-family: 'Roboto', sans-serif !important; font-size: 16px; line-height: 24px; color: #424651; text-align: center;">
+                            <p>Welcome to Global Trade Data<br>We're glad you have chosen us as your Data Partner.</p>
+                        </div>
+                        <!--[if mso]></td></tr></table><![endif]-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- spacer-lg -->
+<table width="60%" cellspacing="0" cellpadding="0" border="0" role="presentation" style="margin-left: 20%">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs"
+            style="background-color: #dbe5ea; padding-left: 8px; padding-right: 8px;" align="center">
+            <!--[if mso]><table width="800" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]-->
+            <table class="o_block-lg"
+                   style="max-width: 800px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-white" style="font-size: 48px; line-height: 48px; height: 48px; background-color: #ffffff;">&nbsp; </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- footer-white -->
+<table width="60%" cellspacing="0" cellpadding="0" border="0" role="presentation" style="margin-left: 20%">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs o_pb-lg o_xs-pb-xs"
+            style="background-color: #dbe5ea; padding-left: 8px; padding-right: 8px; padding-bottom: 32px; padding-bottom: 8px !important;" align="center">
+            <!--[if mso]><table width="800" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]-->
+            <table class="o_block-lg"
+                   style="max-width: 800px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-white o_px-md o_py-lg o_bt-light o_br-b"
+                        style="background-color: #ffffff; padding-left: 24px; padding-right: 24px; padding-top: 32px; padding-bottom: 32px; border-top: 1px solid #d3dce0; border-radius: 0px 0px 4px 4px;" align="center">
+                        <!--[if mso]><table width="584" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td align="center"><![endif]-->
+                        <div class="o_col-6s o_sans o_text-xs o_text-light"
+                             style="max-width: 584px; font-family: 'Roboto', sans-serif !important; font-size: 14px; line-height: 21px; color: #82899a;">
+                            <!--<p class="o_mb" style="margin-bottom: 16px;"><a class="o_text-primary"  style="color: #126de5;" href="https://example.com/">
+                                <img src="/front/images/global_trade_data_logo.png" width="36" height="36" alt="SimpleApp" style="max-width: 36px;"></a></p>-->
+                            <p class="o_mb" style="margin-bottom: 16px;">© GlobalVox Inc</p>
+                            <p class="o_mb" style="margin-bottom: 16px;">
+                                7900 Westpark Drive,<br>
+                                Mclean, VA, USA 22102
+                            </p>
+                            <a style="color: #82899a; text-decoration: none;" href="#">www.globaltradesdata.com</a>
+
+                            <!--<div style="display: flex; width: 26%;">
+                                <a class="o_text-light o_underline" style="color: #82899a; text-decoration: none;" href="https://example.com/">Help Center</a>
+                                <span class="o_hide-xs" style="display: none !important; font-size: 0 !important; max-height: 0 !important; width: 0 !important; line-height: 0 !important; overflow: hidden !important; visibility: hidden !important; height: 0 !important;">&nbsp; • &nbsp;</span>
+                                <br class="o_hide-lg" style="display: none; font-size: 0; max-height: 0; width: 0; line-height: 0; overflow: hidden; mso-hide: all; visibility: hidden;">
+
+                                <a class="o_text-light o_underline" style="color: #82899a; text-decoration: none;" href="https://example.com/">&nbsp; • Preferences</a>
+                                <span class="o_hide-xs" style="display: none !important; font-size: 0 !important; max-height: 0 !important; width: 0 !important; line-height: 0 !important; overflow: hidden !important; visibility: hidden !important; height: 0 !important;">&nbsp; • &nbsp;</span>
+                                <br class="o_hide-lg" style="display: none; font-size: 0; max-height: 0; width: 0; line-height: 0; overflow: hidden; mso-hide: all; visibility: hidden;">
+                                <a class="o_text-light o_underline" style="color: #82899a; text-decoration: none;" href="https://example.com/">&nbsp; • Unsubscribe</a>
+                            </div>-->
+
+                            <!--<p style="display: flex; ">
+                                <a class="o_text-light o_underline" style="color: #82899a; text-decoration: none;" href="https://example.com/">Help Center</a>
+                                <span class="o_hide-xs" style="display: none !important; font-size: 0 !important; max-height: 0 !important; width: 0 !important; line-height: 0 !important; overflow: hidden !important; visibility: hidden !important; height: 0 !important;">&nbsp; • &nbsp;</span>
+                                <br class="o_hide-lg" style="display: none; font-size: 0; max-height: 0; width: 0; line-height: 0; overflow: hidden; mso-hide: all; visibility: hidden;">
+
+                                <a class="o_text-light o_underline" style="color: #82899a; text-decoration: none;" href="https://example.com/">&nbsp; • Preferences</a>
+                                <span class="o_hide-xs" style="display: none !important; font-size: 0 !important; max-height: 0 !important; width: 0 !important; line-height: 0 !important; overflow: hidden !important; visibility: hidden !important; height: 0 !important;">&nbsp; • &nbsp;</span>
+                                <br class="o_hide-lg" style="display: none; font-size: 0; max-height: 0; width: 0; line-height: 0; overflow: hidden; mso-hide: all; visibility: hidden;">
+                                <a class="o_text-light o_underline" style="color: #82899a; text-decoration: none;" href="https://example.com/">&nbsp; • Unsubscribe</a>
+                            </p>-->
+                        </div>
+                        <!--[if mso]></td></tr></table><![endif]-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+            <div class="o_hide-xs" style="font-size: 64px; line-height: 64px; height: 64px; display: none !important; font-size: 0 !important; max-height: 0 !important; width: 0 !important; line-height: 0 !important; overflow: hidden !important; visibility: hidden !important; height: 0 !important;">&nbsp; </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
+<!--Forget pass template-->
+<!--<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Account Password Reset</title>
+</head>
+<body class="o_body o_bg-light" style="margin-bottom: 4px; background-color: #dbe5ea;">
+&lt;!&ndash; preview-text &ndash;&gt;
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        &lt;!&ndash;<td class="o_hide" align="center">Email Summary (Hidden)</td>&ndash;&gt;
+    </tr>
+    </tbody>
+</table>
+&lt;!&ndash; header-white-link &ndash;&gt;
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs o_pt-lg o_xs-pt-xs" align="center">
+            &lt;!&ndash;[if mso]><table width="632" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]&ndash;&gt;
+            <table class="o_block"
+                   style="max-width: 632px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_re o_bg-white o_px o_pb-md o_br-t"
+                        style="border-radius: 4px 4px 0px 0px; padding-bottom: 24px; padding-left: 16px; padding-right: 16px; background-color: #ffffff; font-size: 0; vertical-align: top;" align="center">
+                        &lt;!&ndash;[if mso]><table cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td width="200" align="left" valign="top" style="padding:0px 8px;"><![endif]&ndash;&gt;
+                        <div class="o_col o_col-2"
+                        style="display: inline-block; vertical-align: top; max-width: 200px;">
+                            <div style="font-size: 24px; line-height: 24px; height: 24px;">&nbsp; </div>
+                            <div class="o_px-xs o_sans o_text o_left o_xs-center"
+                                 style="text-align: center; text-align: left; font-size: 16px; line-height: 24px; padding-left: 8px; padding-right: 8px; font-family: 'Roboto', sans-serif;">
+                                <p><a class="o_text-white"
+                                      style="color: #ffffff; text-decoration: none; font-size: 25px;" href="#">Global Trade Data
+                                    &lt;!&ndash;<img src="/front/images/global_trade_data_logo.png" width="136" height="36" alt="GTD Logo" style="max-width: 136px;">&ndash;&gt;
+                                </a></p>
+                            </div>
+                        </div>
+                        &lt;!&ndash;[if mso]></td><td width="400" align="right" valign="top" style="padding:0px 8px;"><![endif]&ndash;&gt;
+                        <div class="o_col o_col-4" style="display: inline-block; vertical-align: top; max-width: 400px;">
+                            <div style="font-size: 22px; line-height: 22px; height: 22px;">&nbsp; </div>
+                            <div class="o_px-xs" style="padding-left: 8px; padding-right: 8px;">
+                                <table class="o_right o_xs-center"
+                                       style="text-align: center; text-align: right;" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                                    <tbody>
+                                    <tr>
+                                        <td class="o_btn-b o_heading o_text-xs"
+                                            style="font-size: 14px; line-height: 21px; font-family: 'Roboto', sans-serif; mso-padding-alt: 7px 8px;" align="center">
+                                            <a class="o_text-light" style="color: #82899a; text-decoration: none; float: right; font-size: 20px; margin-top: -5px; margin-bottom: 5px;"
+                                               href="#"><span th:text="${firstName + ' ' + lastName + ' •'}"></span>
+                                                &lt;!&ndash;<img src="images/person-24-light.png" width="24" height="24" alt="" style="max-width: 24px;">&ndash;&gt;</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        &lt;!&ndash;[if mso]></td></tr></table><![endif]&ndash;&gt;
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            &lt;!&ndash;[if mso]></td></tr></table><![endif]&ndash;&gt;
+        </td>
+    </tr>
+    </tbody>
+</table>
+&lt;!&ndash; hero-icon-lines &ndash;&gt;
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs"
+            style="padding-left: 8px; padding-right: 8px; background-color: #dbe5ea;" align="center">
+            &lt;!&ndash;[if mso]><table width="632" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]&ndash;&gt;
+            <table class="o_block" style="max-width: 632px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-ultra_light o_px-md o_py-xl o_xs-py-md o_sans o_text-md o_text-light"
+                        style="color: #82899a; font-size: 19px; line-height: 28px; font-family: 'Roboto', sans-serif !important; padding-top: 24px !important; padding-bottom: 24px !important; padding-top: 64px; padding-bottom: 64px; padding-left: 24px; padding-right: 24px; background-color: #ebf5fa; " align="center">
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                            <tr>
+                                <td class="o_bb-primary"
+                                    style="border-bottom: 1px solid #126de5;" height="40" width="32">&nbsp; </td>
+                                <td rowspan="2" class="o_sans o_text o_text-secondary o_px o_py"
+                                    style="padding-top: 16px; padding-bottom: 16px; padding-left: 16px; padding-right: 16px; color: #424651; font-size: 16px; line-height: 24px; font-family: 'Roboto', sans-serif !important;" align="center">
+                                    <img src="images/vpn_key-48-primary.png" width="48" height="48" alt="" style="max-width: 48px;">
+                                </td>
+                                <td class="o_bb-primary"
+                                    style="border-bottom: 1px solid #126de5;" height="40" width="32">&nbsp; </td>
+                            </tr>
+                            <tr>
+                                <td height="40">&nbsp; </td>
+                                <td height="40">&nbsp; </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 8px; line-height: 8px; height: 8px;">&nbsp; </td>
+                                <td style="font-size: 8px; line-height: 8px; height: 8px;">&nbsp; </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <h2 class="o_heading o_text-dark o_mb-xxs"
+                        style="margin-bottom: 4px; color: #242b3d; font-family: 'Roboto', sans-serif !important;">Forgot Your Password?</h2>
+                        <p>Wow much off less more thus grabbed beside more stole</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            &lt;!&ndash;[if mso]></td></tr></table><![endif]&ndash;&gt;
+        </td>
+    </tr>
+    </tbody>
+</table>
+&lt;!&ndash; spacer &ndash;&gt;
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs" align="center"
+        style="padding-left: 8px; padding-right: 8px; background-color: #dbe5ea;">
+            &lt;!&ndash;[if mso]><table width="632" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]&ndash;&gt;
+            <table class="o_block" style="max-width: 632px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-white" style="font-size: 24px; line-height: 24px; height: 24px; background-color: #ffffff;">&nbsp; </td>
+                </tr>
+                </tbody>
+            </table>
+            &lt;!&ndash;[if mso]></td></tr></table><![endif]&ndash;&gt;
+        </td>
+    </tr>
+    </tbody>
+</table>
+&lt;!&ndash; content &ndash;&gt;
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs" style="background-color: #dbe5ea; padding-left: 8px; padding-right: 8px;" align="center">
+            &lt;!&ndash;[if mso]><table width="632" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]&ndash;&gt;
+            <table class="o_block" style="max-width: 632px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-white o_px-md o_py o_sans o_text o_text-secondary"
+                        style="color: #424651; font-size: 16px; line-height: 24px; font-family: 'Roboto', sans-serif !important; padding-top: 16px; padding-bottom: 16px; padding-left: 24px; padding-right: 24px; background-color: #ffffff;" align="center">
+                        <p>Callously piranha however moronic selfless more because spitefully dear some far forward where mounted underneath however feeling out less alas.</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            &lt;!&ndash;[if mso]></td></tr></table><![endif]&ndash;&gt;
+        </td>
+    </tr>
+    </tbody>
+</table>
+&lt;!&ndash; button-primary &ndash;&gt;
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs" style="background-color: #dbe5ea; padding-left: 8px; padding-right: 8px;" align="center">
+            &lt;!&ndash;[if mso]><table width="632" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]&ndash;&gt;
+            <table class="o_block" style="max-width: 632px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-white o_px-md o_py-xs"
+                        style="padding-top: 8px; padding-bottom: 8px; padding-left: 24px; padding-right: 24px; background-color: #ffffff; " align="center">
+                        <table align="center" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                            <tbody>
+                            <tr>
+                                <td width="300" class="o_btn o_bg-primary o_br o_heading o_text"
+                                    style="font-size: 16px; line-height: 24px; font-family: 'Roboto', sans-serif !important; border-radius: 4px; background-color: #126de5; mso-padding-alt: 12px 24px;" align="center">
+                                    <a class="o_text-white" style="color: #ffffff;" href="https://example.com/">Reset My Password</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            &lt;!&ndash;[if mso]></td></tr></table><![endif]&ndash;&gt;
+        </td>
+    </tr>
+    </tbody>
+</table>
+&lt;!&ndash; spacer-lg &ndash;&gt;
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs"
+            style="padding-left: 8px; padding-right: 8px; background-color: #dbe5ea;" align="center">
+            &lt;!&ndash;[if mso]><table width="632" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]&ndash;&gt;
+            <table class="o_block" style="max-width: 632px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-white" style="background-color: #ffffff; font-size: 48px; line-height: 48px; height: 48px;">&nbsp; </td>
+                </tr>
+                </tbody>
+            </table>
+            &lt;!&ndash;[if mso]></td></tr></table><![endif]&ndash;&gt;
+        </td>
+    </tr>
+    </tbody>
+</table>
+&lt;!&ndash; footer-white-2cols &ndash;&gt;
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs o_pb-lg o_xs-pb-xs"
+            style="padding-bottom: 8px !important; padding-bottom: 32px; padding-left: 8px; padding-right: 8px; background-color: #dbe5ea;" align="center">
+            &lt;!&ndash;[if mso]><table width="632" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]&ndash;&gt;
+            <table class="o_block" style="max-width: 632px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_re o_bg-white o_px o_pb-lg o_bt-light o_br-b"
+                        style="border-radius: 0px 0px 4px 4px; border-top: 1px solid #d3dce0; padding-bottom: 32px; padding-left: 16px; padding-right: 16px; background-color: #ffffff; font-size: 0; vertical-align: top;" align="center">
+                        &lt;!&ndash;[if mso]><table cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td width="200" align="left" valign="top" style="padding:0px 8px;"><![endif]&ndash;&gt;
+                        <div class="o_col o_col-4" style="display: inline-block; vertical-align: top; max-width: 400px;">
+                            <div style="font-size: 32px; line-height: 32px; height: 32px;">&nbsp; </div>
+                            <div class="o_px-xs o_sans o_text-xs o_text-light o_left o_xs-center"
+                                 style="text-align: center !important; text-align: left; color: #82899a; font-size: 14px; line-height: 21px; font-family: 'Roboto', sans-serif !important; padding-left: 8px; padding-right: 8px;">
+                                <p class="o_mb-xs" style="margin-bottom: 8px;">©2018 SimpleApp Inc. All rights reserved.</p>
+                                <p class="o_mb-xs" style="margin-bottom: 8px;">2603 Woodridge Lane, Memphis, TN 38104, USA</p>
+                                <p>
+                                    <a class="o_text-light o_underline"
+                                       style="text-decoration: underline; color: #82899a;" href="https://example.com/">Help Center</a> <span class="o_hide-xs"
+                                        style="display: none !important; font-size: 0 !important; max-height: 0 !important; width: 0 !important; line-height: 0 !important; overflow: hidden !important; visibility: hidden !important; height: 0 !important;">&nbsp; • &nbsp;</span>
+                                    <br class="o_hide-lg" style="display: none; font-size: 0; max-height: 0; width: 0; line-height: 0; overflow: hidden; mso-hide: all; visibility: hidden;">
+                                    <a class="o_text-light o_underline"
+                                       style="text-decoration: underline; color: #82899a;" href="https://example.com/">Preferences</a> <span class="o_hide-xs"
+                                        style="display: none !important; font-size: 0 !important; max-height: 0 !important; width: 0 !important; line-height: 0 !important; overflow: hidden !important; visibility: hidden !important; height: 0 !important;">&nbsp; • &nbsp;</span>
+                                    <br class="o_hide-lg" style="display: none; font-size: 0; max-height: 0; width: 0; line-height: 0; overflow: hidden; mso-hide: all; visibility: hidden;">
+                                    <a class="o_text-light o_underline"
+                                       style="text-decoration: underline; color: #82899a;" href="https://example.com/">Unsubscribe</a>
+                                </p>
+                            </div>
+                        </div>
+                        &lt;!&ndash;[if mso]></td><td width="400" align="right" valign="top" style="padding:0px 8px;"><![endif]&ndash;&gt;
+                        <div class="o_col o_col-2" style="display: inline-block; vertical-align: top; max-width: 200px;">
+                            <div style="font-size: 32px; line-height: 32px; height: 32px;">&nbsp; </div>
+                            <div class="o_px-xs o_sans o_text-xs o_text-light o_right o_xs-center"
+                            style="text-align: center !important; text-align: right; color: #82899a; font-size: 14px; line-height: 21px; font-family: 'Roboto', sans-serif !important; padding-left: 8px; padding-right: 8px;">
+                                <p>
+                                    &lt;!&ndash;<a class="o_text-light" href="https://example.com/"><img src="images/facebook-light.png" width="36" height="36" alt="fb" style="max-width: 36px;"></a><span> &nbsp;</span>
+                                    <a class="o_text-light" href="https://example.com/"><img src="images/twitter-light.png" width="36" height="36" alt="tw" style="max-width: 36px;"></a><span> &nbsp;</span>
+                                    <a class="o_text-light" href="https://example.com/"><img src="images/instagram-light.png" width="36" height="36" alt="ig" style="max-width: 36px;"></a><span> &nbsp;</span>
+                                    <a class="o_text-light" href="https://example.com/"><img src="images/snapchat-light.png" width="36" height="36" alt="sc" style="max-width: 36px;"></a>&ndash;&gt;
+                                </p>
+                            </div>
+                        </div>
+                        &lt;!&ndash;[if mso]></td></tr></table><![endif]&ndash;&gt;
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            &lt;!&ndash;[if mso]></td></tr></table><![endif]&ndash;&gt;
+            <div class="o_hide-xs" style="display: none !important; font-size: 0 !important; max-height: 0 !important; width: 0 !important; line-height: 0 !important; overflow: hidden !important; visibility: hidden !important; height: 0 !important; font-size: 64px; line-height: 64px; height: 64px;">&nbsp; </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>-->
+
+<!--Old Template-->
+<!--<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{mail/layout/body}">
+
+<th:block layout:fragment="content">
+            <div style="text-align: center; width: 100%;margin-top:20px;margin-bottom:20px; font-size: 26px;color:#4d4d4d;">
+                <h4>Password Reset</h4>
+            </div>
+            <div style="margin: 0px 50px">
+                <div style="font-size:15px">
+                    <div class="title" th:text="${'Hello ' + name + ','}"></div>
+                    <div style="color:#4d4d4d;">
+                        <p>Welcome to<br/>
+                        DataServices GLOBALVOX<br/>
+                            We're glad you have chosen us as your Data Partner.</p>
+
+                        <p>
+                            <br/>Click the below link to change your password<br/>
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div style="margin-top:35px;text-align: center;">
+
+
+                <a th:href="${baseUrl}+'/forgot/password/token?token='+${verificationToken}"
+                   style="text-decoration:none;padding: 10px 25px;color: white;background: green    ;font-size: 20px;border-radius: 3px; font-weight: 100">Reset password</a>
+            </div>
+            <div style="margin-top:35px;">
+                <div style="background: #605577;height:2px;"></div>
+            </div>
+            &lt;!&ndash;<div th:include="mail/layout/footer :: mailFooter"></div>&ndash;&gt;
+
+            &lt;!&ndash;<div th:replace="mail/layout/copyright :: mailCopyright"></div>&ndash;&gt;
+
+
+</th:block>
+
+</html>-->

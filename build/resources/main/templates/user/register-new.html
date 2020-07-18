@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+
+<!--
+
+<th:block layout:fragment="subheader">
+    <div class="ereaders-subheader">
+        &lt;!&ndash;<div class="ereaders-subheader-text">
+            <span class="ereaders-subheader-transparent"></span>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Login here</h1>
+                    </div>
+                </div>
+            </div>
+        </div>&ndash;&gt;
+        &lt;!&ndash;<div class="ereaders-breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul>
+                            <li><a href="index.html">Homepage</a></li>
+                            <li class="active">Login</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>&ndash;&gt;
+    </div>
+</th:block>
+-->
+
+<!--VIVEK-->
+<th:block layout:fragment="content">
+
+    <div class="ereaders-main-content ereaders-error-full">
+        <div class="ereaders-main-section" style="height: 602px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <!--Login Page Starts-->
+                        <div class="parentLogin">
+                            <div class="loginImg">
+                                <div class="loginlogo">
+                                    <img th:src="@{/front/images/gvxlogovertical.png}" alt="">
+                                </div>
+                                <div class="loginimage">
+                                    <img style="height: 460px;" th:src="@{/front/images/login-img-new.PNG}" alt="">
+                                </div>
+                            </div>
+                            <div class="loginContent">
+
+                                <h2>Sign Up</h2>
+
+                                <div class="ereaders-contact-formReg">
+                                    <form th:action="@{/register-new}" th:object="${user}" method="post">
+                                        <ul>
+                                            <li>
+                                                <div style="position: relative">
+                                                    <input value="First Name"
+                                                           placeholder="First Name" autofocus="autofocus"
+                                                           style="font-size: 16px; margin-top: -6px; width: 47%; float: left;"
+                                                           onblur="if(this.value == '') { this.value ='First Name'; }"
+                                                           onfocus="if(this.value =='First Name') { this.value = ''; }"
+                                                           id="firstName" name="firstName"
+                                                           tabindex="0"
+                                                           type="text">
+                                                    <i class="fa fa-user-circle" style="position: absolute; left: 107px; top: 9px;"></i>
+                                                    <div style="width: 100%; position: absolute; top: 63%; left: 70%;">
+                                                        <p th:if="${#fields.hasErrors('firstName')}" class="error-icon fa fa-exclamation-triangle text-danger"
+                                                           th:errors="*{firstName}">
+                                                            Incorrect LP</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <div style="position: relative">
+                                                    <input value="Last Name"
+                                                           placeholder="Last Name"
+                                                           style="font-size: 16px; margin-top: -6px; width: 47%; float: right; margin-top: -70px;"
+                                                           onblur="if(this.value == '') { this.value ='Last Name'; }"
+                                                           onfocus="if(this.value =='Last Name') { this.value = ''; }"
+                                                           id="lastName" name="lastName"
+                                                           tabindex="0"
+                                                           type="text">
+                                                    <i class="fa fa-user-circle" style="position: absolute; left: 251px; top: -55px;"></i>
+                                                    <div style="width: 100%; position: absolute; top: 63%; left: 70%;">
+                                                        <p th:if="${#fields.hasErrors('lastName')}" class="error-icon fa fa-exclamation-triangle text-danger"
+                                                           th:errors="*{lastName}">
+                                                            Incorrect LP</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <div style="position: relative">
+                                                    <input value="Phone (Include ISD code)"
+                                                           th:field="*{phone}"
+                                                           placeholder="Phone (Include ISD code)"
+                                                           style="font-size: 16px; margin-top: -42px; position: absolute;"
+                                                           onblur="if(this.value == '') { this.value ='Phone (Include ISD code)'; }"
+                                                           onfocus="if(this.value =='Phone (Include ISD code)') { this.value = ''; }"
+                                                           id="phone" name="phone"
+                                                           tabindex="0"
+                                                           type="text">
+                                                    <i class="fa fa-phone" style="position: absolute; left: 251px; top: -28px;"></i>
+                                                    <div style="width: 100%; position: absolute; top: 63%; left: 70%;">
+                                                        <p th:if="${#fields.hasErrors('phone')}" class="error-icon fa fa-exclamation-triangle text-danger"
+                                                           th:errors="*{phone}">
+                                                            Incorrect LP</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <div style="position: relative">
+                                                    <input value="Email"
+                                                           placeholder="Email"
+                                                           th:field="*{email}"
+                                                           style="font-size: 16px; margin-top: -14px; position: absolute;"
+                                                           onblur="if(this.value == '') { this.value ='Email'; }"
+                                                           onfocus="if(this.value =='Email') { this.value = ''; }"
+                                                           id="email" name="email"
+                                                           autocomplete="new-password"
+                                                           tabindex="0"
+                                                           type="email">
+                                                    <i class="fa fa-envelope" style="position: absolute; right: 12px; top: 0px;"></i>
+                                                    <div style="width: 100%; position: absolute; top: 63%; left: 70%;">
+                                                        <p th:if="${#fields.hasErrors('email')}" class="error-icon fa fa-exclamation-triangle text-danger"
+                                                           th:errors="*{email}">
+                                                            Incorrect LP</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <input value="Password"
+                                                       style="font-size: 16px; margin-top: 15px; position: absolute; width: 90%;"
+                                                       placeholder="Password"
+                                                       onblur="if(this.value == '') { this.value ='Password'; }"
+                                                       onfocus="if(this.value =='Password') { this.value = ''; }"
+                                                       tabindex="0"
+                                                       type="password"
+                                                       id="password"
+                                                       autocomplete="new-password"
+                                                       th:field="*{password}"
+                                                       name="password">
+                                                <i class="fa fa-lock" style="position: absolute; top: 27px; right: 29px;"></i>
+                                                <p th:if="${#fields.hasErrors('password')}" class="label error"
+                                                   th:errors="*{password}">
+                                                    Incorrect LP</p>
+                                            </li>
+
+                                            <li>
+                                                <input value="Confirm Password"
+                                                       placeholder="Confirm Password"
+                                                       style="font-size: 16px; margin-top: 42px; position: absolute; width: 90%;"
+                                                       onblur="if(this.value == '') { this.value ='Confirm Password'; }"
+                                                       onfocus="if(this.value =='Confirm Password') { this.value = ''; }"
+                                                       tabindex="0"
+                                                       type="password"
+                                                       id="password"
+                                                       autocomplete="new-password"
+                                                       th:field="*{confirmPassword}"
+                                                       name="password">
+                                                <i class="fa fa-lock" style="position: absolute; right: 29px; top: 55px;"></i>
+                                                <p th:if="${#fields.hasErrors('password')}" class="label error"
+                                                   th:errors="*{password}">
+                                                    Incorrect LP</p>
+
+                                                <!--<input type="checkbox" id="terms" name="terms" value="terms"
+                                                    style="position: absolute; left: 15px; top: 99px;">-->
+                                                <!--<label for="terms" style="position: absolute; left: 35px; top: 95px;">
+                                                    I agree to all statements <a href="#">terms of service</a></label><br>-->
+
+                                            </li>
+
+                                            <li class="full-width">
+                                                <input type="submit"
+                                                       style="height: 43px; border-radius: 3rem; width: 165px; margin-bottom: 15px; position: absolute; margin-top: 80px;"
+                                                       class="ereaders-simple-btn ereaders-bgcolor"
+                                                       name="submit"
+                                                       th:field="*{password}"
+                                                       value="Register now">
+                                                <a class="ereaders-simple-btn ereaders-bgcolor"
+                                                   style="margin-left: 50px; border-radius: 3rem; position: absolute; left: 150px; margin-top: 80px;"
+                                                   th:href="@{/login}">Login</a>
+                                            </li>
+                                        </ul>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<!--ANAND-->
+<!--<th:block layout:fragment="content">
+
+    <div class="ereaders-main-content ereaders-error-full">
+
+        &lt;!&ndash;// Main Section \\&ndash;&gt;
+        <div class="ereaders-main-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>
+                        <div class="ereaders-error-wrap">
+                            <div class="ereaders-error-text" >
+                                <form th:action="@{/login}" th:object="${user}" method="post"
+                                      style="margin: 0 30px 70px 30px;" class="loginform" autocomplete="disabled">
+                                    <input type="text" name="temp" class="form-control" style="display:none">
+
+
+                                    <div class="form-group">
+                                        <input type="text" name="username" class="form-control"
+                                               placeholder="Email" id="email" autocomplete="new-password"
+                                               autofocus="autofocus">
+                                        <p th:if="${#fields.hasErrors('email')}" class="label error"
+                                           th:errors="*{email}">
+                                            Incorrect LP</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" style="margin-top:10px;"
+                                               id="password" autocomplete="new-password"
+                                               th:field="*{password}" class="form-control" placeholder="Password">
+                                        <p th:if="${#fields.hasErrors('password')}" class="label error"
+                                           th:errors="*{password}">
+                                            Incorrect LP</p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="g-recaptcha"
+                                             data-sitekey="6Ld2Gr8SAAAAABV6gZ_0ZxRS2UggoKgamLJrxleJ"></div>
+                                        <p th:if="${captchaTokenError!=null}" class="label label-danger"
+                                           th:text="${captchaTokenError}">
+                                            Invalid captcha</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row middle">
+                                            <div class="col-md-12 mb-sm-10" style="margin-top:50px;">
+                                                <a href="javascript:void(0);" id="forgetPass"
+                                                   class="t-small t-gray forgotpassword">
+                                                    Forgot Password?</a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <div class="">
+                                            <input type="checkbox" id="check2">
+                                            <label for="check2">Remember password</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row middle">
+
+                                        <div class="col-md-12">
+                                            <button class="btn  btn-primary " type="submit">Login</button>
+                                            <a class="d-flex t-small t-dark mar-15-0 mb-sm-0 btn  btn-success"
+                                               id="register"
+                                               th:href="@{/register}"><b>Register Now</b></a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-sm-0">
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        &lt;!&ndash;// Main Section \\&ndash;&gt;
+
+    </div>
+    &lt;!&ndash;// Main Content \\&ndash;&gt;
+</th:block>-->
+
+<th:block layout:fragment="extrascripts">
+    <script type="text/javascript" th:src="@{/front/script/functions.js}"></script>
+    <script type="text/javascript">
+        $(document).on("click", ".forgotpassword", function (e) {
+            $.confirm({
+                title: 'Forgot password!',
+                content: $("#forgotpassword-form").html(),
+                buttons: {
+                    ok: {
+                        text: 'Send password reset link',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            var email = this.$content.find('#inputFgEmail').val();
+                            if (email != '') {
+                                this.$content.find('#forgot-submit').click();
+                            }else{
+                                this.$content.find('.fp').show();
+                            }
+                            return false;
+                        }
+                    },
+                    cancel: function () {
+                        //close
+                    },
+                },
+
+            });
+        });
+
+    </script>
+    <div style="display: none;" id="forgotpassword-form">
+        <form id="forgotpass" th:action="@{'/forgot/password'}"
+              method="get">
+            <div class="alert alert-danger fp" style="display: none;">Please enter email id</div>
+            <label for="inputFgEmail" class="sr-only">Email</label>
+
+            <input type="email" id="inputFgEmail" name="userEmail"
+                   class="form-control" placeholder="Email"
+                   autofocus="">
+            <input type="submit" id="forgot-submit" style="display: none;">
+        </form>
+    </div>
+
+    <!--VIVEK-CSS-JS-->
+    <!--<script th:src="@{front/script/loginscript.js}"></script>-->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script type="text/javascript" th:src="@{/front/script/functions.js}"></script>
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">-->
+    <!--<link rel="stylesheet" th:href="@{front/css/loginstyle.css}">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+    <!--ANAND-CSS-JS-->
+
+
+</th:block>
+</html>

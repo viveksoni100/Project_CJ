@@ -1,0 +1,209 @@
+agreement:
+    path: ${base.path}/agreement
+api:
+    client:
+        id: crypkart_dbuser
+        secret: zE4N*L&o6HVtnNe9zpT3hko&swmX1y
+    telegram:
+        client:
+            id: telegram
+            secret: kGp3f%&XlyOAX0Q2msM#lMMdH*xey7
+app:
+    name: Publications
+base:
+    path: /opt/uploads
+    url:  http://192.168.1.28:8880
+    url.api: ${base.url}/api/v1
+captch:
+    required: Captcha validation failed
+    site:
+        key: 6Ld2Gr8SAAAAABV6gZ_0ZxRS2UggoKgamLJrxleJ
+        secret: 6Ld2Gr8SAAAAALPJEFgj35jfyhFxSOdviKpaWBEg
+captcha:
+    enabled: false
+company:
+    download:
+        url: /user/downloadFile/company
+    logo:
+        path: ${base.path}/company
+db:
+    executed:
+        scripts:
+            path: /opt/pub
+    password: root
+    scripts:
+        executed:
+            folder:
+                name: executed
+        separator: /data
+        unexecuted:
+            folder:
+                name: unexecuted
+    unexecuted:
+        scripts:
+            path: /data/upload/unexecuted
+    url: jdbc:mysql://localhost:3306/easelobby?cachePrepStmts=true&useServerPrepStmts=true&rewriteBatchedStatements=true&createDatabaseIfNotExist=true
+    username: root
+email:
+    enabled: true
+eventbrite:
+    api:
+        token: EFJVVACR53EOFYMOR4QH
+file:
+    upload-dir: ./uploads
+firebase:
+    company:
+        id: userId
+    realtime-database-url: https://easeclick-f394a.firebaseio.com/
+    service-account-filename: classpath:easeclick-f394a-22e7648b55d8.json
+forgot:
+    password:
+        expiry:
+            minutes: 30
+from:
+    email: anand4686@gmail.com
+google:
+    client:
+        access-token-uri: https://www.googleapis.com/oauth2/v3/token
+        access-type: offline
+        client-authentication-scheme: query
+        client-id: 866287052884-ojo8ntq109l059tq4mhb37crekuimlma.apps.googleusercontent.com
+        client-secret: m9Edjm6NDkP-TJYNRGSAyyqw
+        redirectUri: http://127.0.0.1:8880/integrations/login/google
+        redirectUri.drive: http://127.0.0.1:8880/integrations/login/google/drive
+        scope: profile,email,https://www.googleapis.com/auth/calendar
+        user-authorization-uri: https://accounts.google.com/o/oauth2/auth?access_type=offline&prompt=consent
+    resource:
+        prefer-token-info: true
+        user-info-uri: https://www.googleapis.com/oauth2/v2/userinfo
+hibernate:
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    format_sql: true
+    generate_statistics: true
+    show_sql: true
+    use_sql_comments: true
+initial:
+    db:
+        required: true
+        required.custom: true
+logging:
+    config: classpath:log4j2-linux.xml
+    level:
+        org:
+            hibernate:
+                SQL: debug
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE
+    pattern:
+        console: '%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n'
+onedrive:
+    client:
+        client-id: 9f772a69-78fd-4c6d-9c48-57182a4e9eae
+        client-secret: oTrd9fap_TT4][uyR2@kARP8mum6@L-F
+        redirecturi: http://localhost:8880/integrations/login/onedrive
+        redirecturi.token: http://localhost:8880/integrations/login/onedrive/token
+oracle:
+    password: Admin123
+    url: jdbc:oracle:thin:@//localhost:1521/ORCL
+    username: sys as sysdba
+org:
+    hibernate:
+        stat: DEBUG
+publication:
+    path:
+        doc: /opt/uploads/publications/doc/
+        image: /opt/uploads/publications/image/
+        thumb: /opt/uploads/publications/thumb/
+        toc: /opt/uploads/publications/toc/
+qrcode:
+    path: ${base.path}/qr
+server:
+    port: 8880
+signature:
+    pdf:
+        url:
+            path: /signature/pdf
+spring:
+    datasource:
+        continue-on-error: false
+        data: classpath:data/configuration.sql
+        driver:
+            class: com.mysql.cj.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        driverClassName: com.mysql.cj.jdbc.Driver
+        initialization-mode: always
+        password: BeAJain
+        url: jdbc:mysql://localhost:3306/publications
+        username: root
+    jackson:
+        serialization:
+            WRITE_DATES_AS_TIMESTAMPS: true
+    jpa:
+        database-platform: org.hibernate.dialect.Oracle12cDialect
+        hibernate:
+            ddl-auto: update
+            jdbc:
+                batch_versioned_data: true
+        open-in-view: false
+        properties:
+            hibernate:
+                generate_statistics: true
+                jdbc:
+                    batch_size: 2
+                    batch_versioned_data: true
+                order_inserts: true
+        show-sql: true
+    mail:
+        defaultEncoding: UTF-8
+        host: smtp.gmail.com
+        password: ocr1982!
+        port: 587
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+        protocol: smtp
+        username: ease.ocr@ocr-inc.com
+    main:
+        allow-bean-definition-overriding: true
+    mvc:
+        static-path-pattern: classpath:/resources/static/easeClick-theme
+    profiles:
+        include: common
+    security:
+        strategy: MODE_INHERITABLETHREADLOCAL
+    servlet:
+        multipart:
+            enabled: true
+            file-size-threshold: 2KB
+            max-file-size: 200MB
+            max-request-size: 215MB
+    thymeleaf:
+        cache: false
+stripe:
+    public:
+        key: pk_test_yOOuHyTpPdA72Gw9ekLUae2a00hGArncWN
+    secret:
+        key: sk_test_Vqd8fRTdbIn4jFdWDWr0UiHL00Je70L3Jd
+    webhooks:
+        key: whsec_IJx2Qo0IvzF8yCTkrI0n0RI0uhsrwY05
+template:
+    cache: false
+to:
+    email:
+        temp: anandy2k1@gmail.com
+visitor:
+    image:
+        path: ${base.path}/visitor
+        url: /settings/kiosk/image
+    url:
+        api: /image/visitor
+flowpaper:
+    login:
+        url: https://flowpaper.com/account
+        user: kamlesh.munshi@ocr-inc.com
+        password: ac5a6dff

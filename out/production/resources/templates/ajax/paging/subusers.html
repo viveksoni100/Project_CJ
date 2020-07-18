@@ -1,0 +1,149 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="dataTables_wrapper dt-bootstrap4">
+    <div class="row m-0">
+        <Div class="col-sm-12">
+            <form th:action="@{${pagingUrl}}"
+                  th:attr="data-baseurl=${pagingUrl},data-formname='subuserList',data-replacediv='replace'"
+                  id="subuserList" class="paging" autocomplete="off">
+                <table class="table " id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>-</th>
+
+
+                        <th th:with="order=${pageable.getSort().getOrderFor('transactionId')}">
+                            <a href="javascript:void(0)"
+                               th:value="${transactionId}"
+                               th:attr="data-sort='transactionId',data-baseurl=${pagingUrl},data-formname='subuserList',data-replacediv='replace',data-page='1',
+                            data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                Transaction ID</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('expiryDate')}">
+                            <a href="javascript:void(0)"
+                               th:value="${expiryDate}"
+                               th:attr="data-sort='expiryDate',data-baseurl=${pagingUrl},data-formname='subuserList',data-replacediv='replace',data-page='1',
+                            data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                Expiry date</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('firstName')}">
+                            <a href="javascript:void(0)"
+                               th:value="${firstName}"
+                               th:attr="data-sort='firstName',data-baseurl=${pagingUrl},data-formname='subuserList',data-replacediv='replace',data-page='1',
+                            data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                First name</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('lastName')}">
+                            <a href="javascript:void(0)"
+                               th:value="${lastName}"
+                               th:attr="data-sort='lastName',data-baseurl=${pagingUrl},data-formname='subuserList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort"
+                            >Last name</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('email')}">
+                            <a href="javascript:void(0)"
+                               th:value="${email}"
+                               th:attr="data-sort='email',data-baseurl=${pagingUrl},data-formname='subuserList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort"
+                            >Email</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('phone')}">
+                            <a href="javascript:void(0)"
+                               th:value="${phone}"
+                               th:attr="data-sort='phone',data-baseurl=${pagingUrl},data-formname='subuserList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort"
+                            >Phone</a>
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+
+                        </th>
+                        <th style="text-align: right">
+                            Edit
+                        </th>
+
+                    </tr>
+                    <tr>
+                        <th><input type="checkbox" class="checkbox-all" /></th>
+
+                        <th>
+                            <input type="text" name="transaction_id" placeholder="Transaction ID"
+                                   class="mark1" autocomplete="off">
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+                            <input type="text" name="first_name" placeholder="First name"
+                                   class="mark1" autocomplete="off">
+                        </th>
+                        <th>
+                            <input type="text" name="last_name" placeholder="Last name"
+                                   class="mark1 " autocomplete="nope">
+                        </th>
+                        <th>
+                            <input type="text" name="email" placeholder="Email"
+                                   class="mark1" autocomplete="off">
+                        </th>
+                        <th>
+                            <input type="text" name="phone" placeholder="Phone"
+                                   class="mark1" autocomplete="off">
+                        </th>
+                        <th>
+                            <input type="submit" style="display: none;">
+                            <input type="checkbox" name="status" data-toggle="toggle" class="tCheckbox" data-on="Active" data-off="Expired" data-height="40">
+                        </th>
+                        <th>
+                        </th>
+
+                    </tr>
+                    </thead>
+                    <tbody class="marktext">
+                    <tr th:each="subuser : ${subusers}">
+                        <td  ><input type="checkbox" name="userIds" class="user-checkbox" th:attr="data-id=${@pathVariableEnc.encrypt(subuser.id)}, data-name=${(subuser.username!=null) ? subuser.username : ''}" /></td>
+
+
+                        <td  th:text="${(subuser.transactionId!=null) ? subuser.transactionId : ''}"></td>
+                        <td><div th:text="${(subuser.expiryDate!=null) ? subuser.expiryDate : ''}" style="width: 100px;"></div></td>
+                        <td  th:text="${(subuser.firstName!=null) ? subuser.firstName : ''}"></td>
+                        <td  th:text="${(subuser.lastName!=null) ? subuser.lastName : ''}"></td>
+                        <td  th:text="${(subuser.email!=null) ? subuser.email : ''}"></td>
+                        <td  th:text="${(subuser.phone!=null) ? subuser.phone : ''}"></td>
+
+                        <td th:width="200px" style="text-align: center">
+                            <form method="post" th:id="${'formstatus'+subuserStat.index}">
+                                <i class="fa fa-3x subuserValStatus"
+                                   th:attr="data-id=${@pathVariableEnc.encrypt(subuser.id)},data-after='configStatusSave',
+                                                            data-ele=${'form'+subuserStat.index}"
+                                   th:classappend="${(!subuser.status) ? 'fa-toggle-off text-danger' : 'fa-toggle-on text-success'}"></i>
+                            </form>
+                        </td>
+                        <td>
+                            <a
+                                    th:href="'javascript:void(0)'"
+                                    class="btn btn-primary btn-sm pull-right subuser-create"
+                                    th:attr="data-onload='tCheckbox',data-after='tCheckbox',data-title=${'Edit ' + subuser.firstName},data-size='large',data-url='/ajax/corporate/subuser/'+${@pathVariableEnc.encrypt(subuser.id)}, data-submiturl='/ajax/corporate/subuser/create/'+${@pathVariableEnc.encrypt(subuser.id)}, data-close='configCreated',data-reload='true'"
+                            >Edit</a>
+
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </form>
+        </div>
+    </Div>
+    <div th:remove="tag" th:include="layouts/paging :: paging"
+         th:with="pageObj=${subusers},replaceDiv='replace',formName='subuserList', pagingUrl=${pagingUrl}"></div>
+
+</div>

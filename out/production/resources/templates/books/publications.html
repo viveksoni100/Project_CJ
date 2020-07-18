@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<th:block layout:fragment="content">
+    <div class="ereaders-main-content">
+
+        <!--// Main Section \\-->
+        <div class="ereaders-main-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12" id="replace">
+
+                            <form th:action="@{${pagingUrl}}"
+                                  th:attr="data-baseurl=${pagingUrl},data-formname='booksList',data-replacediv='replace'"
+                                  id="configList" class="paging" autocomplete="off">
+                                <div class="ereaders-blog ereaders-blog-grid">
+                                <ul class="row">
+                                    <li class="col-md-4" th:each="pub : ${publications}" style="list-style: none !important;">
+                                        <div class="ereaders-blog-grid-wrap">
+                                            <figure>
+                                                <a th:href="@{'/subuser/publications/' +${@pathVariableEnc.encrypt(pub.id)}}">
+                                                    <img th:src="${'/subuser/publications/img/' + @pathVariableEnc.encrypt(pub.id)}"
+                                                         alt="">
+                                                </a>
+                                            </figure>
+                                            <div class="ereaders-blog-grid-text">
+                                                <span th:each="cat : ${pub.categories}" th:text="${cat.categoryName}">Business</span>
+                                                <h2>
+                                                    <a th:href="@{'/subuser/publications/' +${@pathVariableEnc.encrypt(pub.id)}}"
+                                                       th:text="${pub.publicationTitle}">
+
+                                                    </a>
+                                                </h2>
+                                                <ul class="ereaders-blog-option">
+                                                    <li th:text="${pub.createdAt}"></li>
+                                                </ul>
+                                                <p th:utext="${(pub.description!=null && #strings.length(pub.description)>99) ? #strings.substring(pub.description,0,99) : pub.description}">
+
+                                                </p>
+                                                <a th:href="@{'/subuser/publications/' +${@pathVariableEnc.encrypt(pub.id)}}"
+                                                   class="ereaders-readmore-btn">Read more <i
+                                                        class="fa fa-angle-double-right"></i></a>
+
+                                                <span class="pull-right">
+                                                    <!--<a th:target="_blank" th:href="${@environment.getProperty('publication.path.toc')} + ${pub.labelPublicationUploadToc}" class="ereaders-readmore-btn">Read TOC <i
+                                                            class="fa fa-angle-double-right"></i></a></span>-->
+                                                <a th:target="_blank" th:href="@{'/subuser/publications/toc/' +${@pathVariableEnc.encrypt(pub.id)}}"
+                                                   class="ereaders-readmore-btn">Read TOC <i
+                                                        class="fa fa-angle-double-right"></i></a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                </div>
+                            </form>
+
+                        <!--// Pagination \\-->
+                        <div th:remove="tag" th:include="layouts/pagingFront :: paging"
+                             th:with="pageObj=${publications},replaceDiv='replace',formName='booksList', pagingUrl=${pagingUrl}"></div>
+                        <!--// Pagination \\-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// Main Section \\-->
+
+    </div>
+</th:block>
+
+<th:block layout:fragment="extrascripts">
+    <script type="text/javascript" th:src="@{/front/nimda/js/ajax.js}"></script>
+    <script type="text/javascript" th:src="@{/front/nimda/js/paging.js}"></script>
+</th:block>
+</html>

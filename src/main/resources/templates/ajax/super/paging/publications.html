@@ -1,0 +1,134 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="dataTables_wrapper dt-bootstrap4">
+    <div class="row m-0">
+        <Div class="col-sm-12">
+            <form th:action="@{${pagingUrl}}"
+                  th:attr="data-baseurl=${pagingUrl},data-formname='pubList',data-replacediv='replace'"
+                  id="pubList" class="paging" autocomplete="off">
+                <table class="table " id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>-</th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('productId')}">
+                            <a href="javascript:void(0)"
+                               th:value="${productId}"
+                               th:attr="data-sort='productId',data-baseurl=${pagingUrl},data-formname='pubList',data-replacediv='replace',data-page='1',
+                            data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                Data Product Id</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('productName')}">
+                            <a href="javascript:void(0)"
+                               th:value="${productName}"
+                               th:attr="data-sort='productName',data-baseurl=${pagingUrl},data-formname='pubList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort"
+                            >Title</a>
+                        </th>
+
+
+                        <th>
+                            <a href="javascript:void(0)"
+                               th:value="${productPrice}"
+                               th:attr="data-sort='productPrice',data-baseurl=${pagingUrl},data-formname='pubList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort"
+                            >Price</a>
+                        </th>
+                        <th>
+                            Split Mode
+                        </th>
+                        <th>
+                        </th>
+                        <th style="text-align: center">
+                            Status
+                        </th>
+                        <th style="text-align: right">
+                            Edit
+                        </th>
+                        <th style="text-align: right">
+                            Copy
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>-</th>
+
+                        <th>
+                            <input type="text" name="productId"
+                                   placeholder="Product ID" th:value="${productId}"
+                                   class="mark1" autocomplete="off">
+                        </th>
+                        <th>
+                            <input type="text" name="productName" placeholder="Product Name"
+                                   th:value="${productName}"
+                                   class="mark1 " autocomplete="nope">
+                        </th>
+                        <th>
+                            <input type="text" name="productPrice" placeholder="Price" th:value="${productPrice}"
+                                   class="mark1 " autocomplete="nope">
+                        </th>
+
+                        <th>
+                            <input type="submit" style="display: none;">
+                        </th>
+                        <th>
+                        </th>
+                        <th>
+                        </th>
+                        <th>
+                        </th>
+                        <th></th>
+
+                    </tr>
+                    </thead>
+                    <tbody class="marktext">
+                    <tr th:each="pub : ${dataproduct}">
+                        <td th:text="${pubStat.index+1}"></td>
+                        <td th:width="'300px'" th:text="${pub.productId}"></td>
+
+                        <td th:text="${pub.productName}"></td>
+                        <td th:text="${pub.productPrice}"></td>
+                        <td th:text=""></td>
+                        <td>
+                            <!--<img th:src="@{'/admin/pub/thumb/' + ${pub.id}}">-->
+                        </td>
+
+                        <td th:width="200px" style="text-align: center">
+                            <form method="post" th:id="${'formstatus'+pubStat.index}">
+                                <i class="fa fa-3x categoryStatus"
+                                   th:attr="data-id=${@pathVariableEnc.encrypt(pub.id)},data-after='configStatusSave',
+                                                            data-ele=${'form'+pubStat.index}"
+                                   th:classappend="${(!pub.status) ? 'fa-toggle-off text-danger' : 'fa-toggle-on text-success'}"></i>
+                            </form>
+                        </td>
+                        <td>
+                            <a
+                                    th:href="'javascript:void(0)'"
+                                    class="btn btn-primary btn-sm pull-right category-create"
+                                    th:attr="data-after='tCheckbox',data-onload='tCheckbox',data-title=${'Edit ' + pub.productId},data-size='large',data-url='/ajax/super/publications/dataform/'+${@pathVariableEnc.encrypt(pub.id)}, data-submiturl='/ajax/super/publications/datacreate/'+${@pathVariableEnc.encrypt(pub.id)}, data-close='pubCreated',data-reload='true'"
+                            >Edit</a>
+
+
+                        </td>
+                        <td>
+                            <a
+                                    th:href="'javascript:void(0)'"
+                                    class="btn btn-success btn-sm pull-right publication-copy"
+                                    th:attr="data-url='/ajax/super/publications/copy/'+${@pathVariableEnc.encrypt(pub.id)}, data-after='pubCopied'"
+                            >Copy</a>
+
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </form>
+        </div>
+    </Div>
+    <div th:remove="tag" th:include="layouts/paging :: paging"
+         th:with="pageObj=${dataproduct},replaceDiv='replace',formName='pubList', pagingUrl=${pagingUrl}"></div>
+
+</div>

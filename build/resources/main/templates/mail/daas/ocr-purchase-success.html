@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{mail/layout/body}">
+
+<head>
+    <link href="front/css/invoice-success.css" rel="stylesheet">
+</head>
+
+<th:block layout:fragment="title">OCR Purchase Success</th:block>
+<th:block layout:fragment="content">
+
+    <div style="margin: 0px 50px">
+        <div style="font-size:15px;">
+            <div class="title" th:text="${'Hello OCR Admin,'}"></div>
+            <div style="color:#4d4d4d;">
+
+                <p>
+                    This is ocr purchase success email<br/>
+                    from Global Trade Data<br/>
+                </p>
+                <p>
+                    <!--<br/>Click the below link to verify your email address.<br/>-->
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <body class="bodyClass">
+    <!-- Header -->
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+        <tr>
+            <td height="20"></td>
+        </tr>
+        <tr>
+            <td>
+                <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff" style="border-radius: 10px 10px 0 0;">
+                    <tr>
+                        <td>
+                            <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <table width="220" border="0" cellpadding="0" cellspacing="0" align="right" class="col">
+                                            <tbody>
+                                            <tr>
+                                                <td style="font-size: 18px; color: #ff0000; letter-spacing: -1px; font-family: 'Open Sans', sans-serif; line-height: 1; vertical-align: top; text-align: right; padding-right: 59px;">
+                                                    <br><br>
+                                                    <small th:text="${daasUser.getFirstName() + ' ' + daasUser.getLastName()}" /><br>
+                                                    <small th:text="${daasUser.getPhone()}" /><br>
+                                                    <small th:text="${daasUser.getEmail()}" /><br>
+                                                    <hr>
+                                                </td>
+                                                <hr>
+                                            </tr>
+                                            <tr>
+                                            <tr class="hiddenMobile">
+                                                <td height="50"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size: 18px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: right; padding-right: 59px;">
+                                                    <small th:text="${'Transaction ID : ' + order.getTransactionNumber()}" /><br>
+                                                    <small th:text="${'Purchase Date : '}" /><br>
+                                                    <small th:text="${#temporals.day(order.getPurchaseDate()) + '-' + #temporals.monthNameShort(order.getPurchaseDate()) + '-' +
+                                                    #temporals.year(order.getPurchaseDate())}" /><br>
+                                                    <small th:text="${'Expiry Date : '}" /><br>
+                                                    <small th:text="${#temporals.day(orderDetail.getProductExpiryDate()) + '-' + #temporals.monthNameShort(orderDetail.getProductExpiryDate()) + '-' +
+                                                    #temporals.year(orderDetail.getProductExpiryDate())}" />
+                                                    <br><br><br>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size: 18px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: right; padding-right: 59px;">
+                                                    <small th:text="${'data count : ' + productDataList.size()}" /><br>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <!--TABLE_DATA-->
+                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                                                                <tbody>
+                                                                <tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                            <tbody>
+                                                                            <tr>
+                                                                                <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 10px 7px 0;" width="52%" align="left">
+                                                                                    Product Name
+                                                                                </th>
+                                                                                <!--<th style="font-size: 20px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="left">
+                                                                                    <small>Item id</small>
+                                                                                </th>-->
+                                                                                <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+                                                                                    Quantity
+                                                                                </th>
+                                                                                <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+                                                                                    Price
+                                                                                </th>
+                                                                                <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+                                                                                    Discount Rate
+                                                                                </th>
+                                                                                <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="right">
+                                                                                    Subtotal
+                                                                                </th>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td height="1" style="background: #bebebe;" colspan="5"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td height="10" colspan="5"></td>
+                                                                            </tr>
+                                                                            <tr th:each="product : ${productDataList}">
+                                                                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #ff0000;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article" th:text="${product.getProductName()}"></td>
+                                                                                <!--<td style="font-size: 20px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;"><small th:text="${product.getId()}"></small></td>-->
+                                                                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center" th:text="${product.productQty}"></td>
+                                                                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center" th:text="${'$'+product.getProduct().getProductPrice()}"></td>
+                                                                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center" th:text="${#numbers.formatDecimal(product.getDiscount(),1,'POINT',2,'POINT') + '%'}"></td>
+                                                                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="right" th:text="${'$' + product.getNetPrice()}"></td>
+                                                                                <td height="1" colspan="5"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td height="1" style="background: #bebebe;" colspan="5"></td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td height="20"></td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!--TABLE_DATA-->
+                                            </tr>
+
+                                            <br><br><br>
+
+                                            <tr>
+                                                <td style="font-size: 18px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: right; padding-right: 59px;">
+                                                    <small th:text="${'api count : ' + productApiList.size()}" /><br>
+                                                </td>
+                                            </tr>
+
+                                            <br><br><br>
+
+                                            <tr>
+
+                                                <!--TABLE_API-->
+                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                                                                <tbody>
+                                                                <tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                            <tbody>
+                                                                            <tr>
+                                                                                <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 10px 7px 0;" width="52%" align="left">
+                                                                                    Product Name
+                                                                                </th>
+                                                                                <!--<th style="font-size: 20px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="left">
+                                                                                    <small>Item id</small>
+                                                                                </th>-->
+                                                                                <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+                                                                                    Quantity
+                                                                                </th>
+                                                                                <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+                                                                                    Price
+                                                                                </th>
+                                                                                <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+                                                                                    Discount Rate
+                                                                                </th>
+                                                                                <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="right">
+                                                                                    Subtotal
+                                                                                </th>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td height="1" style="background: #bebebe;" colspan="5"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td height="10" colspan="5"></td>
+                                                                            </tr>
+                                                                            <tr th:each="product : ${productApiList}">
+                                                                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #ff0000;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article" th:text="${product.getProductName()}"></td>
+                                                                                <!--<td style="font-size: 20px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;"><small th:text="${product.getId()}"></small></td>-->
+                                                                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center" th:text="${product.productQty}"></td>
+
+                                                                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center"
+                                                                                    th:if="${product.getProduct().getProductPrice() != 0}"
+                                                                                    th:text="${'$'+product.getProduct().getProductPrice()}"></td>
+                                                                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center"
+                                                                                    th:if="${product.getProduct().getProductPrice() == 0}"
+                                                                                    th:text="${'$'+product.getOriginalPrice() / product.getProductQty()}"></td>
+
+                                                                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center" th:text="${#numbers.formatDecimal(product.getDiscount(),1,'POINT',2,'POINT') + '%'}"></td>
+                                                                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="right" th:text="${'$' + product.getNetPrice()}"></td>
+                                                                                <td height="1" colspan="5"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td height="1" style="background: #bebebe;" colspan="5"></td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td height="20"></td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!--TABLE_API-->
+                                            </tr>
+
+                                            <br><br><br>
+
+                                            <tr>
+
+                                                <!--TABLE_TOTAL-->
+                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+
+                                                                        <!-- Table Total -->
+                                                                        <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                            <tbody>
+                                                                            <tr>
+                                                                                <!--<td style="font-size: 18px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                                    Subtotal
+                                                                                </td>
+                                                                                <td style="font-size: 18px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; white-space:nowrap;" width="80" th:text="${'$' + order.getNetPrice()}"></td>-->
+                                                                            </tr>
+                                                                            <!--<tr>
+                                                                                <td style="font-size: 18px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                                    Shipping &amp; Handling
+                                                                                </td>
+                                                                                <td style="font-size: 18px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                                    $00.00
+                                                                                </td>
+                                                                            </tr>-->
+                                                                            <tr>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td style="font-size: 15px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                                    <strong style="margin-left: -75px; float: right; padding-right: 10px;">Grand Total </strong>
+                                                                                </td>
+                                                                                <td style="font-size: 15px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; width: 9%;">
+                                                                                    <strong th:text="${'$' + order.getNetPrice()}"></strong>
+                                                                                </td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <!-- /Table Total -->
+
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!--TABLE_TOTAL-->
+
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <!-- /Header -->
+    <!-- Order Details -->
+
+<!--    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+        <tbody>
+        <tr>
+            <td>
+                <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                    <tbody>
+                    <tr>
+                    <tr>
+                        <td>
+                            <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                <tbody>
+                                <tr>
+                                    <th style="font-size: 20px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 10px 7px 0;" width="52%" align="left">
+                                        Product Name
+                                    </th>
+                                    &lt;!&ndash;<th style="font-size: 20px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="left">
+                                        <small>Item id</small>
+                                    </th>&ndash;&gt;
+                                    <th style="font-size: 20px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+                                        Quantity
+                                    </th>
+                                    <th style="font-size: 20px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="right">
+                                        Subtotal
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td height="1" style="background: #bebebe;" colspan="4"></td>
+                                </tr>
+                                <tr>
+                                    <td height="10" colspan="4"></td>
+                                </tr>
+                                <tr th:each="product : ${orderDetailList}">
+                                    <td style="font-size: 20px; font-family: 'Open Sans', sans-serif; color: #ff0000;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article" th:text="${product.getProductName()}"></td>
+                                    &lt;!&ndash;<td style="font-size: 20px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;"><small th:text="${product.getId()}"></small></td>&ndash;&gt;
+                                    <td style="font-size: 20px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center" th:text="${product.productQty}"></td>
+                                    <td style="font-size: 20px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="right" th:text="${'$' + product.getNetPrice()}"></td>
+                                    <td height="1" colspan="4"></td>
+                                </tr>
+                                <tr>
+                                    <td height="1" style="background: #bebebe;" colspan="4"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="20"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    &lt;!&ndash; /Order Details &ndash;&gt;
+    &lt;!&ndash; Total &ndash;&gt;
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+        <tbody>
+        <tr>
+            <td>
+                <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                    <tbody>
+                    <tr>
+                        <td>
+
+                            &lt;!&ndash; Table Total &ndash;&gt;
+                            <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                <tbody>
+                                <tr>
+                                    <td style="font-size: 18px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                                        Subtotal
+                                    </td>
+                                    <td style="font-size: 18px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; white-space:nowrap;" width="80" th:text="${'$' + order.getNetPrice()}"></td>
+                                </tr>
+                                &lt;!&ndash;<tr>
+                                    <td style="font-size: 18px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                                        Shipping &amp; Handling
+                                    </td>
+                                    <td style="font-size: 18px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                                        $00.00
+                                    </td>
+                                </tr>&ndash;&gt;
+                                <tr>
+                                    <td style="font-size: 18px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                                        <strong>Grand Total (Incl.Tax)</strong>
+                                    </td>
+                                    <td style="font-size: 18px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                                        <strong th:text="${'$' + order.getNetPrice()}"></strong>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            &lt;!&ndash; /Table Total &ndash;&gt;
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>-->
+
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+
+        <tr>
+            <td>
+                <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff" style="border-radius: 0 0 10px 10px;">
+                    <tr>
+                        <td>
+                            <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                <tbody>
+                                <tr>
+                                    <td style="font-size: 20px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: left;">
+                                        <!--Have a nice day.-->
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="spacer">
+                        <td height="50"></td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td height="20"></td>
+        </tr>
+    </table>
+    <!-- partial -->
+    <!--<a th:href="@{'/stripe/printInvoice/' + ${order.id}}" class="btn btn-primary">Print Invoice</a>-->
+    </body>
+
+    <div style="margin-top:35px;text-align: center;">
+
+
+        <!--<a style="padding: 8px 24px !important;
+                    font-size: 13px !important;
+                    border-radius: 30px  !important;
+                    height: auto !important;
+                    color: #fff !important;
+                    background-color: #007bff !important;text-decoration: none !important;"
+           th:href="${baseURL}+'/registration/email/verification?token='+${verificationToken}" class="btn">
+            Verify Email Address
+        </a>-->
+    </div>
+
+</th:block>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<!--<head>
+&lt;!&ndash;    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">&ndash;&gt;
+&lt;!&ndash;    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />&ndash;&gt;
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
+</head>-->
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>
+
+        <form id="publicationsForm" th:action="@{/super/publications/submit}" th:object="${productoffer}" method="post"
+              th:if="${!success}" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <label style="font-size: 13px; margin-top: 8px;">Offer ID* </label>
+                    </div>
+
+                    <div class="col-md-4">
+                        <input type="text" th:attr="data-control='hue'" th:field="*{offerId}"
+                               class="form-control  minicolors-input" id="offerId"
+                               th:classappend="${#fields.hasErrors('offerId') ? 'is-invalid' : ''}"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('offerId')}" class="label text-danger "
+                           th:errors="*{offerId}"></p>
+                    </div>
+
+                    <div class="col-md-2">
+
+                        <label style="font-size: 13px; margin-top: 8px;">Offer Name* </label>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <input type="text" th:field="*{offerName}" class="form-control colorpicker"
+                               id="offerName"
+                               th:classappend="${#fields.hasErrors('offerName') ? 'is-invalid' : ''}"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('offerName')}" class="label text-danger "
+                           th:errors="*{offerName}"></p>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="summernote">
+                            <textarea type="text" th:attr="data-control='hue'" th:field="*{offerDescription}"
+                                      class="form-control  minicolors-input" id="offerDescription"
+                                      th:classappend="${#fields.hasErrors('offerDescription') ? 'is-invalid' : ''}"
+                                      autofocus="autofocus" rows="10" cols="100" th:text="${offerDescription}"></textarea>
+                            <p th:if="${#fields.hasErrors('offerDescription')}" class="label text-danger "
+                               th:errors="*{offerDescription}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12" style="height: 175px; overflow-y: auto;">
+                        <label>Select Products* </label>
+
+                        <!--checkboxes-->
+                        <ul style="list-style: none;">
+                            <li th:each="type : ${productList}">
+                                <input type="checkbox" th:value="${type.getId()}"
+                                       th:field="*{productSet}"
+                                       th:name="productSet" th:id="productSet" />
+                                <label th:text="${type.getProductName() + ' - $' + #numbers.formatDecimal(type.getProductPrice(),0,'COMMA',0,'POINT')}"></label>
+                            </li>
+                        </ul>
+
+                        <!--Hello World-->
+
+                        <!--dropdown-->
+                        <!--<select class="form-control" name="productSet" id="productSet"
+                                style="margin-top:0px; height: 230px;"
+                                multiple th:if="${not #lists.isEmpty(productList)}">
+                            &lt;!&ndash;th:field="${productCategoryDetail}"&ndash;&gt;
+                            <option th:each="type : ${productList}"
+                                    th:value="${type.getId()}"
+                                    th:text="${type.getProductName() + ' - $' + #numbers.formatDecimal(type.getProductPrice(),0,'COMMA',0,'POINT')}"></option>
+                            </option>
+                        </select>-->
+
+                        <select class="form-control" name="productSet" th:if="${#lists.isEmpty(productList)}">
+                            <!--th:field="${productCategoryDetail}"-->
+                            <option th:text="${'Offers are available on all Data products. No products to show.'}" th:checked="${selectedProducts}">
+
+                            </option>
+                        </select>
+
+                        <p th:if="${#fields.hasErrors('productSet')}" class="label text-danger "
+                           th:errors="*{productSet}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="custom-file mb-3">
+                            &lt;!&ndash;<input type="file" name="offerThumbnailname"
+                                   class="form-control custom-file-input"
+                                   id="offerThumbnailname"
+                                   th:classappend="${#fields.hasErrors('offerThumbnailname') ? 'is-invalid' : ''}"
+                                   placeholder="Upload thumbnail of Offer*"
+                                   autofocus="autofocus">
+                            <label class="custom-file-label" for="offerThumbnailname">Upload thumbnail of Offer</label>&ndash;&gt;
+                            &lt;!&ndash;<p th:if="${#fields.hasErrors('offerThumbnailname')}" class="label text-danger "
+                               th:errors="*{offerThumbnailname}"></p>&ndash;&gt;
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+
+            <div class="form-group">
+                <div class="form-row">
+
+                    <div class="col-md-2">
+                        <label style="margin-top: 8px;">Price ($)* </label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" th:attr="data-control='hue'" th:field="*{discountedPrice}"
+                               class="form-control  minicolors-input" id="discountedPrice"
+                               th:classappend="${#fields.hasErrors('discountedPrice') ? 'is-invalid' : ''}"
+                               placeholder="Discounted Price*"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('discountedPrice')}" class="label text-danger "
+                           th:errors="*{discountedPrice}"></p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="file" name="offerThumbnailname"
+                               class="form-control custom-file-input"
+                               id="offerThumbnailname"
+                               th:classappend="${#fields.hasErrors('offerThumbnailname') ? 'is-invalid' : ''}"
+                               placeholder="Upload thumbnail"
+                               autofocus="autofocus">
+                        <label style="margin-top: 38px; font-style: italic;">Only .png/.jpg/.jpeg allowed<br>Max upload image size : 500KB</label>
+                        <label class="custom-file-label" for="offerThumbnailname">Upload thumbnail</label>
+                        <!--<p th:if="${#fields.hasErrors('offerThumbnailname')}" class="label text-danger "
+                           th:errors="*{offerThumbnailname}"></p>-->
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <label style="font-size: 13px; margin-top: 8px;">Start Date*</label>
+                    </div>
+                    <!--datetime-local-->
+                    <div class="col-md-4">
+                        <input type="date" th:field="*{startDate}" th:attr="data-control='hue'"
+                               name="startDate" onchange="startDateEvent(this);"
+                               th:value="${startDatePrevious}"
+                               class="form-control  date-picker" id="startDate"
+                               th:classappend="${#fields.hasErrors('startDate') ? 'is-invalid' : ''}"
+                               placeholder="Start Date*"
+                               autofocus="autofocus">
+                        <!--<p th:if="${#fields.hasErrors('startDate')}" class="label text-danger"
+                           th:errors="*{startDate}"></p>-->
+                    </div>
+                    <div class="col-md-2">
+                        <label style="font-size: 13px; margin-top: 8px;">End Date</label>
+                    </div>
+                    <div class="col-md-4">
+                        <!--th:classappend="${#fields.hasErrors('endDate') ? 'is-invalid' : ''}"-->
+                        <input type="date" th:field="*{endDate}" th:attr="data-control='hue'" name="endDate"
+                               class="form-control  date-picker" id="endDate"
+                               th:value="${endDatePrevious}" onchange="endDateEvent(this);"
+                               placeholder="End Date*"
+                               autofocus="autofocus">
+                        <label style="font-style: italic;">leave this blank if you don't want offer to end</label>
+                        <p th:if="${#fields.hasErrors('endDate')}" class="label text-danger "
+                           th:errors="*{endDate}"></p>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-2">
+                    </div>
+                    &lt;!&ndash;datetime-local&ndash;&gt;
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-4">
+                        <label style="margin-top: 38px;">leave this blank if you don't want offer to end</label>
+                    </div>
+                </div>
+            </div>-->
+
+            <!--<div class="form-group">
+                <div class="form-row">
+
+                    <div class="col-md-6">
+                        <label>Start Date and Time:</label>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <input type="datetime-local" th:value="*{startDate}" th:attr="data-control='hue'"
+                               name="startDate"
+                               class="form-control  date-picker" id="startDate"
+                               th:classappend="${#fields.hasErrors('startDate') ? 'is-invalid' : ''}"
+                               placeholder="Start Date*"
+                               autofocus="autofocus">
+&lt;!&ndash;                        <input type="datetime-local" th:field="*{startDate}" th:attr="data-control='hue'"
+                               name="startDate"
+                               class="form-control  date-picker" id="startDate"
+                               th:classappend="${#fields.hasErrors('startDate') ? 'is-invalid' : ''}"
+                               placeholder="Start Date*"
+                               autofocus="autofocus">&ndash;&gt;
+
+
+                        <p th:if="${#fields.hasErrors('startDate')}" class="label text-danger "
+                           th:errors="*{startDate}"></p>
+                    </div>
+
+
+                </div>
+            </div>-->
+
+            <!--<div class="form-group">
+                <div class="form-row">
+
+                    <div class="col-md-6">
+                        <label>End Date and Time:</label>
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="datetime-local" th:value="*{endDate}" th:attr="data-control='hue'" name="endDate"
+                               class="form-control  date-picker" id="endDate"
+                               th:classappend="${#fields.hasErrors('endDate') ? 'is-invalid' : ''}"
+                               placeholder="End Date*"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('endDate')}" class="label text-danger "
+                           th:errors="*{endDate}"></p>
+                    </div>
+                </div>
+            </div>-->
+
+
+            <div class="form-group">
+                <div class="form-row">
+
+                    <div class="col-md-6">
+                        <!--<input type="checkbox" th:field="*{status}" data-toggle="toggle" class="tCheckbox"
+                               data-on="Enable" data-off="Disable" data-height="40" id="tg">
+                        <p th:if="${#fields.hasErrors('status')}" class="label text-danger "
+                           th:errors="*{status}"></p>-->
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}">
+    </div>
+</div>
+
+<!--for summernote-full-->
+<!--<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.js"/>-->
+
+<!--for summernote-lite-->
+<!--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>-->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+<script th:src="@{/front/nimda/js/ajax.js}"></script>
+<script th:src="@{/front/nimda/js/paging.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script type="text/javascript">
+
+    jQuery(document).ready(function () {
+        setTimeout(function () {
+            $('#offerDescription').summernote({
+                height: 100,
+                toolbar: [
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['view', ['fullscreen']]
+                ]
+            });
+        }, 100);
+    });
+
+    var start_date = null;
+    function startDateEvent(object) {
+        start_date = object.value;
+        console.log(start_date);
+        $('#endDate').attr('min', start_date);
+        console.log("Abhimanyu...!");
+    }
+
+    function endDateEvent(object) {
+        console.log(object.value);
+    }
+
+    $('#tg').prop('checked', true).change();
+
+    $('#productSet').multiselect({
+        nonSelectedText: 'Select Product',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,
+
+    });
+
+
+
+</script>
+<!--<script type="text/javascript">
+    /*    $(document).ready(function() {
+
+            $( '#productSet' ).change(function() {
+                    var price = 0;
+                    $( "select option:selected" ).each(function() {
+                        price =price+parseFloat($( this ).val())  ;
+                    });
+                    $( '#totalPrice' ).val( price );
+                })
+                .trigger( "change" );
+        });*/
+
+</script>-->
+
+</html>

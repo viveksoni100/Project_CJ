@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="row">
+    <div class="col-md-12">
+
+
+        <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>
+        <form id="publicationsForm" th:action="@{/super/publications/submit}" th:object="${publications}" method="post"
+              th:if="${!success}" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+
+                        <input type="text" th:attr="data-control='hue'" th:field="*{publicationId}"
+                               class="form-control  minicolors-input" id="publicationId"
+                               th:classappend="${#fields.hasErrors('publicationId') ? 'is-invalid' : ''}"
+                               placeholder="Publication ID*"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('publicationId')}" class="label text-danger "
+                           th:errors="*{publicationId}"></p>
+                    </div>
+                    <div class="col-md-6">
+
+                        <input type="text" th:field="*{publicationTitle}" class="form-control colorpicker"
+                               id="publicationTitle"
+                               th:classappend="${#fields.hasErrors('publicationTitle') ? 'is-invalid' : ''}"
+                               placeholder="Publication title"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('publicationTitle')}" class="label text-danger "
+                           th:errors="*{publicationTitle}"></p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <textarea type="text" th:attr="data-control='hue'" th:field="*{description}"
+                                  class="form-control  minicolors-input" id="description"
+                                  th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}"
+                                  placeholder="Description"
+                                  autofocus="autofocus"></textarea>
+
+                        <p th:if="${#fields.hasErrors('description')}" class="label text-danger "
+                           th:errors="*{description}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+
+                        <input type="text" th:attr="data-control='hue'" th:field="*{price}"
+                               class="form-control  minicolors-input" id="price"
+                               th:classappend="${#fields.hasErrors('price') ? 'is-invalid' : ''}"
+                               placeholder="Price*"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('price')}" class="label text-danger "
+                           th:errors="*{price}"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-control" name="categories" id="categories" style="margin-top:0px;"
+                                multiple="multiple">
+
+
+                            <option th:each="type : ${@serviceUtil.getAllCategories()}"
+                                    th:value="${{type}}"
+                                    th:selected="${categories.contains(type.id) ? true : false}"
+                                    th:text="${type.getCategoryName()}"></option>
+
+
+                            </option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('categories')}" class="label text-danger "
+                           th:errors="*{categories}"></p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="custom-file mb-3">
+                            <input type="file" th:attr="data-control='hue'" name="lImage"
+                                   class="form-control  custom-file-input" id="labelPublicationOriginalImage"
+                                   th:classappend="${#fields.hasErrors('labelPublicationOriginalImage') ? 'is-invalid' : ''}"
+                                   placeholder="Upload pdf file*"
+                                   autofocus="autofocus">
+                            <label class="custom-file-label" for="labelPublicationOriginalImage">Upload pdf
+                                file*</label>
+                            <p th:if="${#fields.hasErrors('labelPublicationOriginalImage')}" class="label text-danger "
+                               th:errors="*{labelPublicationOriginalImage}"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="custom-file mb-3">
+                            <input type="file" name="thumb"
+                                   class="form-control custom-file-input"
+                                   id="labelPublicationThumbnail"
+                                   th:classappend="${#fields.hasErrors('labelPublicationThumbnail') ? 'is-invalid' : ''}"
+                                   placeholder="Uplaod thumbnail for pdf *"
+                                   autofocus="autofocus">
+                            <label class="custom-file-label" for="labelPublicationThumbnail">Uplaod thumbnail for pdf
+                                *</label>
+                            <p th:if="${#fields.hasErrors('labelPublicationThumbnail')}" class="label text-danger "
+                               th:errors="*{labelPublicationThumbnail}"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="custom-file mb-3">
+                            <input type="file" th:attr="data-control='hue'" name="dImage"
+                                   class="form-control  custom-file-input" id="labelPublicationUploadDoc"
+                                   th:classappend="${#fields.hasErrors('labelPublicationUploadDoc') ? 'is-invalid' : ''}"
+                                   placeholder="Upload doc file*"
+                                   autofocus="autofocus">
+                            <label class="custom-file-label" for="labelPublicationUploadDoc">Upload
+                                doc file*</label>
+                            <p th:if="${#fields.hasErrors('labelPublicationUploadDoc')}" class="label text-danger "
+                               th:errors="*{labelPublicationUploadDoc}"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="custom-file mb-3">
+                            <input type="file" name="tImage"
+                                   class="form-control custom-file-input"
+                                   id="labelPublicationUploadToc"
+                                   th:classappend="${#fields.hasErrors('labelPublicationUploadToc') ? 'is-invalid' : ''}"
+                                   placeholder="Upload toc file*"
+                                   autofocus="autofocus">
+                            <label class="custom-file-label" for="labelPublicationUploadToc">Upload toc file*</label>
+                            <p th:if="${#fields.hasErrors('labelPublicationUploadToc')}" class="label text-danger "
+                               th:errors="*{labelPublicationUploadToc}"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+
+                        <input type="checkbox" th:field="*{documentInSplitFormat}" data-toggle="toggle"
+                               class="tCheckbox" data-on="Split format" data-off="No split format" data-height="40">
+                        <p th:if="${#fields.hasErrors('documentInSplitFormat')}" class="label text-danger "
+                           th:errors="*{documentInSplitFormat}"></p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="checkbox" th:field="*{status}" data-toggle="toggle" class="tCheckbox"
+                               data-on="Enable" data-off="Disable" data-height="40">
+                        <p th:if="${#fields.hasErrors('status')}" class="label text-danger "
+                           th:errors="*{status}"></p>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}">
+    </div>
+</div>
+</html>

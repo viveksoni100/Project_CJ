@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" th:href="@{front/css/loginstyle.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+</head>
+
+<th:block layout:fragment="subheader">
+    <div class="ereaders-subheader">
+        <div class="ereaders-subheader-text">
+            <span class="ereaders-subheader-transparent"></span>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Reset Password here</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+
+<th:block layout:fragment="content">
+
+    <style>
+        .correct-ins{
+            color: green;
+            text-decoration: line-through;
+        }
+    </style>
+
+    <div class="ereaders-main-content ereaders-error-full">
+        <div class="ereaders-main-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>
+                        <body style="background-color: #ffffff">
+                            <div class="container rst-pswrd-wrp">
+                                <article class="full rst-pswrd-cnt-wrp">
+                                    <!--<h1 style="margin-right: -28%;font-size: 22px;font-weight: 700;margin-bottom: 23px;text-align: center;text-indent: 6px;
+	letter-spacing: 7px;text-transform: uppercase;color: #263238;">Global Trade Data</h1>-->
+                                    <div class="tabs rst-pswrd-top-tb">
+                                        <span class="tab signin active rst-pswrd-ttl">Choose your password</span>
+                                    </div>
+                                    <div class="content rst-pswrd-frm-blk">
+                                        <div class="signin-cont cont rst-pswrd-fcnt-blk">
+                                            <form method="post" th:action="@{'/forgot/password/token'}" th:object="${resetPasswordForm}"
+                                                                 th:if="${!expired}" >
+                                                <div class="form-group">
+                                                    <input type="password" th:field="*{password}" id="pass" name="pass" placeholder="New Password" class="form-control"
+                                                           th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}">
+                                                    <i class="fa fa-check rst-pswrd-icn" id="correct1" style="display:none;"></i>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <!--<p th:if="${#fields.hasErrors('password')}" class="label error" th:errors="*{password}">Incorrect LP</p>-->
+                                                    <div th:if="${#fields.hasErrors('password')}" class="label text-danger" th:errors="*{password}"></div>
+                                                    <input type="hidden" th:field="*{token}">
+                                                    <input type="hidden" th:field="*{uid}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="password" th:field="*{resetPassword}" id="cpass" name="cpass" placeholder="Confirm New Password" class="form-control"
+                                                       th:classappend="${#fields.hasErrors('resetPassword') ? 'is-invalid' : ''}" >
+                                                    <!--<p th:if="${#fields.hasErrors('resetPassword')}" class="label error" th:errors="*{resetPassword}">Incorrect LP</p>-->
+                                                    <i class="fa fa-check rst-pswrd-icn" id="correct2" style="display:none;"></i>
+                                                    <i class="fa fa-exclamation-triangle rst-pswrd-icn" id="wrong" style="display:none;"></i>
+                                                    <p id="msg" class="rst-error-msg" style="display: none;">Passwords do not match</p>
+                                                    <div th:if="${#fields.hasErrors('resetPassword')}" class="label text-danger"
+                                                         th:errors="*{resetPassword}"></div>
+                                                </div>
+
+                                                <div class="rst-pswrd-mst-cnt">
+                                                    <h6 class="rst-pswrd-mst-cnt-ttl">Password must contain </h6>
+                                                    <h6 id="ins1" class="rst-pswrd-mst-cnt-msg">Atleast 1 uppercase letter </h6>
+                                                    <h6 id="ins2" class="rst-pswrd-mst-cnt-msg">Atleast 1 number</h6>
+                                                    <h6 id="ins3" class="rst-pswrd-mst-cnt-msg">Atleast 8 characters</h6>
+                                                </div>
+
+                                                <div class="submit-wrap">
+                                                <!--<input style="font-size: x-large; height: 55px; width: 65%; margin-right: 100px;" type="submit" value="Log in" class="ereaders-simple-btn ereaders-bgcolor">-->
+                                                <input type="submit" id="btn" value="Change my password" class="d-flex t-small t-dark mar-15-0 mb-sm-0 btn btn-success rst-chng-pswrd-btn" disabled />
+                                                </div>
+
+                                                <script type="text/javascript">
+                                                    $("#cpass").on('keyup', function(e) {
+                                                        console.log("key is pressed...");
+                                                        if($("#cpass").val()===$("#pass").val()){
+                                                            $('#cpass').css('border-color', 'green');
+                                                            $('#cpass').css('color', 'green');
+                                                            $('#correct2').css('display','block');
+                                                            $('#wrong').css('display','none');
+                                                            $('#msg').css('display','none');
+                                                            $('#btn').removeAttr('disabled');
+                                                        }else{
+                                                            $('#cpass').css('border-color', 'red');
+                                                            $('#cpass').css('color', 'red');
+                                                            $('#correct2').css('display','none');
+                                                            $('#wrong').css('display','block');
+                                                            $('#wrong').css('color','red');
+                                                            $('#msg').css('display','block');
+                                                            $('#btn').attr('disabled','disabled');
+                                                        }
+                                                    });
+                                                    $("#pass").on('keyup', function(e) {
+                                                        console.log("key is pressed...");
+                                                        var u = 0;
+                                                        var n = 0;
+                                                        var l = 0;
+                                                        var text = document.getElementById("pass").value;
+                                                        if(e.keyCode == 8 || e.keyCode == 46){
+                                                            //var text = document.getElementById("pass").value;
+                                                            for(ch of text) {
+                                                                if($.isNumeric(ch))
+                                                                    n=1;
+
+                                                                if(isUpperCase(ch))
+                                                                    u=1;
+                                                            }
+                                                            if(n==0)
+                                                                $("#ins2").removeClass("correct-ins");
+                                                            else
+                                                                $("#ins2").addClass("correct-ins");
+
+                                                            if(u==0)
+                                                                $("#ins1").removeClass("correct-ins");
+                                                            else
+                                                                $("#ins1").addClass("correct-ins");
+                                                        }
+                                                        for(c of text) {
+                                                            if($.isNumeric(c))
+                                                                n=1;
+
+                                                            if(isUpperCase(c))
+                                                                u=1;
+
+                                                            if(n==0)
+                                                                $("#ins2").removeClass("correct-ins");
+                                                            else
+                                                                $("#ins2").addClass("correct-ins");
+
+                                                            if(u==0)
+                                                                $("#ins1").removeClass("correct-ins");
+                                                            else
+                                                                $("#ins1").addClass("correct-ins");
+                                                        }
+                                                        if($("#pass").val().length >= 8){
+                                                            $("#ins3").addClass("correct-ins");
+                                                            l=1;
+                                                        }
+                                                        else{
+                                                            $("#ins3").removeClass("correct-ins");
+                                                            l=0;
+                                                        }
+                                                        if(u==1 && l==1 && n==1){
+                                                            $('#pass').css('border-color', 'green');
+                                                            $('#pass').css('color', 'green');
+                                                            $('#correct1').css('display','block');
+                                                        }else{
+                                                            $('#pass').css('border-color', 'none');
+                                                            $('#pass').css('color', 'none');
+                                                            $('#correct1').css('display','none');
+                                                        }
+                                                        function isUpperCase(str) {
+                                                            if($.isNumeric(str)){
+                                                                return false;
+                                                            }
+                                                            return str === str.toUpperCase();
+                                                        }
+                                                    });
+                                                </script>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </article>
+                            <!--                            <div class="half bg">-->
+                            <!--                                <img th:src="@{/front/extra-images/login-thumb.png}" style="margin-top: 125px;">-->
+                            <!--                            </div>-->
+                            </div>
+                        </body>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!--    <script th:src="@{front/script/loginscript.js}"></script>-->
+<!--    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>-->
+<!--    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>-->
+<!--    <script type="text/javascript" th:src="@{/front/script/functions.js}"></script>-->
+
+</th:block>
+<!--<div layout:fragment="content" id="page_content">-->
+<!--    <div class="container-fluid">-->
+<!--        <div class="row mar-tb15 middle">-->
+<!--            <div class="col-md-6">-->
+<!--                <h5 class="uppercase themecolor mb-0"> Reset password</h5>-->
+<!--            </div>-->
+
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <div class="col-md-3"></div>-->
+<!--            <div class="col-md-6">-->
+<!--                <div class="">-->
+
+
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+<!--                            <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>-->
+<!--                            <form method="post" th:action="@{'/forgot/password/token'}" th:object="${resetPasswordForm}"-->
+<!--                            th:if="${!expired}"-->
+<!--                            >-->
+<!--                                <div class="form-group">-->
+
+<!--                                    <input type="password" th:field="*{password}" placeholder="Password"-->
+<!--                                           th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}"-->
+<!--                                    >-->
+
+<!--                                    <div th:if="${#fields.hasErrors('password')}" class="label text-danger "-->
+<!--                                       th:errors="*{password}"></div>-->
+
+<!--                                    <input type="hidden" th:field="*{token}">-->
+<!--                                    <input type="hidden" th:field="*{uid}">-->
+
+<!--                                </div>-->
+<!--                                <div class="form-group">-->
+
+<!--                                    <input type="password" th:field="*{resetPassword}" placeholder="Retype password"-->
+<!--                                           th:classappend="${#fields.hasErrors('resetPassword') ? 'is-invalid' : ''}"-->
+<!--                                    >-->
+
+<!--                                    <div th:if="${#fields.hasErrors('resetPassword')}" class="label text-danger "-->
+<!--                                       th:errors="*{resetPassword}"></div>-->
+
+<!--                                </div>-->
+<!--                                <div class="form-group">-->
+
+<!--                                    <button type="submit" class="btn btn-primary btn-sm">Reset</button>-->
+
+<!--                                </div>-->
+
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+
+<!--            </div>-->
+<!--            <div class="col-md-3"></div>-->
+<!--        </div>-->
+
+<!--    </div>-->
+<!--</div>-->
+
+<!--<th:block layout:fragment="scripts">-->
+<!--    <script th:src="@{/easeClick-theme/js/paging.js}"></script>-->
+<!--</th:block>-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+</html>

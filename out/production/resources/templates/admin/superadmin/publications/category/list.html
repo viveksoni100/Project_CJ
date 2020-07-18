@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/main}">
+
+
+<th:block layout:fragment="content">
+    <!--<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>-->
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <a
+                        th:href="'javascript:void(0)'" class="btn btn-primary btn-sm pull-right category-create"
+                        th:attr="data-title='Add category',data-size='medium',data-url='/ajax/super/category/form', data-submiturl='/ajax/super/category/create', data-close='configCreated',data-reload='true'"
+                >Add Category</a>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title"> Categories</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" id="replace">
+                            <div class="dataTables_wrapper dt-bootstrap4">
+                                <div class="row m-0">
+                                    <Div class="col-sm-12">
+                                        <form th:action="@{${pagingUrl}}"
+                                              th:attr="data-baseurl=${pagingUrl},data-formname='categoryList',data-replacediv='replace'"
+                                              id="categoryList" class="paging" autocomplete="off">
+                                            <table class="table " id="dataTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>-</th>
+                                                    <th th:with="order=${pageable.getSort().getOrderFor('categoryName')}">
+                                                        <a href="javascript:void(0)"
+                                                           th:value="${categoryName}"
+                                                           th:attr="data-sort='categoryName',data-baseurl=${pagingUrl},data-formname='categoryList',data-replacediv='replace',data-page='1',
+                            data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                           class="page-sort">
+                                                            Category</a>
+                                                    </th>
+                                                    <th th:with="order=${pageable.getSort().getOrderFor('categoryDescription')}">
+                                                        <a href="javascript:void(0)"
+                                                           th:value="${categoryDescription}"
+                                                           th:attr="data-sort='categoryDescription',data-baseurl=${pagingUrl},data-formname='categoryList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                           class="page-sort"
+                                                        >Description</a>
+                                                    </th>
+
+                                                    <th style="text-align: center">
+                                                        Status
+                                                    </th>
+                                                    <th style="text-align: right">
+                                                        Edit
+                                                    </th>
+
+                                                </tr>
+                                                <tr>
+                                                    <th>-</th>
+
+                                                    <th>
+                                                        <input type="text" name="categoryName" placeholder="Category"
+                                                               class="mark1" autocomplete="off">
+                                                    </th>
+                                                    <th>
+                                                        <input type="text" name="categoryDescription" placeholder="Description"
+                                                               class="mark1 " autocomplete="nope">
+                                                    </th>
+                                                    <th>
+
+                                                    </th>
+
+                                                    <th>
+                                                        <input type="submit" style="display: none;">
+                                                    </th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody class="marktext">
+                                                <tr th:each="category : ${categories}">
+                                                    <td th:text="${categoryStat.index+1}"></td>
+                                                    <td th:width="'300px'" th:text="${category.categoryName}"></td>
+
+                                                    <td th:text="${category.categoryDescription}"></td>
+
+                                                    <td th:width="200px" style="text-align: center">
+                                                        <form method="post" th:id="${'formstatus'+categoryStat.index}">
+                                                            <i class="fa fa-3x categoryStatus"
+                                                               th:attr="data-id=${@pathVariableEnc.encrypt(category.id)},data-after='configStatusSave',
+                                                            data-ele=${'form'+categoryStat.index}"
+                                                               th:classappend="${(!category.status) ? 'fa-toggle-off text-danger' : 'fa-toggle-on text-success'}"></i>
+                                                        </form>
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                                th:href="'javascript:void(0)'"
+                                                                class="btn btn-primary btn-sm pull-right category-create"
+                                                                th:attr="data-onload='editConfig',data-title=${'Edit ' + category.categoryName},data-size='medium',data-url='/ajax/super/category/form/'+${@pathVariableEnc.encrypt(category.id)}, data-submiturl='/ajax/super/category/create/'+${@pathVariableEnc.encrypt(category.id)}, data-close='configCreated',data-reload='true'"
+                                                        >Edit</a>
+
+
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </form>
+                                    </div>
+                                </Div>
+                                <div th:remove="tag" th:include="layouts/paging :: paging"
+                                     th:with="pageObj=${categories},replaceDiv='replace',formName='categoryList', pagingUrl=${pagingUrl}"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</th:block>
+<th:block layout:fragment="extrascripts">
+    <script th:src="@{/front/nimda/js/ajax.js}"></script>
+    <script th:src="@{/front/nimda/js/paging.js}"></script>
+
+
+    <script type="text/javascript">
+        $(document).on("click", ".category-create", function (e) {
+            confirmAjaxSubmit($(this));
+        });
+
+        function configCreated(params, currentElement, popup) {
+            closeConfirmPopupWithAlertMessage(params, currentElement, popup, "Config created", "html");
+        }
+
+
+        $(document).on("click", ".configValReload", function (e) {
+            //if ($(this).val() != "") {
+            data = {};
+            data['configVaue'] = $("#" + $(this).data("inputid")).val();
+            data['csrfParameter'] = $("meta[name='_csrf_parameter']").attr("content");
+            data['csrfToken'] = $("meta[name='_csrf']").attr("content");
+            data['csrfHeader'] = $("meta[name='_csrf_header']").attr("content");
+            ajaxPost("post", "/ajax/super/category/change/" + $(this).data("id"), data, $(this), true);
+            //}
+        });
+
+
+        $(document).on("click", ".categoryStatus", function (e) {
+            //if ($(this).val() != "") {
+            ajaxPost("post", "/ajax/super/category/status/" + $(this).data("id"), $("#" + $(this).data("ele")).serialize(), $(this), true);
+            //}
+        });
+
+        function configSave(params, currentElement) {
+            if (params.success) {
+                reloadPage();
+            } else {
+                $.alert({
+                    title: false,
+                    content: "<div class='alert alert-danger'>" + params.msg + "</div>",
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-primary',
+                            action: function () {
+
+                            }
+                        },
+                    }
+                });
+            }
+        }
+
+        function configStatusSave(params, currentElement) {
+            if (params.success) {
+                if (params.obj[0]) {
+                    currentElement.removeClass("text-danger").removeClass("fa-toggle-off");
+                    currentElement.addClass("text-success").addClass("fa-toggle-on");
+                } else {
+                    currentElement.removeClass("text-success").removeClass("fa-toggle-on");
+                    currentElement.addClass("text-danger").addClass("fa-toggle-off");
+
+                }
+            } else {
+                $.alert({
+                    title: false,
+                    content: "<div class='alert alert-danger'>" + params.msg + "</div>",
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-primary',
+                            action: function () {
+
+                            }
+                        },
+                    }
+                });
+            }
+        }
+
+        function editConfig(res, currentElement) {
+
+        }
+    </script>
+</th:block>
+</html>

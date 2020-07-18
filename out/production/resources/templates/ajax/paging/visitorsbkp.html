@@ -1,0 +1,136 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="dataTables_wrapper dt-bootstrap4">
+    <div class="row">
+        <Div class="col-sm-12">
+            <form th:action="@{${pagingUrl}}"
+                  th:attr="data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace'"
+                  id="visitorsList" class="paging">
+                <table lass="table " id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>
+                            <div class="checkbox checkbox-primary">
+                                <input type="checkbox" id="checkall" >
+                                <input type="hidden" id="start" name="start"
+                                       th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd 00:00:00')}">
+                                <label for="checkall"></label>
+                            </div>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('firstName')}">
+                            <a href="javascript:void(0)"
+                               th:value="${firstName}"
+                               th:attr="data-sort='firstName',data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace',data-page='1',
+                    data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                First name</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('lastName')}">
+                            <a href="javascript:void(0)"
+                               th:value="${lastName}"
+                               th:attr="data-sort='lastName',data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace',data-page='1',data-dir='asc',
+                        data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort"
+                            >Last Name</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('city')}">
+                            <a href="javascript:void(0)"
+                               th:value="${city}"
+                               th:attr="data-sort='city',data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace',data-page='1',data-dir='asc',
+                        data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                City</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('state')}">
+                            <a href="javascript:void(0)"
+                               th:value="${state}"
+                               th:attr="data-sort='state',data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace',data-page='1',data-dir='asc',
+                        data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                State</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('country')}">
+                            <a href="javascript:void(0)"
+                               th:value="${country}"
+                               th:attr="data-sort='country',data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace',data-page='1',data-dir='asc',
+                        data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort"
+                            >Country</a>
+                        </th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>-</th>
+
+                        <th>
+                            <input type="text" name="first_name" placeholder="First name" th:value="${firstName}">
+                        </th>
+                        <th>
+                            <input type="text" name="last_name" placeholder="Last name" th:value="${lastName}">
+                        </th>
+                        <th>
+                            <input type="text" name="city" placeholder="City" th:value="${city}">
+                        </th>
+                        <th>
+                            <input type="text" name="state" placeholder="State" th:value="${state}">
+                        </th>
+                        <th>
+                            <input type="text" name="country" placeholder="Country" th:value="${country}">
+                            <input type="submit" style="display: none;">
+                        </th>
+                        <th></th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="visitor : ${visitors}" th:if="${!visitors.empty}">
+                        <td th:text="${visitorStat.index+1}"></td>
+                        <td>
+                            <a href="javascript:void(0)" th:attr="data-url=@{'/ajax/visitor/info/'+ ${@pathVariableEnc.encrypt(visitor.id)}},
+                                            data-title=${visitor.firstName+'''s info'},data-size='large'"
+                               class="view-visitor"
+                               th:text="${visitor.firstName}">
+
+                            </a>
+                        </td>
+
+                        <td th:text="${visitor.lastName}"></td>
+                        <td th:text="${visitor.city}"></td>
+                        <td th:text="${visitor.state}"></td>
+                        <td th:text="${visitor.country.name}"></td>
+                        <td class="text-center">
+
+
+
+                            <button class="btn btn-xs btn-primary add-phone" type="button"
+                                    th:attr="data-url='/ajax/visitor/phone/form?vi='+${@pathVariableEnc.encrypt(visitor.id)},
+                                        data-submiturl='/ajax/visitor/phone/create',data-size='small',
+                                        data-after='',data-before='',data-replacediv='',data-title='Add phone', data-close='emailPhoneAdded'"
+
+                            ><i class="fas fa-phone"></i>
+                            </button> <button class="btn btn-xs btn-primary add-email" type="button"
+                                              th:attr="data-url='/ajax/visitor/email/form?vi='+${@pathVariableEnc.encrypt(visitor.id)},
+                                        data-submiturl='/ajax/visitor/email/create',data-size='small',
+                                        data-after='',data-before='',data-replacediv='',data-title='Add email', data-close='emailPhoneAdded'"
+
+                        ><i class="fas fa-envelope"></i>
+                        </button>
+                        </td>
+
+                    </tr>
+                    <tr th:if="${visitors.empty}">
+                        <td colspan="7">
+                            <div class="alert alert-danger">There are no records matching your search</div>
+                        </td>
+
+                    </tr>
+                    </tbody>
+
+                </table>
+            </form>
+        </Div>
+    </div>
+    <div th:include="base/paging :: paging" th:remove="tag"
+         th:with="pageObj=${visitors},replaceDiv='replace',formName='visitorsList', pagingUrl=${pagingUrl}"></div>
+</div>

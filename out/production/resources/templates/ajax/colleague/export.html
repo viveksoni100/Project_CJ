@@ -1,0 +1,176 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="row">
+    <div class="col-md-12">
+        <div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+        <form th:action="@{/user/colleagues/export}" th:object="${exportFormHost}" method="post" style="width: 99%">
+
+            <!--        <div class="form-group">-->
+
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <div class="mb-10">
+                        <div class="form-group">
+                            <div class="checkbox checkbox-primary">
+                                <input type="checkbox"
+                                       th:field="*{location}"
+                                       id="location">
+                                <label for="location">
+                                    Location
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-10">
+                        <div class="form-group">
+                            <div class="checkbox checkbox-primary">
+                                <input type="checkbox"
+                                       th:field="*{name}"
+                                       id="name">
+                                <label for="name">
+                                    Host Name
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-10">
+                        <div class="form-group">
+                            <div class="checkbox checkbox-primary">
+                                <input type="checkbox"
+                                       th:field="*{email}"
+                                       id="email">
+                                <label for="email">
+                                    Email
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-10">
+                        <div class="form-group">
+                            <div class="checkbox checkbox-primary">
+                                <input type="checkbox"
+                                       th:field="*{createdAt}"
+                                       id="createdAt">
+                                <label for="createdAt">
+                                    Created At
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-10">
+                        <div class="form-group">
+                            <div class="checkbox checkbox-primary">
+                                <input type="checkbox"
+                                       th:field="*{enabled}"
+                                       id="enabled">
+                                <label for="enabled">
+                                    Enabled for login
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-10">
+                        <div class="form-group">
+                            <div class="checkbox checkbox-primary">
+                                <input type="checkbox"
+                                       th:field="*{phone}"
+                                       id="phone">
+                                <label for="phone">
+                                    Phone
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-10">
+                        <div class="form-group">
+                            <div class="checkbox checkbox-primary">
+                                <input type="checkbox"
+                                       th:field="*{mobile}"
+                                       id="mobile">
+                                <label for="mobile">
+                                    Mobile
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-10">
+                        <div class="form-group">
+                            <div class="checkbox checkbox-primary">
+                                <input type="checkbox"
+                                       th:field="*{assistantOf}"
+                                       id="assistantOf">
+                                <label for="assistantOf">
+                                    Assistant Of
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-10">
+                        <div class="form-group">
+                            <div class="checkbox checkbox-primary">
+                                <input type="checkbox"
+                                       th:field="*{role}"
+                                       id="role">
+                                <label for="role">
+                                    Role
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--            <div class="form-group">-->
+            <!--                <div class="form-row">-->
+            <!--                    <div class="col-md-12">-->
+            <!--                        <div class="form-label-group required">-->
+            <!--&lt;!&ndash;                            <p for="visitors">Location*</p>&ndash;&gt;-->
+            <!--                            <select  class="form-control" th:field="*{location}" id="visitors">-->
+            <!--                                <option th:value="${''}">Select Location</option>-->
+            <!--                                <option th:each="type : ${@serviceUtil.getAllLocationByCompany(company)}"-->
+            <!--                                        th:value="${{type}}"-->
+            <!--                                        th:text="${type.locationName}"></option>-->
+            <!--                                </option>-->
+            <!--                            </select>-->
+            <!--                            <p th:if="${#fields.hasErrors('location')}" class="label text-danger "-->
+            <!--                               th:errors="*{location}"></p>-->
+
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
+
+
+
+
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <div class="mb-10">
+                        <input type="submit" class="btn btn-primary btn-xs" onclick="cnfbox.close();">
+                    </div>
+                </div>
+            </div>
+
+
+            <!--        </div>-->
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/main}">
+
+
+<th:block layout:fragment="content">
+    <!--<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>-->
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title"> Payments</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" id="replace">
+                            <div class="dataTables_wrapper dt-bootstrap4">
+                                <div class="row m-0">
+                                    <Div class="col-sm-12">
+                                        <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="\">
+                                                    <input type="checkbox" name="type" id="type" data-toggle="toggle"
+                                                           class="tCheckbox" data-on="YEARLY" data-off="MONTHLY"
+                                                          data-height="40" checked="checked">
+                                                    <br/>
+                                                    <input type="text" class="form-control form-inlinee" name="users" id="users"
+                                                           placeholder="Enter no of users to purchase license ">
+
+                                                    <button type="button" class="getForm" style="display: none;"
+                                                            th:attr="data-url=@{'/ajax/corporate/paymentform'}, data-replacediv='paymentdiv', data-replacecontent='yes'">
+                                                        Pay
+                                                    </button>
+
+
+                                                    <div id="paymentdiv" style="margin-top:40px">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </Div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</th:block>
+<th:block layout:fragment="extrascripts">
+    <script th:src="@{/front/nimda/js/ajax.js}"></script>
+    <script th:src="@{/front/nimda/js/paging.js}"></script>
+    <script type="text/javascript">
+        $(document).on("keyup", "#users", function (e) {
+
+
+            if (Number.isInteger(+$(this).val())) {
+                $(".getForm").click();
+            } else {
+                $.alert("Please enter valid users count");
+                $(this).val("");
+            }
+
+        });
+
+        $(document).on("change", "#type", function (e) {
+            if (Number.isInteger(+$("#users").val())) {
+                $(".getForm").click();
+            } else {
+                $.alert("Please enter valid users count");
+                $("#users").val("");
+            }
+        });
+        $(document).on("click", ".getForm", function (e) {
+            var url = $(this).data("url");
+            //url = url + "?users=" + $("#users").val();
+            $(this).data("url", url);
+            var data = {};
+            data["users"] = $("#users").val();
+            if ($("#type").prop("checked") == true) {
+                data["type"] = "Y";
+            } else {
+                data["type"] = "M";
+            }
+
+            ajaxGet("GET", $(this).data("url"), data, $(this), true);
+        });
+
+        $(document).ready(function () {
+            $('.tCheckbox').bootstrapToggle();
+        });
+
+
+    </script>
+</th:block>
+</html>

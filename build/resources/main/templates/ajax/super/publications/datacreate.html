@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+<div class="row">
+    <div class="col-md-12">
+
+
+        <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>
+
+        <form id="publicationsForm" th:action="@{/super/publications/submit}" th:object="${daasproduct}" method="post"
+              th:if="${!success}" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <label style="margin-top: 8px; font-size: 13px;">Product ID* </label>
+                    </div>
+                    <div class="col-md-4">
+
+                        <input type="text" th:attr="data-control='hue'" th:field="*{productId}"
+                               class="form-control  minicolors-input" id="productId"
+                               th:classappend="${#fields.hasErrors('productId') ? 'is-invalid' : ''}"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('productId')}" class="label text-danger "
+                           th:errors="*{productId}"></p>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label style="font-size: 13px; margin-top: 8px;">Product Name* </label>
+                    </div>
+                    <div class="col-md-4">
+
+                        <input type="text" th:field="*{productName}" class="form-control colorpicker"
+                               id="productName"
+                               th:classappend="${#fields.hasErrors('productName') ? 'is-invalid' : ''}"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('productName')}" class="label text-danger "
+                           th:errors="*{productName}"></p>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <label style=" font-size: 13px; margin-top: 8px;">Price ($)* </label>
+                    </div>
+                    <div class="col-md-4">
+
+                        <input type="number" th:attr="data-control='hue'" th:field="*{productPrice}"
+                               class="form-control  minicolors-input" id="productPrice"
+                               th:classappend="${#fields.hasErrors('productPrice') ? 'is-invalid' : ''}"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('productPrice')}" class="label text-danger "
+                           th:errors="*{productPrice}"></p>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label style="font-size: 13px; margin-top: 8px;">Category* </label>
+                    </div>
+                    <div class="col-md-4">
+
+                        <select class="form-control" name="categories" id="categories" style="margin-top:0px;">
+                            <!--th:field="${productCategoryDetail}"-->
+                            <option th:each="type : ${categories}" th:if="${!categories.empty}"
+                                    th:value="${type.getId()}"
+                                    th:text="${type.getProductCategory().getProductCategoryName()}"
+                                    th:selected="${daasproduct.productCategoryDetail!=null && daasproduct.productCategoryDetail.id==type.id}"></option>
+                            </option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('productCategoryDetail')}" class="label text-danger "
+                           th:errors="*{productCategoryDetail}"></p>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+
+                    <div class="col-md-2">
+                        <label style="font-size: 13px; margin-top: 8px;">Version Name </label>
+                    </div>
+
+                    <div class="col-md-4">
+                        <input type="text" th:attr="data-control='hue'"
+                               class="form-control  minicolors-input" id="versionName" name="versionName"
+                               autofocus="autofocus" th:value="${versionName}">
+
+                        <!--<p th:if="${#fields.hasErrors('productVersions')}" class="label text-danger "
+                           th:errors="*{productVersions}"></p>-->
+                    </div>
+
+                    <div class="col-md-2">
+                        <label style="font-size: 13px; margin-top: 8px;">Version No </label>
+                    </div>
+
+                    <div class="col-md-4">
+                        <input type="text" th:attr="data-control='hue'"
+                               class="form-control  minicolors-input" id="productVersion" name="productVersion"
+                               autofocus="autofocus" th:value="${productVersion}" readonly>
+
+                        <!--<p th:if="${#fields.hasErrors('productVersions')}" class="label text-danger "
+                           th:errors="*{productVersions}"></p>-->
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!--<div class="form-group">
+                <div class="form-row">
+
+                    <div class="col-md-6">
+                        <input type="text" th:attr="data-control='hue'" th:field="*{productId}"
+                               class="form-control  minicolors-input" id="productId"
+                               th:classappend="${#fields.hasErrors('productId') ? 'is-invalid' : ''}"
+                               placeholder="Data Product ID*"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('productId')}" class="label text-danger "
+                           th:errors="*{productId}"></p>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <input type="text" th:field="*{productName}" class="form-control colorpicker"
+                               id="productName"
+                               th:classappend="${#fields.hasErrors('productName') ? 'is-invalid' : ''}"
+                               placeholder="Product Name"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('productName')}" class="label text-danger "
+                           th:errors="*{productName}"></p>
+                    </div>
+
+                </div>
+            </div>-->
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="summernote">
+                            <textarea type="text" th:attr="data-control='hue'" th:field="*{productDescription}"
+                                  class="form-control  minicolors-input" id="productDescription"
+                                  th:classappend="${#fields.hasErrors('productDescription') ? 'is-invalid' : ''}"
+                                  autofocus="autofocus" rows="10" cols="100" th:text="${prductDescription}"></textarea>
+                            <p th:if="${#fields.hasErrors('productDescription')}" class="label text-danger "
+                               th:errors="*{productDescription}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="custom-file mb-3">
+                            <input type="file" th:attr="data-control='hue'" name="dataFile"
+                                   class="form-control  custom-file-input" id="dataFile"
+                                   th:classappend="${#fields.hasErrors('dataFileName') ? 'is-invalid' : ''}"
+                                   placeholder="Upload item file*"
+                                   autofocus="autofocus" multiple="multiple">
+                            <label style="margin-top: 38px; font-style: italic">Only .json/.pdf/.xls/.xml/.octet_stream/.txt/.txtxml allowed in zip file.</label>
+                            <label class="custom-file-label" for="dataFile">Upload item file*</label>
+                            <p th:if="${#fields.hasErrors('dataFileName')}" class="label text-danger "
+                               th:errors="*{dataFileName}"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="custom-file mb-3">
+                            <input type="file" name="productThumbnail"
+                                   class="form-control custom-file-input"
+                                   id="productThumbnail"
+                                   th:classappend="${#fields.hasErrors('productThumbnailName') ? 'is-invalid' : ''}"
+                                   placeholder="Upload thumbnail"
+                                   autofocus="autofocus">
+                            <label style="margin-top: 38px; font-style: italic">Only .png/.jpg/.jpeg allowed<br>Max upload image size : 500KB</label>
+                            <!--<label style="margin-top: 38px;">image size : W-275 X H-285 is allowed.</label>-->
+                            <label class="custom-file-label" for="productThumbnail">Upload thumbnail</label>
+                            <p th:if="${#fields.hasErrors('productThumbnailName')}" class="label text-danger "
+                               th:errors="*{productThumbnailName}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--<div class="form-group">
+                <div class="form-row">
+
+                </div>
+            </div>-->
+
+            <div class="form-group">
+                <div class="form-row">
+
+                    <div class="col-md-3">
+
+                        <!--togglebutton-->
+
+                        <!--fancy-checkbox-->
+                        <!--<input checked type="checkbox"
+                               th:field="*{status}"
+                               data-toggle="toggle"
+                               class="tCheckbox"
+                               data-on="Enable" data-off="Disable" data-height="40" id="tg"/>
+
+                        <p th:if="${#fields.hasErrors('status')}" class="label text-danger "
+                           th:errors="*{status}"></p>-->
+                    </div>
+
+                    <div class="col-md-3">
+                        <label></label>
+                    </div>
+
+                    <!--<div class="col-md-2">
+                        <label style="margin-top: 8px;">Version :</label>
+                    </div>
+
+                    <div class="col-md-4">
+                        <input type="text" th:attr="data-control='hue'"
+                               class="form-control  minicolors-input" id="productVersion" name="productVersion"
+
+                               placeholder="Product Version*"
+                               autofocus="autofocus" th:value="${productVersion}" readonly>
+
+                        &lt;!&ndash;<p th:if="${#fields.hasErrors('productVersions')}" class="label text-danger "
+                           th:errors="*{productVersions}"></p>&ndash;&gt;
+
+                    </div>-->
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="form-row">
+                    <!--                    <div class="col-md-6">
+
+                                            <input type="checkbox" th:field="*{documentInSplitFormat}" data-toggle="toggle"
+                                                   class="tCheckbox" data-on="Split format" data-off="No split format" data-height="40">
+                                            <p th:if="${#fields.hasErrors('documentInSplitFormat')}" class="label text-danger "
+                                               th:errors="*{documentInSplitFormat}"></p>
+                                        </div>-->
+
+
+                </div>
+            </div>
+
+        </form>
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}">
+    </div>
+</div>
+
+<!--for summernote-full-->
+<!--<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.js"/>-->
+
+<!--for summernote-lite-->
+<!--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>-->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+<script th:src="@{/front/nimda/js/ajax.js}"></script>
+<script th:src="@{/front/nimda/js/paging.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function () {
+        setTimeout(function () {
+            $('#productDescription').summernote({
+                height: 150,
+                toolbar: [
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['view', ['fullscreen']]
+                ]
+            });
+        }, 100);
+
+        $('#tg').prop('checked', true).change();
+    });
+
+    /*status-toggle*/
+    $(document).on("click", ".categoryStatus", function (e) {
+        //if ($(this).val() != "") {
+        ajaxPost("post", "/ajax/super/publications/status/" + $(this).data("id"), $("#" + $(this).data("ele")).serialize(), $(this), true);
+        //}
+    });
+
+    function configStatusSave(params, currentElement) {
+        if (params.success) {
+            if (params.obj[0]) {
+                currentElement.removeClass("text-danger").removeClass("fa-toggle-off");
+                currentElement.addClass("text-success").addClass("fa-toggle-on");
+            } else {
+                currentElement.removeClass("text-success").removeClass("fa-toggle-on");
+                currentElement.addClass("text-danger").addClass("fa-toggle-off");
+
+            }
+        } else {
+            $.alert({
+                title: false,
+                content: "<div class='alert alert-danger'>" + params.msg + "</div>",
+                buttons: {
+                    ok: {
+                        btnClass: 'btn-primary',
+                        action: function () {
+
+                        }
+                    },
+                }
+            });
+        }
+    }
+
+</script>
+
+</html>

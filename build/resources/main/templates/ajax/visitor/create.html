@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="row" th:fragment="visitor-ajax-form">
+
+    <div class="col-md-12">
+        <div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+        <form th:action="@{/register}" th:object="${visitor}" method="post" style="width: 99%" th:if="${!success}">
+            <div th:include="user/visitor/form/form :: visitor-create-form"></div>
+            <div th:include="user/visitor/form/extrafields :: extrafields"></div>
+
+        </form>
+    </div>
+
+
+    <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}">
+    <input type="hidden" id="ajaxvisitorsList" th:value="${visitorsList}">
+    <input type="hidden" id="createdVisitor"
+           th:value="${visitor.firstName +' '+visitor.lastName + '::'+@pathVariableEnc.encrypt(visitor.id)}"
+           th:if="${success}">
+
+    <div id="replace-visitors">
+        <select multiple="multiple" class=" width-100" data-actions-box="true"
+                name="visitors" id="visitors"
+                style="display: none;"
+        >
+
+            <option th:each="type : ${@serviceUtil.getAllVisitors()}"
+                    th:value="${{type}}"
+                    th:text="${type.firstName + ' ' + type.lastName}"
+            ></option>
+            </option>
+        </select>
+    </div>
+    <script type="text/javascript">
+
+
+        var tabEle = $('.Tabs__tab.active:first');
+        setTabSlider(tabEle);
+
+        $('.Tabs__tab').click(function () {
+            setTabSlider($(this));
+        });
+    </script>
+</div>

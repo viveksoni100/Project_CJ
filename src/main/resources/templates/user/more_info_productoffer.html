@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link href="front/css/apislabformat.css" rel="stylesheet">
+</head>
+
+<body>
+
+<ul style="list-style-type:none">
+    Offer Name :
+    <li th:text="${offer.getofferName()}" style="list-style-type:none"></li>
+    <br>
+    Offer Description : <br>
+    <li th:utext="${offer.getofferDescription()}" style="list-style-type:none"></li>
+    <br>
+    This offer includes below product : <br>
+    <table id="productSlab" style="width: 100%">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Product Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="offerproduct,i : ${offer.productSet}">
+            <td th:text="${i.index+1}"></td>
+            <td th:text="${offerproduct.productName}"></td>
+            <td th:text="${offerproduct.productPrice}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+
+</ul>
+
+</body>
+
+</html>

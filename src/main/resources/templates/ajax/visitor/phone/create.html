@@ -1,0 +1,149 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <nav>
+            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist" style="position: relative;">
+                <a class="nav-item nav-link Tabs__tab active" id="nav-home-tab" data-toggle="tab"
+                   href="#visitorDetails" role="tab" aria-controls="nav-home"
+                   aria-selected="true">Add Phone</a>
+                <a class="nav-item nav-link Tabs__tab" id="nav-profile-tab" data-toggle="tab"
+                   href="#visitorHistory" role="tab" aria-controls="nav-profile" aria-selected="false">List</a>
+                <li class="Tabs__presentation-slider" role="presentation"></li>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="visitorDetails" role="tabpanel"
+                 aria-labelledby="nav-home-tab">
+                <form th:action="@{/register}" th:object="${visitorPhone}" method="post" style="width: 99%"
+                      th:if="${!success}">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="form-label-group required">
+                                        <select class="form-control" name="country" id="country">
+
+                                            <th:block th:if="${visitorPhone.country==null}">
+
+                                                <option th:each="type : ${@serviceUtil.getAllCountries()}"
+                                                        th:value="${{type}}"
+                                                        th:selected="${type.getCode2()=='US'}"
+                                                        th:text="${type.name}"></option>
+
+                                            </th:block>
+                                            <th:block th:if="${visitorPhone.country!=null}">
+                                                <option th:each="type : ${@serviceUtil.getAllCountries()}"
+                                                        th:value="${{type}}"
+                                                        th:selected="${type.id==visitorPhone.country.id}"
+                                                        th:text="${type.name}"></option>
+                                            </th:block>
+
+                                            </option>
+                                        </select>
+
+                                        <p th:if="${#fields.hasErrors('country')}" class="label text-danger"
+                                           th:errors="*{country}"></p>
+                                        <input type="hidden" name="vi"
+                                               th:value="${@pathVariableEnc.encrypt(visitorId)}">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-12">
+
+                                    <input type="text" th:field="*{phone}" class="form-control" id="phone"
+                                           style="margin-top: 0"
+                                           th:classappend="${#fields.hasErrors('phone') ? 'is-invalid' : ''}"
+                                           placeholder="Phone*"
+                                           autofocus="autofocus"><i
+                                        class="fas fa-exclamation-triangle"></i>
+
+                                    <p th:if="${#fields.hasErrors('phone')}" class="label text-danger "
+                                       th:errors="*{phone}"></p>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+
+
+                                <div class="checkbox checkbox-primary">
+                                    <input type="checkbox" th:field="*{primary}" id="primary">
+                                    <label for="primary">Primary ?</label>
+                                </div>
+
+                                <p th:if="${#fields.hasErrors('primary')}" class="label text-danger "
+                                   th:errors="*{primary}"></p>
+
+
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="checkbox checkbox-primary">
+                                    <input type="checkbox" th:field="*{sms}" id="sms">
+                                    <label for="sms">SMS ?</label>
+
+                                </div>
+                                <p th:if="${#fields.hasErrors('sms')}" class="label text-danger"
+                                   th:errors="*{sms}"></p>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <input type="hidden" id="closepopup"
+                           th:value="${(success!=null && success==true) ? 'true' : 'false'}">
+
+
+                </form>
+            </div>
+            <div class="tab-pane fade" id="visitorHistory" role="tabpanel"
+                 aria-labelledby="nav-profile-tab">
+                <div class="table-responsive">
+                    <table class="table">
+
+                        <tbody>
+                        <tr th:each="phone : ${phones}">
+                            <td>
+                                <div class="flag"
+                                     th:classappend="${'flag-icon-'+phone.country.getCode2().toLowerCase()}"></div>&nbsp;
+                                <span th:text="${phone.country.getCalling_code() + '-'+phone.phone}"></span>
+                            </td>
+                        </tr>
+                        <tr th:if="${phones.empty}">
+                            <td>
+                                <div class="alert-danger alert">There are no emails</div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+
+        var tabEle = $('.Tabs__tab.active:first');
+        setTabSlider(tabEle);
+
+        $('.Tabs__tab').click(function () {
+            setTabSlider($(this));
+        });
+    </script>
+    <input type="hidden" id="closepopup" th:value="${(success!=null && success==true) ? 'true' : 'false'}">
+</div>
+</html>

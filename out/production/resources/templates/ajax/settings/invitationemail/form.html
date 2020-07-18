@@ -1,0 +1,192 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+<form th:action="@{/register}" method="post" style="width: 99%">
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Logbook
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_LOGBOOK_EXPORT}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            Logbook export
+                        </li>
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_VISITORS_READ}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            View
+                            visitors
+                        </li>
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_VISITS_READ}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            View
+                            visits
+                        </li>
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_LOGBOOK_READ}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            View
+                            logbook
+                        </li>
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_VISITORS_CREATE}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            Create visitor
+                        </li>
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_VISITS_CREATE}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            Create visit
+                        </li>
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_VISITS_CHANGE_STATUS}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            Visit status change
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    User management
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_USER_READ}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            View
+                            users
+                        </li>
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_USER_CREATE}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            Create
+                            users
+                        </li>
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_HOME_READ}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            Dashboard
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Privacy
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_COLLEAGUES_CREATE}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            Colleague create
+                        </li>
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_COLLEAGUES_EXPORT}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            Export colleagues
+                        </li>
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_COLLEAGUES_READ}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            View colleagues
+                        </li>
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_UPLOAD_COLLEAGUES}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            Upload colleagues
+                        </li>
+
+
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_LOCATIONS_CREATE}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            Create locations
+                        </li>
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_LOCATIONS_READ}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            View locations
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    User rights
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_USER_RIGHGT_UPDATE}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            User rights update
+                        </li>
+                        <li class="list-group-item"
+                            th:with="privilegeId=${T(com.easelobby.constants.Constants).ROLE_VISIT_SETTINGS_READ}">
+                            <input type="checkbox" name="rights[]"
+                                   th:checked="${@serviceUtil.hasPrivilege(role.id, privilegeId)}"
+                                   th:value="${@pathVariableEnc.encrypt(privilegeId)}">
+                            View KIOSK list
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

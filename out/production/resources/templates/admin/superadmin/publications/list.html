@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/main}">
+
+
+<th:block layout:fragment="content">
+    <!--<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>-->
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <a
+                        th:href="'javascript:void(0)'" class="btn btn-primary btn-sm pull-right category-create"
+                        data-onload="tCheckbox"
+                        th:attr="data-after='tCheckbox',data-title='Add entry',data-size='large',data-url='/ajax/super/publications/form', data-submiturl='/ajax/super/publications/create', data-close='pubCreated',data-reload='true'"
+                >Add Entry</a>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title"> Publications</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" id="replace">
+                            <div class="dataTables_wrapper dt-bootstrap4">
+                                <div class="row m-0">
+                                    <Div class="col-sm-12">
+                                        <form th:action="@{${pagingUrl}}"
+                                              th:attr="data-baseurl=${pagingUrl},data-formname='pubList',data-replacediv='replace'"
+                                              id="pubList" class="paging" autocomplete="off">
+                                            <table class="table " id="dataTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>-</th>
+                                                    <th th:with="order=${pageable.getSort().getOrderFor('publicationId')}">
+                                                        <a href="javascript:void(0)"
+                                                           th:value="${publicationId}"
+                                                           th:attr="data-sort='publicationId',data-baseurl=${pagingUrl},data-formname='pubList',data-replacediv='replace',data-page='1',
+                            data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                           class="page-sort">
+                                                            Publication ID</a>
+                                                    </th>
+                                                    <th th:with="order=${pageable.getSort().getOrderFor('publicationTitle')}">
+                                                        <a href="javascript:void(0)"
+                                                           th:value="${publicationTitle}"
+                                                           th:attr="data-sort='publicationTitle',data-baseurl=${pagingUrl},data-formname='pubList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                           class="page-sort"
+                                                        >Title</a>
+                                                    </th>
+
+
+                                                    <th>
+                                                        <a href="javascript:void(0)"
+                                                           th:value="${price}"
+                                                           th:attr="data-sort='price',data-baseurl=${pagingUrl},data-formname='pubList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                           class="page-sort"
+                                                        >Price</a>
+                                                    </th>
+                                                    <th>
+                                                        Split Mode
+                                                    </th>
+                                                    <th>
+                                                    </th>
+                                                    <th style="text-align: center">
+                                                        Status
+                                                    </th>
+                                                    <th style="text-align: right">
+                                                        Edit
+                                                    </th>
+                                                    <th style="text-align: right">
+                                                        Copy
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>-</th>
+
+                                                    <th>
+                                                        <input type="text" name="publicationId"
+                                                               placeholder="Publication ID"
+                                                               class="mark1" autocomplete="off">
+                                                    </th>
+                                                    <th>
+                                                        <input type="text" name="publicationTitle" placeholder="Title"
+                                                               class="mark1 " autocomplete="nope">
+                                                    </th>
+                                                    <th>
+                                                        <input type="text" name="price" placeholder="Price"
+                                                               class="mark1 " autocomplete="nope">
+                                                    </th>
+
+                                                    <th>
+                                                        <input type="submit" style="display: none;">
+                                                    </th>
+                                                    <th>
+                                                    </th>
+                                                    <th>
+                                                    </th>
+                                                    <th>
+                                                    </th>
+                                                    <th></th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody class="marktext">
+                                                <tr th:each="pub : ${publications}">
+                                                    <td th:text="${pubStat.index+1}"></td>
+                                                    <td th:width="'300px'" th:text="${pub.publicationId}"></td>
+
+                                                    <td th:text="${pub.publicationTitle}"></td>
+                                                    <td th:text="${pub.price}"></td>
+                                                    <td th:text="${pub.documentInSplitFormat}"></td>
+                                                    <td>
+                                                        <!--<img th:src="@{'/admin/pub/thumb/' + ${pub.id}}">-->
+                                                    </td>
+
+                                                    <td th:width="200px" style="text-align: center">
+                                                        <form method="post" th:id="${'formstatus'+pubStat.index}">
+                                                            <i class="fa fa-3x categoryStatus"
+                                                               th:attr="data-id=${@pathVariableEnc.encrypt(pub.id)},data-after='configStatusSave',
+                                                            data-ele=${'form'+pubStat.index}"
+                                                               th:classappend="${(!pub.status) ? 'fa-toggle-off text-danger' : 'fa-toggle-on text-success'}"></i>
+                                                        </form>
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                                th:href="'javascript:void(0)'"
+                                                                class="btn btn-primary btn-sm pull-right category-create"
+                                                                th:attr="data-after='tCheckbox',data-onload='tCheckbox',data-title=${'Edit ' + pub.publicationId},data-size='large',data-url='/ajax/super/publications/form/'+${@pathVariableEnc.encrypt(pub.id)}, data-submiturl='/ajax/super/publications/create/'+${@pathVariableEnc.encrypt(pub.id)}, data-close='pubCreated',data-reload='true'"
+                                                        >Edit</a>
+
+
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                                th:href="'javascript:void(0)'"
+                                                                class="btn btn-success btn-sm pull-right publication-copy"
+                                                                th:attr="data-url='/ajax/super/publications/copy/'+${@pathVariableEnc.encrypt(pub.id)}, data-after='pubCopied'"
+                                                        >Copy</a>
+
+
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </form>
+                                    </div>
+                                </Div>
+                                <div th:remove="tag" th:include="layouts/paging :: paging"
+                                     th:with="pageObj=${publications},replaceDiv='replace',formName='pubList', pagingUrl=${pagingUrl}"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</th:block>
+<th:block layout:fragment="extrascripts">
+    <script th:src="@{/front/nimda/js/ajax.js}"></script>
+    <script th:src="@{/front/nimda/js/paging.js}"></script>
+
+
+    <script type="text/javascript">
+        $(document).on("click", ".category-create", function (e) {
+            publicationSubmit($(this));
+        });
+
+        function pubCreated(params, currentElement, popup) {
+            closeConfirmPopupWithAlertMessage(params, currentElement, popup, "Config created", "html");
+        }
+
+
+        $(document).on("click", ".configValReload", function (e) {
+            //if ($(this).val() != "") {
+            data = {};
+            data['configVaue'] = $("#" + $(this).data("inputid")).val();
+            data['csrfParameter'] = $("meta[name='_csrf_parameter']").attr("content");
+            data['csrfToken'] = $("meta[name='_csrf']").attr("content");
+            data['csrfHeader'] = $("meta[name='_csrf_header']").attr("content");
+            ajaxPost("post", "/ajax/super/publications/change/" + $(this).data("id"), data, $(this), true);
+            //}
+        });
+
+
+        $(document).on("click", ".categoryStatus", function (e) {
+            //if ($(this).val() != "") {
+            ajaxPost("post", "/ajax/super/publications/status/" + $(this).data("id"), $("#" + $(this).data("ele")).serialize(), $(this), true);
+            //}
+        });
+        $(document).on("click", ".publication-copy", function (e) {
+            //if ($(this).val() != "") {
+            ajaxPost("post", $(this).data("url"), "", $(this), true);
+            //}
+        });
+
+        function pubCopied(params, currentElement) {
+            if (params.success) {
+                $.alert({
+                    title: false,
+                    content: "<div class='alert alert-success'>" + params.msg + "</div>",
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-primary',
+                            action: function () {
+                                refreshGrid();
+                            }
+                        },
+                    }
+                });
+            } else {
+                $.alert("<div class='alert alert-danger'>" + params.msg + "</div>");
+
+            }
+        }
+
+
+        function configSave(params, currentElement) {
+            if (params.success) {
+                reloadPage();
+            } else {
+                $.alert({
+                    title: false,
+                    content: "<div class='alert alert-danger'>" + params.msg + "</div>",
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-primary',
+                            action: function () {
+
+                            }
+                        },
+                    }
+                });
+            }
+        }
+
+        function configStatusSave(params, currentElement) {
+            if (params.success) {
+                if (params.obj[0]) {
+                    currentElement.removeClass("text-danger").removeClass("fa-toggle-off");
+                    currentElement.addClass("text-success").addClass("fa-toggle-on");
+                } else {
+                    currentElement.removeClass("text-success").removeClass("fa-toggle-on");
+                    currentElement.addClass("text-danger").addClass("fa-toggle-off");
+
+                }
+            } else {
+                $.alert({
+                    title: false,
+                    content: "<div class='alert alert-danger'>" + params.msg + "</div>",
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-primary',
+                            action: function () {
+
+                            }
+                        },
+                    }
+                });
+            }
+        }
+
+        function editPub(res, currentElement) {
+
+        }
+
+        function tCheckbox(res, currentElement) {
+            $('.tCheckbox').bootstrapToggle();
+        }
+
+        $(document).on("change", ".custom-file-input", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+
+        function publicationSubmit(currentElement) {
+            cnfbox = $.confirm({
+                title: currentElement.data('title'),
+                icon: 'fa fa-pencil',
+                columnClass: (currentElement.data("size") != "") ? currentElement.data("size") : "large",
+                backgroundDismiss: false,
+
+                closeIcon: true,
+                content: "URL:" + BASE_URL + currentElement.data("url"),
+                buttons: {
+                    formSubmit: {
+                        text: 'Submit',
+                        btnClass: 'btn-blue',
+                        action: function () {
+
+                            var cntnt = this;
+                            this.showLoading();
+                            $.ajax({
+                                type: "POST",
+                                /*contentType: "application/json",*/
+                                //dataType: (currentElement.data("contenttype") != "") ? currentElement.data("contenttype") : "html",
+                                url: BASE_URL + currentElement.data("submiturl"),
+                                data: new FormData($('#publicationsForm')[0]),
+                                timeout: 100000,
+                                headers: headers,
+                                contentType: false,
+                                cache: false,
+                                processData: false,
+                                enctype: 'multipart/form-data',
+                                success: function (res) {
+                                    cntnt.hideLoading();
+                                    cntnt.setContent(res, true);
+                                    if (jQuery.type(currentElement.data("after")) != "undefined") {
+                                        callGlobalMethodUsingVariable(currentElement.data("after"), res, currentElement);
+                                    }
+                                    if (jQuery.type(currentElement.data("close")) != "undefined") {
+                                        callGlobalMethodUsingVariableClose(currentElement.data("close"), res, currentElement, cntnt);
+                                    }
+                                    //$.alert("<div class='alert alert-success'>Saved!!!</div>");
+
+                                },
+                                error: function (e) {
+                                    cntnt.hideLoading();
+                                    cntnt.setContent(e.responseText, true);
+                                    console.log("ERROR: ", e);
+                                    if (jQuery.type(currentElement.data("after")) != "undefined") {
+                                        callGlobalMethodUsingVariable(currentElement.data("after"), res, currentElement);
+                                    }
+                                },
+                                done: function (e) {
+                                    cntnt.hideLoading();
+                                    console.log("DONE");
+                                    if (jQuery.type(currentElement.data("after")) != "undefined") {
+                                        callGlobalMethodUsingVariable(currentElement.data("after"), res, currentElement);
+                                    }
+                                }
+                            });
+                            return false;
+                        }
+                    },
+                    close: function () {
+                        //window.location.href = window.location.href;
+                        //location.reload();
+                        cnfbox.close();
+                    }
+                },
+                onContentReady: function () {
+                    // bind to events
+                    var jc = this;
+                    if (jQuery.type(currentElement.data("onload")) != "undefined") {
+                        callGlobalMethodUsingVariable(currentElement.data("onload"), "", currentElement);
+                    }
+
+                }
+            });
+        }
+
+
+    </script>
+</th:block>
+</html>

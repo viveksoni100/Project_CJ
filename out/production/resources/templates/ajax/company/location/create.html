@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="row">
+    <div class="col-md-12">
+
+
+        <div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+        <form th:action="@{/company/location/submit}" th:object="${location}" method="post" th:if="${!success}">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+
+                        <input type="text" th:field="*{locationName}" class="form-control" id="locationName"
+                               th:classappend="${#fields.hasErrors('locationName') ? 'is-invalid' : ''}"
+                               placeholder="Location name*"
+                               autofocus="autofocus">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('locationName')}" class="label text-danger "
+                           th:errors="*{locationName}"></p>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+
+                        <input type="text" th:field="*{address1}" class="form-control" id="address1"
+                               placeholder="Address 1*"
+                               th:classappend="${#fields.hasErrors('address1') ? 'is-invalid' : ''}"
+                               autofocus="autofocus">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('address1')}" class="label text-danger "
+                           th:errors="*{address1}"></p>
+
+                    </div>
+
+                    <!-- </div>
+                 </div>
+                 <div class="form-group">
+                     <div class="form-row">-->
+                    <div class="col-md-6">
+
+                        <input type="text" th:field="*{address2}" class="form-control"
+                               placeholder="Address 2"
+                               id="address2"
+                               th:classappend="${#fields.hasErrors('address2') ? 'is-invalid' : ''}"
+                               autofocus="autofocus">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('address2')}" class="label text-danger "
+                           th:errors="*{address2}"></p>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-4">
+
+                        <input type="text" th:field="*{postalCode}" class="form-control"
+                               placeholder="Postal code*" id="postalCode"
+                               th:attr="data-before='loadingCity',data-url='/ajax/zipdetails',data-after='setCityState',data-content-type='json'"
+                               th:classappend="${#fields.hasErrors('postalCode') ? 'is-invalid' : ''}"
+                        >
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('postalCode')}" class="label text-danger"
+                           th:errors="*{postalCode}"></p>
+
+                    </div>
+                    <div class="col-md-4">
+
+                        <input type="text" th:field="*{city}" class="form-control" id="city"
+                               th:classappend="${#fields.hasErrors('city') ? 'is-invalid' : ''}"
+                               placeholder="City*"
+                               autofocus="autofocus">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('city')}" class="label text-danger "
+                           th:errors="*{city}"></p>
+                        <div class="city-loader hide">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+
+                        <input type="text" th:field="*{state}" class="form-control"
+                               placeholder="State*" id="state"
+                               th:classappend="${#fields.hasErrors('state') ? 'is-invalid' : ''}"
+                        >
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('state')}" class="label text-danger"
+                           th:errors="*{state}"></p>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+
+                    <div class="col-md-12">
+                        <div class="form-label-group required">
+                            <input name="tagscountry" placeholder="Type country name .." autofocus
+                                   th:classappend="${#fields.hasErrors('country') ? 'is-invalid' : ''}"
+                                   class="form-control countrytags"
+                                   th:value="${(location.country!=null) ? location.country.name : 'United States'}">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p th:if="${#fields.hasErrors('country')}" class="label text-danger "
+                               th:errors="*{country}"></p>
+                            <div id="countrySelect" style="display: none;">
+                                <select class="form-control" name="country" id="country" style="margin-top:0px;">
+
+                                    <th:block th:if="${location.country==null}">
+
+                                        <option th:each="type : ${@serviceUtil.getAllCountries()}"
+                                                th:value="${{type}}"
+                                                th:selected="${type.getCode2()=='US'}"
+                                                th:text="${type.name}"></option>
+
+                                    </th:block>
+                                    <th:block th:if="${location.country!=null}">
+                                        <option th:each="type : ${@serviceUtil.getAllCountries()}"
+                                                th:value="${{type}}"
+                                                th:selected="${type.id==location.country.id}"
+                                                th:text="${type.name}"></option>
+                                    </th:block>
+
+                                    </option>
+                                </select>
+                                <!--<label for="country">Country</label>-->
+
+                                <p th:if="${#fields.hasErrors('country')}" class="label text-danger"
+                                   th:errors="*{country}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+
+                        <textarea type="text" th:field="*{extraInfo}" class="form-control" id="extraInfo"
+                               placeholder="Specify Extra information, for example building name/ land marks/ Lobby/Entrance, etc., "
+                               th:classappend="${#fields.hasErrors('extraInfo') ? 'is-invalid' : ''}"
+                               autofocus="autofocus">
+                        </textarea>
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('extraInfo')}" class="label text-danger "
+                           th:errors="*{extraInfo}"></p>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+
+                        <input type="text" th:field="*{phone}" class="form-control" id="phone"
+                               placeholder="Phone"
+                               th:classappend="${#fields.hasErrors('phone') ? 'is-invalid' : ''}"
+                               autofocus="autofocus">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('phone')}" class="label text-danger "
+                           th:errors="*{phone}"></p>
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <select class="form-control" name="zoneId" id="zoneId">
+
+                            <th:block th:if="${location.zoneId==null}">
+
+                                <option th:each="type : ${@serviceUtil.getAllZones()}"
+                                        th:value="${{type}}"
+                                        th:selected="${type.getZoneName()=='America/New_York'}"
+                                        th:text="${type.zoneName}"></option>
+
+                            </th:block>
+                            <th:block th:if="${location.zoneId!=null}">
+                                <option th:each="type : ${@serviceUtil.getAllZones()}"
+                                        th:value="${{type}}"
+
+                                        th:selected="${type.id==location.zoneId.id}"
+                                        th:text="${type.zoneName}"></option>
+                            </th:block>
+
+                            </option>
+                        </select>
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('zoneId')}" class="label text-danger "
+                           th:errors="*{zoneId}"></p>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}">
+        <select class="form-control" name="location" style="display: none" id="location">
+            <option value=""></option>
+            <option th:each="type : ${@serviceUtil.getAllLocationByCompany(company)}"
+                    th:value="${{type}}"
+                    th:attr="data-tzone=${type.zoneId!=null ? type.zoneId.getZoneName() : 'No time zone selected for this location'}"
+                    th:selected="${location!=null && location.id==type.id ? true : false}"
+                    th:text="${type.locationName}"></option>
+            </option>
+        </select>
+    </div>
+</div>
+</html>

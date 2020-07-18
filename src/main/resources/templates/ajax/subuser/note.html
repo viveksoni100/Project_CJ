@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="row">
+    <div class="col-md-12">
+
+
+        <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>
+        <form th:action="@{/company/location/submit}" th:object="${publicationsNote}" method="post"
+              th:if="${!success}">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+
+                        <textarea th:field="*{note}" style="height:300px"
+                                  th:classappend="${#fields.hasErrors('note') ? 'is-invalid' : ''}"
+                                  placeholder="Note*"
+                                  autofocus="autofocus"
+                                  class="form-control" id="note"
+                        ></textarea>
+
+                        <p th:if="${#fields.hasErrors('note')}" class="label error "
+                           th:errors="*{note}"></p>
+                    </div>
+
+
+                </div>
+            </div>
+        </form>
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}">
+
+    </div>
+</div>
+</html>

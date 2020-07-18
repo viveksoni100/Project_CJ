@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+
+    <head th:include="mail/layout/head :: mailHead"></head>
+    <body>
+        <div style="width: 100%; margin:auto;background: white">
+            <div style="margin:auto;font-family:Arial !important;">
+                <div th:include="mail/layout/header :: mailHeader"></div>
+                <div style="width:100%; ">
+
+
+                    <div style="width: 100%; font-size: 26px;color:#4d4d4d; background:#e5ecfd;display: block;height: 89px;">
+                        <span style="margin: 0px;padding: 45px;
+    margin: 0;color:#15295a;
+    padding-top: 30px;
+    float: left;" th:text="${title}">
+                        </span>
+                        <img src="front/images/daas-logo.jpg" data-th-src="|cid:${daasLogo}|"
+                             style="float:right;margin-right: 45px;width: 150px;margin: 15px 20px;background:#e5ecfd;"/>
+                    </div>
+                    <div style="clear: both;
+    width: 100%;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 20px;">
+
+                    </div>
+                    <th:block layout:fragment="content"></th:block>
+
+                    <div th:include="mail/layout/footer :: mailFooter"></div>
+
+                    <div th:replace="mail/layout/copyright :: mailCopyright"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

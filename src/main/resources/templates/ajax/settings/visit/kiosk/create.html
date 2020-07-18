@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="row">
+
+    <div class="col-md-12">
+        <div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+        <form th:action="@{/register}" th:object="${kiosk}" method="post" style="width: 99%" th:if="${!success}">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="">
+                            <input type="text" th:field="*{name}" class="form-control" id="name"
+                                   th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
+                                   placeholder="Name*"
+                                   autofocus="autofocus">
+                            <i
+                                    class="fas fa-exclamation-triangle"></i>
+
+
+                            <p th:if="${#fields.hasErrors('name')}" class="label text-danger "
+                               th:errors="*{name}"></p>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+
+                    <div class="col-md-12">
+                        <div class="">
+                            <input type="text" th:field="*{entranceName}" class="form-control"
+                                   placeholder="Entrance name" id="entranceName"
+                                   th:classappend="${#fields.hasErrors('entranceName') ? 'is-invalid' : ''}"
+                            >
+                            <i
+                                    class="fas fa-exclamation-triangle"></i>
+                            <p th:if="${#fields.hasErrors('entranceName')}" class="label text-danger"
+                               th:errors="*{entranceName}"></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group" th:if="${edit}">
+                <div class="form-row">
+
+                    <div class="col-md-12">
+                        <div class="form-label-group required">
+                            <input type="text" th:field="*{activationCode}" class="form-control" disabled="disabled"
+                                   placeholder="Entrance name" id="activationCode"
+                                   th:classappend="${#fields.hasErrors('activationCode') ? 'is-invalid' : ''}"
+                            ><i
+                                class="fas fa-exclamation-triangle"></i>
+
+                            <p th:if="${#fields.hasErrors('activationCode')}" class="label text-danger"
+                               th:errors="*{activationCode}"></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </form>
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}">
+    </div>
+</div>

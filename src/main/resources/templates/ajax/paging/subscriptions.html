@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="dataTables_wrapper dt-bootstrap4">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <table class="table " id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+
+                    <th>
+                        <a href="javascript:void(0)">
+                            Package</a>
+                    </th>
+                    <th>
+                        <a href="javascript:void(0)">
+                            Expiry date</a>
+                    </th>
+                    <th th:with="order=${pageable.getSort().getOrderFor('state')}">
+                        <a href="javascript:void(0)">
+                           Available hosts</a>
+                    </th>
+
+                    <th>
+                        <a href="javascript:void(0)">
+                            Available visitors</a>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="subscription : ${subscriptions.getContent()}" th:if="${!subscriptions.empty}">
+
+                    <td th:text="${@serviceUtil.paymentPlanName(subscription.planId)}">
+
+                    </td>
+                    <td th:text="${subscription.expiryDate}">
+
+                    </td>
+                    <td th:text="${subscription.availableHosts}"></td>
+                    <td th:text="${subscription.availableVisitors}"></td>
+
+                </tr>
+                <tr th:if="${subscriptions.empty}">
+                    <td colspan="7">
+                        <div class="alert alert-danger">No active package available.
+                        </div>
+                    </td>
+
+                </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+    <div th:include="base/paging :: paging" th:remove="tag"
+         th:with="pageObj=${subscriptions},replaceDiv='replace',formName='visitorsList', pagingUrl=${pagingUrl}"></div>
+</div>

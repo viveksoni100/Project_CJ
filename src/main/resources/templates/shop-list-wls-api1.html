@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Ereaders Shop List WLS</title>
+
+    <!-- Css Files -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="css/flaticon.css" rel="stylesheet">
+    <link href="css/slick-slider.css" rel="stylesheet">
+    <link href="css/fancybox.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <link href="css/color.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
+    <link href="front/css/apislabformat.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<th:block layout:fragment="content">
+    <style>
+        .highlightCat{
+            /*#0067f4*/
+            background-color: #06469E !important;
+            color: white !important;
+        }
+    </style>
+    <!--// Main Wrapper \\-->
+    <div class="ereaders-main-wrapper">
+
+        <!--// Header \\-->
+        <!--        <header id="ereaders-header" class="ereaders-header-one">
+                    <div class="ereaders-main-header">
+                        <div class="container">
+                            <div class="row">
+                                <aside class="col-md-3"><a href="index.html" class="logo"><img src="images/logo.png" alt=""></a>
+                                </aside>
+                                <aside class="col-md-9">
+                                    &lt;!&ndash;// Navigation \\&ndash;&gt;
+                                    <a href="#menu" class="menu-link active"><span></span></a>
+                                    <nav id="menu" class="menu navbar navbar-default">
+                                        <ul class="level-1 navbar-nav">
+                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="#">our blog</a><span class="has-subnav"><i
+                                                    class="fa fa-angle-down"></i></span>
+                                                <ul class="sub-menu level-2">
+                                                    <li><a href="blog-grid.html">Blog Grid</a><span class="has-subnav"><i
+                                                            class="fa fa-angle-down"></i></span>
+                                                        <ul class="sub-menu">
+                                                            <li><a href="blog-grid-wls.html">Blog Grid W/L/S</a></li>
+                                                            <li><a href="blog-grid-wrs.html">Blog Grid W/R/S</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="blog-large.html">Blog Large</a><span class="has-subnav"><i
+                                                            class="fa fa-angle-down"></i></span>
+                                                        <ul class="sub-menu">
+                                                            <li><a href="blog-large-wls.html">Blog Large W/L/S</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="blog-detail.html">Blog Detail</a><span class="has-subnav"><i
+                                                            class="fa fa-angle-down"></i></span>
+                                                        <ul class="sub-menu">
+                                                            <li><a href="blog-detail-wls.html">Blog Detail W/L/S</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">Books</a><span class="has-subnav"><i
+                                                    class="fa fa-angle-down"></i></span>
+                                                <ul class="sub-menu level-2">
+                                                    <li><a href="book-grid.html">Book Grid</a><span class="has-subnav"><i
+                                                            class="fa fa-angle-down"></i></span>
+                                                        <ul class="sub-menu">
+                                                            <li><a href="book-grid-wls.html">Book Grid W/L/S</a></li>
+                                                            <li><a href="book-grid-wrs.html">Book Grid W/R/S</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="author-detail.html">Author Detail</a></li>
+                                                    <li><a href="book-detail.html">Book Detail</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">Events</a><span class="has-subnav"><i
+                                                    class="fa fa-angle-down"></i></span>
+                                                <ul class="sub-menu level-2">
+                                                    <li><a href="event-list.html">Event List</a><span class="has-subnav"><i
+                                                            class="fa fa-angle-down"></i></span>
+                                                        <ul class="sub-menu">
+                                                            <li><a href="event-list-wls.html">Event List W/L/S</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="event-detail.html">Event Detail</a><span class="has-subnav"><i
+                                                            class="fa fa-angle-down"></i></span>
+                                                        <ul class="sub-menu">
+                                                            <li><a href="event-detail-wls.html">Event Detail W/L/S</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="active"><a href="#">Our Shop</a><span class="has-subnav"><i
+                                                    class="fa fa-angle-down"></i></span>
+                                                <ul class="sub-menu level-2">
+                                                    <li><a href="shop-grid.html">Shop Grid</a><span class="has-subnav"><i
+                                                            class="fa fa-angle-down"></i></span>
+                                                        <ul class="sub-menu">
+                                                            <li><a href="shop-grid-wls.html">Shop Grid W/L/S</a></li>
+                                                            <li><a href="shop-grid-v2.html">Shop Grid V2</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="shop-list.html">Shop List</a><span class="has-subnav"><i
+                                                            class="fa fa-angle-down"></i></span>
+                                                        <ul class="sub-menu">
+                                                            <li><a href="shop-list-wls.html">Shop List W/L/S</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="shop-detail.html">Shop Detail</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">Pages</a><span class="has-subnav"><i
+                                                    class="fa fa-angle-down"></i></span>
+                                                <ul class="sub-menu level-2">
+                                                    <li><a href="about-us.html">About Us</a></li>
+                                                    <li><a href="404.html">Error Page</a></li>
+                                                    <li><a href="priceplan.html">Pricing Plan</a></li>
+                                                    <li><a href="faq.html">Our FAQ</a></li>
+                                                    <li><a href="search-result.html">Search Result</a></li>
+                                                    <li><a href="contact-us.html">Contact Us</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    &lt;!&ndash;// Navigation \\&ndash;&gt;
+                                    <a href="404.html" class="ereaders-simple-btn ereaders-bgcolor">Download</a>
+                                </aside>
+                            </div>
+                        </div>
+                    </div>
+                </header>-->
+        <!--// Header \\-->
+
+        <!--// SubHeader \\-->
+        <div class="ereaders-subheader">
+            <div class="ereaders-subheader-text">
+                <span class="ereaders-subheader-transparent"></span>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Web Services</h1>
+                            <!--<p>Ut porta massa in risus maximus, eget sodales massa malesuada. Fusce et neque
+                                aliquet.</p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--            <div class="ereaders-breadcrumb">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <ul>
+                                            <li><a href="index.html">Homepage</a></li>
+                                            <li class="active">Shop List W/L/Sidebar</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+        </div>
+        <!--// SubHeader \\-->
+
+        <!--// Main Content \\-->
+        <div class="ereaders-main-content">
+
+            <!--// Main Section \\-->
+            <div class="ereaders-main-section">
+                <div class="container">
+                    <div class="row">
+
+                        <!--// Sidebar \\-->
+                        <aside class="col-md-3 sl-lst-lft-blk">
+
+                            <!--// Widget Search \\-->
+                            <div class="widget widget_search">
+                                <form th:action="@{${pagingUrl}}" th:object="${productSearch}">
+                                    <input value="Search" onblur="if(this.value == '') { this.value ='Search'; }"
+                                           onfocus="if(this.value =='Search') { this.value = ''; }" tabindex="0"
+                                           type="text"
+                                           th:field="${productSearch.productName}">
+                                    <label><input type="submit" value=""></label>
+                                </form>
+                            </div>
+                            <!--// Widget Search \\-->
+
+                            <!--// Widget Cetagories \\-->
+                            <div class="widget widget_cetagories widget_border">
+                                <h2 class="ereaders-widget-title">Categories</h2>
+                                <ul class="sl-lst-mnu">
+                                    <li>
+                                        <a
+                                                th:classappend="${highlightAttId == null || #strings.equals(highlightAttId,'all')  ? 'highlightCat' : ''}"
+                                                th:href="@{'/daas/api-as-service/all'}" th:text="All"></a>
+                                    </li>
+                                    <li th:each="category:${apicategories}" th:if="${@serviceUtil.isThereAnyRecordRelatedToCategoryAndDataType(category.id,'Web Service')}">
+                                        <a th:href="@{'/daas/api-as-service/' +${category.id}}"
+                                           th:classappend="${#strings.equals(highlightAttId,category.id) ? 'highlightCat' : ''}"
+                                           th:text="${category.productCategory.productCategoryName}"></a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <!--// Widget Cetagories \\-->
+
+                            <!--// Widget Sort by Price \\-->
+                            <!--                            <div class="widget widget_sort_price widget_border">
+                                                            <h2 class="ereaders-widget-title">Sort by Price</h2>
+                                                            <label>Range:</label>
+                                                            <input type="text" id="amount" readonly>
+                                                            <div id="slider-range"></div>
+                                                        </div>-->
+                            <!--// Widget Sort by Price \\-->
+
+                            <!--// Widget Popular Post \\-->
+                            <!--<div class="widget widget_popular_product widget_border">
+                                <h2 class="ereaders-widget-title">Added</h2>
+                                <ul >
+                                    <li>
+                                        <form th:action="@{${pagingUrl}}">
+                                            <select class="form-control" name="timeAdded" id="timeAdded"
+                                                    onchange="this.form.submit()">
+                                                <option value="week">This Week</option>
+                                                <option value="month">This Month</option>
+                                                <option value="year">This Year</option>
+                                                <option value="all" selected="selected">All Time</option>
+                                            </select>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>-->
+                            <!--// Widget Popular Post \\-->
+
+                            <!--// Widget Recent Comments \\-->
+                            <!--<div class="widget widget_recent_comments widget_border">
+                                <h2 class="ereaders-widget-title">Recent Comments</h2>
+                                <ul>
+                                    <li>
+                                        <h6><a href="blog-detail.html">English breakfast tea with tasty donut</a></h6>
+                                        <span>By<a href="404.html"> @johnmarlon</a></span>
+                                    </li>
+                                    <li>
+                                        <h6><a href="blog-detail.html">Two smart kids reading magazine before
+                                            sleeping.</a>
+                                        </h6>
+                                        <span>By<a href="404.html"> @sarahjoy</a></span>
+                                    </li>
+                                    <li>
+                                        <h6><a href="blog-detail.html">We helpyou create clean mod interior design.</a>
+                                        </h6>
+                                        <span>By<a href="404.html"> @jason_jk</a></span>
+                                    </li>
+                                </ul>
+                            </div>
+                            &lt;!&ndash;// Widget Recent Comments \\&ndash;&gt;
+
+                            &lt;!&ndash;// Widget Top Tags \\&ndash;&gt;
+                            <div class="widget widget_tags widget_border">
+                                <h2 class="ereaders-widget-title">Top Tags</h2>
+                                <a href="404.html">Business</a>
+                                <a href="404.html">Domain</a>
+                                <a href="404.html">keywords</a>
+                                <a href="404.html">SEA</a>
+                                <a href="404.html">Search Engine</a>
+                                <a href="404.html">Work</a>
+                                <a href="404.html">SEm</a>
+                                <a href="404.html">Trnds</a>
+                                <a href="404.html">SEA</a>
+                            </div>-->
+                            <!--// Widget Top Tags \\-->
+
+                        </aside>
+                        <!--// Sidebar \\-->
+
+                        <div class="col-md-9 sl-lst-rit-blk">
+                            <div class="ereaders-shop-filter">
+                                <span th:text="${'Showing '+(daasapilist.number+1)+' of '+daasapilist.totalPages+ ' pages'}"></span>
+                                <!-- Nav tabs -->
+                                <ul class="nav-tabs" role="tablist">
+                                    <!--                                        <li role="presentation" class="active"><a href="#home" aria-controls="home"
+                                                                                                                      role="tab"
+                                                                                                                      data-toggle="tab"><i
+                                                                                    class="icon ereaders-list-interface-symbol"></i> <span>List</span></a></li>
+                                                                            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab"
+                                                                                                       data-toggle="tab"><i class="icon ereaders-3x3-grid"></i>
+                                                                                <span>Grid</span></a></li>-->
+                                </ul>
+                                <!-- Tab panes -->
+                                <form th:action="@{${pagingUrl}}">
+                                    <div class="ereaders-search-select">
+                                        <label style="position: absolute; right: 14rem; top: 5%;">Sorting:</label>
+                                        <select class="form-control" name="sortProductBy" id="sortProductBy"
+                                                onchange="this.form.submit()" style="width: 100%;">
+                                            <option value="createdAt">Newest Added</option>
+                                            <!--<option value="updatedAt">Last Updated</option>-->
+                                            <!--<option value="none" selected="selected">None</option>-->
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="home">
+                                    <div class="ereaders-shop ereaders-shop-list">
+                                        <ul class="row">
+                                            <li th:if="${daasapilist.empty}"
+                                                style=" list-style: none; font-weight: bold; margin-left: 40px;"
+                                                th:text="${'Sorry! No items to show in this category.'}"
+                                                class="col-md-12"/>
+                                            <li class="col-md-12 sl-itm" th:each="daasData : ${daasapilist}"
+                                                th:object="${addApitoCart}" sec:authorize="isAnonymous()">
+                                                <figure>
+                                                    <!--<span>sale</span>-->
+                                                    <a>
+                                                        <img
+                                                                class="sl-img"
+                                                                th:if="${@serviceUtil.isThumbnailNull(daasData) == true}"
+                                                                th:src="@{/front/images/product_img_default_new.png}"
+                                                                alt="">
+                                                        <img
+                                                                class="sl-img"
+                                                                th:if="${@serviceUtil.isThumbnailNull(daasData) == false}"
+                                                                th:src="@{${'/daas/downloadFile/' + daasData.productId + '/' + daasData.productThumbnailName}}"
+                                                                alt="">
+                                                    </a>
+                                                    <figcaption>
+                                                        <a th:attr="data-url='/moreinfo/api/' + ${@pathVariableEnc.encrypt(daasData.id)}, data-size='large',
+                                                        data-title=${daasData.productName}, data-reload='true'"
+                                                           href="javascript:void(0);"
+                                                           class="icon ereaders-idea"
+                                                           data-toggle="tooltip"
+                                                           title="More Info"></a>
+                                                        <!--                                                        <a href="#" class="icon ereaders-link" data-toggle="tooltip"
+                                                                                                                   title="Add To Link"></a>
+                                                                                                                <a href="#" class="icon ereaders-heart" data-toggle="tooltip"
+                                                                                                                   title="Add To Wishlist"></a>
+                                                                                                                <a href="#" class="icon ereaders-reload" data-toggle="tooltip"
+                                                                                                                   title="Reload"></a>-->
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="ereaders-shop-list-text api-data-div">
+                                                    <h2 th:text="${daasData.productName}"><a
+                                                            href="#"></a></h2><hr class="sl-line">
+                                                    <!--                                                    <div class="star-rating"><span class="star-rating-box"
+                                                                                                                                       style="width:60%"></span></div>-->
+                                                    <!--<span>-->
+                                                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                                                        <!--<font size="1">-->
+                                                        <!--<div style="font-size: 13px; color: #1b1b1b; line-height: 1; font-weight: bold; display: inline;">
+                                                            Upto
+                                                        </div>-->
+                                                        <!--<select class="form-control" name="upperlimit" id="upperlimit"
+                                                                onchange="slabchangefnc()"
+                                                                style="margin-top: 20px; float: left; width: 47%; margin-bottom: 20px;">
+                                                            <option th:each="i : ${@serviceUtil.getProductSlabDetails(daasData)}"
+                                                                    th:value="${i.slabUpperLimit}"
+                                                                    th:text="${i.slabUpperLimit}"></option>
+                                                        </select>
+                                                        <select class="form-control" name="price" id="price" disabled
+                                                                style="margin-top: 20px; float: right; width: 47%; margin-bottom: 20px;">
+                                                            <option th:each="i : ${@serviceUtil.getProductSlabDetails(daasData)}"
+                                                                    th:value="${i.slabRate}"
+                                                                    th:text="${i.slabRate + ' $ / api call'}"></option>
+                                                        </select>-->
+                                                        <!--<table id="productSlab" class="display" style="width: 100%">
+                                                            <thead>
+                                                            <tr>
+                                                                <th scope="col">#</th>
+                                                                <th scope="col">Slabs (Quantity)</th>
+                                                                <th scope="col">Price per API Call($)</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr th:each="slab,i : ${daasData.productSlab.productSlabDetailList}">
+                                                                <td th:text="${i.index+1}"></td>
+                                                                <td th:text="${slab.slabLowerLimit}+'-'+${slab.slabUpperLimit}"></td>
+                                                                <td th:text="${slab.slabRate}"></td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>-->
+                                                        <!--</font>-->
+                                                    </div>
+                                                    </span>
+                                                    <!--<span>$600.00 <del>$300.00</del></span>-->
+
+                                                    <form th:id="cartForm+${daasDataStat.index}"
+                                                          style="margin-top: -30px;"
+                                                          th:action="@{'/apiaddtocart/'+${daasData.id}}" method="post">
+                                                        <div>
+                                                            <!--<input type="number"
+                                                                   value="1"
+                                                                   class="form-control  minicolors-input"
+                                                                   id="productquantity"
+                                                                   onchange="if($(this).val()>0) { document.getElementById('btn'+${daasData.id}).removeAttribute('disabled'); }"
+                                                                   placeholder="Quantity" name="productquantity"
+                                                                   style="width: 30%; height: 35px;">-->
+
+                                                            <!--<input type="hidden" id="upperlimitvalue" name="upperlimitvalue"
+                                                                   value=document.getElementById("upperlimit").value>
+
+                                                            <input type="hidden" id="priceofslab" name="priceofslab"
+                                                                   value=document.getElementById("price").value>-->
+
+                                                            <!--RADIO-->
+                                                            <!--<h2 th:text="'Pricing : '" style=" font-size: 16px; text-transform: none; color: #06469E;"></h2>
+                                                            <ul>
+                                                                <li th:each="i : ${@serviceUtil.getProductSlabDetails(daasData)}" style="list-style: none; margin-left: -18px;">
+                                                                    <input type="radio"
+                                                                                                 th:name="upperlimitvalue"
+                                                                                                 th:value="${i.slabUpperLimit}"
+                                                                                                 th:text="${' '+i.slabUpperLimit}" checked/>
+                                                                    <h2 style="font-size: 16px; text-transform: none; display: inline"
+                                                                        th:text="${' API requests ($' + i.slabRate + ' per call) : $' + i.slabUpperLimit * i.slabRate}" />
+                                                                </li>
+                                                            </ul>
+-->
+                                                            <!--DROPDOWN-->
+                                                            <!--<select class="form-control" name="upperlimitvalue"
+                                                                    id="upperlimitvalue"
+                                                                    onchange="slabchangefnc(this)"
+                                                                    style="margin-top: 20px; float: left; width: 47%; margin-bottom: 20px;">
+                                                                <option th:each="i : ${@serviceUtil.getProductSlabDetails(daasData)}"
+                                                                        th:value="${i.slabUpperLimit}"
+                                                                        th:text="${i.slabUpperLimit}"></option>
+                                                            </select>
+
+                                                            <select class="form-control" name="priceofslab"
+                                                                    id="priceofslab" readonly
+                                                                    style="margin-top: 20px; float: right; width: 47%; margin-bottom: 20px;">
+                                                                <option th:each="i : ${@serviceUtil.getProductSlabDetails(daasData)}"
+                                                                        th:value="${i.slabRate}"
+                                                                        th:text="${i.slabRate + ' $ / api call'}"></option>
+                                                            </select>-->
+                                                            <div class="sl-desc-blk">
+                                                                <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),100)}"/>
+                                                                <!--<a th:attr="data-url='/moreinfo/api/' + ${@pathVariableEnc.encrypt(daasData.id)}, data-size='large',
+                                                                data-title=${daasData.productName}, data-reload='true'"
+                                                                   th:href="@{'/getApiDetailPage/' + ${@pathVariableEnc.encrypt(daasData.id)}}"
+                                                                   style="color: #06469E"> | Read more</a>-->
+                                                                <!--<a th:attr="data-url='/moreinfo/api/' + ${@pathVariableEnc.encrypt(daasData.id)}, data-size='large',
+                                                                data-title=${daasData.productName}, data-reload='true'"
+                                                                   th:href="@{'/getApiDetailPage/' + ${@pathVariableEnc.encrypt(daasData.id)}}"
+                                                                   class="sl-tx-blu"> | Read more</a>-->
+                                                                <a th:attr="data-url='/moreinfo/api/' + ${@pathVariableEnc.encrypt(daasData.id)}, data-size='large',
+                                                        data-title=${daasData.productName}, data-reload='true'"
+                                                                   href="javascript:void(0);"
+                                                                   class="readmore sl-tx-blu">| Read more</a>
+                                                            </div>
+                                                            <a th:href="@{'/getApiDetailPage/' + ${@pathVariableEnc.encrypt(daasData.id)}}"><button th:id="'btn'+ ${daasData.id}" type="button"
+                                                                    value="Show more"
+                                                                    th:if="${@serviceUtil.isAvailableInCart(daasData.id, #request) == false}"
+                                                                    class="ereaders-simple-btn ereaders-bgcolor addtocart sl-shw-mr"
+                                                                    name="addtocartapiAddToCart">Show more</button></a>
+
+                                                            <a th:href="@{'/getCartPage'}"
+                                                               th:if="${@serviceUtil.isAvailableInCart(daasData.id, #request) == true}"
+                                                               class="ereaders-simple-btn ereaders-bgcolor addedincart sl-addcrt-in-btn">Added in Cart </a>
+
+                                                            <a  th:attr="data-deleteid=${daasData.id}" th:href="@{'/deletefromcartcustomapi/' + ${daasData.id}}"
+                                                                th:if="${@serviceUtil.isAvailableInCart(daasData.id, #request) == true and @serviceUtil.isAvailableInOrder(daasData.id) == false}"
+                                                                class="btn btn-danger fa fa-trash callDeleteAjax carttrash"
+                                                            ></a>
+
+                                                        </div>
+                                                        <!--                                                       <div>
+                                                                                                                   &lt;!&ndash;<a th:href="@{'/login'}" id="btn"
+                                                                                                                      class="btn btn-primary"
+                                                                                                                      style="width: 100%"
+                                                                                                                   >Add To Cart
+                                                                                                                       &lt;!&ndash; <i class="icon ereaders-shopping-bag"></i>&ndash;&gt;</a>&ndash;&gt;
+
+                                                                                                               </div>
+                                                        -->                                                   </form>
+                                                    <!--                                                    <a href="event-detail.html"
+                                                                                                           class="ereaders-simple-btn ereaders-bgcolor">Add To Cart <i
+                                                                                                                class="icon ereaders-shopping-bag"></i></a>-->
+                                                </div>
+                                            </li>
+
+                                            <li class="col-md-12 sl-itm" th:each="daasData : ${daasapilist}"
+                                                th:object="${addApitoCart}" sec:authorize="isAuthenticated()">
+                                                <figure>
+                                                    <!--<span>sale</span>-->
+                                                    <a>
+                                                        <img
+                                                                class="sl-img"
+                                                                th:if="${@serviceUtil.isThumbnailNull(daasData) == true}"
+                                                                th:src="@{/front/images/product_img_default_new.png}"
+                                                                alt="">
+                                                        <img
+                                                                class="sl-img"
+                                                                th:if="${@serviceUtil.isThumbnailNull(daasData) == false}"
+                                                                th:src="@{${'/daas/downloadFile/' + daasData.productId + '/' + daasData.productThumbnailName}}"
+                                                                alt="">
+                                                    </a>
+                                                    <figcaption>
+                                                        <a th:attr="data-url='/moreinfo/api/' + ${@pathVariableEnc.encrypt(daasData.id)}, data-size='large',
+                                                        data-title=${daasData.productName}, data-reload='true'"
+                                                           href="javascript:void(0);"
+                                                           class="icon ereaders-idea"
+                                                           data-toggle="tooltip"
+                                                           title="More Info"></a>
+                                                        <!--                                                        <a href="#" class="icon ereaders-link" data-toggle="tooltip"
+                                                                                                                   title="Add To Link"></a>
+                                                                                                                <a href="#" class="icon ereaders-heart" data-toggle="tooltip"
+                                                                                                                   title="Add To Wishlist"></a>
+                                                                                                                <a href="#" class="icon ereaders-reload" data-toggle="tooltip"
+                                                                                                                   title="Reload"></a>-->
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="ereaders-shop-list-text api-data-div">
+                                                    <h2 th:text="${daasData.productName}"><a
+                                                            href="#"></a></h2><hr class="sl-line">
+                                                    <!--                                                    <div class="star-rating"><span class="star-rating-box"
+                                                                                                                                       style="width:60%"></span></div>-->
+                                                    <span>
+
+                                                        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                                                        <!--<font size="1">-->
+                                                            <!--<div style="font-size: 13px; color: #1b1b1b; line-height: 1; font-weight: bold; display: inline;">
+                                                                Upto
+                                                            </div>-->
+                                                            <!--<select class="form-control" name="upperlimit"
+                                                                    id="upperlimit" onchange="slabchangefnc()"
+                                                                    style="margin-top: 20px; float: left; width: 47%; margin-bottom: 20px;">
+                                                                <option th:each="i : ${@serviceUtil.getProductSlabDetails(daasData)}"
+                                                                        th:value="${i.slabUpperLimit}"
+                                                                        th:text="${i.slabUpperLimit}"></option>
+                                                            </select>
+                                                            <select class="form-control" name="price" id="price"
+                                                                    disabled
+                                                                    style="margin-top: 20px; float: right; width: 47%; margin-bottom: 20px;">
+                                                                <option th:each="i : ${@serviceUtil.getProductSlabDetails(daasData)}"
+                                                                        th:value="${i.slabRate}"
+                                                                        th:text="${i.slabRate + ' $ / api call'}"></option>
+                                                            </select>-->
+                                                            <!--<table id="productSlab" class="display" style="width: 100%">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th scope="col">#</th>
+                                                                    <th scope="col">Slabs (Quantity)</th>
+                                                                    <th scope="col">Price per API Call($)</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr th:each="slab,i : ${daasData.productSlab.productSlabDetailList}">
+                                                                    <td th:text="${i.index+1}"></td>
+                                                                    <td th:text="${slab.slabLowerLimit}+'-'+${slab.slabUpperLimit}"></td>
+                                                                    <td th:text="${slab.slabRate}"></td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>-->
+                                                            <!--</font>-->
+                                                    </div>
+                                                    </span>
+                                                    <!--<span>$600.00 <del>$300.00</del></span>-->
+
+                                                    <form th:id="cartForm+${daasDataStat.index}"
+                                                          th:action="@{'/apiaddtocart/'+${daasData.id}}" method="post">
+                                                        <div>
+                                                            <!--<input type="number"
+                                                                   value="1"
+                                                                   class="form-control  minicolors-input"
+                                                                   id="productquantity"
+                                                                   onchange="if($(this).val()>0) { document.getElementById('btn'+${daasData.id}).removeAttribute('disabled'); }"
+                                                                   placeholder="Quantity" name="productquantity"
+                                                                   style="width: 30%; height: 35px;">-->
+
+                                                            <!--<input type="hidden" id="upperlimitvalue" name="upperlimitvalue"
+                                                                   value=document.getElementById("upperlimit").value>
+
+                                                            <input type="hidden" id="priceofslab" name="priceofslab"
+                                                                   value=document.getElementById("price").value>-->
+
+                                                            <!--RADIO-->
+                                                            <!--<h2 th:text="'Pricing : '" style=" font-size: 16px; text-transform: none; color: #06469E;"></h2>
+                                                            <ul>
+                                                                <li th:each="i : ${@serviceUtil.getProductSlabDetails(daasData)}" style="list-style: none; margin-left: -18px;">
+                                                                    <input type="radio"
+                                                                           th:name="upperlimitvalue"
+                                                                           th:value="${i.slabUpperLimit}"
+                                                                           th:text="${' '+i.slabUpperLimit}" checked />
+                                                                    <h2 style="font-size: 16px; text-transform: none; display: inline"
+                                                                        th:text="${' API requests ($' + i.slabRate + ' per call) : $' + i.slabUpperLimit * i.slabRate}" />
+                                                                </li>
+                                                            </ul>
+-->
+                                                            <!--DROPDOWN-->
+                                                            <!--<select class="form-control" name="upperlimitvalue"
+                                                                    id="upperlimitvalue" onchange="slabchangefnc(this)"
+                                                                    style="margin-top: 20px; float: left; width: 47%; margin-bottom: 20px;">
+                                                                <option th:each="i : ${@serviceUtil.getProductSlabDetails(daasData)}"
+                                                                        th:value="${i.slabUpperLimit}"
+                                                                        th:text="${i.slabUpperLimit}"></option>
+                                                            </select>
+                                                            <select class="form-control" name="priceofslab"
+                                                                    id="priceofslab" readonly
+                                                                    style="margin-top: 20px; float: right; width: 47%; margin-bottom: 20px;">
+                                                                <option th:each="i : ${@serviceUtil.getProductSlabDetails(daasData)}"
+                                                                        th:value="${i.slabRate}"
+                                                                        th:text="${i.slabRate + ' $ / api call'}"></option>
+                                                            </select>-->
+                                                            <div class="sl-desc-blk">
+                                                                <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),100)}"/>
+                                                                <!--<a th:attr="data-url='/moreinfo/api/' + ${@pathVariableEnc.encrypt(daasData.id)}, data-size='large',
+                                                                data-title=${daasData.productName}, data-reload='true'"
+                                                                   th:href="@{'/getApiDetailPage/' + ${@pathVariableEnc.encrypt(daasData.id)}}"
+                                                                   style="color: #06469E"> | Read more</a>-->
+                                                                <a th:attr="data-url='/moreinfo/api/' + ${@pathVariableEnc.encrypt(daasData.id)}, data-size='large',
+                                                        data-title=${daasData.productName}, data-reload='true'"
+                                                                   href="javascript:void(0);"
+                                                                   class="readmore sl-tx-blu"
+                                                                   >| Read more</a>
+                                                            </div>
+
+                                                            <a th:href="@{'/getApiDetailPage/' + ${@pathVariableEnc.encrypt(daasData.id)}}"><button th:id="'btn'+ ${daasData.id}" type="button"
+                                                                    value="Show more"
+                                                                    th:if="${@serviceUtil.isAvailableInCart(daasData.id, #request) == false}"
+                                                                    class="ereaders-simple-btn ereaders-bgcolor addtocart sl-addcrt-btn"
+                                                                    name="addtocartapiAddToCart">Show more<!--<i
+                                                                    class="icon ereaders-shopping-bag"></i>--></button></a>
+
+                                                            <a th:href="@{'/getCartPage'}"
+                                                               th:if="${@serviceUtil.isAvailableInCart(daasData.id, #request) == true}"
+                                                               class="ereaders-simple-btn ereaders-bgcolor addedincart sl-addcrt-in-btn">Added in Cart </a>
+
+                                                            <a  th:attr="data-deleteid=${daasData.id}"  th:href="@{'/deletefromcartcustomapi/' + ${daasData.id}}"
+                                                                th:if="${@serviceUtil.isAvailableInCart(daasData.id, #request) == true and @serviceUtil.isAvailableInOrder(daasData.id) == false}"
+                                                                class="btn btn-danger fa fa-trash callDeleteAjax carttrash"
+                                                            ></a>
+                                                        </div>
+
+                                                    </form>
+                                                    <!--                                                    <a href="event-detail.html"
+                                                                                                           class="ereaders-simple-btn ereaders-bgcolor">Add To Cart <i
+                                                                                                                class="icon ereaders-shopping-bag"></i></a>-->
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!--// Pagination \\-->
+                                    <div class="ereaders-pagination">
+                                        <ul class="page-numbers">
+                                            <li th:if="${daasapilist.hasPrevious()}">
+                                                <a class="previous page-numbers"
+                                                   th:href="@{${pagingUrl}(size=${daasapilist.size}, page=${daasapilist.number-1})}"
+                                                   aria-label="Next">
+                                                    <span aria-label="Next"><i
+                                                            class="icon ereaders-arrow-point-to-right"></i></span></a>
+                                            </li>
+                                            <li class="page-numbers" th:if="${daasapilist.totalPages == 1}"
+                                                style="display: none;"
+                                                th:each="pageNumber : ${pageNumbers}">
+												<span th:if="${pageNumber==daasapilist.number + 1}" class="current">
+
+                                                <a th:text="${pageNumber}"
+                                                   th:href="@{${pagingUrl}(size=${daasapilist.size}, page=${pageNumber-1})}" class="sl-clr-whit"></a>
+
+												</span>
+                                                <span th:if="${pageNumber!=daasapilist.number + 1}">
+													<a th:th:text="${pageNumber}"
+                                                       th:href="@{${pagingUrl}(size=${daasapilist.size}, page=${pageNumber-1})}" class="sl-clr-whit"></a>
+												</span>
+                                            </li>
+
+                                            <li class="page-numbers" th:if="${daasapilist.totalPages > 1}"
+                                                th:each="pageNumber : ${pageNumbers}">
+												<span th:if="${pageNumber==daasapilist.number + 1}" class="current">
+
+                                                <a th:text="${pageNumber}"
+                                                   th:href="@{${pagingUrl}(size=${daasapilist.size}, page=${pageNumber-1})}" class="sl-clr-whit"></a>
+
+												</span>
+                                                <span th:if="${pageNumber!=daasapilist.number + 1}">
+													<a th:th:text="${pageNumber}"
+                                                       th:href="@{${pagingUrl}(size=${daasapilist.size}, page=${pageNumber-1})}" class="sl-clr-whit"></a>
+												</span>
+                                            </li>
+
+                                            <li th:if="${daasapilist.hasNext()}"><a class="next page-numbers"
+                                                                                  th:href="@{${pagingUrl}(size=${daasapilist.size}, page=${daasapilist.number+1})}">
+                                                <span aria-label="Next"><i
+                                                        class="icon ereaders-arrow-point-to-right"></i></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!--// Pagination \\-->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--// Main Section \\-->
+
+        </div>
+        <!--// Main Content \\-->
+
+        <!--// Footer \\-->
+        <footer id="ereaders-footer" class="ereaders-footer-one">
+
+            <!--// Footer Widget \\-->
+            <!--<div class="ereaders-footer-widget">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="ereaders-footer-newslatter">
+                                <h2>Subscribe to Our Newsletter</h2>
+                                <p>Aenean ultricies iaculis cursus. Mauris enim tellus, finibus in felis a, sollicitudin
+                                    iaculis dolor. Donec sollicitudin orci id efficitur dapibus.</p>
+                                <form>
+                                    <input value="Enter Your Email Address"
+                                           onblur="if(this.value == '') { this.value ='Enter Your Email Address'; }"
+                                           onfocus="if(this.value =='Enter Your Email Address') { this.value = ''; }"
+                                           tabindex="0" type="email">
+                                    <input type="submit" value="Subscribe">
+                                </form>
+                                <a href="index.html" class="ereaders-footer-logo"><img src="images/footer-logo.png"
+                                                                                       alt=""></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>-->
+            <!--// Footer Widget \\-->
+
+            <!--// CopyRight \\-->
+            <!--<div class="ereaders-copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p><i class="fa fa-copyright"></i> 6017, All Right Reserved - by <a
+                                    href="index.html">EyeCix</a>
+                            </p>
+                            <ul class="footer-social-network">
+                                <li><a href="https://en-gb.facebook.com/login/" class="fa fa-facebook"></a></li>
+                                <li><a href="https://www.linkedin.com/uas/login" class="fa fa-linkedin"></a></li>
+                                <li><a href="https://twitter.com/login?lang=en" class="fa fa-twitter"></a></li>
+                                <li><a href="https://www.pinterest.com/login/" class="fa fa-pinterest-p"></a></li>
+                                <li><a href="https://en-gb.facebook.com/login/" class="fa fa-google-plus"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <!--// CopyRight \\-->
+
+        </footer>
+        <!--// Footer \\-->
+
+        <div class="clearfix"></div>
+
+    </div>
+    <!--// Main Wrapper \\-->
+
+    <!-- jQuery (necessary for JavaScript plugins) -->
+    <script type="text/javascript" src="script/jquery.js"></script>
+    <script type="text/javascript" src="script/jquery-ui.js"></script>
+    <script type="text/javascript" src="script/bootstrap.min.js"></script>
+    <script type="text/javascript" src="script/slick.slider.min.js"></script>
+    <script type="text/javascript" src="script/fancybox.pack.js"></script>
+    <script type="text/javascript" src="script/isotope.min.js"></script>
+    <script type="text/javascript" src="script/progressbar.js"></script>
+    <script type="text/javascript" src="script/jquery.countdown.min.js"></script>
+    <script type="text/javascript" src="script/circle-chart.js"></script>
+    <script type="text/javascript" src="script/numscroller.js"></script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs_m2ywm-bE8z9YM_WmtPaIQNIosN4Dxo&callback=initMap"></script>
+    <script type="text/javascript" src="script/functions.js"></script>
+    <script type="text/javascript">
+        document.getElementById("productQuantity").addEventListener("keyup", function () {
+            var productqty = document.getElementById('productquantity').value;
+            if (productqty > 0) {
+                document.getElementById('addtocartapi').removeAttribute("disabled");
+            } else {
+                document.getElementById('addtocartapi').setAttribute("disabled", null);
+            }
+        });
+
+    </script>
+
+    <script>
+
+        /*$(document).ready(function(){
+            console.log("Ye koshise to hogi kam nahi...");
+            $(":submit").css("display", "none");
+        });*/
+
+        function submitTheForm() {
+            document.formAddToCart.addtocartapiAddToCart.value = 'Adding . . .';
+            return true;
+        }
+
+        function slabchangefnc(element) {
+
+            console.log(element.closest(".api-data-div").querySelector("#upperlimitvalue").selectedIndex);
+            /*var x = $("#upperlimitvalue option:selected").index();*/
+            element.closest(".api-data-div").querySelector("#priceofslab").selectedIndex = element.closest(".api-data-div").querySelector("#upperlimitvalue").selectedIndex;
+
+        }
+
+        /*function enableAddToCart() {
+            console.log("Jo tum na ho, rahenge ham nahi...");
+            $("'btn'+ ${daasData.id}").css("display","block");
+        }*/
+
+    </script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,24 @@
+=======================================================================================================
+Database
+=======================================================================================================
+tbl_subusers_history : transaction_id and subuser_id 6 - but - no mapping
+
+tbl_theme_configuration : class_name? : config_name? : config_value? : property_name - ama kavi keva sun mage 6?
+
+tbl_persistent_logins senamate 6? : token atle sun? : series sun 6?
+
+tbl_subscription_notifications : task_id ? - no mapping
+
+tbl_stripe_users : sena mate 6? : stripe_customer_id? : user_id? - what is relationship?
+
+tbl_user_subscriptions : plan_id? : subscription_type? : transaction_id? : user_id?
+hun avu samju 6u k id atle ane equivalent same table ma hovu joi a
+
+tbl_subusers : subscription_type? : parent_id? : mapping to pdf_marks atle?
+=======================================================================================================
+Source Code
+See .ods
+=======================================================================================================
+Other
+=======================================================================================================
+what is the significance of publication.zip?

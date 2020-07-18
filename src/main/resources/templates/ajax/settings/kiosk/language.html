@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+<div class="row">
+
+    <div class="col-md-12">
+        <form th:action="@{/register}" th:object="${kioskLanguage}" method="post" style="width: 99%"
+              th:if="${!success}">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="form-label-group required">
+
+                            <select class="form-control" th:field="*{language}" id="language"
+                                    th:classappend="${#fields.hasErrors('language') ? 'is-invalid' : ''}"
+                            >
+                                <option th:value="''">Select language</option>
+                                <option th:value="'French'">French</option>
+                                <option th:value="'Chinese'">Chinese</option>
+                            </select>
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p th:if="${#fields.hasErrors('language')}" class="label text-danger "
+                               th:errors="*{language}"></p>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <br/>
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox" th:field="*{isPrimary}" id="isPrimary">
+                            <label for="isPrimary">Default ?</label>
+                        </div>
+
+                        <p th:if="${#fields.hasErrors('isPrimary')}" class="label text-danger "
+                           th:errors="*{isPrimary}"></p>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox" th:field="*{isActive}" id="status">
+                            <label for="status">Active ?</label>
+                        </div>
+
+                        <p th:if="${#fields.hasErrors('isActive')}" class="label text-danger "
+                           th:errors="*{isActive}"></p>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </form>
+
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}"/>
+        <div style="display: none;" id="languageDiv">
+            <select class="selectpicker" name="kioskLanguage" id="kioskLanguage">
+                <option th:each="lang : ${@serviceUtil.getKioskLanguages()}"
+                        th:value="${{lang}}"
+                        th:text="${lang.getLanguage()}"
+                        th:selected="${lang.id==kioskLanguage.id ? true : false}"
+                ></option>
+            </select>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,488 @@
+Index: daas/src/main/resources/templates/user/more_info_api.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/resources/templates/user/more_info_api.html	(revision 350e98b14a6632ae37bb20e7bbe2eed1d07d2728)
++++ daas/src/main/resources/templates/user/more_info_api.html	(date 1586435634622)
+@@ -14,7 +14,7 @@
+     <li th:text="${product.getProductName()}" style="list-style-type:none"></li>
+     <br>
+     Product Description : <br>
+-    <li th:text="${product.getProductDescription()}" style="list-style-type:none"></li>
++    <li th:utext="${product.getProductDescription()}" style="list-style-type:none"></li>
+     <br>
+     Product Pricing :
+             <table id="productSlab" style="width: 100%">
+Index: daas/src/main/resources/templates/layouts/scripts.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/resources/templates/layouts/scripts.html	(revision 350e98b14a6632ae37bb20e7bbe2eed1d07d2728)
++++ daas/src/main/resources/templates/layouts/scripts.html	(date 1586510178441)
+@@ -132,6 +132,11 @@
+             confirmAjaxSubmitCustom($(this));
+         });
+ 
++        $(document).on("click", ".readmore", function (e) {
++            console.log("Ayushman Bhav...");
++            confirmAjaxSubmitCustom($(this));
++        });
++
+         function closePass(params, currentElement, popup) {
+             var parsed = $.parseHTML(params);
+             var el = $(parsed).find("#closepopup");
+Index: daas/src/main/java/com/publications/controllers/daas/CartController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/java/com/publications/controllers/daas/CartController.java	(revision 350e98b14a6632ae37bb20e7bbe2eed1d07d2728)
++++ daas/src/main/java/com/publications/controllers/daas/CartController.java	(date 1586506341399)
+@@ -293,7 +293,7 @@
+                 cartForUser = cartRepository.findByDaasUser(userUtil.getCurrentUser());
+                 cartDetail = cartDetailRepository.findFirstByCartAndProduct(cartForUser, product);
+                 if (cartDetail != null) {
+-                    quantity += cartDetail.getQuantity();
++                        quantity += cartDetail.getQuantity();
+                 } else {
+                     cartDetail = new CartDetail();
+                 }
+Index: daas/src/main/resources/templates/user/more_info.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/resources/templates/user/more_info.html	(revision 350e98b14a6632ae37bb20e7bbe2eed1d07d2728)
++++ daas/src/main/resources/templates/user/more_info.html	(date 1586435620680)
+@@ -10,7 +10,7 @@
+         <br>
+         Product Price : <li th:text="${product.getProductPrice()}" style="list-style-type:none"></li>
+         <br>
+-        Product Description : <br><li th:text="${product.getProductDescription()}" style="list-style-type:none"></li>
++        Product Description : <br><li th:utext="${product.getProductDescription()}" style="list-style-type:none"></li>
+ 
+     </ul>
+ 
+Index: daas/src/main/resources/templates/shop-list-wls-data.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/resources/templates/shop-list-wls-data.html	(revision 350e98b14a6632ae37bb20e7bbe2eed1d07d2728)
++++ daas/src/main/resources/templates/shop-list-wls-data.html	(date 1586510640373)
+@@ -98,6 +98,7 @@
+                                             <li th:if="${daasDatas.empty}" style="font-weight: bold; margin-left: 40px;"
+                                                 th:text="${'Sorry! No items to show in this category.'}"/>
+                                             <li th:each="daasData : ${daasDatas}" class="col-md-12"
++                                                style="list-style: none;"
+                                                 sec:authorize="isAnonymous()">
+ 
+                                                 <figure>
+@@ -119,8 +120,8 @@
+                                                         <!--<a href="#" class="icon ereaders-shopping-bag"
+                                                            data-toggle="tooltip"
+                                                            title="Add To Cart"></a>-->
+-                                                        <a href="#" class="icon ereaders-add" data-toggle="tooltip"
+-                                                           title="Add To Wishlist"></a>
++                                                        <!--<a href="#" class="icon ereaders-add" data-toggle="tooltip"
++                                                           title="Add To Wishlist"></a>-->
+                                                         <a th:attr="data-url=@{'/moreinfo/data/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
+                                                            href="javascript:void(0);"
+                                                            class="icon ereaders-idea"
+@@ -132,21 +133,24 @@
+                                                     <h2 style="font-size: 20px;"
+                                                         th:text="${#strings.abbreviate(daasData.getProductName(),50)}"/>
+                                                     <span th:text="${'$' + daasData.getProductPrice() + '  / year'}"/>
+-                                                    <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),200)}"/>
++                                                    <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),15)}"/>
++                                                    <a th:attr="data-url=@{'/moreinfo/data/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
++                                                       href="javascript:void(0);" class="readmore">read more</a>
+                                                     <br/>
+                                                     <p th:text="'Last updated on: '+${#temporals.format(daasData.createdAt,'dd-MM-yyyy')}"></p>
+                                                     <input type="hidden" th:value="${daasData.getProductId()}"
+                                                            id="productIdUnauthorised" name="productId"/>
+                                                     <br><br>
+                                                     <a th:href="@{'/login'}"
+-                                                       class="ereaders-simple-btn ereaders-bgcolor">Add To Cart <i
+-                                                            class="icon ereaders-shopping-bag"></i></a>
++                                                       class="btn btn-primary">Add To Cart<!-- <i
++                                                            class="icon ereaders-shopping-bag"></i>--></a>
+                                                 </div>
+ 
+                                             </li>
+ 
+                                             <!--if not already added to cart-->
+                                             <li th:each="daasData : ${daasDatas}" class="col-sm-12"
++                                                style="list-style: none;"
+                                                 sec:authorize="isAuthenticated()">
+                                                 <figure>
+                                                     <!--<span>sale</span>-->
+@@ -166,8 +170,8 @@
+                                                         <!--<a href="#" class="icon ereaders-shopping-bag"
+                                                            data-toggle="tooltip"
+                                                            title="Add To Cart"></a>-->
+-                                                        <a href="#" class="icon ereaders-add" data-toggle="tooltip"
+-                                                           title="Add To Wishlist"></a>
++                                                        <!--<a href="#" class="icon ereaders-add" data-toggle="tooltip"
++                                                           title="Add To Wishlist"></a>-->
+                                                         <a th:attr="data-url=@{'/moreinfo/data/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
+                                                            href="javascript:void(0);"
+                                                            class="icon ereaders-idea"
+@@ -180,28 +184,31 @@
+                                                         th:text="${#strings.abbreviate(daasData.getProductName(),15)}"/>
+                                                     <span th:text="${'$' + daasData.getProductPrice() + '  / year'}"/>
+                                                     <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),15)}"/>
+-                                                    <br/><br/>
++                                                    <a th:attr="data-url=@{'/moreinfo/data/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
++                                                       href="javascript:void(0);" class="readmore">read more</a>
++                                                    <br/>
+                                                     <h6 style="font-size: xx-small;"
+                                                         th:text="'Last updated on: '+${#temporals.format(daasData.createdAt,'dd-MM-yyyy')}"></h6>
+                                                     <!--<input type="hidden" th:value="${daasData.getProductId()}"
+                                                            id="productIdAuthorised" name="productId"/>-->
+                                                     <br><br>
+                                                     <!--if not already added to cart-->
++                                                    <!--class="ereaders-simple-btn ereaders-bgcolor"-->
+                                                     <a th:href="@{'/addtocart/' +${daasData.id}}"
+                                                        th:if="${@serviceUtil.isAvailableInCart(daasData.id) == false and @serviceUtil.isAvailableInOrder(daasData.id) == false}"
+-                                                       class="ereaders-simple-btn ereaders-bgcolor"
+-                                                       id="btnAddToCart">Add To Cart <i
+-                                                            class="icon ereaders-shopping-bag"></i></a>
++                                                       class="btn btn-primary"
++                                                       id="btnAddToCart">Add To Cart<!-- <i
++                                                            class="icon ereaders-shopping-bag"></i>--></a>
+                                                     <!--if already added to cart-->
+                                                     <a th:href="@{'/getCartPage'}"
+                                                        th:if="${@serviceUtil.isAvailableInCart(daasData.id) == true and @serviceUtil.isAvailableInOrder(daasData.id) == false}"
+-                                                       class="ereaders-simple-btn ereaders-bgcolor"
++                                                       class="btn btn-primary"
+                                                     >Added in Cart <i
+                                                             class="icon ereaders-arrow-point-to-right"></i></a>
+                                                     <!--if in order but not in cart-->
+                                                     <a th:href="@{'/downloadRequest/'+${daasData.id}}"
+                                                        th:if="${@serviceUtil.isAvailableInCart(daasData.id) == false and @serviceUtil.isAvailableInOrder(daasData.id) == true}"
+-                                                       class="ereaders-simple-btn ereaders-bgcolor"
++                                                       class="btn btn-primary"
+                                                     >Download <i class="icon ereaders-download-content"></i></a>
+                                                 </div>
+ 
+Index: daas/src/main/java/com/publications/entities/DaaS/OrderDetail.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/java/com/publications/entities/DaaS/OrderDetail.java	(revision 350e98b14a6632ae37bb20e7bbe2eed1d07d2728)
++++ daas/src/main/java/com/publications/entities/DaaS/OrderDetail.java	(date 1586504260928)
+@@ -40,7 +40,7 @@
+     @HtmlValidateConstraint(whiteListType="none")
+     private float discount;
+ 
+-    @Column(name="net_price")
++    @Column(name="net_price", precision = 2)
+     @HtmlValidateConstraint(whiteListType="none")
+     private float netPrice;
+ 
+Index: daas/src/main/resources/templates/shop-list-wls-api.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/resources/templates/shop-list-wls-api.html	(revision 350e98b14a6632ae37bb20e7bbe2eed1d07d2728)
++++ daas/src/main/resources/templates/shop-list-wls-api.html	(date 1586510856623)
+@@ -159,7 +159,8 @@
+                                         <ul class="row" th:each="daasData : ${daasapilist}"
+                                             th:object="${addApitoCart}" sec:authorize="isAnonymous()">
+                                             <!--<li th:if="${daasapilist.empty}" style="font-weight: bold; margin-left: 40px;" th:text="${'Sorry! No items to show in this category.'}"/>-->
+-                                            <li class="col-md-8">
++                                            <li class="col-md-8"
++                                                style="list-style: none;">
+                                                 <figure>
+                                                     <!--<a href="shop-detail.html">-->
+                                                     <img
+@@ -174,8 +175,8 @@
+                                                             alt="">
+                                                     <!--</a>-->
+                                                     <figcaption>
+-                                                        <a href="#" class="icon ereaders-add" data-toggle="tooltip"
+-                                                           title="Add To Wishlist"></a>
++                                                        <!--<a href="#" class="icon ereaders-add" data-toggle="tooltip"
++                                                           title="Add To Wishlist"></a>-->
+                                                         <a th:attr="data-url=@{'/moreinfo/api/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
+                                                            href="javascript:void(0);"
+                                                            class="icon ereaders-idea"
+@@ -186,7 +187,9 @@
+                                                 <div class="ereaders-shop-list-text">
+                                                     <h2 th:text="${daasData.productName}"/>
+                                                     <!--<span th:text="${'$' + daasData.productPrice}"/>-->
+-                                                    <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),200)}"/>
++                                                    <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),15)}"/>
++                                                    <a th:attr="data-url=@{'/moreinfo/data/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
++                                                       href="javascript:void(0);" class="readmore">read more</a>
+                                                     <br><br>
+ 
+                                                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
+@@ -220,18 +223,17 @@
+                                                       th:action="@{'/apiaddtocart/'+${daasData.id}}" method="post">
+                                                     <div>
+                                                         <input type="number"
++                                                               value="10"
+                                                                class="form-control  minicolors-input"
+-                                                               id="productquantity" value="0"
++                                                               id="productquantity"
+                                                                onchange="if($(this).val()>0) { document.getElementById('btn').removeAttribute('disabled'); }"
+                                                                placeholder="Quantity" name="productquantity"
+-                                                               style="width: 57%;">
++                                                               style="width: 36%;">
+                                                     </div>
+                                                     <br/>
+                                                     <div>
+                                                         <a th:href="@{'/login'}" id="btn"
+-                                                           class="ereaders-simple-btn ereaders-bgcolor" disabled>Add To
+-                                                            Cart <i
+-                                                                    class="icon ereaders-shopping-bag"></i></a>
++                                                           class="btn btn-primary">Add To Cart<!-- <i class="icon ereaders-shopping-bag"></i>--></a>
+                                                     </div>
+                                                 </form>
+ 
+@@ -242,7 +244,8 @@
+                                         <ul class="row" th:each="daasData : ${daasapilist}"
+                                             th:object="${addApitoCart}" sec:authorize="isAuthenticated()">
+ 
+-                                            <li class="col-md-8">
++                                            <li class="col-md-8"
++                                                style="list-style: none;">
+                                                 <figure>
+                                                     <!--<span>sale</span>-->
+                                                     <!--<a href="shop-detail.html">-->
+@@ -261,8 +264,8 @@
+                                                         <!--NOt Applicable for API product-->
+                                                         <!--                                                        <a href="#" class="icon ereaders-link" data-toggle="tooltip"
+                                                                                                                    title="Add To Cart"></a>-->
+-                                                        <a href="#" class="icon ereaders-add" data-toggle="tooltip"
+-                                                           title="Add To Wishlist"></a>
++                                                        <!--<a href="#" class="icon ereaders-add" data-toggle="tooltip"
++                                                           title="Add To Wishlist"></a>-->
+                                                         <a th:attr="data-url=@{'/moreinfo/api/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
+                                                            href="javascript:void(0);"
+                                                            class="icon ereaders-idea"
+@@ -273,7 +276,9 @@
+                                                 <div class="ereaders-shop-list-text">
+                                                     <h2 th:text="${daasData.productName}"/>
+                                                     <!--<span th:text="${'$' + daasData.productPrice}"/>-->
+-                                                    <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),200)}"/>
++                                                    <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),15)}"/>
++                                                    <a th:attr="data-url=@{'/moreinfo/data/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
++                                                       href="javascript:void(0);" class="readmore">read more</a>
+                                                     <br><br>
+ 
+                                                     <div class="table-wrapper-scroll-y my-custom-scrollbar"
+@@ -314,17 +319,17 @@
+                                                       th:action="@{'/apiaddtocart/'+${daasData.id}}" method="post">
+                                                     <div>
+                                                         <input type="number"
++                                                               value="10"
+                                                                class="form-control  minicolors-input"
+-                                                               style="width: 50%"
++                                                               style="width: 36%"
+                                                                id="productquantity"
+                                                                placeholder="Quantity" name="productquantity">
+                                                     </div>
+                                                     <br/>
+                                                     <div>
+                                                         <input type="submit" value="Add to Cart"
+-                                                               class="ereaders-simple-btn ereaders-bgcolor icon ereaders-shopping-bag"
+-                                                               id="addtocartapi"><!--<i
+-                                                            class="icon ereaders-shopping-bag"></i>--></input>
++                                                               class="btn btn-primary"
++                                                               id="addtocartapi"><!--<i class="icon ereaders-shopping-bag"></i>--></input>
+                                                     </div>
+                                                 </form>
+ 
+Index: daas/src/main/java/com/publications/controllers/daas/StripeController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/java/com/publications/controllers/daas/StripeController.java	(revision 350e98b14a6632ae37bb20e7bbe2eed1d07d2728)
++++ daas/src/main/java/com/publications/controllers/daas/StripeController.java	(date 1586507883959)
+@@ -116,12 +116,12 @@
+ 
+         /*for multi product*/
+         List<LineItem> listLineItems = new ArrayList<LineItem>();
+-
++/*.setDescription(cartDetail.getProduct().getProductDescription())*/
+         float netPrice = 0;
+         for (CartDetail cartDetail : cartDetails) {
+             listLineItems.add(new LineItem.Builder()
+                     .setName(cartDetail.getProduct().getProductName())
+-                    .setDescription(cartDetail.getProduct().getProductDescription())
++                    .setDescription(" ")
+                     .setAmount((long) (cartDetail.getTotalPrice() / cartDetail.getQuantity()) * 100)
+                     .setCurrency("usd")
+                     .setQuantity(cartDetail.getQuantity())
+@@ -277,7 +277,7 @@
+             /*Cart cart1 = cartRepository.findByDaasUser(daasUser);
+             cartDetailRepository.deleteAllByCart(cart1);*/
+             /*cartDetailRepository.deleteByCartId(cart.getId());*//*
+-            *//*cartDetailRepository.deleteByCart(cart);*//*
++             *//*cartDetailRepository.deleteByCart(cart);*//*
+             for (int i = 0; i < cartDetails.size(); i++) {
+                 cartDetailRepository.deleteById(cartDetails.get(i).getId());
+             }*/
+Index: daas/src/main/java/com/publications/utilities/singleton/ServiceUtil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/java/com/publications/utilities/singleton/ServiceUtil.java	(revision 350e98b14a6632ae37bb20e7bbe2eed1d07d2728)
++++ daas/src/main/java/com/publications/utilities/singleton/ServiceUtil.java	(date 1586507289880)
+@@ -46,7 +46,7 @@
+     @Autowired
+     private OrderDetailRepository orderDetailRepository;
+ 
+-    public Boolean sendPurchaseSuccessEmail(User daasUser){
++    public Boolean sendPurchaseSuccessEmail(User daasUser) {
+ 
+         try {
+ 
+@@ -119,7 +119,7 @@
+         return null;
+     }
+ 
+-    public boolean isAvailableInCart(Product product){
++    public boolean isAvailableInCart(Product product) {
+         User daasUser = userUtil.getCurrentUser();
+         Cart cart = cartRepository.findByDaasUser(daasUser);
+         List<CartDetail> cartDetails = null;
+@@ -131,16 +131,16 @@
+         }
+ 
+         for (int i = 0; i < cartDetails.size(); i++) {
+-            if(cartDetails.get(i).getProduct().getId().equals(product.getId())){
++            if (cartDetails.get(i).getProduct().getId().equals(product.getId())) {
+                 return true;
+             }
+         }
+         return false;
+     }
+ 
+-    public int getCartEntriesCount(){
++    public int getCartEntriesCount() {
+         User daasUser = userUtil.getCurrentUser();
+-        if(daasUser != null){
++        if (daasUser != null) {
+             Cart cart = cartRepository.findByDaasUser(daasUser);
+             List<CartDetail> cartDetails = null;
+             if (cart == null) {
+@@ -154,60 +154,60 @@
+         return 0;
+     }
+ 
+-    public boolean isAvailableInOrder(Product product){
++    public boolean isAvailableInOrder(Product product) {
+ 
+         User daasUser = userUtil.getCurrentUser();
+         Order order = orderRepository.findFirstByDaasUser(daasUser);
+         List<OrderDetail> orderDetail = null;
+ 
+-        if(order == null){
++        if (order == null) {
+             orderDetail = new ArrayList<OrderDetail>();
+         } else {
+             orderDetail = order.getOrderDetailList();
+         }
+ 
+         for (int i = 0; i < orderDetail.size(); i++) {
+-            if(orderDetail.get(i).getProduct().getId().equals(product.getId())){
++            if (orderDetail.get(i).getProduct().getId().equals(product.getId())) {
+                 return true;
+             }
+         }
+         return false;
+     }
+ 
+-    public boolean isThumbnailNull(Product product){
++    public boolean isThumbnailNull(Product product) {
+ 
+         System.out.println(product.getProductThumbnailName());
+-        if(product.getProductThumbnailName().endsWith(".")){
++        if (product.getProductThumbnailName().endsWith(".")) {
+             return true;
+         }
+ 
+         return false;
+     }
+ 
+-    public boolean isOfferAvailed(ProductOffer offer){
+-        User daasUser=userUtil.getCurrentUser();
+-        Cart cart=cartRepository.findByDaasUser(daasUser);
+-        if(cart!=null){
+-            List<CartDetail> cartDetailList=cart.getCartDetails();
+-            for(CartDetail c:cartDetailList){
+-                if(c.getProductOffer().getId()==offer.getId()){
++    public boolean isOfferAvailed(ProductOffer offer) {
++        User daasUser = userUtil.getCurrentUser();
++        Cart cart = cartRepository.findByDaasUser(daasUser);
++        if (cart != null) {
++            List<CartDetail> cartDetailList = cart.getCartDetails();
++            for (CartDetail c : cartDetailList) {
++                if (c.getProductOffer().getId() == offer.getId()) {
+                     return true;
+                 }
+             }
+-            List<Order> orderList=orderRepository.findAllByDaasUser(daasUser);
+-            List<OrderDetail> orderDetailList=new ArrayList<>();
+-            if(orderList!=null){
+-                for(Order o:orderList){
++            List<Order> orderList = orderRepository.findAllByDaasUser(daasUser);
++            List<OrderDetail> orderDetailList = new ArrayList<>();
++            if (orderList != null) {
++                for (Order o : orderList) {
+                     orderDetailList.addAll(o.getOrderDetailList());
+                 }
+             }
+-            for(OrderDetail o:orderDetailList){
+-                if(o.getOfferAppliedId()==offer.getId()){
++            for (OrderDetail o : orderDetailList) {
++                if (o.getOfferAppliedId() == offer.getId()) {
+                     return true;
+                 }
+             }
+ 
+-        }else{
++        } else {
+             return false;
+         }
+         return false;
+Index: daas/src/main/resources/templates/cartpage.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/resources/templates/cartpage.html	(revision 350e98b14a6632ae37bb20e7bbe2eed1d07d2728)
++++ daas/src/main/resources/templates/cartpage.html	(date 1586511059576)
+@@ -68,7 +68,8 @@
+             <li th:each="productListItems : ${productListOnUsersCart}" style="list-style-type: none;">
+                 <div class="product">
+                     <div class="product-image">
+-                        <img src="https://s.cdpn.io/3/dingo-dog-bones.jpg">
++                        <!--<img src="https://s.cdpn.io/3/dingo-dog-bones.jpg">-->
++                        <img th:src="@{/front/images/product_img_default_no_border.png}" />
+                     </div>
+                     <div class="product-details">
+                         <div class="product-title" th:text="${productListItems.product.productName}"></div>
+@@ -173,10 +174,10 @@
+                 <label style="font-size: larger;">Tax (0%)</label>
+                 <div style="font-size: larger;" class="totals-value" id="cart-tax"></div>
+             </div>
+-            <div class="totals-item">
++            <!--<div class="totals-item">
+                 <label style="font-size: larger;">Shipping</label>
+                 <div style="font-size: larger;" class="totals-value" id="cart-shipping"></div>
+-            </div>
++            </div>-->
+             <div class="totals-item totals-item-total">
+                 <label style="font-size: larger; font-family: 'Lato', sans-serif;">Grand Total</label>
+                 <div style="font-size: larger; font-family: 'Lato', sans-serif;" class="totals-value" id="cart-total">

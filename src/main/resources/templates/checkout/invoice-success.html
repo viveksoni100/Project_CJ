@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}" lang="en">
+<head>
+    <link href="front/css/invoice-success.css" rel="stylesheet">
+</head>
+
+<th:block layout:fragment="content">
+
+    <!--// Main Wrapper \\-->
+    <div class="ereaders-main-wrapper">
+
+        <!--// SubHeader \\-->
+        <div class="ereaders-subheader">
+            <div class="ereaders-subheader-text">
+                <span class="ereaders-subheader-transparent"></span>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Order Confirmation</h1>
+                            <!--<p style="margin-top: -12px;">Thank you for shopping from our store and for your order.</p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// SubHeader \\-->
+
+        <!--// Main Content \\-->
+        <div class="ereaders-main-content">
+
+            <!--// Main Section \\-->
+            <div class="ereaders-main-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <body class="bodyClass">
+                            <div class="invc-blk">
+                            <!-- Header -->
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable invc-hed-blk">
+                                <tr>
+                                    <td>
+                                        <table border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable invc-hed-innr-tbl-blk">
+                                            <tr>
+                                                <td>
+                                                    <table border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <table border="0" cellpadding="0" cellspacing="0" align="right" class="col">
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td class="invc-top-ttl">Invoice</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <tr class="hiddenMobile">
+                                                                        <td class="invc-het-50"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="invc-trns-txt">
+                                                                            <small th:text="${'Transaction ID : ' + order.getTransactionNumber()}" /><br>
+                                                                            <!--<small th:text="${'Current Date : ' + #temporals.day(order.getPurchaseDate()) + '-' + #temporals.monthNameShort(order.getPurchaseDate()) + '-' +
+                                                                            #temporals.year(order.getPurchaseDate())}" /><br>
+                                                                            <small th:text="${'Expiry Date : ' + #temporals.day(orderDetail.getProductExpiryDate()) + '-' + #temporals.monthNameShort(orderDetail.getProductExpiryDate()) + '-' +
+                                                                            #temporals.year(orderDetail.getProductExpiryDate())}" />-->
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- /Header -->
+                            <!-- Order Details -->
+                            <div class="invc-ord-lst-blk">
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable invc-ord-lst-tbl">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <table border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                                            <tbody>
+                                            <tr>
+                                            <tr>
+                                                <td>
+                                                    <table border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="ins-th inswid-52">Product Name</th>
+                                                                <!--<th style="font-size: 20px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="left">
+                                                                    <small>Item id</small>
+                                                                </th>-->
+                                                                <th class="ins-th">Quantity</th>
+                                                                <th class="ins-th">Price</th>
+                                                                <!--<th class="ins-th">Discount Rate</th>-->
+                                                                <th class="ins-th">Valid Till</th>
+                                                                <th class="ins-th">Subtotal</th>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="ins-td-brd-clr" height="1" colspan="5"></td>
+                                                            </tr>
+                                                            <tr th:each="product : ${productDetails}">
+                                                                <td class="article ins-td" th:text="${product.getProductName()}"></td>
+                                                                <!--<td style="font-size: 20px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;"><small th:text="${product.getId()}"></small></td>-->
+                                                                <td class="ins-td" align="center" th:text="${product.productQty}"></td>
+
+                                                                <td class="ins-td" align="center" th:if="${product.getProduct().getProductPrice() == 0}" th:text="${'$'+#numbers.formatDecimal(product.getNetPrice() / product.getProductQty(),1,'COMMA',2,'POINT')+'*'}"></td>
+                                                                <td class="ins-td" align="center" th:if="${product.getProduct().getProductPrice() != 0}" th:text="${'$'+#numbers.formatDecimal(product.getProduct().getProductPrice(),0,'COMMA',0,'POINT')}"></td>
+
+                                                                <!--<td class="ins-td" align="center" th:text="${#numbers.formatDecimal(product.getDiscount(),0,'POINT',0,'POINT') + '%'}"></td>-->
+                                                                <td class="ins-td" align="center" th:text="${#temporals.day(orderDetail.getProductExpiryDate()) + '-' + #temporals.monthNameShort(orderDetail.getProductExpiryDate()) + '-' + #temporals.year(orderDetail.getProductExpiryDate())}">
+                                                                </td>
+                                                                <td class="ins-td" align="right" th:text="${'$' + #numbers.formatDecimal(product.getNetPrice(),0,'COMMA',2,'POINT')}"></td>
+<!--                                                                <td height="1" colspan="6"></td>-->
+                                                            </tr>
+                                                            <tr>
+                                                                <!--<td height="1" style="background: #bebebe;" colspan="5"></td>-->
+                                                                <td colspan="5"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="invc-het-20"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <label style="float: left" th:if="${@serviceUtil.isAPIPresentInUsersOrder(productDetails) == true}">* Average price per API call</label>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                            <!-- /Order Details -->
+                            <!-- Total -->
+                            <table border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable invc-odr-ttl">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <table border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+
+                                                    <!-- Table Total -->
+                                                    <table border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                        <tbody>
+                                                        <tr>
+                                                            <!--<td style="font-size: 18px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                Subtotal
+                                                            </td>
+                                                            <td style="font-size: 18px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; white-space:nowrap;" width="80" th:text="${'$' + order.getNetPrice()}"></td>-->
+                                                        </tr>
+                                                        <!--<tr>
+                                                            <td style="font-size: 18px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                Shipping &amp; Handling
+                                                            </td>
+                                                            <td style="font-size: 18px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                $00.00
+                                                            </td>
+                                                        </tr>-->
+
+                                                        <tr>
+                                                            <td class="invc-amunt-word">
+                                                                <strong th:text="${'Amount Paid : ' + orderNetPriceInWords + ' USD'}"></strong></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="invc-grnd-ttl-blk">
+                                                                <strong class="invc-grnd-ttl">Grand Total</strong>
+                                                            </td>
+                                                            <td class="invc-amunt-numb">
+                                                                <!--order point-->
+                                                                <strong th:text="${'$' + #numbers.formatDecimal(order.getNetPrice(),0,'COMMA',2,'POINT')}"></strong>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!--<tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td style="font-size: 18px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; width: 9%;" colspan="3">
+                                                                &lt;!&ndash;order point&ndash;&gt;
+                                                                <strong th:text="${orderNetPriceInWords + ' USD'}"></strong>
+                                                            </td>
+                                                        </tr>-->
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- /Table Total -->
+
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!-- /Total -->
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable invc-dwlnld-tbl">
+
+                                <tr>
+                                    <td>
+                                        <table border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable">
+                                            <tr>
+                                                <td>
+                                                    <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="invc-dwnl-blnk-txt">
+                                                                <!--Have a nice day.-->
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr class="spacer">
+                                                <td height="50">
+                                                    <!--<a th:href="@{'/'}"
+                                                       class="ereaders-simple-btn ereaders-bgcolor"
+                                                    >Home</a>-->
+                                                    <a th:href="@{'/view/invoice/' + ${order.getId().toString()}}"
+                                                       target="_blank"
+                                                       class="ereaders-simple-btn ereaders-bgcolor"
+                                                    >View Invoice</a>
+                                                    <a th:href="@{'/download/invoiceNew/' + ${order.getId().toString()}}"
+                                                       class="ereaders-simple-btn ereaders-bgcolor invc-btn-mrg"
+                                                       >Download Invoice</a>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="invc-het-20"></td>
+                                </tr>
+                            </table>
+                            <!-- partial -->
+                            <!--<a th:href="@{'/stripe/printInvoice/' + ${order.id}}" class="btn btn-primary">Print Invoice</a>-->
+                            </div>
+
+                            </body>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--// Main Content \\-->
+
+        <div class="clearfix"></div>
+
+    </div>
+    <!--// Main Wrapper \\-->
+
+</th:block>
+
+<!-- jQuery (necessary for JavaScript plugins) -->
+
+</body>
+</html>

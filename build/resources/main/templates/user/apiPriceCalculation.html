@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link rel="stylesheet" th:href="@{/static/front/css/style.css}">
+</head>
+
+
+<body>
+
+<table id="apiDescriptionTable" class="gtd-dtls-tble">
+    <thead>
+    <tr>
+        <th>From</th>
+        <th>To</th>
+        <th>Price/API</th>
+        <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="i,iterator : ${productSlabDetailFinals}">
+        <td th:text="${i.slabLowerLimit}"></td>
+        <td th:if="!${iterator.last}" th:text="${i.slabUpperLimit}"></td>
+        <td th:if="${iterator.last}" th:text="${productQty}"></td>
+        <td th:text="${'$'+#numbers.formatDecimal(i.slabRate,1,'COMMA',2,'POINT')}"></td>
+        <td th:text="${'$' + #numbers.formatDecimal(i.total,0,'COMMA',2,'POINT')}"></td>
+
+    </tr>
+    <tr>
+        <td style="font-weight: bold" colspan="3">Grand Total </td>
+        <td style="font-weight: bold" th:text="${'$' + #numbers.formatDecimal(cartDetail.totalPrice,0,'COMMA',2,'POINT')}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+
+<!--<body>
+
+    <p>An example is given bellow to understand price calculation</p><br>
+    <p>Pricing : </p>
+    <table id="apiDescriptionTable" class="gtd-dtls-tble">
+        <thead>
+        <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>Price/API</th>
+        </tr>
+        </thead>
+        <tbody>
+        &lt;!&ndash;ꝏ&ndash;&gt;
+        <tr>
+            <td>0</td>
+            <td>1000</td>
+            <td>$0.5</td>
+        </tr>
+        <tr>
+            <td>1001</td>
+            <td>2000</td>
+            <td>$0.4</td>
+        </tr>
+        <tr>
+            <td>2001</td>
+            <td>3000</td>
+            <td>$0.3</td>
+        </tr>
+        <tr>
+            <td>3001</td>
+            <td>4000</td>
+            <td>$0.2</td>
+        </tr>
+        <tr>
+            <td>4001</td>
+            <td>ꝏ</td>
+            <td>$0.1</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="ereaders-number-select">
+        <label>QTY:</label>
+        <input value="6" min="01" id="upperlimitvalue" name="upperlimitvalue" type="number" readonly>
+        <label>X 1,000 = 6,000 (total api calls purchased)</label>
+    </div>
+    <br>
+    <p>Calculation : </p>
+    <p>first 1000 calls (0-1000) will be charged with $0.5</p>
+    <p>∴ 1000 X $0.5 = $500</p>
+    <p>second 1000 calls (1001-2000) will be charged with $0.4</p>
+    <p>∴ 1000 X $0.4 = $400</p>
+    <p>third 1000 calls (2001-3000) will be charged with $0.3</p>
+    <p>∴ 1000 X $0.3 = $300</p>
+    <p>fourth 1000 calls (3001-4000) will be charged with $0.2</p>
+    <p>∴ 1000 X $0.2 = $200</p>
+    <p>fifth 1000 calls (4001-5000) will be charged with $0.1</p>
+    <p>∴ 1000 X $0.1 = $100</p>
+    <p>sixth 1000 calls (5001-6000) will be charged with $0.1</p>
+    <p>∴ 1000 X $0.1 = $100</p>
+    <br>
+    <label>$500 + $400 + $300 + $200 + $100 + $100 = $1,600</label>
+    <label>Total = $1,600</label>
+    <label>API per call is charged $0.27 (∵ $1,600 / 6000 = $0.27)</label>
+    <label>Grand Total = $0.27 X 6000 = <b>$1,620</b></label>
+
+</body>-->
+</html>

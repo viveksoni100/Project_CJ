@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{mail/layout/body}">
+
+<th:block layout:fragment="content">
+            <div style="text-align: center; width: 100%;margin-top:20px;margin-bottom:20px; font-size: 26px;color:#4d4d4d;">
+                <h4>Email Verification</h4>
+            </div>
+            <div style="margin: 0px 50px">
+                <div style="font-size:15px;color:#da125c">
+                    <div style="color:#da125c;text-transform: capitalize;" th:text="${'Hey ' + name + ','}"></div>
+                    <div style="color:#4d4d4d;">Welcome to EASEClick. <br/>To reset your password click below link</div>
+
+                </div>
+
+            </div>
+
+            <div style="margin-top:35px;text-align: center;">
+
+
+                <a th:href="${baseUrl}+'/forgot/password/token?token='+${verificationToken}"
+                   style="text-decoration:none;padding: 10px 25px;color: white;background: green    ;font-size: 20px;border-radius: 3px; font-weight: 100">Reset password</a>
+            </div>
+            <div style="margin-top:35px;">
+                <div style="background: #605577;height:2px;"></div>
+            </div>
+            <!--<div th:include="mail/layout/footer :: mailFooter"></div>-->
+
+            <!--<div th:replace="mail/layout/copyright :: mailCopyright"></div>-->
+
+
+</th:block>
+
+</html>

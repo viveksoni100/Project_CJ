@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/main}"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+
+<th:block layout:fragment="content">
+    <!--<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>-->
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <a
+                        sec:authorize="hasRole('ROLE_ADMIN')"
+                        th:href="'javascript:void(0)'" class="btn btn-primary btn-sm pull-right subuser-create"
+                        th:attr="data-onload='tCheckbox',data-after='tCheckbox',data-title='Add Subuser',data-size='large',data-url='/ajax/corporate/subuser/form', data-submiturl='/ajax/corporate/subuser/create', data-close='configCreated',data-reload='true'"
+                >Add User</a>
+                <a
+                        sec:authorize="hasRole('ROLE_CORPORATE')"
+                        th:href="@{'/corporate/checkout'}" class="btn btn-primary btn-sm pull-right "
+
+                >Add User</a>
+
+                <a
+                        sec:authorize="hasRole('ROLE_CORPORATE')"
+                        th:href="'javascript:void(0)'" class="btn btn-primary btn-sm pull-right subuser-renew"
+                        th:attr="data-onload='tCheckbox', data-replacecontent='true', data-replacediv='renewdiv', data-after='tCheckbox',data-title='Renew selected',data-size='large',data-url='/ajax/corporate/renew', data-submiturl='/ajax/corporate/renew/submit', data-close='renewDone',data-reload='true'"
+                >Renew selected</a>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title"> Sub Users</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" id="replace">
+                            <div class="dataTables_wrapper dt-bootstrap4">
+                                <div class="row m-0">
+                                    <Div class="col-sm-12">
+                                        <form th:action="@{${pagingUrl}}"
+                                              th:attr="data-baseurl=${pagingUrl},data-formname='subuserList',data-replacediv='replace'"
+                                              id="subuserList" class="paging" autocomplete="off">
+                                            <table class="table " id="dataTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>-</th>
+
+                                                    <th>
+                                                        <input type="hidden" name="parent_id" th:value="${user.id}"
+                                                               class="mark1" autocomplete="off">
+                                                    </th>
+                                                    <th th:with="order=${pageable.getSort().getOrderFor('transactionId')}">
+                                                        <a href="javascript:void(0)"
+                                                           th:value="${transactionId}"
+                                                           th:attr="data-sort='transactionId',data-baseurl=${pagingUrl},data-formname='subuserList',data-replacediv='replace',data-page='1',
+                            data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                           class="page-sort">
+                                                            Transaction ID</a>
+                                                    </th>
+                                                    <th th:with="order=${pageable.getSort().getOrderFor('expiryDate')}">
+                                                        <a href="javascript:void(0)"
+                                                           th:value="${expiryDate}"
+                                                           th:attr="data-sort='expiryDate',data-baseurl=${pagingUrl},data-formname='subuserList',data-replacediv='replace',data-page='1',
+                            data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                           class="page-sort">
+                                                            Expiry date</a>
+                                                    </th>
+                                                    <th th:with="order=${pageable.getSort().getOrderFor('firstName')}">
+                                                        <a href="javascript:void(0)"
+                                                           th:value="${firstName}"
+                                                           th:attr="data-sort='firstName',data-baseurl=${pagingUrl},data-formname='subuserList',data-replacediv='replace',data-page='1',
+                            data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                           class="page-sort">
+                                                            First name</a>
+                                                    </th>
+                                                    <th th:with="order=${pageable.getSort().getOrderFor('lastName')}">
+                                                        <a href="javascript:void(0)"
+                                                           th:value="${lastName}"
+                                                           th:attr="data-sort='lastName',data-baseurl=${pagingUrl},data-formname='subuserList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                           class="page-sort"
+                                                        >Last name</a>
+                                                    </th>
+                                                    <th th:with="order=${pageable.getSort().getOrderFor('email')}">
+                                                        <a href="javascript:void(0)"
+                                                           th:value="${email}"
+                                                           th:attr="data-sort='email',data-baseurl=${pagingUrl},data-formname='subuserList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                           class="page-sort"
+                                                        >Email</a>
+                                                    </th>
+                                                    <th th:with="order=${pageable.getSort().getOrderFor('phone')}">
+                                                        <a href="javascript:void(0)"
+                                                           th:value="${phone}"
+                                                           th:attr="data-sort='phone',data-baseurl=${pagingUrl},data-formname='subuserList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                           class="page-sort"
+                                                        >Phone</a>
+                                                    </th>
+                                                    <th>
+
+                                                    </th>
+                                                    <th>
+
+                                                    </th>
+                                                    <th style="text-align: right">
+                                                        Edit / History
+                                                    </th>
+
+                                                </tr>
+                                                <tr>
+                                                    <th><input type="checkbox" class="checkbox-all" /></th>
+
+                                                    <th>
+                                                        <input type="text" name="transaction_id" placeholder="Transaction ID"
+                                                               class="mark1" autocomplete="off">
+                                                    </th>
+
+                                                    <th>
+                                                        <input type="text" name="first_name" placeholder="First name"
+                                                               class="mark1" autocomplete="off">
+                                                    </th>
+                                                    <th>
+                                                        <input type="text" name="last_name" placeholder="Last name"
+                                                               class="mark1 " autocomplete="nope">
+                                                    </th>
+                                                    <th>
+                                                        <input type="text" name="email" placeholder="Email"
+                                                               class="mark1" autocomplete="off">
+                                                    </th>
+                                                    <th>
+                                                        <input type="text" name="phone" placeholder="Phone"
+                                                               class="mark1" autocomplete="off">
+                                                    </th>
+                                                    <th>
+                                                        <input type="submit" style="display: none;">
+                                                        <input type="checkbox" name="status" data-toggle="toggle" class="tCheckbox" data-on="Active" data-off="Expired" data-height="40">
+                                                    </th>
+                                                    <th>
+                                                    </th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody class="marktext">
+                                                <tr th:each="subuser : ${subusers}">
+                                                    <td  ><input type="checkbox" name="userIds" class="user-checkbox" th:attr="data-id=${@pathVariableEnc.encrypt(subuser.id)}, data-name=${(subuser.username!=null) ? subuser.username : ''}" /></td>
+
+                                                    <td  th:text="${(subuser.transactionId!=null) ? subuser.transactionId : ''}"></td>
+                                                    <td><div th:text="${(subuser.expiryDate!=null) ? subuser.expiryDate : ''}" style="width: 100px;"></div></td>
+                                                    <td  th:text="${(subuser.firstName!=null) ? subuser.firstName : ''}"></td>
+                                                    <td  th:text="${(subuser.lastName!=null) ? subuser.lastName : ''}"></td>
+                                                    <td  th:text="${(subuser.email!=null) ? subuser.email : ''}"></td>
+                                                    <td  th:text="${(subuser.phone!=null) ? subuser.phone : ''}"></td>
+
+                                                    <td th:width="200px" style="text-align: center">
+                                                        <form method="post" th:id="${'formstatus'+subuserStat.index}">
+                                                            <i class="fa fa-3x subuserValStatus"
+                                                               th:attr="data-id=${@pathVariableEnc.encrypt(subuser.id)},data-after='configStatusSave',
+                                                            data-ele=${'form'+subuserStat.index}"
+                                                               th:classappend="${(!subuser.status) ? 'fa-toggle-off text-danger' : 'fa-toggle-on text-success'}"></i>
+                                                        </form>
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                                th:href="'javascript:void(0)'"
+                                                                class="btn btn-primary btn-sm pull-right subuser-create"
+                                                                th:attr="data-onload='tCheckbox',data-after='tCheckbox',data-title=${'Edit ' + subuser.firstName},data-size='large',data-url='/ajax/corporate/subuser/'+${@pathVariableEnc.encrypt(subuser.id)}, data-submiturl='/ajax/corporate/subuser/create/'+${@pathVariableEnc.encrypt(subuser.id)}, data-close='configCreated',data-reload='true'"
+                                                        >Edit</a> <br/><br/>
+                                                        <a
+                                                                th:href="'javascript:void(0)'"
+                                                                class="btn btn-primary btn-sm pull-right subuser-history"
+                                                                th:attr="data-onload='tCheckbox',data-after='tCheckbox',data-title=${'History ' + subuser.firstName},data-size='large',data-url='/ajax/corporate/subuser/history/'+${@pathVariableEnc.encrypt(subuser.id)},  data-close='configCreated',data-reload='true'"
+                                                        >History</a>
+
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </form>
+                                    </div>
+                                </Div>
+                                <div th:remove="tag" th:include="layouts/paging :: paging"
+                                     th:with="pageObj=${subusers},replaceDiv='replace',formName='subuserList', pagingUrl=${pagingUrl}"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</th:block>
+<th:block layout:fragment="extrascripts">
+    <script th:src="@{/front/nimda/js/ajax.js}"></script>
+    <script th:src="@{/front/nimda/js/paging.js}"></script>
+
+
+    <script type="text/javascript">
+        $(document).on("click", ".subuser-create", function (e) {
+            confirmAjaxSubmit($(this));
+        });
+
+        function configCreated(params, currentElement, popup) {
+            closeConfirmPopupWithAlertMessage(params, currentElement, popup, "Config created", "html");
+        }
+
+
+        $(document).on("click", ".configValReload", function (e) {
+            //if ($(this).val() != "") {
+            data = {};
+            data['configVaue'] = $("#" + $(this).data("inputid")).val();
+            data['csrfParameter'] = $("meta[name='_csrf_parameter']").attr("content");
+            data['csrfToken'] = $("meta[name='_csrf']").attr("content");
+            data['csrfHeader'] = $("meta[name='_csrf_header']").attr("content");
+            ajaxPost("post", "/ajax/corporate/subuser/change/" + $(this).data("id"), data, $(this), true);
+            //}
+        });
+
+
+        $(document).on("click", ".subuserValStatus", function (e) {
+            //if ($(this).val() != "") {
+            ajaxPost("post", "/ajax/corporate/subuser/status/" + $(this).data("id"), $("#" + $(this).data("ele")).serialize(), $(this), true);
+            //}
+        });
+
+        function configSave(params, currentElement) {
+            if (params.success) {
+                reloadPage();
+            } else {
+                $.alert({
+                    title: false,
+                    content: "<div class='alert alert-danger'>" + params.msg + "</div>",
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-primary',
+                            action: function () {
+
+                            }
+                        },
+                    }
+                });
+            }
+        }
+
+        function configStatusSave(params, currentElement) {
+            if (params.success) {
+                if (params.obj[0]) {
+                    currentElement.removeClass("text-danger").removeClass("fa-toggle-off");
+                    currentElement.addClass("text-success").addClass("fa-toggle-on");
+                } else {
+                    currentElement.removeClass("text-success").removeClass("fa-toggle-on");
+                    currentElement.addClass("text-danger").addClass("fa-toggle-off");
+
+                }
+            } else {
+                $.alert({
+                    title: false,
+                    content: "<div class='alert alert-danger'>" + params.msg + "</div>",
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-primary',
+                            action: function () {
+
+                            }
+                        },
+                    }
+                });
+            }
+        }
+
+
+        $(document).on("change", ".checkbox-all", function(e){
+           if ($(this).is(':checked')){
+               $('.user-checkbox').prop('checked', true);
+           }else{
+               $('.user-checkbox').prop('checked', false);
+           }
+        });
+        function editConfig(res, currentElement) {
+
+        }
+        function tCheckbox(res, currentElement) {
+            $('.tCheckbox').bootstrapToggle();
+        }
+
+
+        $(document).on("click", ".subuser-renew", function(e){
+            var numberOfChecked = $('.user-checkbox:checkbox:checked').length;
+            var users = [];
+            var usernames;
+            var currentElement = $(this);
+            if (numberOfChecked <=0){
+                $.alert("Please select at least one user");
+            }else{
+                $.each($(".user-checkbox:checked"), function(){
+                    users.push($(this).data("id"));
+                    if ($(this).data("username") !=null && $(this).data("username") != "")
+                    usernames = usernames + "," + $(this).data("username");
+                });
+
+                var url = "/ajax/corporate/renew?userIds=" + users.join(",");
+                currentElement.data("url", url);
+                confirmAjaxSubmitNoButton(currentElement);
+            }
+        });
+
+        $(document).on("click", ".subuser-history", function(e){
+            confirmAjaxUrl($(this));
+        });
+    </script>
+    <style type="text/css">
+        .switch-field {
+            display: flex;
+            margin-bottom: 36px;
+            overflow: hidden;
+        }
+
+        .switch-field input {
+            position: absolute !important;
+            clip: rect(0, 0, 0, 0);
+            height: 1px;
+            width: 1px;
+            border: 0;
+            overflow: hidden;
+        }
+
+        .switch-field label {
+            background-color: #e4e4e4;
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 14px;
+            line-height: 1;
+            text-align: center;
+            padding: 8px 16px;
+            margin-right: -1px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+            transition: all 0.1s ease-in-out;
+        }
+
+        .switch-field label:hover {
+            cursor: pointer;
+        }
+
+        .switch-field input:checked + label {
+            background-color: #a5dc86;
+            box-shadow: none;
+        }
+
+        .switch-field label:first-of-type {
+            border-radius: 4px 0 0 4px;
+        }
+
+        .switch-field label:last-of-type {
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* This is just for CodePen. */
+
+        .form {
+            max-width: 600px;
+            font-family: "Lucida Grande", Tahoma, Verdana, sans-serif;
+            font-weight: normal;
+            line-height: 1.625;
+            margin: 8px auto;
+            padding: 16px;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+    </style>
+</th:block>
+</html>

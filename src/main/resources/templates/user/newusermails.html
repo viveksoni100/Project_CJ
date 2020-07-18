@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/main}">
+
+
+<th:block layout:fragment="content">
+    <!--<div th:replace="base/globalmessages :: global-messages">(global-messages)</div> usersWithoutEmail-->
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title"> Pending Invites</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"/>
+                        <h4 th:if="${#lists.isEmpty(usersWithoutEmail.subUsers)}"> There are no pending invites. </h4>
+
+                        <form th:if="${not #lists.isEmpty(usersWithoutEmail.subUsers)}" th:action="@{/corporate/invites}" th:object="${usersWithoutEmail}"  method="post"
+                              style="margin: 0 30px 70px 30px;" class="loginform" autocomplete="disabled">
+                            <fieldset>
+                                <table class="table " id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th> EMAIL ID(s)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="marktext">
+                                    <tr th:each="subuser, iter : *{subUsers}">
+                                        <td>
+                                            <!--<input type="hidden" th:field="*{subUsers[__${iter.index}__].id}" th:value="${subuser.id}">
+                                            <input th:field="*{subUsers[__${iter.index}__].email}"
+
+                                                   th:placeholder=${'User'+(iter.index+1)+'(EmailId)'}>
+-->
+                                            <input type="hidden" th:field="*{subUsers[__${iter.index}__].id}" th:value="${subuser.id}">
+                                            <input th:field="*{subUsers[__${iter.index}__].email}"
+
+                                                   th:placeholder=${'User'+(iter.index+1)+'(EmailId)'}>
+                                            <!--<input th:field="*{subUsers[__${iter.index}__].email}"
+                                                   class="form-control  minicolors-input" id="subUsers[__${iter.index}__].email"
+                                                   th:classappend="${#fields.hasErrors('subUsers[__${iter.index}__].email') ? 'is-invalid' : ''}"
+                                                   th:placeholder=${'User'+(iter.index+1)+'(EmailId)'}
+                                                   autofocus="autofocus">
+                                            <p th:if="${#fields.hasErrors('subUsers[__${iter.index}__].email')}" class="label text-danger "
+                                               th:errors="*{subUsers[__${iter.index}__].email}"></p>-->
+                                        </td>
+                                        <td th:if="${#fields.hasErrors('{subUsers[__${iter.index}__].email}')}" th:errors="*{subUsers[__${iter.index}__].email}">
+                                            Invalid Email
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input class="btn btn-primary " type="submit" id="inviteButton" th:value="InviteAll">
+                                            <input class="btn btn-primary" style="margin-left: 30%" type="reset" id="resetButton" name="reset" th:value="Reset">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </fieldset>
+
+                        </form>
+
+                    </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+</th:block>
+<th:block layout:fragment="extrascripts">
+    <script th:src="@{/front/nimda/js/ajax.js}"></script>
+    <script th:src="@{/front/nimda/js/paging.js}"></script>
+    <script type="text/javascript">
+
+        $(document).on("click", ".subuser-renew", function(e){
+            var numberOfChecked = $('.user-checkbox:checkbox:checked').length;
+            var users = [];
+            var usernames;
+            var currentElement = $(this);
+                if (numberOfChecked <=0){
+                $.alert("Please select at least one user");
+            }else{
+                $.each($(".user-checkbox:checked"), function(){
+                    users.push($(this).data("id"));
+                    if ($(this).data("username") !=null && $(this).data("username") != "")
+                        usernames = usernames + "," + $(this).data("username");
+                });
+
+                var url = "/ajax/corporate/renew?userIds=" + users.join(",");
+                currentElement.data("url", url);
+                confirmAjaxSubmitNoButton(currentElement);
+            }
+        });
+
+        $(document).on("keyup", "#users", function (e) {
+
+
+            if (Number.isInteger(+$(this).val())) {
+                $(".getForm").click();
+            } else {
+                $.alert("Please enter valid users count");
+                $(this).val("");
+            }
+
+        });
+
+        $(document).on("change", "#type", function (e) {
+            if (Number.isInteger(+$("#users").val())) {
+                $(".getForm").click();
+            } else {
+                $.alert("Please enter valid users count");
+                $("#users").val("");
+            }
+        });
+        $(document).on("click", ".getForm", function (e) {
+            var url = $(this).data("url");
+            //url = url + "?users=" + $("#users").val();
+            $(this).data("url", url);
+            var data = {};
+            data["users"] = $("#users").val();
+            if ($("#type").prop("checked") == true) {
+                data["type"] = "Y";
+            } else {
+                data["type"] = "M";
+            }
+
+            ajaxGet("GET", $(this).data("url"), data, $(this), true);
+        });
+
+        $(document).ready(function () {
+            $('.tCheckbox').bootstrapToggle();
+        });
+
+
+    </script>
+</th:block>
+</html>

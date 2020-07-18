@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/main}">
+<th:block layout:fragment="content">
+	<!--// Main Content \\-->
+	<div class="ereaders-main-content ereaders-error-full">
+
+		<!--// Main Section \\-->
+		<div class="ereaders-main-section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="ereaders-error-wrap">
+							<div class="ereaders-error-text">
+								<h2>4<img th:src="@{/front/extra-images/text-shadow.png}" alt="">1</h2>
+								<span>Unauthorized</span>
+								<p>User do not have rights to access this page.</p>
+								<div class="clearfix"></div>
+								<a th:href="@{'/'}" class="eraders-search-btn">Back To Homepage <i class="icon ereaders-right-arrow"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--// Main Section \\-->
+
+	</div>
+	<!--// Main Content \\-->
+</th:block>
+</html>

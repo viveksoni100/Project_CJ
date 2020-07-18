@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/main}">
+
+
+<th:block layout:fragment="content">
+    <!--<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>-->
+    <div class="content">
+        <div class="row">
+            <!--<div class="col-md-12">
+                <a
+                        th:href="'javascript:void(0)'" class="btn btn-primary btn-sm pull-right category-create"
+                        data-onload="tCheckbox"
+                        th:attr="data-after='tCheckbox',data-title='Add entry',data-size='large',data-url='/ajax/super/offer/form', data-submiturl='/ajax/super/offer/create', data-close='ordCreated',data-reload='true'"
+                >Add Offer</a>
+            </div>-->
+            <div class="col-md-12" style="margin-top: -32px;">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" style="font-size: 20px;"> Purchase Details (Data)</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table " id="dataTable" width="100%" cellspacing="0"
+                               data-toolbar="#toolbar"
+                               data-search="true"
+                               data-toggle="table"
+                               data-search-align="left"
+                               data-minimum-count-columns="2"
+                               data-pagination="true"
+                               data-page-size="10"
+                               data-sortable="true"
+                               data-page-list="[10, 25, 50, All]"
+                               data-side-pagination="client"
+                               data-show-extended-pagination="true"
+                               data-buttons-class="btn btn-info">
+                            <thead>
+                            <tr>
+                                <!--<th>-</th>-->
+
+                                <th data-sortable="true" data-searchable="true">Order Id</th>
+                                <th data-sortable="true" data-searchable="true">User Name</th>
+                                <th data-sortable="true" data-searchable="true">User Email</th>
+                                <th data-sortable="true" data-searchable="true">Purchase Date</th>
+                                <th data-sortable="true" data-searchable="true">Product Name</th>
+                                <th data-sortable="true" data-searchable="true">Expiry Date</th>
+                                <th data-sortable="true" data-searchable="true">Total Price</th>
+                                <th data-sortable="true" data-searchable="true">Offer Applied Id</th>
+                                <!--<th style="text-align: right">Actions</th>-->
+                            </tr>
+                            </thead>
+                            <tbody class="marktext">
+                            <tr th:each="ord : ${orders}">
+                                <!--<td th:text="${ordStat.index+1}"></td>-->
+                                <td th:text="${ord.orderId}"/>
+                                <td th:text="${ord.uFirstName + ' ' + ord.uLastName}"/>
+                                <td th:text="${ord.email}"/>
+                                <td th:text="${#temporals.day(ord.purchaseDate) + '-' + #temporals.monthNameShort(ord.purchaseDate) + '-' + #temporals.year(ord.purchaseDate)}"/>
+                                <td th:text="${ord.productName}"/>
+                                <td th:text="${#temporals.day(ord.expiryDate) + '-' + #temporals.monthNameShort(ord.expiryDate) + '-' + #temporals.year(ord.expiryDate)}"/>
+                                <td th:text="${'$' + #numbers.formatDecimal(ord.totalPrice,0,'COMMA',0,'POINT')}"/>
+                                <td th:if="${ord.offerIdApplied!=null}" th:text="${ord.offerIdApplied}"/>
+                                <td th:if="${ord.offerIdApplied==null}" th:text="--"/>
+                                <!--<td>
+                                    <a
+                                            th:href="'javascript:void(0)'"
+                                            class="btn btn-primary btn-sm pull-right category-create"
+
+                                            >Edit</a>
+
+                                    &lt;!&ndash;th:attr="data-after='tCheckbox',data-onload='tCheckbox',data-title=${'Edit Offer ' + ord.id},data-size='large',data-url='/ajax/super/offer/form/'+${@pathVariableEnc.encrypt(ord.id)}, data-submiturl='/ajax/super/offer/create/'+${@pathVariableEnc.encrypt(ord.id)}, data-close='ordCreated',data-reload='true'"&ndash;&gt;
+                                </td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</th:block>
+<th:block layout:fragment="extrascripts">
+    <script th:src="@{/front/nimda/js/ajax.js}"></script>
+    <script th:src="@{/front/nimda/js/paging.js}"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#dataTable").bootstrapTable();
+        });
+
+        $(document).on("click", ".category-create", function (e) {
+            ordlicationSubmit($(this));
+        });
+
+        function ordCreated(params, currentElement, popup) {
+            closeConfirmPopupWithAlertMessage(params, currentElement, popup, "Offer created", "html");
+        }
+
+
+        $(document).on("click", ".configValReload", function (e) {
+            //if ($(this).val() != "") {
+            data = {};
+            data['configVaue'] = $("#" + $(this).data("inputid")).val();
+            data['csrfParameter'] = $("meta[name='_csrf_parameter']").attr("content");
+            data['csrfToken'] = $("meta[name='_csrf']").attr("content");
+            data['csrfHeader'] = $("meta[name='_csrf_header']").attr("content");
+            ajaxPost("post", "/ajax/super/ordlications/change/" + $(this).data("id"), data, $(this), true);
+            //}
+        });
+
+
+        $(document).on("click", ".categoryStatus", function (e) {
+            //if ($(this).val() != "") {
+            ajaxPost("post", "/ajax/super/offer/status/" + $(this).data("id"), $("#" + $(this).data("ele")).serialize(), $(this), true);
+            //}
+        });
+        $(document).on("click", ".ordlication-copy", function (e) {
+            //if ($(this).val() != "") {
+            ajaxPost("post", $(this).data("url"), "", $(this), true);
+            //}
+        });
+
+        function ordCopied(params, currentElement) {
+            if (params.success) {
+                $.alert({
+                    title: false,
+                    content: "<div class='alert alert-success'>" + params.msg + "</div>",
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-primary',
+                            action: function () {
+                                refreshGrid();
+                            }
+                        },
+                    }
+                });
+            } else {
+                $.alert("<div class='alert alert-danger'>" + params.msg + "</div>");
+
+            }
+        }
+
+
+        function configSave(params, currentElement) {
+            if (params.success) {
+                reloadPage();
+            } else {
+                $.alert({
+                    title: false,
+                    content: "<div class='alert alert-danger'>" + params.msg + "</div>",
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-primary',
+                            action: function () {
+
+                            }
+                        },
+                    }
+                });
+            }
+        }
+
+        function configStatusSave(params, currentElement) {
+            if (params.success) {
+                if (params.obj[0]) {
+                    currentElement.removeClass("text-danger").removeClass("fa-toggle-off");
+                    currentElement.addClass("text-success").addClass("fa-toggle-on");
+                } else {
+                    currentElement.removeClass("text-success").removeClass("fa-toggle-on");
+                    currentElement.addClass("text-danger").addClass("fa-toggle-off");
+
+                }
+            } else {
+                $.alert({
+                    title: false,
+                    content: "<div class='alert alert-danger'>" + params.msg + "</div>",
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-primary',
+                            action: function () {
+
+                            }
+                        },
+                    }
+                });
+            }
+        }
+
+        function editord(res, currentElement) {
+
+        }
+
+        function tCheckbox(res, currentElement) {
+            $('.tCheckbox').bootstrapToggle();
+        }
+
+        $(document).on("change", ".custom-file-input", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+
+        function ordlicationSubmit(currentElement) {
+            cnfbox = $.confirm({
+                title: currentElement.data('title'),
+                icon: 'fa fa-pencil',
+                columnClass: (currentElement.data("size") != "") ? currentElement.data("size") : "large",
+                backgroundDismiss: false,
+
+                closeIcon: true,
+                content: "URL:" + BASE_URL + currentElement.data("url"),
+                buttons: {
+                    formSubmit: {
+                        text: 'Submit',
+                        btnClass: 'btn-blue',
+                        action: function () {
+
+                            var cntnt = this;
+                            this.showLoading();
+                            $.ajax({
+                                type: "POST",
+                                /*contentType: "application/json",*/
+                                //dataType: (currentElement.data("contenttype") != "") ? currentElement.data("contenttype") : "html",
+                                url: BASE_URL + currentElement.data("submiturl"),
+                                data: new FormData($('#ordlicationsForm')[0]),
+                                timeout: 100000,
+                                headers: headers,
+                                contentType: false,
+                                cache: false,
+                                processData: false,
+                                enctype: 'multipart/form-data',
+                                success: function (res) {
+                                    cntnt.hideLoading();
+                                    cntnt.setContent(res, true);
+                                    if (jQuery.type(currentElement.data("after")) != "undefined") {
+                                        callGlobalMethodUsingVariable(currentElement.data("after"), res, currentElement);
+                                    }
+                                    if (jQuery.type(currentElement.data("close")) != "undefined") {
+                                        callGlobalMethodUsingVariableClose(currentElement.data("close"), res, currentElement, cntnt);
+                                    }
+                                    //$.alert("<div class='alert alert-success'>Saved!!!</div>");
+
+                                },
+                                error: function (e) {
+                                    cntnt.hideLoading();
+                                    cntnt.setContent(e.responseText, true);
+                                    console.log("ERROR: ", e);
+                                    if (jQuery.type(currentElement.data("after")) != "undefined") {
+                                        callGlobalMethodUsingVariable(currentElement.data("after"), res, currentElement);
+                                    }
+                                },
+                                done: function (e) {
+                                    cntnt.hideLoading();
+                                    console.log("DONE");
+                                    if (jQuery.type(currentElement.data("after")) != "undefined") {
+                                        callGlobalMethodUsingVariable(currentElement.data("after"), res, currentElement);
+                                    }
+                                }
+                            });
+                            return false;
+                        }
+                    },
+                    close: function () {
+                        //window.location.href = window.location.href;
+                        //location.reload();
+                        cnfbox.close();
+                    }
+                },
+                onContentReady: function () {
+                    // bind to events
+                    var jc = this;
+                    if (jQuery.type(currentElement.data("onload")) != "undefined") {
+                        callGlobalMethodUsingVariable(currentElement.data("onload"), "", currentElement);
+                    }
+
+                }
+            });
+        }
+
+
+    </script>
+</th:block>
+</html>
+

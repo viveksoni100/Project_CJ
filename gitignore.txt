@@ -1,0 +1,37 @@
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+c:/
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+/src/main/resources/application-dve.yml
+/src/main/resources/application.yml
+/src/main/resources/application-daastest.yml
+/src/main/resources/application-linux.yml
+/src/main/resources/log4j2.xml
+/src/main/resources/log4j2-linux.xml
+/src/main/resources/log4j2-win.xml
+
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+*.sql
+*.log
+/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/

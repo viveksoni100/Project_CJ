@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/main}">
+	<head>
+	 <meta charset="utf-8">
+	 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	 <meta name="viewport" content="width=device-width, initial-scale=1">
+	 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	 <title>Ereaders Book Grid</title>
+
+		<link href="front/css/bootstrap.css" rel="stylesheet">
+		<link href="front/css/font-awesome.css" rel="stylesheet">
+		<link href="front/css/flaticon.css" rel="stylesheet">
+		<link href="front/css/slick-slider.css" rel="stylesheet">
+		<link href="front/css/fancybox.css" rel="stylesheet">
+		<link href="front/css/style.css" rel="stylesheet">
+		<link href="front/css/color.css" rel="stylesheet">
+		<link href="front/css/responsive.css" rel="stylesheet">
+	 
+
+	 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	 <!--[if lt IE 9]>
+		 <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	 <![endif]-->
+	</head>
+	<body>
+
+	<th:block layout:fragment="content">
+
+	 <!--// Main Wrapper \\-->
+	 <div class="ereaders-main-wrapper">
+		 <!--// SubHeader \\-->
+		 <div class="ereaders-subheader">
+			 <div class="ereaders-subheader-text">
+				 <span class="ereaders-subheader-transparent"></span>
+				 <div class="container">
+					 <div class="row">
+						 <div class="col-md-12">
+							 <h1>Books Grid</h1>
+							 <p>Ut porta massa in risus maximus, eget sodales massa malesuada. Fusce et neque aliquet.</p>
+						 </div>
+					 </div>
+				 </div>
+			 </div>
+			 <div class="ereaders-breadcrumb">
+				 <div class="container">
+					 <div class="row">
+						 <div class="col-md-12">
+							 <ul>
+								 <li><a href="index-2.html">Homepage</a></li>
+								 <li class="active">Books Grid</li>
+							 </ul>
+						 </div>
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+		 <!--// SubHeader \\-->
+
+	<!--// Main Content \\-->
+	<div class="ereaders-main-content">
+
+		<!--// Main Section \\-->
+		<div class="ereaders-main-section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="ereaders-books ereaders-book-grid">
+							<ul class="row">
+								<li class="col-md-3">
+									<figure>
+										<a href="book-detail.html"><img src="extra-images/book-grid-img1.jpg" alt=""></a>
+										<figcaption>
+											<a href="#" class="icon ereaders-link" data-toggle="tooltip" title="Add To Link"></a>
+											<a href="#" class="icon ereaders-heart" data-toggle="tooltip" title="Add To Wishlist"></a>
+											<a href="#" class="icon ereaders-reload" data-toggle="tooltip" title="Reload"></a>
+										</figcaption>
+									</figure>
+									<div class="ereaders-book-grid-text">
+										<h2><a href="book-detail.html">Corporate Business</a></h2>
+										<span>$200.00</span>
+										<small>Lorem ipsum dolor</small>
+										<a href="book-detail.html" class="ereaders-simple-btn ereaders-bgcolor">Add To Cart</a>
+									</div>
+								</li>
+								<li class="col-md-3">
+									<figure>
+										<a href="book-detail.html"><img src="extra-images/book-grid-img7.jpg" alt=""></a>
+										<figcaption>
+											<a href="#" class="icon ereaders-link" data-toggle="tooltip" title="Add To Link"></a>
+											<a href="#" class="icon ereaders-heart" data-toggle="tooltip" title="Add To Wishlist"></a>
+											<a href="#" class="icon ereaders-reload" data-toggle="tooltip" title="Reload"></a>
+										</figcaption>
+									</figure>
+									<div class="ereaders-book-grid-text">
+										<h2><a href="book-detail.html">Corporate Business</a></h2>
+										<span>$200.00</span>
+										<small>Lorem ipsum dolor</small>
+										<a href="book-detail.html" class="ereaders-simple-btn ereaders-bgcolor">Add To Cart</a>
+									</div>
+								</li>
+								<li class="col-md-3">
+									<figure>
+										<a href="book-detail.html"><img src="extra-images/book-grid-img2.jpg" alt=""></a>
+										<figcaption>
+											<a href="#" class="icon ereaders-link" data-toggle="tooltip" title="Add To Link"></a>
+											<a href="#" class="icon ereaders-heart" data-toggle="tooltip" title="Add To Wishlist"></a>
+											<a href="#" class="icon ereaders-reload" data-toggle="tooltip" title="Reload"></a>
+										</figcaption>
+									</figure>
+									<div class="ereaders-book-grid-text">
+										<h2><a href="book-detail.html">Corporate Business</a></h2>
+										<span>$200.00</span>
+										<small>Lorem ipsum dolor</small>
+										<a href="book-detail.html" class="ereaders-simple-btn ereaders-bgcolor">Add To Cart</a>
+									</div>
+								</li>
+								<li class="col-md-3">
+									<figure>
+										<a href="book-detail.html"><img src="extra-images/book-grid-img3.jpg" alt=""></a>
+										<figcaption>
+											<a href="#" class="icon ereaders-link" data-toggle="tooltip" title="Add To Link"></a>
+											<a href="#" class="icon ereaders-heart" data-toggle="tooltip" title="Add To Wishlist"></a>
+											<a href="#" class="icon ereaders-reload" data-toggle="tooltip" title="Reload"></a>
+										</figcaption>
+									</figure>
+									<div class="ereaders-book-grid-text">
+										<h2><a href="book-detail.html">Corporate Business</a></h2>
+										<span>$200.00</span>
+										<small>Lorem ipsum dolor</small>
+										<a href="book-detail.html" class="ereaders-simple-btn ereaders-bgcolor">Add To Cart</a>
+									</div>
+								</li>
+								<li class="col-md-3">
+									<figure>
+										<a href="book-detail.html"><img src="extra-images/book-grid-img4.jpg" alt=""></a>
+										<figcaption>
+											<a href="#" class="icon ereaders-link" data-toggle="tooltip" title="Add To Link"></a>
+											<a href="#" class="icon ereaders-heart" data-toggle="tooltip" title="Add To Wishlist"></a>
+											<a href="#" class="icon ereaders-reload" data-toggle="tooltip" title="Reload"></a>
+										</figcaption>
+									</figure>
+									<div class="ereaders-book-grid-text">
+										<h2><a href="book-detail.html">Corporate Business</a></h2>
+										<span>$200.00</span>
+										<small>Lorem ipsum dolor</small>
+										<a href="book-detail.html" class="ereaders-simple-btn ereaders-bgcolor">Add To Cart</a>
+									</div>
+								</li>
+								<li class="col-md-3">
+									<figure>
+										<a href="book-detail.html"><img src="extra-images/book-grid-img5.jpg" alt=""></a>
+										<figcaption>
+											<a href="#" class="icon ereaders-link" data-toggle="tooltip" title="Add To Link"></a>
+											<a href="#" class="icon ereaders-heart" data-toggle="tooltip" title="Add To Wishlist"></a>
+											<a href="#" class="icon ereaders-reload" data-toggle="tooltip" title="Reload"></a>
+										</figcaption>
+									</figure>
+									<div class="ereaders-book-grid-text">
+										<h2><a href="book-detail.html">Corporate Business</a></h2>
+										<span>$200.00</span>
+										<small>Lorem ipsum dolor</small>
+										<a href="book-detail.html" class="ereaders-simple-btn ereaders-bgcolor">Add To Cart</a>
+									</div>
+								</li>
+								<li class="col-md-3">
+									<figure>
+										<a href="book-detail.html"><img src="extra-images/book-grid-img6.jpg" alt=""></a>
+										<figcaption>
+											<a href="#" class="icon ereaders-link" data-toggle="tooltip" title="Add To Link"></a>
+											<a href="#" class="icon ereaders-heart" data-toggle="tooltip" title="Add To Wishlist"></a>
+											<a href="#" class="icon ereaders-reload" data-toggle="tooltip" title="Reload"></a>
+										</figcaption>
+									</figure>
+									<div class="ereaders-book-grid-text">
+										<h2><a href="book-detail.html">Corporate Business</a></h2>
+										<span>$200.00</span>
+										<small>Lorem ipsum dolor</small>
+										<a href="book-detail.html" class="ereaders-simple-btn ereaders-bgcolor">Add To Cart</a>
+									</div>
+								</li>
+								<li class="col-md-3">
+									<figure>
+										<a href="book-detail.html"><img src="extra-images/book-grid-img7.jpg" alt=""></a>
+										<figcaption>
+											<a href="#" class="icon ereaders-link" data-toggle="tooltip" title="Add To Link"></a>
+											<a href="#" class="icon ereaders-heart" data-toggle="tooltip" title="Add To Wishlist"></a>
+											<a href="#" class="icon ereaders-reload" data-toggle="tooltip" title="Reload"></a>
+										</figcaption>
+									</figure>
+									<div class="ereaders-book-grid-text">
+										<h2><a href="book-detail.html">Corporate Business</a></h2>
+										<span>$200.00</span>
+										<small>Lorem ipsum dolor</small>
+										<a href="book-detail.html" class="ereaders-simple-btn ereaders-bgcolor">Add To Cart</a>
+									</div>
+								</li>
+								<li class="col-md-3">
+									<figure>
+										<a href="book-detail.html"><img src="extra-images/book-grid-img2.jpg" alt=""></a>
+										<figcaption>
+											<a href="#" class="icon ereaders-link" data-toggle="tooltip" title="Add To Link"></a>
+											<a href="#" class="icon ereaders-heart" data-toggle="tooltip" title="Add To Wishlist"></a>
+											<a href="#" class="icon ereaders-reload" data-toggle="tooltip" title="Reload"></a>
+										</figcaption>
+									</figure>
+									<div class="ereaders-book-grid-text">
+										<h2><a href="book-detail.html">Corporate Business</a></h2>
+										<span>$200.00</span>
+										<small>Lorem ipsum dolor</small>
+										<a href="book-detail.html" class="ereaders-simple-btn ereaders-bgcolor">Add To Cart</a>
+									</div>
+								</li>
+								<li class="col-md-3">
+									<figure>
+										<a href="book-detail.html"><img src="extra-images/book-grid-img3.jpg" alt=""></a>
+										<figcaption>
+											<a href="#" class="icon ereaders-link" data-toggle="tooltip" title="Add To Link"></a>
+											<a href="#" class="icon ereaders-heart" data-toggle="tooltip" title="Add To Wishlist"></a>
+											<a href="#" class="icon ereaders-reload" data-toggle="tooltip" title="Reload"></a>
+										</figcaption>
+									</figure>
+									<div class="ereaders-book-grid-text">
+										<h2><a href="book-detail.html">Corporate Business</a></h2>
+										<span>$200.00</span>
+										<small>Lorem ipsum dolor</small>
+										<a href="book-detail.html" class="ereaders-simple-btn ereaders-bgcolor">Add To Cart</a>
+									</div>
+								</li>
+								<li class="col-md-3">
+									<figure>
+										<a href="book-detail.html"><img src="extra-images/book-grid-img4.jpg" alt=""></a>
+										<figcaption>
+											<a href="#" class="icon ereaders-link" data-toggle="tooltip" title="Add To Link"></a>
+											<a href="#" class="icon ereaders-heart" data-toggle="tooltip" title="Add To Wishlist"></a>
+											<a href="#" class="icon ereaders-reload" data-toggle="tooltip" title="Reload"></a>
+										</figcaption>
+									</figure>
+									<div class="ereaders-book-grid-text">
+										<h2><a href="book-detail.html">Corporate Business</a></h2>
+										<span>$200.00</span>
+										<small>Lorem ipsum dolor</small>
+										<a href="book-detail.html" class="ereaders-simple-btn ereaders-bgcolor">Add To Cart</a>
+									</div>
+								</li>
+								<li class="col-md-3">
+									<figure>
+										<a href="book-detail.html"><img src="extra-images/book-grid-img1.jpg" alt=""></a>
+										<figcaption>
+											<a href="#" class="icon ereaders-link" data-toggle="tooltip" title="Add To Link"></a>
+											<a href="#" class="icon ereaders-heart" data-toggle="tooltip" title="Add To Wishlist"></a>
+											<a href="#" class="icon ereaders-reload" data-toggle="tooltip" title="Reload"></a>
+										</figcaption>
+									</figure>
+									<div class="ereaders-book-grid-text">
+										<h2><a href="book-detail.html">Corporate Business</a></h2>
+										<span>$200.00</span>
+										<small>Lorem ipsum dolor</small>
+										<a href="book-detail.html" class="ereaders-simple-btn ereaders-bgcolor">Add To Cart</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<!--// Pagination \\-->
+                        <div class="ereaders-pagination">
+                          <ul class="page-numbers">
+                             <li><a class="previous page-numbers" href="404.html"><span aria-label="Next"><i class="icon ereaders-arrow-point-to-right"></i></span></a></li>
+                             <li><span class="page-numbers current">01</span></li>
+                             <li><a class="page-numbers" href="404.html">02</a></li>
+                             <li><a class="page-numbers" href="404.html">03</a></li>
+                             <li><a class="page-numbers" href="404.html">04</a></li>
+                             <li><a class="next page-numbers" href="404.html"><span aria-label="Next"><i class="icon ereaders-arrow-point-to-right"></i></span></a></li>
+                          </ul>
+                        </div>
+                        <!--// Pagination \\-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--// Main Section \\-->
+
+	</div>
+	<!--// Main Content \\-->
+
+	<div class="clearfix"></div>
+
+	</div>
+	<!--// Main Wrapper \\-->
+
+	 <!-- jQuery (necessary for JavaScript plugins) -->
+	 <script type="text/javascript" src="script/jquery.js"></script>
+	 <script type="text/javascript" src="script/jquery-ui.js"></script>
+	 <script type="text/javascript" src="script/bootstrap.min.js"></script>
+	 <script type="text/javascript" src="script/slick.slider.min.js"></script>
+	 <script type="text/javascript" src="script/fancybox.pack.js"></script>
+	 <script type="text/javascript" src="script/isotope.min.js"></script>
+	 <script type="text/javascript" src="script/progressbar.js"></script>
+	 <script type="text/javascript" src="script/jquery.countdown.min.js"></script>
+	 <script type="text/javascript" src="script/circle-chart.js"></script>
+	 <script type="text/javascript" src="script/numscroller.js"></script>
+	 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs_m2ywm-bE8z9YM_WmtPaIQNIosN4Dxo&callback=initMap"></script>
+	 <script type="text/javascript" src="script/functions.js"></script>
+
+	</body>
+
+	</th:block>
+</html>

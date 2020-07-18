@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{admin/layout/main}">
+
+
+<th:block layout:fragment="content">
+    <!--<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>-->
+    <div class="content">
+        <div class="row">
+            <!--<div class="col-md-12">
+                &lt;!&ndash;<a
+                        th:href="'javascript:void(0)'" class="btn btn-primary btn-sm pull-right config-create"
+                        th:attr="data-title='Add configuration',data-size='medium',data-url='/ajax/super/config/form', data-submiturl='/ajax/super/config/create', data-close='configCreated',data-reload='true'"
+                >Add Config</a>&ndash;&gt;
+            </div>-->
+            <div class="col-md-12">
+                <div class="card" style="background-color: gainsboro">
+                    <!--<div class="card-header">
+                        <h4 class="card-title"> Major Statistics</h4>
+                    </div>-->
+                    <div class="card-body">
+                        <!--<h5 th:text="${'Total Revenue Earned : $' + totalRevenue}"/>-->
+                        <div class="table-responsive" id="replace">
+                            <div class="dataTables_wrapper dt-bootstrap4">
+                                <div class="row m-0">
+                                    <Div class="col-sm-12">
+                                        <div class="row">
+                                            <h5>General Statistics</h5>
+                                        </div>
+                                        <div class="row gs-bx-blk">
+                                            <div class="col">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h6 class="card-title" th:text="${'Orders in ' + month}"></h6>
+                                                        <div class="row">
+                                                            <div class="col-md-9">
+                                                                <p class="card-text" th:text="${orderThisMonth}"></p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <i class="fa fa-shopping-cart"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="card" style="background-color: floralwhite;border-left: 10px solid #ef8157;">
+                                                    <div class="card-body">
+                                                        <h6 class="card-title" th:text="${'Earnings in ' + month}"></h6>
+                                                        <div class="row">
+                                                            <div class="col-md-9">
+                                                                <p class="card-text" th:text="${earningThisMonth}"></p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <i class="fa fa-dollar"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h6 class="card-title">Registered users</h6>
+                                                        <div class="row">
+                                                            <div class="col-md-9">
+                                                                <p class="card-text" th:text="${regUsers}"></p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <i class="fa fa-user-plus"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h6 class="card-title">No. of visitors</h6>
+                                                        <div class="row">
+                                                            <div class="col-md-9">
+                                                                <p class="card-text" th:text="${visitors}"></p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <i class="fa fa-user-times"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <h5>Graphical Statistics</h5>
+                                        </div>
+
+                                        <!--<div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <input type="hidden" th:value="${monthsList}" id="monthsList">
+                                                    <input type="hidden" th:value="${monthWiseAmt}" id="monthWiseAmt">
+                                                    <input type="hidden" th:value="${prev}" id="prev">
+                                                    <input type="hidden" th:value="${now}" id="now">
+                                                    <div class="box card-body">
+                                                        <canvas id="canvasSA" height="300vw"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>-->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <input type="hidden" th:value="${monthwiseIncome}" id="monthwiseIncome">
+                                                    <div class="box card-body">
+                                                        <canvas id="canvas1SA" height="300vw"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="card">
+                                                    <input type="hidden" th:value="${productDataTitles}" id="productDataTitles">
+                                                    <input type="hidden" th:value="${productDataAmt}" id="productDataAmt">
+                                                    <div class="box card-body">
+                                                        <canvas id="canvas2SA" height="300vw"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="card">
+                                                    <input type="hidden" th:value="${productAPITitles}" id="productAPITitles">
+                                                    <input type="hidden" th:value="${productAPIAmt}" id="productAPIAmt">
+                                                    <div class="box card-body">
+                                                        <canvas id="canvas3SA" height="300vw"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                    <!--div class="row">
+                                        <h5>Publications Statistics</h5>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="card" style="background-color: floralwhite;border-left: 10px solid #ef8157;">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-9">
+                                                            <h6 class="card-title" style="font-weight: bolder">No. of Publications</h6>
+                                                            <p class="card-text" style="font-size: 40px" th:text="${@userUtil.getTotalPubs()}"></p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <i class="fa fa-book" style="font-size: 60px; margin-top: 15px; color:blue"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="card" style="background-color: floralwhite;border-left: 10px solid #ef8157;">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-9">
+                                                            <h6 class="card-title" style="font-weight: bolder">Total No. of Downloads</h6>
+                                                            <p class="card-text" style="font-size: 40px" th:text="${@userUtil.getTotalDownloads()}"></p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <i class="fa fa-cloud-download" style="font-size: 60px; margin-top: 15px; color:blue"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="card" style="background-color: floralwhite;border-left: 10px solid #ef8157;">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-9">
+                                                            <h6 class="card-title" style="font-weight: bolder">Total No. of Pages</h6>
+                                                            <p class="card-text" style="font-size: 40px" th:text="${@userUtil.getTotalPages()}"></p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <i class="fa fa-file-text" style="font-size: 60px; margin-top: 15px; color:blue"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </Div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</th:block>
+<th:block layout:fragment="extrascripts">
+    <script th:src="@{/front/nimda/js/ajax.js}"></script>
+    <script th:src="@{/front/nimda/js/paging.js}"></script>
+    <script th:src="@{/front/script/script.js}"></script>
+</th:block>
+</html>

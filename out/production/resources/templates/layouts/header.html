@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<!--// Header \\-->
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" th:href="@{/static/front/css/stylecart.css}">
+</head>
+<th:block th:fragment="header">
+
+<!--// Header \\-->
+<header id="ereaders-header" class="ereaders-header-one">
+    <div class="ereaders-main-header">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-3"> <a th:href="@{'/'}" class="logo"><img
+                        th:src="@{/front/images/gvxlogo-new-new.png}" alt=""></a> </aside>
+                <aside class="col-md-9">
+                    <!--// Navigation \\-->
+                    <a href="#menu" class="menu-link active"><span></span></a>
+                    <nav id="menu" class="menu navbar navbar-default">
+                        <ul class="level-1 navbar-nav">
+
+                            <li style="padding-top: 16px"><a th:href="@{'/'}">Home</a></li>
+                            <li style="padding-top: 16px"><a th:href="@{'/data-as-service'}">Data</a></li>
+                            <li style="padding-top: 16px"><a th:href="@{'/api-as-service'}">API</a></li>
+
+                            <li style="padding-top: 16px"><a href="#">Other</a><span class="has-subnav"><i
+                                    class="fa fa-angle-down"></i></span>
+                                <ul class="sub-menu level-2">
+                                    <li><a th:href="@{'/faq-page'}">FAQ</a></li>
+                                    <li><a th:href="@{'/aboutus'}">About Us</a></li>
+                                    <li><a th:href="@{'/contactus'}">Contact Us</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </nav>
+                    <!--// Navigation \\-->
+
+                    <!--cart-code-->
+                    <span class="badge ereaders-simple-btn-cart" style="font-size: 15px; background-color: #00aff0;">3</span><a th:href="@{'#'}" id="cart"><i class="fa fa-shopping-cart ereaders-simple-btn-cart" style="font-size: 35px; padding-top: 6px; padding-left: 15px;"></i></a>
+
+                    <div class="container-cart">
+                        <div class="shopping-cart" style="display: none; margin: auto; width: 350px; position: absolute; background: rgb(255, 255, 255) none repeat scroll 0% 0%; right: 0px; top: 80px; padding: 30px; box-shadow: rgba(51, 51, 51, 0.17) 0px 3px 15px;">
+                            <div class="shopping-cart-header" style="border-bottom: 1px solid #E8E8E8; padding-bottom: 15px;">
+                                </i><span class="badge" style="font-size: 15px; background-color: #00aff0;">3</span>
+                                <div class="shopping-cart-total" style="float: right; padding-bottom: 15px;">
+                                    <span class="lighter-text" style="color: #ABB0BE;">Total:</span>
+                                    <span class="main-color-text" style="color: #6394F8;">$2,229.97</span>
+                                </div>
+                            </div> <!--end shopping-cart-header -->
+
+                            <ul class="shopping-cart-items" style="padding-top: 20px;">
+                                <li class="clearfix" style="display: table; clear: both; content: ; width: 100%; display: flex !important; align-content: center; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;">
+                                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item1.jpg" alt="item1" />
+                                    <div style="width: 100%; text-align: right;">
+                                        <span class="item-name" style="display: block; padding-top: 10px; font-size: 16px;">Sony DSC-RX100M III</span>
+                                        <span class="item-price" style="color: #6394F8; margin-right: 8px;">$849.99</span>
+                                        <span class="item-quantity" style="color: #ABB0BE;">Quantity: 01</span>
+                                    </div>
+                                </li>
+
+                                <li class="clearfix" style="display: table; clear: both; content: ; width: 100%; display: flex !important; align-content: center; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;">
+                                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item2.jpg" alt="item1" />
+                                    <div style="width: 100%; text-align: right;">
+                                        <span class="item-name" style="display: block; padding-top: 10px; font-size: 16px;">KS Automatic Mechanic...</span>
+                                        <span class="item-price" style="color: #6394F8; margin-right: 8px;">$1,249.99</span>
+                                        <span class="item-quantity" style="color: #ABB0BE;">Quantity: 01</span>
+                                    </div>
+                                </li>
+
+                                <li class="clearfix" style="display: table; clear: both; content: ; width: 100%; display: flex !important; align-content: center; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;">
+                                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item3.jpg" alt="item1" />
+                                    <div style="width: 100%; text-align: right;">
+                                        <span class="item-name" style="display: block; padding-top: 10px; font-size: 16px;">Kindle, 6" Glare-Free To...</span>
+                                        <span class="item-price" style="color: #6394F8; margin-right: 8px;">$129.99</span>
+                                        <span class="item-quantity" style="color: #ABB0BE;">Quantity: 01</span>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <a href="#" class="button" style="background: #6394F8; color: white; text-align: center; padding: 12px; text-decoration: none; display: block; border-radius: 3px; font-size: 16px; margin: 25px 0 15px 0;">Checkout</a>
+                        </div> <!--end shopping-cart -->
+                    </div> <!--end container-cart -->
+                    <!--cart-code-->
+
+                    <a sec:authorize="isAuthenticated()" class="ereaders-simple-btn ereaders-bgcolor"
+                       th:href="@{'/logout'}">Logout</a>
+                    <a sec:authorize="isAnonymous()" class="ereaders-simple-btn ereaders-bgcolor"
+                       th:href="@{'/login'}" style="margin-top: 18px">Login</a>
+
+
+                </aside>
+            </div>
+        </div>
+    </div>
+</header>
+<!--// Header \\-->
+    <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+        (function(){
+            $("#cart").on("click", function() {
+                console.log("cart on click is working...");
+                $(".shopping-cart").fadeToggle( "fast");
+            });
+        })();
+    </script>
+    </body>
+</html>

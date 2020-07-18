@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:fragment="head">
+
+    <link rel="icon" href="/front/images/product_img_default_no_border.png" type="image/png" sizes="16x16">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Global Trade Data</title>
+    <script type="text/javascript">
+        BASE_URL = '[[${@serviceUtil.getBaseUrl()}]]';
+        console.log(BASE_URL);
+        var cnfbox;
+        var abc;
+    </script>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="_csrf_parameter" th:content="${_csrf.parameterName}"/>
+    <th:block layout:fragment="headScriptsTop">
+    </th:block>
+    <!-- Css Files -->
+    <link th:href="@{'/front/css/bootstrap.css'}" rel="stylesheet">
+    <link th:href="@{'/front/css/font-awesome.css'}" rel="stylesheet">
+    <link th:href="@{'/front/css/flaticon.css'}" rel="stylesheet">
+    <link th:href="@{'/front/css/slick-slider.css'}" rel="stylesheet">
+    <link th:href="@{'/front/css/fancybox.css'}" rel="stylesheet">
+    <link th:href="@{'/front/css/style.css'}" rel="stylesheet">
+    <!--<link th:href="@{'/front/css/cartpage.css'}" rel="stylesheet">-->
+
+    <link th:href="@{'/front/css/color.css'}" rel="stylesheet">
+    <link th:href="@{'/front/css/responsive.css'}" rel="stylesheet">
+    <link th:href="@{'/front/jconfirm/confirm.css'}" rel="stylesheet" type="text/css">
+
+<!--    <script src="https://use.fontawesome.com/856a15b71f.js"></script>-->
+<!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">-->
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <script type="text/javascript" th:src="@{/front/script/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/front/script/jquery-ui.js}"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.css" rel="stylesheet">
+    <!--<script  th:src="@{/front/script/cartpage.js}"></script>-->
+
+
+
+
+
+    <th:block layout:fragment="flowpaperHead">
+    </th:block>
+
+</head>

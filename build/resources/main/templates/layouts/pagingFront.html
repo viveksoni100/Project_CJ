@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:fragment="paging">
+
+
+    <div class="ereaders-pagination">
+
+        <div class="col-sm-12 col-md-5 pagination-div" style="display:none;">
+
+            <div th:with="size=${pageObj.getPageable().getPageSize()}" class="basepaging"
+                 th:attr="data-psize=${pageObj.getPageable().getPageSize()}"
+            >
+                Display per page  <select id="size" name="size" class="size"
+                                          th:attr="data-baseurl=${pagingUrl},data-formname=${formName},data-replacediv=${replaceDiv},data-replacecontent='true'">
+                <option value="1"
+                        th:selected="${size=='1' ? true : false}">
+                    1
+                </option>
+                <option value="10"
+                        th:selected="${size=='10' ? true : false}">
+                    10
+                </option>
+                <option value="20"
+                        th:selected="${size=='20' ? true : false}">
+                    20
+                </option>
+                <option value="50"
+                        th:selected="${size=='50' ? true : false}">
+                    50
+                </option>
+                <option th:value="${size}"
+                        th:selected="${size==size ? true : false}" th:text="${size}">
+
+                </option>
+
+            </select>
+            </div>
+            <div class="dataTables_info" th:text="${'Total records : ' + pageObj.getTotalElements()}">
+
+            </div>
+
+        </div>
+
+        <ul class="page-numbers">
+
+            <!--Previous page-->
+            <li class="page-item">
+                <a class="previous page-numbers page-link prev-page" href="javascript:void(0)"
+                   th:attr="data-baseurl=${pagingUrl},data-formname=${formName},data-replacediv=${replaceDiv}"
+                >
+                    <span aria-label="Next">
+                        <i class="icon ereaders-arrow-point-to-right"></i>
+                    </span>
+                </a>
+            </li>
+
+            <!--All pages-->
+            <li class="page-item" th:each="i : ${#numbers.sequence( 1, pageObj.getTotalPages())}"
+                >
+                <span th:attr="data-baseurl=${pagingUrl},data-formname=${formName},data-replacediv=${replaceDiv},data-page=${i}"
+                      th:classappend="${(pageObj.getPageable().getPageNumber() == i-1) ? 'current' : ''}"
+                         class="page-link page-numbers "  th:text="${i}">01</span>
+            </li>
+
+            <!--Next page-->
+            <li  class="page-item">
+                <a class="next page-numbers page-link next-page"  href="javascript:void(0)"
+                   th:attr="data-baseurl=${pagingUrl},data-formname=${formName},data-replacediv=${replaceDiv}"
+                >
+                    <span aria-label="Next">
+                        <i class="icon ereaders-arrow-point-to-right"></i>
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <input type="hidden" th:value="${pageObj.getPageable().getPageNumber()}" class="current-page-id">
+        <input type="hidden" th:value="${pageObj.getTotalPages()}" class="total-pages">
+    </div>
+</div>
+
+

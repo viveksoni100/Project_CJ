@@ -1,0 +1,223 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="dataTables_wrapper dt-bootstrap4">
+    <div class="row">
+        <Div class="col-sm-12">
+            <form th:action="@{${pagingUrl}}"
+                  th:attr="data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace'"
+                  id="visitorsList" class="paging">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <Tr>
+                        <td colspan="7">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-2 pull-left"><input type="checkbox"
+                                                                               name="expected"
+                                                                               class="filter-status"
+                                                                               checked="checked"
+                                                                               th:attr="data-url='/ajax/logbook/list'"
+                                                                               th:checked="${expected==1 ? true : false}"
+                                                                               id="expected" value="1">
+                                            Expected
+                                        </div>
+                                        <div class="col-md-2 pull-left"><input type="checkbox"
+                                                                               name="checkin"
+                                                                               class="filter-status"
+                                                                               checked="checked"
+                                                                               th:attr="data-url='/ajax/logbook/list'"
+                                                                               th:checked="${checkin==1 ? true : false}"
+                                                                               id="checkin" value="1">
+                                            Checked In
+                                        </div>
+                                        <div class="col-md-2 pull-left"><input type="checkbox"
+                                                                               name="checkout"
+                                                                               class="filter-status"
+                                                                               checked="checked"
+                                                                               th:checked="${checkout==1 ? true : false}"
+                                                                               th:attr="data-url='/ajax/logbook/list'"
+                                                                               id="checkout" value="1">
+                                            Checked
+                                            Out
+                                        </div>
+                                        <div class="col-md-6"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </td>
+                    </Tr>
+                    <tr>
+
+                        <th>
+                            Status
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('Visit_Title')}">
+                            <a href="javascript:void(0)"
+
+                               th:attr="data-sort='Visit_Title',data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace',data-page='1',data-dir='asc',
+                        data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                Title</a>
+                        </th>
+                        <th>
+                            Visitor
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('Visit_AppointmentDateTime')}">
+                            <a href="javascript:void(0)"
+
+                               th:attr="data-sort='Visit_AppointmentDateTime',data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace',data-page='1',data-dir='asc',
+                        data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                Check in</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('Visit_CheckInDateTime')}">
+                            <a href="javascript:void(0)"
+
+                               th:attr="data-sort='Visit_CheckInDateTime',data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace',data-page='1',data-dir='asc',
+                        data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                Check out</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('Visitor_Cmpny')}">
+                            <a href="javascript:void(0)"
+
+                               th:attr="data-sort='Visitor_Cmpny',data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace',data-page='1',data-dir='asc',
+                        data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort"
+                            >Company</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('Visit_Host_FirstName')}">
+                            <a href="javascript:void(0)"
+
+                               th:attr="data-sort='Visit_Host_FirstName',data-baseurl=${pagingUrl},data-formname='visitorsList',data-replacediv='replace',data-page='1',data-dir='asc',
+                        data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort"
+                            >Host</a>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th><input type="text" name="title" placeholder="Title" th:value="${title}"></th>
+                        <th>
+                            <input type="text" name="visitor" placeholder="Visitor">
+                            <input type="hidden" id="start" name="start"
+                                   th:value="${start}">
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+
+                            <input type="submit" style="display: none;">
+                        </th>
+
+
+                    </tr>
+                    </thead>
+
+                    <tr th:each="vvisit : ${visitVisitors}">
+                        <td>
+                            <div class="btn-group">
+                                <th:block th:switch="${vvisit.visitStatus}">
+                                    <th:block th:case="0">
+                                        <button type="button" class="btn btn-secondary btn-sm" >Expected</button>
+                                        <button type="button"
+                                                class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split"
+                                                data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false"><span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                    </th:block>
+                                    <th:block th:case="1">
+                                        <button type="button" class="btn btn-success btn-sm" >Checked In</button>
+                                        <button type="button"
+                                                class="btn btn-success btn-sm dropdown-toggle dropdown-toggle-split"
+                                                data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false"><span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                    </th:block>
+                                    <th:block th:case="2">
+                                        <button type="button" class="btn btn-danger btn-sm">Checked Out</button>
+                                        <button type="button"
+                                                class="btn btn-danger btn-sm dropdown-toggle dropdown-toggle-split"
+                                                data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false"><span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                    </th:block>
+
+                                </th:block>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item change-status"
+                                       href="javascript:void(0);"
+                                       th:attr="data-status='1', data-id=${@pathVariableEnc.encrypt(vvisit.id)},data-url='/ajax/visit/change/status',data-after='statusChanged'"
+                                    >Change to
+                                        checked in</a>
+                                    <a class="dropdown-item change-status"
+                                       href="javascript:void(0);"
+                                       th:attr="data-status='2', data-id=${@pathVariableEnc.encrypt(vvisit.id)},data-url='/ajax/visit/change/status',data-after='statusChanged'"
+                                    >Change to
+                                        checked out</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item edit-visit"
+                                       th:attr="data-submiturl=${submiturl +'/'+ @pathVariableEnc.encrypt(vvisit.id)},data-url=@{'/ajax/visit/edit/'+ ${@pathVariableEnc.encrypt(vvisit.id)}},
+                                            data-title=${vvisit.visitor.firstName+'''s info'},data-size='large',data-after='visitEditLoaded',data-onload='visitEditLoaded'"
+
+                                       href="javascript:void(0);">Edit</a>
+                                    <a class="dropdown-item edit-visit"
+                                       th:attr="data-submiturl=${duplicatesubmiturl},data-url=@{'/ajax/visit/form/'+ ${@pathVariableEnc.encrypt(vvisit.id)}},
+                                            data-title=${vvisit.visitor.firstName+'''s info'},data-size='large',data-after='visitEditLoaded',data-onload='visitEditLoaded'"
+
+                                       href="javascript:void(0);">Duplicate</a>
+                                    <a class="dropdown-item edit-delete"
+                                       th:attr="data-submiturl=@{'/ajax/visit/delete/'+ ${@pathVariableEnc.encrypt(vvisit.id)}},data-title=false,data-size='large',data-after='visitEditLoaded'"
+                                       href="javascript:void(0);">Delete</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item add-to-calendar"
+                                       th:attr="data-location=${vvisit.visit.location.city +','+vvisit.visit.location.state+','+vvisit.visit.location.country.name},data-start=${vvisit.visit.appointmentDateTime},data-end=${vvisit.visit.checkInDateTime},data-title=${vvisit.visit.title}"
+                                       href="javascript:void(0);">Add to calendar</a>
+                                </div>
+
+
+                            </div>
+
+                        </td>
+                        <td th:text="${vvisit.visit.title}">
+
+                        </td>
+                        <td>
+
+                            <a href="javascript:void(0)" th:attr="data-url=@{'/ajax/visitor/info/'+ ${@pathVariableEnc.encrypt(vvisit.visitor.id)}},
+                                            data-title=${vvisit.visitor.firstName+'''s info'},data-size='large'"
+                               class="view-visitor"
+                               th:text="${vvisit.visitor.firstName + ' ' + vvisit.visitor.lastName}">
+
+                            </a>
+                        </td>
+                        <td th:text="${#temporals.format(vvisit.visit.appointmentDateTime, 'hh:mm a')}"></td>
+                        <td th:text="${#temporals.format(vvisit.visit.checkInDateTime, 'hh:mm a')}"></td>
+                        <td th:text="${vvisit.visitor.company}"></td>
+                        <td th:text="${vvisit.visit.host.firstName + ' ' + vvisit.visit.host.lastName}">
+
+                        </td>
+                    </tr>
+                    <tr th:if="${visitVisitors.empty}">
+                        <td colspan="7">
+                            <div class="alert alert-warning">There are no records to display</div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </Div>
+    </div>
+    <div th:include="base/paging :: paging" th:remove="tag"
+         th:with="pageObj=${visitVisitors},replaceDiv='replace',formName='visitorsList', pagingUrl=${pagingUrl}"></div>
+</div>

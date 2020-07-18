@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Ereaders Shop List WLS</title>
+
+    <!-- Css Files -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="css/flaticon.css" rel="stylesheet">
+    <link href="css/slick-slider.css" rel="stylesheet">
+    <link href="css/fancybox.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <link href="css/color.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
+    <link href="front/css/apislabformat.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body style="font-size: 13px;">
+<th:block layout:fragment="content">
+    <!--// SubHeader \\-->
+    <!--<div class="ereaders-subheader">
+        <div class="ereaders-breadcrumb ereaders-book-breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul>
+                            <li><a href="index.html">Web Services</a></li>
+                            <li class="active" th:text="${product.productName}"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <div class="ereaders-subheader">
+        <div class="ereaders-subheader-text">
+            <span class="ereaders-subheader-transparent"></span>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="active" th:text="'Web Services > ' + ${product.productName}"></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// SubHeader \\-->
+
+    <!--// Main Content \\-->
+    <div class="ereaders-main-content ereaders-content-padding">
+
+        <!--// Main Section \\-->
+        <div class="ereaders-main-section">
+            <div class="container">
+                <input type="hidden" th:value="${product.id}" id="ProductIdUsedForSlabAjax">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="ereaders-book-wrap gtd-dtls-blk">
+                            <div class="row">
+                                <div class="col-md-5 gtd-dtls-img-blk">
+                                    <img
+                                            th:if="${@serviceUtil.isThumbnailNull(product) == true}"
+                                            th:src="@{/front/images/product_img_default_new.png}"
+                                            alt="" class="gtd-dtls-img" />
+                                    <img
+                                            th:if="${@serviceUtil.isThumbnailNull(product) == false}"
+                                            th:src="@{${'/daas/downloadFile/' + product.productId + '/' + product.productThumbnailName}}"
+                                            alt="" class="gtd-dtls-img" />
+
+                                    <ul class="ereaders-detail-option gtd-dtls-img-info">
+                                        <!--<li>
+                                            <h6>Product Name:</h6>
+                                            <span th:text="${product.productName}"></span>
+                                        </li>-->
+                                        <li>
+                                            <h6>Category</h6>
+                                            <a th:text="${product.productCategoryDetail.productCategory.productCategoryName}"></a>
+                                        </li>
+                                        <li>
+                                            <h6>Product Code:</h6>
+                                            <span th:text="${product.productId}"></span>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="ereaders-detail-thumb-text gtd-dtls-informtion">
+                                        <h2 th:text="${product.productName}"></h2>
+                                        <!--<div class="star-rating"><span class="star-rating-box" style="width:60%"></span></div>
+                                        <small>( Review 03 )</small>
+                                        <div class="clearfix"></div>
+                                        <span>$200.00<del>$300.00</del></span>-->
+                                        <!--<p>Pellentesque dolor augue, euismod vel orci in, congue sodales nunc. Duis sed auctorol or, ac facilisis mi. Duis malesuada, arcu ut ultricies pretiu nulla tortor egestas nisl, fu dictum mauris elit eu nisi. Donec hen drerit magna a consectetur ullamcor per.libo sed, sollicitudin euismod est hasellus congue.</p>-->
+
+                                        <p>Pricing : </p>
+                                        <table id="apiDescriptionTable" class="gtd-dtls-tble">
+                                            <thead>
+                                                <tr>
+                                                    <th>From</th>
+                                                    <th>To</th>
+                                                    <th>Price/API</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="i,iterator : ${@serviceUtil.getProductSlabDetails(product)}">
+                                                   <td th:text="${i.slabLowerLimit}"></td>
+                                                   <td th:if="!${iterator.last}" th:text="${i.slabUpperLimit}"></td>
+                                                   <td th:if="${iterator.last}">ꝏ</td>
+                                                   <td th:text="${'$'+#numbers.formatDecimal(i.slabRate,1,'COMMA',2,'POINT')}"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <form id="my_form_api" th:action="@{'/apiaddtocart/'+${product.id}}" method="post">
+                                        <div class="ereaders-number-select">
+                                            <label>QTY:</label>
+                                            <input value="0" id="upperlimitvalue" name="upperlimitvalue" type="number"
+                                                   onchange="check(); return false;" onkeyup="check(); return false;" required>
+                                            <label>X 1,000</label>
+                                            <div class="totalprice-blk">
+                                                <div class="totalprice-itm">
+                                                    <label>Total : </label>
+                                                    <label id="totalPrice">0</label>
+                                                </div>
+                                                <div class="totalprice-itm">
+                                                    <label>Average price per API call : </label>
+                                                    <label id="averagePrice">0</label>
+                                                </div>
+                                            </div>
+                                            <!--<label id="message" style="color: red;"></label>-->
+                                        </div>
+
+                                        <div class="apiCalculationDiv"></div>
+
+                                            <label id="message" class="prd-dtl-errormsg"></label>
+                                            <div class="prd-dtl-wid100">
+                                            <a th:href="@{'/daas/api-as-service'}" class="ereaders-detail-btn">Back</a>
+                                            <a onclick="document.getElementById('my_form_api').submit();" id="addtocartbtn" class="ereaders-detail-btn gtd-dtl-addcrt-btn"
+                                            th:if="${@serviceUtil.isAvailableInCart(product.id, #request) == false}">Add To Cart</a>
+                                            </div>
+                                            <a th:if="${@serviceUtil.isAvailableInCart(product.id, #request) == true}" class="ereaders-detail-btn gtd-dtl-addcrtin-btn"
+                                               th:href="@{'/getCartPage'}">Added in Cart</a>
+                                            <a  th:attr="data-deleteid=${product.id}" th:href="@{'/deletefromcartcustomapi/' + ${product.id}}"
+                                                th:if="${@serviceUtil.isAvailableInCart(product.id, #request) == true and @serviceUtil.isAvailableInOrder(product.id) == false}"
+                                                class="ereaders-detail-btn fa fa-trash callDeleteAjax btn-danger gtd-dtl-del-btn"></a>
+                                        </form>
+                                        <!--<a href="404.html" class="ereaders-detail-btn">Wishlist <i class="icon ereaders-shopping-bag"></i></a>
+                                        <a href="404.html" class="ereaders-detail-btn">Compare <i class="icon ereaders-shopping-bag"></i></a>-->
+                                        <!--<ul class="ereaders-detail-social">
+                                            <li><h6>Share This Product:</h6></li>
+                                            <li><a href="https://www.facebook.com/" class="fa fa-facebook"></a></li>
+                                            <li><a href="https://twitter.com/login?lang=en" class="fa fa-twitter"></a></li>
+                                            <li><a href="https://www.pinterest.com/login/" class="fa fa-pinterest-p"></a></li>
+                                            <li><a href="https://plus.google.com/" class="fa fa-google-plus"></a></li>
+                                        </ul>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gtd-dtls-botm-blk">
+                            <h2 class="ereaders-section-heading">API Description</h2>
+                            <div class="ereaders-rich-editor">
+                                <p  th:utext="${product.productDescription}"></p>
+                                <!--<p>Ut porta massa in risus maximus, eget sodales massa malesuada. Fusce et neque aliquet, mollis tellus ut, rutrum nunc. Cras congue magna et velit accumsan tempor. Etiam tempor nisi in tortor sagittis pharetra. Phasellus ut pulvinar risus. Nulla odio ipsum, sagittis at libero sed, sollicitudin euismod est. Phasellus congue, justo eget bibendum aliquet, neque elit vulputate magna,</p>-->
+                            </div>
+                        </div>
+
+                        <!--<h2 class="ereaders-section-heading">Book Detail</h2>
+                        <div class="ereaders-book-detail">
+                            <p>Morbi condimentum, ex ac aliquam congue, sapien eros commodo dolor, eu semper mauris arcu non mauris. Aliquam erat volutpat. Phasellus non nisi ligula. Phasellus accumsan nunc vitae enim interdum fringilla. Integer vel elementum diam.</p>
+                            <ul>
+                                <li>
+                                    <h6>Book Title</h6>
+                                    <p>Cover Book MockUp By ebook Pro</p>
+                                </li>
+                                <li>
+                                    <h6>Author</h6>
+                                    <p>Murial Barbery</p>
+                                </li>
+                                <li>
+                                    <h6>Book Type</h6>
+                                    <p>Business And Accounts</p>
+                                </li>
+                                <li>
+                                    <h6>Date Published</h6>
+                                    <p>December 13, 2017</p>
+                                </li>
+                                <li>
+                                    <h6>Specification</h6>
+                                    <p>Management And Technology</p>
+                                </li>
+                                <li>
+                                    <h6>Chapters & Pages</h6>
+                                    <p>12 Chapters And 550 Pages</p>
+                                </li>
+                            </ul>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// Main Section \\-->
+
+    </div>
+    <style>
+        .loader {
+            border: 16px solid #06469E;
+            border-radius: 50%;
+            border-top: 16px solid blue;
+            border-bottom: 16px solid blue;
+            width: 5px;
+            height: 5px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <!--// Main Content \\-->
+
+        <script>
+
+            $(document).ready(function() {
+                document.getElementById("addtocartbtn").style.display = "none";
+            });
+
+            function check() {
+                /*document.getElementById("totalPrice").innerHTML = "<div class=\"loader\"></div>";
+                document.getElementById("averagePrice").innerHTML = "<div class=\"loader\"></div>";*/
+                var productId,quantityCount;
+                productId = document.getElementById("ProductIdUsedForSlabAjax").value;
+                quantityCount = document.getElementById('upperlimitvalue').value;
+                $.ajax({
+                    type : 'GET',
+                    url : BASE_URL + '/getValueByProductIdAjax/'+productId+"/"+quantityCount,
+                    success :function (data) {
+                        var totalprice = "$"+data.split("|")[0]+"0";
+                        var averageprice = data.split("|")[1];
+                        averageprice = Math.round(averageprice*100)/100;
+                        if(averageprice.toString().split(".")[1].length == 1){
+                            averageprice = averageprice+"0";
+                        }
+
+                        var avgPrice = "$"+averageprice;
+                        document.getElementById("totalPrice").innerHTML = totalprice;
+                        document.getElementById("averagePrice").innerHTML = avgPrice;
+                    }
+                })
+
+                /*for validation check*/
+                console.log("Jai Swaminarayan...");
+                var qty = document.getElementById('upperlimitvalue');
+                var message = document.getElementById('message');
+                if(upperlimitvalue.value <= 0){
+                    message.innerHTML = "Invalid input!  Only numeric values are allowed.";
+                    document.getElementById("addtocartbtn").style.display = "none";
+                }
+
+                if(upperlimitvalue.value.match(/\d+\.\d+/)){
+                    message.innerHTML = "Invalid input!  Only numeric values are allowed.";
+                    document.getElementById("addtocartbtn").style.display = "none";
+                }
+
+                if(upperlimitvalue.value > 0 && !(upperlimitvalue.value.match(/\d+\.\d+/))){
+                    message.innerHTML = ""
+                    document.getElementById("addtocartbtn").style.display = "block";
+                }
+                if(upperlimitvalue.value > 10000){
+                    message.innerHTML = "Quantity can not be more than 10000";
+                    document.getElementById("addtocartbtn").style.display = "none";
+                }
+            }
+
+        </script>
+
+</th:block>
+</body>
+</html>

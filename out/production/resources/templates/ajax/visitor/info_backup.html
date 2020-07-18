@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                Company / Name
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item" th:text="${'Name : ' + visitor.firstName + ' ' + visitor.lastName}"></li>
+                    <li class="list-group-item" th:text="${'Company : ' +visitor.company}"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                Address
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item"
+                        th:utext="${visitor.address1 + ', '+ visitor.address2 + ', '+ visitor.address3+', '+visitor.city + '<br/>' + visitor.state + ', '+visitor.country.getName()}"></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                Phone numbers
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item"
+                        th:if="${phones!=null && phones.getContent().size() > 0}"
+                        th:each="phone : ${phones}" >
+                        <div class="flag"  th:classappend="${'flag-icon-'+phone.country.getCode2().toLowerCase()}"></div>&nbsp;
+                        <span th:text="${phone.country.getCalling_code() + '-'+phone.phone}"></span>
+                    </li>
+                    <li class="list-group-item"
+                        th:if="${phones==null || phones.getContent().size() <= 0}">
+                        <div class="alert alert-danger">
+                            There are no phone numbers available for <span th:text="${visitor.firstName}"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                Email ids
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item"
+                        th:if="${emails!=null && emails.getContent().size() > 0}"
+                        th:each="email : ${emails}" th:text="${email.email}">
+
+                    </li>
+                    <li class="list-group-item"
+                        th:if="${emails==null || emails.getContent().size() <= 0}">
+                        <div class="alert alert-danger">
+                            There are no emails available for <span th:text="${visitor.firstName}"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

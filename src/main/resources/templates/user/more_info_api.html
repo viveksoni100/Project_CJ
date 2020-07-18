@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link href="front/css/apislabformat.css" rel="stylesheet">
+</head>
+
+<body>
+
+<hr style="margin-bottom: 10px; border: 0; border-top: 1px solid #eee; margin-top: 0px;">
+
+<ul style="list-style-type:none">
+    <b style="display: inline;">Product Name :</b>&nbsp;&nbsp;
+    <li th:text="${product.getProductName()}"
+        style="list-style-type:none; display: inline; font-weight: bold;"></li>
+    <br>
+    <b>Product Description :</b>
+    <br>
+    <li th:utext="${product.getProductDescription()}" style="list-style-type:none"></li>
+    <b>Product Pricing :</b>
+    <table id="productSlab" style="width: 100%">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Slabs (Quantity)</th>
+            <th scope="col">Price per API Call</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="slab,i : ${product.productSlab.productSlabDetailList}">
+            <td th:text="${i.index+1}"></td>
+            <td th:text="${slab.slabLowerLimit}+'-'+${slab.slabUpperLimit}"></td>
+            <td th:text="${'$'+#numbers.formatDecimal(slab.slabRate,1,'COMMA',2,'POINT')}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <!--Download Documentation file:<br/>
+    <a th:if="${product.apiDocumentationFileName !=null}" th:href="@{'/daas/downloadRequest/'+${product.id}}"
+       class="btn btn-primary">
+        Download <i class="icon ereaders-download-content"></i></a>
+    <p th:if="${product.apiDocumentationFileName ==null}">
+        &#45;&#45;</p>-->
+
+</ul>
+
+</body>
+
+</html>

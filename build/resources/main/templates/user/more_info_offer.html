@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link href="front/css/apislabformat.css" rel="stylesheet">
+</head>
+
+<body>
+
+<hr style="margin-bottom: 10px; border: 0; border-top: 1px solid #eee; margin-top: 0px;">
+
+<ul style="list-style-type:none">
+
+    <b style="display: inline;">Offer Name :</b>&nbsp;&nbsp;
+    <li th:text="${offer.offerName}"
+        style="list-style-type:none; display: inline; font-weight: bold;"></li>
+    <br><br>
+
+    <b style="display: inline;">Discount Rate :</b>&nbsp;&nbsp;
+    <li th:text="${#numbers.formatDecimal(offer.discountRate,1,'POINT',2,'POINT')}+'%'"
+        style="list-style-type:none; display: inline; font-weight: bold;"></li>
+    <br><br>
+
+    <b>Offer Description :</b><br>
+    <li th:utext="${offer.offerDescription}" style="list-style-type:none"></li><br>
+
+    <br>
+    <b>List of Products in Offer:</b>
+    <br>
+    <li style="list-style-type:none">
+        <table id="productInOffer" style="width: 100%">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Original Price</th>
+                <th scope="col">Discounted Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="daasData,i : ${offer.productSet}">
+                <td th:text="${i.index+1}"></td>
+                <td th:text="${daasData.productName}"></td>
+
+                <td>
+
+                    <del th:text="${'$'+#numbers.formatDecimal(daasData.productPrice,0,'COMMA',0,'POINT')}"/>
+                </td>
+                <td th:text="${'$'+#numbers.formatDecimal((daasData.productPrice * (100 - offer.discountRate) / 100),0,'COMMA',0,'POINT')}"></td>
+                <!--<td th:text="${'$'+#numbers.formatDecimal(daasData.productPrice,0,'COMMA',0,'POINT')}"></td>-->
+            </tr>
+            </tbody>
+        </table>
+    </li>
+    <br>
+
+</ul>
+
+</body>
+
+</html>

@@ -1,0 +1,519 @@
+Index: daas/src/main/resources/templates/user/more_info_api.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/resources/templates/user/more_info_api.html	(date 1586428174435)
++++ daas/src/main/resources/templates/user/more_info_api.html	(date 1586428174435)
+@@ -0,0 +1,41 @@
++<!DOCTYPE html>
++<html xmlns="http://www.w3.org/1999/xhtml"
++      xmlns:th="http://www.thymeleaf.org"
++      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
++
++<head>
++    <link href="front/css/apislabformat.css" rel="stylesheet">
++</head>
++
++<body>
++
++<ul style="list-style-type:none">
++    Product Name :
++    <li th:text="${product.getProductName()}" style="list-style-type:none"></li>
++    <br>
++    Product Description : <br>
++    <li th:text="${product.getProductDescription()}" style="list-style-type:none"></li>
++    <br>
++    Product Pricing :
++            <table id="productSlab" style="width: 100%">
++                <thead>
++                <tr>
++                    <th scope="col">#</th>
++                    <th scope="col">Slabs (Quantity)</th>
++                    <th scope="col">Price per API Call($)</th>
++                </tr>
++                </thead>
++                <tbody>
++                <tr th:each="slab,i : ${product.productSlab.productSlabDetailList}">
++                    <td th:text="${i.index+1}"></td>
++                    <td th:text="${slab.slabLowerLimit}+'-'+${slab.slabUpperLimit}"></td>
++                    <td th:text="${slab.slabRate}"></td>
++                </tr>
++                </tbody>
++            </table>
++
++</ul>
++
++</body>
++
++</html>
+\ No newline at end of file
+Index: daas/src/main/resources/templates/user/more_info.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/resources/templates/user/more_info.html	(date 1586426067073)
++++ daas/src/main/resources/templates/user/more_info.html	(date 1586426067073)
+@@ -0,0 +1,19 @@
++<!DOCTYPE html>
++<html xmlns="http://www.w3.org/1999/xhtml"
++      xmlns:th="http://www.thymeleaf.org"
++      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
++
++<body>
++
++    <ul style="list-style-type:none">
++        Product Name : <li th:text="${product.getProductName()}" style="list-style-type:none"></li>
++        <br>
++        Product Price : <li th:text="${product.getProductPrice()}" style="list-style-type:none"></li>
++        <br>
++        Product Description : <br><li th:text="${product.getProductDescription()}" style="list-style-type:none"></li>
++
++    </ul>
++
++</body>
++
++</html>
+\ No newline at end of file
+Index: daas/src/main/java/com/publications/entities/DaaS/Product.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/java/com/publications/entities/DaaS/Product.java	(date 1586413668000)
++++ daas/src/main/java/com/publications/entities/DaaS/Product.java	(date 1586425370821)
+@@ -20,82 +20,82 @@
+ @Entity
+ @Getter
+ @Setter
+-@Table(name="daas_product")
++@Table(name = "daas_product")
+ public class Product extends BaseEntity {
+ 
+ 
+     @NotNull
+     @NotEmpty
+-    @Column(name="product_id")
+-    @HtmlValidateConstraint(whiteListType="none")
++    @Column(name = "product_id")
++    @HtmlValidateConstraint(whiteListType = "none")
+     private String productId;
+ 
+     @NotNull
+     @NotEmpty
+-    @Column(name="product_name")
+-    @HtmlValidateConstraint(whiteListType="none")
++    @Column(name = "product_name")
++    @HtmlValidateConstraint(whiteListType = "none")
+     private String productName;
+ 
+     @NotNull
+     @NotEmpty
+-    @Column(name="product_description",length = 1000)
+-/*    @HtmlValidateConstraint(whiteListType="none")*/
++    @Column(name = "product_description", length = 1000)
++    /*    @HtmlValidateConstraint(whiteListType="none")*/
+     private String productDescription;
+ 
+-    @Column(name="data_file_name")
+-    @HtmlValidateConstraint(whiteListType="none")
++    @Column(name = "data_file_name")
++    @HtmlValidateConstraint(whiteListType = "none")
+     private String dataFileName;
+ 
+-    @Column(name="api_documentation_file_name")
+-    @HtmlValidateConstraint(whiteListType="none")
++    @Column(name = "api_documentation_file_name")
++    @HtmlValidateConstraint(whiteListType = "none")
+     private String apiDocumentationFileName;
+ 
+     @NotEmpty
+     @NotNull
+-    @Column(name="product_thumbnail_name")
+-    @HtmlValidateConstraint(whiteListType="none")
++    @Column(name = "product_thumbnail_name")
++    @HtmlValidateConstraint(whiteListType = "none")
+     private String productThumbnailName;
+ 
+-    @Column(name="download_count")
+-/*    @HtmlValidateConstraint(whiteListType="none")*/
++    @Column(name = "download_count")
++    /*    @HtmlValidateConstraint(whiteListType="none")*/
+     private int downloadCount;
+ 
+-    @Column(name="product_price")
+-/*    @HtmlValidateConstraint(whiteListType="none")*/
++    @Column(name = "product_price")
++    /*    @HtmlValidateConstraint(whiteListType="none")*/
+     private float productPrice;
+ 
+-    @Column(name="file_path")
+-    @HtmlValidateConstraint(whiteListType="none")
++    @Column(name = "file_path")
++    @HtmlValidateConstraint(whiteListType = "none")
+     private String file_path;
+ 
+     @ManyToOne(fetch = FetchType.EAGER)
+     @JoinColumn(name = "product_category_dtl_id")
+     private ProductCategoryDetail productCategoryDetail;
+ 
+-    @OneToMany(mappedBy = "products",fetch = FetchType.LAZY)
++    @OneToMany(mappedBy = "products", fetch = FetchType.LAZY)
+     private List<ProductVersion> productVersions;
+ 
+-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
++    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+     @JoinColumn(name = "product_slab_id")
+     private ProductSlab productSlab;
+ 
+-    @ManyToMany(mappedBy = "productSet",fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+-    private Set<ProductOffer> productOfferSet=new HashSet<>();
++    @ManyToMany(mappedBy = "productSet", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
++    private Set<ProductOffer> productOfferSet = new HashSet<>();
+ 
+     @Override
+     public boolean equals(Object o) {
+ 
+-        if(o==this)
++        if (o == this)
+             return true;
+ 
+-        if(!(o instanceof Product))
++        if (!(o instanceof Product))
+             return false;
+ 
+-        Product p=(Product)o;
++        Product p = (Product) o;
+ 
+-        if(p.id==this.id){
++        if (p.id == this.id) {
+             return true;
+-        }else {
++        } else {
+             return false;
+         }
+     }
+Index: daas/src/main/resources/templates/layouts/scripts.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/resources/templates/layouts/scripts.html	(date 1586413668000)
++++ daas/src/main/resources/templates/layouts/scripts.html	(date 1586429260140)
+@@ -93,11 +93,45 @@
+             });
+         }
+ 
++        function confirmAjaxSubmitCustom(currentElement){
++            cnfbox = $.confirm({
++                title: currentElement.data('title'),
++                icon: 'fa fa-pencil',
++                columnClass: (currentElement.data("size")!="") ? currentElement.data("size") : "large",
++                backgroundDismiss: true,
++                content: "URL:" + BASE_URL + currentElement.data("url"),
++                onContentReady: function () {
++                    // bind to events
++                    var jc = this;
++                    if (jQuery.type(currentElement.data("onload")) != "undefined") {
++                        callGlobalMethodUsingVariable(currentElement.data("onload"), "", currentElement);
++                    }
++                    /*this.$content.find('.edit-inline-btcrate').on('keyup', function (e) {
++                        var finalMaxLimit = (parseFloat($(this).val().replace(/,/g, "")) * parseFloat(advertiseMax)) / parseFloat(advertiseRate);
++                        jc.$content.find('.edit-inline-maximum').val(Math.round(finalMaxLimit));
++                    });*/
++                    /*this.$content.find('form').on('submit', function (e) {
++
++                        e.preventDefault();
++                        jc.$$formSubmit.trigger('click'); // reference the button and click it
++                    });*/
++                    /* if (jQuery.type(currentElement.data("after")) != "undefined") {
++                         callGlobalMethodUsingVariable(currentElement.data("after"), "", currentElement);
++                     }*/
++                }
++            });
++        }
++
+         $(document).on("click", ".password-edit", function (e) {
+             console.log("Hello");
+             confirmAjaxSubmit($(this));
+         });
+ 
++        $(document).on("click", ".ereaders-idea", function (e) {
++            console.log("Ayushman Bhav...");
++            confirmAjaxSubmitCustom($(this));
++        });
++
+         function closePass(params, currentElement, popup) {
+             var parsed = $.parseHTML(params);
+             var el = $(parsed).find("#closepopup");
+Index: daas/src/main/resources/templates/shop-list-wls-data.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/resources/templates/shop-list-wls-data.html	(date 1586413668000)
++++ daas/src/main/resources/templates/shop-list-wls-data.html	(date 1586428964004)
+@@ -121,15 +121,18 @@
+                                                            title="Add To Cart"></a>-->
+                                                         <a href="#" class="icon ereaders-add" data-toggle="tooltip"
+                                                            title="Add To Wishlist"></a>
+-                                                        <a href="#" class="icon ereaders-idea" data-toggle="tooltip"
++                                                        <a th:attr="data-url=@{'/moreinfo/data/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
++                                                           href="javascript:void(0);"
++                                                           class="icon ereaders-idea"
++                                                           data-toggle="tooltip"
+                                                            title="More Info"></a>
+                                                     </figcaption>
+                                                 </figure>
+                                                 <div class="ereaders-shop-list-text">
+-                                                    <h2 style="font-size: medium;"
+-                                                        th:text="${#strings.abbreviate(daasData.getProductName(),15)}"/>
++                                                    <h2 style="font-size: 20px;"
++                                                        th:text="${#strings.abbreviate(daasData.getProductName(),50)}"/>
+                                                     <span th:text="${'$' + daasData.getProductPrice() + '  / year'}"/>
+-                                                    <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),15)}"/>
++                                                    <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),200)}"/>
+                                                     <br/>
+                                                     <p th:text="'Last updated on: '+${#temporals.format(daasData.createdAt,'dd-MM-yyyy')}"></p>
+                                                     <input type="hidden" th:value="${daasData.getProductId()}"
+@@ -165,12 +168,15 @@
+                                                            title="Add To Cart"></a>-->
+                                                         <a href="#" class="icon ereaders-add" data-toggle="tooltip"
+                                                            title="Add To Wishlist"></a>
+-                                                        <a href="#" class="icon ereaders-idea" data-toggle="tooltip"
++                                                        <a th:attr="data-url=@{'/moreinfo/data/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
++                                                           href="javascript:void(0);"
++                                                           class="icon ereaders-idea"
++                                                           data-toggle="tooltip"
+                                                            title="More Info"></a>
+                                                     </figcaption>
+                                                 </figure>
+                                                 <div class="ereaders-shop-list-text">
+-                                                    <h2 style="font-size: medium;"
++                                                    <h2 style="font-size: 20px;"
+                                                         th:text="${#strings.abbreviate(daasData.getProductName(),15)}"/>
+                                                     <span th:text="${'$' + daasData.getProductPrice() + '  / year'}"/>
+                                                     <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),15)}"/>
+Index: daas/src/main/java/com/publications/controllers/IndexController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/java/com/publications/controllers/IndexController.java	(date 1586413668000)
++++ daas/src/main/java/com/publications/controllers/IndexController.java	(date 1586427009471)
+@@ -3,6 +3,7 @@
+ 
+ import com.fasterxml.jackson.databind.ObjectMapper;
+ import com.publications.entities.DaaS.Cart;
++import com.publications.entities.DaaS.Product;
+ import com.publications.entities.forms.ResetPasswordForm;
+ import com.publications.entities.pdf.PdfMark;
+ import com.publications.entities.publications.Publications;
+@@ -10,6 +11,7 @@
+ import com.publications.events.event.ForgotPasswordEvent;
+ import com.publications.events.event.RegistrationEvent;
+ import com.publications.repositories.daas.CartRepository;
++import com.publications.repositories.daas.ProductRepository;
+ import com.publications.repositories.iface.user.ForgotPasswordRepository;
+ import com.publications.repositories.iface.user.UserRepository;
+ import com.publications.repositories.iface.user.VerificationRepository;
+@@ -58,6 +60,9 @@
+     @Autowired
+     private CartRepository cartRepository;
+ 
++    @Autowired
++    private ProductRepository productRepository;
++
+     @Value("${eventbrite.api.token}")
+     private String eventBrite;
+ 
+@@ -197,6 +202,46 @@
+         model.addAttribute("success", false);
+         return ret;
+     }
++
++    @GetMapping(value = {"moreinfo/data/{id}"})
++    public String moreInfoData(@PathVariable Long id,
++                               HttpServletRequest request, ModelMap model, RedirectAttributes redirectAttributes) {
++
++        String ret = "/home";
++        try {
++
++            if(id != null){
++                Product product = productRepository.findFirstById(id);
++                model.addAttribute("product", product);
++                ret = "user/more_info";
++            }
++
++        } catch (Exception e) {
++            LOG.error("Error getting details of product ", e);
++        }
++
++        return ret;
++    }
++
++    @GetMapping(value = {"moreinfo/api/{id}"})
++    public String moreInfoAPI(@PathVariable Long id,
++                               HttpServletRequest request, ModelMap model, RedirectAttributes redirectAttributes) {
++
++        String ret = "/home";
++        try {
++
++            if(id != null){
++                Product product = productRepository.findFirstById(id);
++                model.addAttribute("product", product);
++                ret = "user/more_info_api";
++            }
++
++        } catch (Exception e) {
++            LOG.error("Error getting details of product ", e);
++        }
++
++        return ret;
++    }
+ 
+ 
+     @PostMapping(value = {"/password/edit"})
+Index: daas/src/main/resources/templates/shop-list-wls-api.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/resources/templates/shop-list-wls-api.html	(date 1586413668000)
++++ daas/src/main/resources/templates/shop-list-wls-api.html	(date 1586428820096)
+@@ -176,14 +176,17 @@
+                                                     <figcaption>
+                                                         <a href="#" class="icon ereaders-add" data-toggle="tooltip"
+                                                            title="Add To Wishlist"></a>
+-                                                        <a href="#" class="icon ereaders-idea" data-toggle="tooltip"
++                                                        <a th:attr="data-url=@{'/moreinfo/api/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
++                                                           href="javascript:void(0);"
++                                                           class="icon ereaders-idea"
++                                                           data-toggle="tooltip"
+                                                            title="More Info"></a>
+                                                     </figcaption>
+                                                 </figure>
+                                                 <div class="ereaders-shop-list-text">
+                                                     <h2 th:text="${daasData.productName}"/>
+                                                     <!--<span th:text="${'$' + daasData.productPrice}"/>-->
+-                                                    <p th:utext="${daasData.productDescription}"/>
++                                                    <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),200)}"/>
+                                                     <br><br>
+ 
+                                                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
+@@ -257,14 +260,17 @@
+                                                                                                                    title="Add To Cart"></a>-->
+                                                         <a href="#" class="icon ereaders-add" data-toggle="tooltip"
+                                                            title="Add To Wishlist"></a>
+-                                                        <a href="#" class="icon ereaders-idea" data-toggle="tooltip"
++                                                        <a th:attr="data-url=@{'/moreinfo/api/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
++                                                           href="javascript:void(0);"
++                                                           class="icon ereaders-idea"
++                                                           data-toggle="tooltip"
+                                                            title="More Info"></a>
+                                                     </figcaption>
+                                                 </figure>
+                                                 <div class="ereaders-shop-list-text">
+                                                     <h2 th:text="${daasData.productName}"/>
+                                                     <!--<span th:text="${'$' + daasData.productPrice}"/>-->
+-                                                    <p th:utext="${daasData.productDescription}"/>
++                                                    <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),200)}"/>
+                                                     <br><br>
+ 
+                                                     <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 150px; overflow-x: auto;">
+Index: daas/src/main/resources/templates/layouts/header.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/resources/templates/layouts/header.html	(date 1586413668000)
++++ daas/src/main/resources/templates/layouts/header.html	(date 1586417786281)
+@@ -10,18 +10,19 @@
+ </head>
+ <th:block th:fragment="header">
+ 
+-<!--// Header \\-->
+-<header id="ereaders-header" class="ereaders-header-one">
+-    <div class="ereaders-main-header">
+-        <div class="container">
+-            <div class="row">
+-                <aside class="col-md-3"> <a th:href="@{'/'}" class="logo"><img
+-                        th:src="@{/front/images/daas_logo_origin_main.png}" alt=""></a> </aside>  <!--gvxlogo-new-new.png-->
+-                <aside class="col-md-9">
+-                    <!--// Navigation \\-->
+-                    <a href="#menu" class="menu-link active"><span></span></a>
+-                    <nav id="menu" class="menu navbar navbar-default">
+-                        <ul class="level-1 navbar-nav">
++    <!--// Header \\-->
++    <header id="ereaders-header" class="ereaders-header-one">
++        <div class="ereaders-main-header">
++            <div class="container">
++                <div class="row">
++                    <aside class="col-md-3"><a th:href="@{'/'}" class="logo"><img
++                            th:src="@{/front/images/daas_logo_origin_main.png}" alt=""></a></aside>
++                    <!--gvxlogo-new-new.png-->
++                    <aside class="col-md-9">
++                        <!--// Navigation \\-->
++                        <a href="#menu" class="menu-link active"><span></span></a>
++                        <nav id="menu" class="menu navbar navbar-default">
++                            <ul class="level-1 navbar-nav">
+ 
+                                 <li style="padding-top: 16px;"><a th:href="@{'/'}" style="font-size: medium;">Home</a>
+                                 </li>
+Index: daas/src/main/java/com/publications/controllers/daas/StripeController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- daas/src/main/java/com/publications/controllers/daas/StripeController.java	(date 1586413668000)
++++ daas/src/main/java/com/publications/controllers/daas/StripeController.java	(date 1586416491627)
+@@ -6,8 +6,8 @@
+ import java.io.FileOutputStream;
+ import java.io.OutputStream;
+ 
+-import com.itextpdf.text.*;
+-import com.itextpdf.text.pdf.*;
++/*import com.itextpdf.text.*;
++import com.itextpdf.text.pdf.*;*/
+ import com.publications.entities.DaaS.*;
+ import com.publications.entities.user.User;
+ import com.publications.events.event.daas.PurchaseSuccessEvent;
+@@ -23,6 +23,7 @@
+ import javafx.scene.text.TextAlignment;
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
++import org.dom4j.DocumentException;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.beans.factory.annotation.Value;
+ import org.springframework.context.ApplicationEventPublisher;
+@@ -279,7 +280,7 @@
+ 
+     }
+ 
+-    @GetMapping(value = "/printInvoice")
++    /*@GetMapping(value = "/printInvoice")
+     public String getInvoicePrinted(@RequestParam("orderId") Integer id) throws DocumentException, FileNotFoundException {
+         String pdfFilename = "Order" + id + ".pdf";
+         OutputStream file = new FileOutputStream(new File(pdfFilename));
+@@ -290,7 +291,7 @@
+         Optional<Order> order = orderRepository.findById(id);
+         //List<OrderDetail> orderDetails = order.getOrderDetailList();
+         //PdfDocument pdfDocument = new PdfDocument(new PdfWriter("Order"+id+".pdf"));
+-        /*Document layoutDocument = new Document(pdfDocument);
++        *//*Document layoutDocument = new Document(pdfDocument);
+         layoutDocument.add(new Paragraph("INVOICE").setBold().setUnderline().setTextAlignment(TextAlignment.CENTER));
+         layoutDocument.add(new Paragraph("Transaction ID : " + order.getTransactionNumber()).setTextAlignment(TextAlignment.RIGHT).setMultipliedLeading(0.2f));
+         layoutDocument.add(new Paragraph("Purchase Date : " + order.getPurchaseDate()).setTextAlignment(TextAlignment.RIGHT).setMultipliedLeading(.2f));
+@@ -302,8 +303,8 @@
+         table.addCell(new Paragraph("Amount").setBold());
+         for(OrderDetail ord : orderDetails){
+ 
+-        }*/
++        }*//*
+         return "home";
+-    }
++    }*/
+ 
+ }
+\ No newline at end of file

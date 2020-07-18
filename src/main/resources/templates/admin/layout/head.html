@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <th:block th:fragment="head">
+        <head>
+            <meta charset="utf-8" />
+            <script type="text/javascript">
+                BASE_URL = '[[${@serviceUtil.getBaseUrl()}]]';
+                console.log(BASE_URL);
+                var cnfbox;
+                var abc;
+            </script>
+            <meta name="_csrf" th:content="${_csrf.token}"/>
+            <!-- default header name is X-CSRF-TOKEN -->
+            <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+            <meta name="_csrf_parameter" th:content="${_csrf.parameterName}"/>
+            <link rel="apple-touch-icon" sizes="76x76" th:href="@{/front/nimda/assets/img/apple-icon.png}">
+            <link rel="icon" type="image/png" th:href="@{/front/nimda/assets/img/favicon.png}">
+
+
+
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+            <title>
+                Global Trade Data
+            </title>
+            <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+            <!--     Fonts and icons     -->
+            <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+            <!-- CSS Files -->
+            <link th:href="@{/front/nimda/assets/css/bootstrap.min.css}" rel="stylesheet" />
+            <link th:href="@{/front/nimda/assets/css/paper-dashboard.css?v=2.0.0}" rel="stylesheet" />
+            <!-- CSS Just for demo purpose, don't include it in your project -->
+            <link th:href="@{/front/nimda/assets/demo/demo.css}" rel="stylesheet" />
+            <link rel="stylesheet" th:href="@{/front/jconfirm/confirm.css}">
+            <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.css" rel="stylesheet">
+
+            <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.css" rel="stylesheet">
+
+
+
+
+
+            <th:block layout:fragment="headextras"></th:block>
+        </head>
+    </th:block>

@@ -1,0 +1,153 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+<form th:action="@{/register}" th:object="${visitForm}" method="post" style="width: 99%" th:if="${!success}">
+    <div class="form-group">
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="form-label-group required">
+                        <p>Select location</p>
+                        <select  class="form-control" th:field="*{location}" id="visitors">
+
+                            <option th:each="type : ${@serviceUtil.getAllLocationByCompany(company)}"
+                                    th:value="${{type}}"
+                                    th:text="${type.locationName}"></option>
+                            </option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('location')}" class="label text-danger "
+                           th:errors="*{visitors}"></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="form-label-group required">
+                        <p>Select visitors</p>
+
+                        <select multiple="multiple" class="form-control" th:field="*{visitors}" id="visitors">
+
+                            <option th:each="type : ${@serviceUtil.getAllVisitors()}"
+                                    th:value="${{type}}"
+                                    th:text="${type.firstName + ' ' + type.lastName}"></option>
+                            </option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('visitors')}" class="label text-danger "
+                           th:errors="*{visitors}"></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="form-label-group required">
+                        <p>Select host</p>
+                        <select  class="form-control" th:field="*{host}" id="visitors">
+
+                            <option th:each="type : ${@serviceUtil.getAllColleagues()}"
+                                    th:value="${{type}}"
+                                    th:text="${type.firstName + ' ' + type.lastName}"></option>
+                            </option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('host')}" class="label text-danger "
+                           th:errors="*{host}"></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="form-label-group required">
+                        <div class='input-group date  ' id='datetimepicker'>
+
+                            <div class="">
+                                <p>Meeting time</p>
+                                <div class="form-inline">
+                                    <select th:field="*{appointment_month}" class="form-control mb-2 mr-sm-2">
+                                        <option th:value="''">MM</option>
+                                        <option th:each="i : ${#numbers.sequence( 1, 12)}" th:value="${i}" th:text="${i}"></option>
+                                    </select>
+                                    <select th:field="*{appointment_day}"  class="form-control mb-2 mr-sm-2">
+                                        <option th:value="''">DD</option>
+                                        <option th:each="i : ${#numbers.sequence( 1, 31)}" th:value="${i}" th:text="${i}"></option>
+                                    </select>
+
+                                    <select th:field="*{appointment_year}" class="form-control mb-2 mr-sm-2">
+                                        <option th:value="''">YY</option>
+                                        <option th:each="i : ${#numbers.sequence( #dates.year(#dates.createNow()), #dates.year(#dates.createNow())+2)}" th:value="${i}" th:text="${i}"></option>
+                                    </select>
+                                    <select th:field="*{appointment_hour}" class="form-control mb-2 mr-sm-2">
+                                        <option th:value="''">HH</option>
+                                        <option th:each="i : ${#numbers.sequence( 0, 23)}" th:value="${i}" th:text="${i}"></option>
+                                    </select>
+                                    <select th:field="*{appointment_minutes}"  class="form-control mb-2 mr-sm-2">
+                                        <option th:value="''">Min</option>
+                                        <option th:each="i : ${#numbers.sequence( 0, 59)}" th:value="${i}" th:text="${i}"></option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <p th:if="${#fields.hasErrors('appointmentDateTime')}" class="label text-danger"
+                           th:errors="*{appointmentDateTime}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="form-label-group required">
+                        <div class='input-group ' id='datetimepicker1'>
+                            <div class="">
+                                <p>Meeting end time</p>
+                                <div class="form-inline">
+                                    <select th:field="*{appointment_end_month}" class="form-control mb-2 mr-sm-2">
+                                        <option th:value="''">MM</option>
+                                        <option th:each="i : ${#numbers.sequence( 1, 12)}" th:value="${i}" th:text="${i}"></option>
+                                    </select>
+                                    <select th:field="*{appointment_end_day}"  class="form-control mb-2 mr-sm-2">
+                                        <option th:value="''">DD</option>
+                                        <option th:each="i : ${#numbers.sequence( 1, 31)}" th:value="${i}" th:text="${i}"></option>
+                                    </select>
+
+                                    <select th:field="*{appointment_end_year}" class="form-control mb-2 mr-sm-2">
+                                        <option th:value="''">YY</option>
+                                        <option th:each="i : ${#numbers.sequence( #dates.year(#dates.createNow()), #dates.year(#dates.createNow())+2)}" th:value="${i}" th:text="${i}"></option>
+                                    </select>
+                                    <select th:field="*{appointment_end_hour}" class="form-control mb-2 mr-sm-2">
+                                        <option th:value="''">HH</option>
+                                        <option th:each="i : ${#numbers.sequence( 0, 23)}" th:value="${i}" th:text="${i}"></option>
+                                    </select>
+                                    <select th:field="*{appointment_end_minutes}"  class="form-control mb-2 mr-sm-2">
+                                        <option th:value="''">Min</option>
+                                        <option th:each="i : ${#numbers.sequence( 0, 59)}" th:value="${i}" th:text="${i}"></option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <p th:if="${#fields.hasErrors('checkInDateTime')}" class="label text-danger"
+                           th:errors="*{checkInDateTime}"></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</form>

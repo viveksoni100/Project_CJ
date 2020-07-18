@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<th:block layout:fragment="content">
+    <!--// Main Content \\-->
+    <div class="ereaders-main-content ereaders-error-full">
+
+        <!--// Main Section \\-->
+        <div class="ereaders-main-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="ereaders-error-wrap">
+                            <div class="ereaders-error-text">
+                                <form th:action="@{/login}" th:object="${user}" method="post" style="margin: 0 30px 70px 30px;" class="loginform">
+                                    <input type="text" name="temp" class="form-control" style="display:none">
+
+
+                                    <div class="form-group">
+                                        <input type="text" name="username" class="form-control"
+                                               placeholder="Email address" id="email"
+                                               autofocus="autofocus">
+                                        <p th:if="${#fields.hasErrors('email')}" class="label error"
+                                           th:errors="*{email}">
+                                            Incorrect LP</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" style="margin-top:10px;"
+                                               id="password"
+                                               th:field="*{password}" class="form-control" placeholder="Password">
+                                        <p th:if="${#fields.hasErrors('password')}" class="label error"
+                                           th:errors="*{password}">
+                                            Incorrect LP</p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="g-recaptcha"
+                                             data-sitekey="6Ld2Gr8SAAAAABV6gZ_0ZxRS2UggoKgamLJrxleJ"></div>
+                                        <p th:if="${captchaTokenError!=null}" class="label label-danger"
+                                           th:text="${captchaTokenError}">
+                                            Invalid captcha</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row middle">
+                                            <div class="col-md-12 mb-sm-10" style="margin-top:50px;">
+                                                <a href="javascript:void(0);" id="forgetPass" class="t-small t-gray">Forgot
+                                                    Password?</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <div class="">
+                                            <input type="checkbox" id="check2">
+                                            <label for="check2">Remember password</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row middle">
+
+                                        <div class="col-md-12">
+                                            <button class="btn  btn-primary " type="submit">LOGIN</button>
+                                            <a class=" d-flex t-small t-dark mar-15-0 mb-sm-0 btn  btn-success"
+                                               id="register"
+                                               th:href="@{/register}"><b>Register Now</b></a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-sm-0">
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// Main Section \\-->
+
+    </div>
+    <!--// Main Content \\-->
+</th:block>
+
+<th:block layout:fragment="extrascripts">
+    <script type="text/javascript" th:src="@{/front/script/functions.js}"></script>
+</th:block>
+</html>

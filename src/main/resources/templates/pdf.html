@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<th:block layout:fragment="flowpaperHead">
+    <style type="text/css" media="screen">
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+        }
+
+        .infoBox > * {
+            font-family: Lato;
+        }
+
+        #flashContent {
+            display: none;
+        }
+    </style>
+
+
+    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+    <link th:href="@{'/front/flowpaper/css/flowpaper_flat.css'}" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="css/flowpaper_flat.css" />-->
+
+    <script type="text/javascript" th:src="@{/front/flowpaper/js/jquery.extensions.min.js}"></script>
+    <script type="text/javascript" th:src="@{/front/flowpaper/js/flowpaper.js}"></script>
+    <script type="text/javascript" th:src="@{/front/flowpaper/js/flowpaper_handlers.js}"></script>
+    <script type="text/javascript" th:src="@{/front/flowpaper/js/flowpaper_ease.js}"></script>
+    <script type="text/javascript" th:src="@{/front/nimda/js/ajax.js}"></script>
+</th:block>
+
+
+<th:block layout:fragment="content">
+    <div id="jsonString" th:text="${pdfMarks}" style="display: none;">
+    </div>
+    <input type="hidden" id="username"
+           th:value="${ @userUtil.getCurrentSubuser() != null ? @userUtil.getCurrentSubuser().getEmail() : @userUtil.getCurrentUser().getEmail()}">
+
+    <input type="hidden" id="pdffile"
+           th:value="${'/subuser/publications/pdf/' + @pathVariableEnc.encrypt(publications.id)}">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-right">
+                    <a target="_blank" th:href="${'/subuser/publications/pdf/' + @pathVariableEnc.encrypt(publications.id) +'?type=download'}" class="ereaders-simple-btn ereaders-bgcolor">
+                        <i class="fa fa-download"></i>
+                    </a>
+                    <a style="margin-right: 5px;" th:href="'javascript:void(0);'" class="createnote ereaders-simple-btn ereaders-bgcolor"
+                    th:attr="data-msg='Note saved',data-title='Personal note',data-url=${'/ajax/suser/note/' + @pathVariableEnc.encrypt(publications.id)},data-submiturl=${'/ajax/suser/note/submit/' + @pathVariableEnc.encrypt(publications.id)}, data-close='noteUpdated', data-size='large', data-contenttype='html'"
+                    >
+                        <i class="fa fa-sticky-note"></i>
+                    </a>
+                </div>
+            </div>country
+        </div>
+        <div class="row">
+            <div class="fol-md-2"></div>
+            <div class="fol-md-8" style="padding-bottom: 100px;">
+                <div id="documentViewer" class="flowpaper_viewer"
+                     style="left:10px;top:10px;width:100%;height: 700px;"></div>
+                <div style="height: 100px;"></div>
+            </div>
+            <div class="fol-md-2"></div>
+        </div>
+    </div>
+    <input type="hidden" id="currentPage" th:value="${pageNo}">
+    <script type="text/javascript">
+        function getDocumentUrl(document) {
+            return "php/services/view.php?doc={doc}&format={format}&page={page}".replace("{doc}", document);
+        }
+
+        var startDocument = "Paper";
+
+        jQuery.get((!window.isTouchScreen) ? '/UI_flowpaper_desktop_flat' : '/UI_flowpaper_mobile',
+            function (toolbarData) {
+                jQuery('#documentViewer').FlowPaperViewer(
+                    {
+                        config: {
+
+                            SWFFile: '/front/flowpaper/docs/Paper.pdf.swf',
+                            IMGFiles: '/front/flowpaper/docs/Paper.pdf_{page}.png',
+                            JSONFile: '/front/flowpaper/docs/Paper.js',
+                            PDFFile: $("#pdffile").val(),
+
+                            Scale: 0.6,
+                            ZoomTransition: 'easeOut',
+                            ZoomTime: 0.5,
+                            ZoomInterval: 0.2,
+                            FitPageOnLoad: false,
+                            FitWidthOnLoad: true,
+                            FullScreenAsMaxWindow: false,
+                            ProgressiveLoading: true,
+                            MinZoomSize: 0.2,
+                            MaxZoomSize: 5,
+                            SearchMatchAll: false,
+                            StickyTools: true,
+
+                            Toolbar: toolbarData,
+                            BottomToolbar: '/front/flowpaper/html/UI_flowpaper_annotations.html',
+                            InitViewMode: 'Portrait',
+                            RenderingOrder: 'html5,html',
+                            StartAtPage: $("#currentPage").val(),
+
+                            ViewModeToolsVisible: true,
+                            ZoomToolsVisible: true,
+                            NavToolsVisible: true,
+                            CursorToolsVisible: true,
+                            SearchToolsVisible: true,
+
+                            UserCollaboration: true,
+                            CurrentUser: $("#username").val(),
+
+                            WMode: 'window',
+                            localeChain: 'en_US'
+                        }
+                    }
+                );
+            });
+    </script>
+
+
+    <script type="text/javascript">
+        var url = window.location.href.toString();
+
+        if (location.length == 0) {
+            url = document.URL.toString();
+        }
+
+        if (url.indexOf("file:") >= 0) {
+            jQuery('#documentViewer').html("<div style='position:relative;background-color:#ffffff;width:420px;font-family:Verdana;font-size:10pt;left:22%;top:20%;padding: 10px 10px 10px 10px;border-style:solid;border-width:5px;'><img src='https://flowpaper.com/resources/warning_icon.gif'>&nbsp;<b>You are trying to use FlowPaper from a local directory.</b><br/><br/> FlowPaper needs to be copied to a web server before the viewer can display its document properlty.<br/><br/>Please copy the FlowPaper files to a web server and access the viewer through a http:// url.</div>");
+        }
+    </script>
+    <input type="hidden" id="sendPdfMark" th:attr="data-pid=${pid},data-after='markPosted',data-contenttype='json'">
+    <input type="hidden" id="sendPdfMarkDelete"
+           th:attr="data-pid=${pid},data-after='markDeleted',data-contenttype='json'">
+
+    <form th:action="@{/register}" th:object="${pdfMarkForm}" method="post" style="display: none;" id="pdfMarkForm">
+        <input type="hidden" name="annotationId" id="annotationId">
+        <input type="hidden" name="markType" id="markType">
+        <input type="hidden" name="note" id="note">
+        <input type="hidden" name="selectionInfo" id="selectionInfo">
+        <input type="hidden" name="hasSelection" id="hasSelection">
+        <input type="hidden" name="color" id="color">
+        <input type="hidden" name="positionX" id="positionX">
+        <input type="hidden" name="positionY" id="positionY">
+        <input type="hidden" name="width" id="width">
+        <input type="hidden" name="height" id="height">
+        <input type="hidden" name="pageIndex" id="pageIndex">
+        <input type="hidden" name="displayFormat" id="displayFormat">
+        <input type="hidden" name="collapsed" id="collapsed">
+        <input type="hidden" name="pid" id="pid" th:value="${pid}">
+
+        <input type="hidden" name="YA" id="YA">
+        <input type="hidden" name="TA" id="TA">
+        <input type="hidden" name="FB" id="FB">
+        <input type="hidden" name="WA" id="WA">
+        <input type="hidden" name="UF" id="UF">
+        <input type="hidden" name="RD" id="RD">
+        <input type="hidden" name="selectionText" id="selectionText">
+        <input type="hidden" name="points" id="points">
+        <input type="hidden" name="pageHeight" id="pageHeight">
+
+
+    </form>
+</th:block>
+
+</html>

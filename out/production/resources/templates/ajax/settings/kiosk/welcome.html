@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+<div class="row">
+
+    <div class="col-md-12">
+        <form th:action="@{/register}" th:object="${kioskWelcomeScreen}" method="post" style="width: 99%"
+              th:if="${!success}">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <br/>
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox" th:field="*{delivery}" id="delivery">
+                            <label for="delivery">Delivery ?</label>
+                        </div>
+
+                        <p th:if="${#fields.hasErrors('delivery')}" class="label text-danger "
+                           th:errors="*{delivery}"></p>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox" th:field="*{visitorCheckout}" id="visitorCheckout">
+                            <label for="visitorCheckout">Visitor checkout ?</label>
+                        </div>
+
+                        <p th:if="${#fields.hasErrors('visitorCheckout')}" class="label text-danger "
+                           th:errors="*{visitorCheckout}"></p>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </form>
+
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}"/>
+    </div>
+</div>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/main}">
+
+
+<div layout:fragment="page_content" id="page_content">
+    <!--<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>-->
+
+    <div class="container-fluid">
+        <div class="row mar-tb15 middle">
+            <div class="col-md-6">
+                <h5 class="uppercase themecolor mb-0">Locations List</h5>
+            </div>
+            <div class="col-md-6 text-right">
+
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="table-responsive" id="replace">
+                        <div class="dataTables_wrapper dt-bootstrap4">
+                            <div class="row">
+                                <Div class="col-sm-12">
+                                    <form th:action="@{${pagingUrl}}"
+                                          th:attr="data-baseurl=${pagingUrl},data-formname='usersList',data-replacediv='replace'"
+                                          id="locationList" class="paging" autocomplete="off">
+                                        <table class="table " id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                            <tr>
+                                                <th>-</th>
+                                                <th th:with="order=${pageable.getSort().getOrderFor('firstName')}">
+                                                    <a href="javascript:void(0)"
+                                                       th:value="${firstName}"
+                                                       th:attr="data-sort='firstName',data-baseurl=${pagingUrl},data-formname='usersList',data-replacediv='replace',data-page='1',
+                            data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                       class="page-sort">
+                                                        First name</a>
+                                                </th>
+                                                <th th:with="order=${pageable.getSort().getOrderFor('lastName')}">
+                                                    <a href="javascript:void(0)"
+                                                       th:value="${lastName}"
+                                                       th:attr="data-sort='lastName',data-baseurl=${pagingUrl},data-formname='usersList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                       class="page-sort"
+                                                    >Last name</a>
+                                                </th>
+                                                <th th:with="order=${pageable.getSort().getOrderFor('companyName')}">
+                                                    <a href="javascript:void(0)"
+                                                       th:value="${companyName}"
+                                                       th:attr="data-sort='companyName',data-baseurl=${pagingUrl},data-formname='usersList',data-replacediv='replace',data-page='1',data-dir='asc',
+                        data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                       class="page-sort">
+                                                        Company</a>
+                                                </th>
+                                                <th th:with="order=${pageable.getSort().getOrderFor('email')}">
+                                                    <a href="javascript:void(0)"
+                                                       th:value="${email}"
+                                                       th:attr="data-sort='email',data-baseurl=${pagingUrl},data-formname='usersList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                       class="page-sort">
+                                                        Email</a>
+                                                </th>
+
+                                            </tr>
+                                            <tr>
+                                                <th>-</th>
+
+                                                <th>
+                                                    <input type="text" name="locationName" placeholder="First name"
+                                                           class="mark1" autocomplete="off">
+                                                </th>
+                                                <th>
+                                                    <input type="text" name="address1" placeholder="Last name"
+                                                           class="mark1" autocomplete="nope">
+                                                </th>
+                                                <th>
+                                                    <input type="text" name="company_name" placeholder="Company">
+                                                </th>
+                                                <th>
+                                                    <input type="text" name="email" placeholder="Email"
+                                                           class="mark1" autocomplete="nope">
+                                                </th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody class="marktext">
+                                            <tr th:each="userSub : ${usersubscription}">
+                                                <td th:text="${userSubStat.index+1}"></td>
+                                                <td th:text="${userSub.getUser().getFirstName()}"></td>
+                                                <td th:text="${userSub.getUser().getLastName()}"></td>
+                                                <td th:text="${userSub.getSubscriptionType()}"></td>
+                                                <td > </td>
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </form>
+                                </div>
+                            </Div>
+                            <div th:remove="tag" th:include="base/paging :: paging"
+                                 th:with="pageObj=${usersubscription},replaceDiv='replace',formName='usersList', pagingUrl=${pagingUrl}"></div>
+
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>ocal
+<th:block layout:fragment="scripts">
+    <script th:src="@{/easeClick-theme/js/ajax.js}"></script>
+    <script th:src="@{/easeClick-theme/js/paging.js}"></script>
+    <script th:src="@{/easeClick-theme/js/visit/visit.js}"></script>
+    <script th:src="@{/easeClick-theme/js/visit/country.js}"></script>
+    <script th:src="@{/easeClick-theme/js/datalist/tagify.min.js}"></script>
+    <link th:href="@{/easeClick-theme/css/datalist/tagify.css}" type="text/css" rel="stylesheet"/>
+    <script th:src="@{/easeClick-theme/js/visit/location.js}"></script>
+</th:block>
+</html>

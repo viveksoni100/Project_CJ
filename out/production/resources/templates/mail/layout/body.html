@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+
+    <head th:include="mail/layout/head :: mailHead"></head>
+    <body>
+        <div style="width: 800px; margin:auto;background: #f3f3f3">
+            <div style="margin:auto;font-family:Arial !important;">
+                <div th:include="mail/layout/header :: mailHeader"></div>
+                <div style="width:100%; ">
+
+                    <div style="text-align: center; width: 100%; font-size: 26px;color:#4d4d4d;">
+                        <h4 style="float:left;margin-left: 45px; color:#1097dd;">
+                            <th:block layout:fragment="title"></th:block>
+                        </h4>
+                        <img th:src="'http://34.226.86.196:8880/easeClick-theme/images/ease-click-logo.png'"
+                             style="float:right;margin-right: 45px;width: 150px;margin-top: 20px;" />
+                    </div>
+                    <div style="clear: both;
+    width: 100%;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 20px;">
+
+                    </div>
+                    <th:block layout:fragment="content"></th:block>
+
+                    <div th:include="mail/layout/footer :: mailFooter"></div>
+
+                    <div th:replace="mail/layout/copyright :: mailCopyright"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

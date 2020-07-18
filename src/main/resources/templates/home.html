@@ -1,0 +1,1092 @@
+<!doctype html>
+<!--GlobalTradeData-->
+<html  lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" th:href="@{/static/front/css/stylecart.css}">
+    <link rel="icon" href="/front/images/product_img_default_no_border.png" type="image/png" sizes="16x16">
+</head>
+
+<head>
+    <meta charset="utf-8">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Global Trade Data</title>
+    <!--<script src="https://use.fontawesome.com/856a15b71f.js"></script>-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="_csrf_parameter" th:content="${_csrf.parameterName}"/>
+    <meta charset="utf-8">
+
+    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">-->
+
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--====== Favicon Icon ======-->
+    <!--<link rel="shortcut icon" th:src="@{/front/landingpage/images/favicon.png}" type="image/png">-->
+    <link rel="shortcut icon" th:src="@{/front/images/product_img_default_no_border.png}" type="image/png">
+
+    <!--====== FontAwesom CSS ======-->
+    <link rel="stylesheet" th:href="@{/front/css/font-awesome.css}">
+
+    <!--====== Magnific Popup CSS ======-->
+    <link rel="stylesheet" th:href="@{/front/landingpage/css/magnific-popup.css}">
+
+    <!--====== Slick CSS ======-->
+    <link rel="stylesheet" th:href="@{/front/landingpage/css/slick.css}">
+
+    <!--====== Line Icons CSS ======-->
+    <link rel="stylesheet" th:href="@{/front/landingpage/css/LineIcons.css}">
+
+
+    <!--====== Bootstrap CSS ======-->
+    <link rel="stylesheet" th:href="@{/front/landingpage/css/bootstrap.min.css}">
+
+    <!--====== Default CSS ======-->
+    <link rel="stylesheet" th:href="@{/front/landingpage/css/default.css}">
+
+    <!--====== Style CSS ======-->
+    <link rel="stylesheet" th:href="@{/front/landingpage/css/style.css}">
+
+</head>
+
+<body>
+<!--[if IE]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+<![endif]-->
+
+<!--====== PRELOADER PART START ======-->
+
+<!--
+<div class="preloader">
+    <div class="loader">
+        <div class="ytp-spinner">
+            <div class="ytp-spinner-container">
+                <div class="ytp-spinner-rotator">
+                    <div class="ytp-spinner-left">
+                        <div class="ytp-spinner-circle"></div>
+                    </div>
+                    <div class="ytp-spinner-right">
+                        <div class="ytp-spinner-circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
+<!--====== PRELOADER PART ENDS ======-->
+
+<!--====== NAVBAR TWO PART START ======-->
+
+<section class="navbar-area sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <nav class="navbar navbar-expand-lg">
+                    <a class="navbar-brand" href="#">
+                        <img th:src="@{/front/landingpage/images/global_trade_data_logo.png}" class="das-logo-img" alt="Logo">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTwo" aria-controls="navbarTwo" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="toggler-icon"></span>
+                        <span class="toggler-icon"></span>
+                        <span class="toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse sub-menu-bar" id="navbarTwo">
+                        <ul class="navbar-nav m-auto">
+                            <!--<li class="nav-item active"><a class="page-scroll" href="#home">home</a></li>-->
+                            <!--<li class="nav-item"><a class="page-scroll" href="#services">Services</a></li>-->
+                            <!--<li class="nav-item dropdown">
+                                <a  class="nav-link dropdown-toggle" id="navbarDropdownProducts" role="button" data-toggle="dropdown" aria-haspopup="true" href="javascript:void(0);" aria-expanded="false">Products</a>
+                                <div class="dropdown-menu global-trade-list" aria-labelledby="navbarDropdownProducts">
+                                    <a class="dropdown-item" th:href="@{'/daas/Data'}">Customs Data</a>
+                                    <a class="dropdown-item" th:href="@{'/daas/api-as-service'}">Web Services</a>
+                                </div>
+                            </li>-->
+                            <!--<li class="nav-item"><a class="page-scroll" href="#portfolio">Portfolio</a></li>
+                            <li class="nav-item"><a class="page-scroll" href="#pricing">Pricing</a></li>-->
+                            <li class="nav-item"><a class="page-scroll" th:href="@{'/daas/Data'}">Customs Data</a></li>
+                            <li class="nav-item"><a class="page-scroll" th:href="@{'/daas/api-as-service'}">Web Services</a></li>
+                            <li class="nav-item"><a class="page-scroll" href="#about">FAQ<small><strong>s</strong></small></a></li>
+                            <!--<li class="nav-item"><a class="page-scroll" href="#team">Team</a></li>-->
+                            <li class="nav-item"><a class="page-scroll" href="#contact">Contact</a></li>
+
+                            <li class="nav-item dropdown usr-mnu-txt-blk" sec:authorize="hasRole('ROLE_USER')">
+                                <i class="fa fa-user usr-icn"></i> <a th:text="'Hi, ' + ${#strings.toUpperCase(@userUtil.getCurrentUser().getFirstName())}" href="javascript:void(0)"
+                                   class="nav-link dropdown-toggle text-trnsnone"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                </a>
+                                <div class="dropdown-menu global-trade-list" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" th:href="@{'/orderhistory'}">My Orders</a>
+                                    <a class="dropdown-item" th:href="@{'/subscription'}">Subscription Details</a>
+                                    <a class="dropdown-item edit-profile"
+                                         th:attr="data-url='/corporate/edit/profile',data-submiturl='/corporate/edit/profile',data-size='medium',data-close='profUpdated',data-title='View/Edit Profile',data-reload='true'"
+                                         href="javascript:void(0);">View Profile</a>
+                                    <a class="password-edit" style="cursor: pointer"
+                                         th:attr="data-url='/password/edit',data-submiturl='/password/edit',data-size='medium',data-close='closePass',data-title='Change Password'">Change Password</a>
+                                </div>
+                            </li>
+
+                            <div sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')">
+                                <li class="nav-item" ><a th:href="@{'/admin/category/list'}" class="page-scroll" href="#contact">Admin Panel</a></li>
+                            </div>
+                        </ul>
+                    </div>
+
+                    <div class="navbar-btn d-none d-sm-inline-block">
+
+                        <!--<li class="nav-item active">
+                            <a th:href="@{'/getCartPage'}" th:if="${@serviceUtil.getCartEntriesCount(#request)} > 0" id="cart" class="page-scroll">
+                                &lt;!&ndash;<i class="fa" style="font-size:36px">&#xf07a;</i>&ndash;&gt;
+                                <i class="fas fa-shopping-cart" style="font-size:26px; position: absolute; left: 72rem; top: 1.5rem;"></i>
+                            </a>
+                        </li>-->
+
+                        <a th:href="@{'/getCartPage'}" th:if="${@serviceUtil.getCartEntriesCount(#request)} > 0" id="cart" class="page-scroll hed-crt-icn hom-hed-cart">
+                            <!--<i class="fa" style="font-size:36px">&#xf07a;</i>-->
+                            <!--fas fa-shopping-cart-->
+                            <i class="fa fa-shopping-cart ereaders-simple-btn-cart cstm-crt-icn"></i>
+                            <span class='badge badge-warning cstm-badge' id='lblCartCount' th:if="${@serviceUtil.getCartEntriesCount(#request)} > 0" th:text="${@serviceUtil.getCartEntriesCount(#request)}"></span>
+                        </a>
+                            <a class="btn btn-primary loginbutton cstm-btn" sec:authorize="isAnonymous()" th:href="@{'/login'}">Login</a>
+                            <a class="btn btn-primary loginbutton cstm-btn1" sec:authorize="isAnonymous()" th:href="@{'/register'}">Register</a>
+                            <a class="btn btn-primary loginbutton cstm-btn1" sec:authorize="isAuthenticated()" th:href="@{'/logout'}">Logout</a>
+                    </div>
+                </nav> <!-- navbar -->
+            </div> <!--col-lg-12-->
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== NAVBAR TWO PART ENDS ======-->
+
+<!--====== SLIDER PART START ======-->
+
+<section id="home" class="slider_area">
+    <div id="carouselThree" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselThree" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselThree" data-slide-to="1"></li>
+            <li data-target="#carouselThree" data-slide-to="2"></li>
+        </ol>
+
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="slider-content">
+                                <h1 class="title csm-fntsz1">Enhance your SAP GTS and Oracle GTM </h1>
+                                <p class="text">with our Denied Party List and Customs Data</p>
+                                <ul class="slider-btn rounded-buttons">
+                                    <li><a class="main-btn rounded-one" th:href="@{'/daas/Data'}">GET STARTED</a></li>
+                                    <!--<li><a class="main-btn rounded-two" href="#">DOWNLOAD</a></li>-->
+                                </ul>
+                            </div>
+                        </div>
+                    </div> <!-- row -->
+                </div> <!-- container -->
+                <div class="slider-image-box d-none d-lg-flex align-items-end">
+                    <div class="slider-image">
+                        <img th:src="@{/front/landingpage/images/slider/1.png}" alt="Hero">
+                    </div> <!-- slider-imgae -->
+                </div> <!-- slider-imgae box -->
+            </div> <!-- carousel-item -->
+
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="slider-content">
+                                <h1 class="title csm-fntsz2">Give your Business</h1>
+                                <p class="text">an EDGE with our real time Denied Party Screening API</p>
+                                <ul class="slider-btn rounded-buttons">
+                                    <li><a class="main-btn rounded-one" th:href="@{'/daas/api-as-service'}">GET STARTED</a></li>
+                                    <!--<li><a class="main-btn rounded-two" href="#">DOWNLOAD</a></li>-->
+                                </ul>
+                            </div> <!-- slider-content -->
+                        </div>
+                    </div> <!-- row -->
+                </div> <!-- container -->
+                <div class="slider-image-box d-none d-lg-flex align-items-end">
+                    <div class="slider-image">
+                        <img th:src="@{/front/landingpage/images/slider/2.png}" alt="Hero">
+                    </div> <!-- slider-imgae -->
+                </div> <!-- slider-imgae box -->
+            </div> <!-- carousel-item -->
+
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="slider-content">
+                                <h1 class="title csm-fntsz2">Get all international</h1>
+                                <p class="text">trade related data just a click away</p>
+                                <ul class="slider-btn rounded-buttons">
+                                    <li><a class="main-btn rounded-one" th:href="@{'/daas/Data'}">GET STARTED</a></li>
+                                    <!--<li><a class="main-btn rounded-two" href="#">DOWNLOAD</a></li>-->
+                                </ul>
+                            </div> <!-- slider-content -->
+                        </div>
+                    </div> <!-- row -->
+                </div> <!-- container -->
+                <div class="slider-image-box d-none d-lg-flex align-items-end">
+                    <div class="slider-image">
+                        <img th:src="@{/front/landingpage/images/slider/3.png}" alt="Hero">
+                    </div> <!-- slider-imgae -->
+                </div> <!-- slider-imgae box -->
+            </div> <!-- carousel-item -->
+        </div>
+
+        <a class="carousel-control-prev" href="#carouselThree" role="button" data-slide="prev">
+            <i class="lni lni-arrow-left"></i>
+        </a>
+        <a class="carousel-control-next" href="#carouselThree" role="button" data-slide="next">
+            <i class="lni lni-arrow-right"></i>
+        </a>
+    </div>
+</section>
+
+<!--====== SLIDER PART ENDS ======-->
+
+<!--====== FEATRES TWO PART START ======-->
+
+<!--
+<section id="services" class="features-area">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-10">
+                <div class="section-title text-center pb-10">
+                    <h3 class="title">Our Services</h3>
+                    <p class="text">Stop wasting time and money designing and managing a website that doesn’t get results. Happiness guaranteed!</p>
+                </div> &lt;!&ndash; row &ndash;&gt;
+            </div>
+        </div> &lt;!&ndash; row &ndash;&gt;
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-7 col-sm-9">
+                <div class="single-features mt-40">
+                    <div class="features-title-icon d-flex justify-content-between">
+                        <h4 class="features-title"><a href="#">Graphics Design</a></h4>
+                        <div class="features-icon">
+                            <i class="lni lni-brush"></i>
+                            <img class="shape" th:src="@{/front/landingpage/images/f-shape-1.svg}" alt="Shape">
+                        </div>
+                    </div>
+                    <div class="features-content">
+                        <p class="text">Short description for the ones who look for something new. Short description for the ones who look for something new.</p>
+                        <a class="features-btn" href="#">LEARN MORE</a>
+                    </div>
+                </div> &lt;!&ndash; single features &ndash;&gt;
+            </div>
+            <div class="col-lg-4 col-md-7 col-sm-9">
+                <div class="single-features mt-40">
+                    <div class="features-title-icon d-flex justify-content-between">
+                        <h4 class="features-title"><a href="#">Website Design</a></h4>
+                        <div class="features-icon">
+                            <i class="lni lni-layout"></i>
+                            <img class="shape" th:src="@{/front/landingpage/images/f-shape-1.svg}" alt="Shape">
+                        </div>
+                    </div>
+                    <div class="features-content">
+                        <p class="text">Short description for the ones who look for something new. Short description for the ones who look for something new.</p>
+                        <a class="features-btn" href="#">LEARN MORE</a>
+                    </div>
+                </div> &lt;!&ndash; single features &ndash;&gt;
+            </div>
+            <div class="col-lg-4 col-md-7 col-sm-9">
+                <div class="single-features mt-40">
+                    <div class="features-title-icon d-flex justify-content-between">
+                        <h4 class="features-title"><a href="#">Digital Marketing</a></h4>
+                        <div class="features-icon">
+                            <i class="lni lni-bolt"></i>
+                            <img class="shape" th:src="@{/front/landingpage/images/f-shape-1.svg}" alt="Shape">
+                        </div>
+                    </div>
+                    <div class="features-content">
+                        <p class="text">Short description for the ones who look for something new. Short description for the ones who look for something new.</p>
+                        <a class="features-btn" href="#">LEARN MORE</a>
+                    </div>
+                </div> &lt;!&ndash; single features &ndash;&gt;
+            </div>
+        </div> &lt;!&ndash; row &ndash;&gt;
+    </div> &lt;!&ndash; container &ndash;&gt;
+</section>
+-->
+
+<!--====== FEATRES TWO PART ENDS ======-->
+
+<!--====== PORTFOLIO PART START ======-->
+
+<!--<section id="portfolio" class="portfolio-area portfolio-four pb-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-10">
+                <div class="section-title text-center pb-10">
+                    <h3 class="title">Featured Works</h3>
+                    <p class="text">Stop wasting time and money designing and managing a website that doesn’t get results. Happiness guaranteed!</p>
+                </div> &lt;!&ndash; section title &ndash;&gt;
+            </div>
+        </div> &lt;!&ndash; row &ndash;&gt;
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="portfolio-menu text-center mt-50">
+                    <ul>
+                        <li data-filter="*" class="active">ALL WORK</li>
+                        <li data-filter=".branding-4">BRANDING</li>
+                        <li data-filter=".marketing-4">MARKETING</li>
+                        <li data-filter=".planning-4">PLANNING</li>
+                        <li data-filter=".research-4">RESEARCH</li>
+                    </ul>
+                </div> &lt;!&ndash; portfolio menu &ndash;&gt;
+            </div>
+            <div class="col-lg-9 col-md-9">
+                <div class="row no-gutters grid mt-50">
+                    <div class="col-lg-4 col-sm-6 branding-4 planning-4">
+                        <div class="single-portfolio">
+                            <div class="portfolio-image">
+                                <img th:src="@{/front/landingpage/images/portfolio/1.png}" alt="">
+                                <div class="portfolio-overlay d-flex align-items-center justify-content-center">
+                                    <div class="portfolio-content">
+                                        <div class="portfolio-icon">
+                                            <a class="image-popup" th:href="@{/front/landingpage/images/portfolio/1.png}"><i class="lni lni-zoom-in"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                        <div class="portfolio-icon">
+                                            <a href="#"><i class="lni lni-link"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> &lt;!&ndash; single portfolio &ndash;&gt;
+                    </div>
+                    <div class="col-lg-4 col-sm-6 marketing-4 research-4">
+                        <div class="single-portfolio">
+                            <div class="portfolio-image">
+                                <img th:src="@{/front/landingpage/images/portfolio/2.png}" alt="">
+                                <div class="portfolio-overlay d-flex align-items-center justify-content-center">
+                                    <div class="portfolio-content">
+                                        <div class="portfolio-icon">
+                                            <a class="image-popup" th:href="@{/front/landingpage/images/portfolio/2.png}"><i class="lni lni-zoom-in"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                        <div class="portfolio-icon">
+                                            <a href="#"><i class="lni lni-link"></i></a>
+                                            <img th:src="@{/front/landingpage/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> &lt;!&ndash; single portfolio &ndash;&gt;
+                    </div>
+                    <div class="col-lg-4 col-sm-6 branding-4 marketing-4">
+                        <div class="single-portfolio">
+                            <div class="portfolio-image">
+                                <img th:src="@{/front/landingpage/images/portfolio/3.png}" alt="">
+                                <div class="portfolio-overlay d-flex align-items-center justify-content-center">
+                                    <div class="portfolio-content">
+                                        <div class="portfolio-icon">
+                                            <a class="image-popup" th:href="@{/front/landingpage/images/portfolio/3.png}"><i class="lni lni-zoom-in"></i></a>
+                                            <img th:src="@{/front/landingpage/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                        <div class="portfolio-icon">
+                                            <a href="#"><i class="lni lni-link"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> &lt;!&ndash; single portfolio &ndash;&gt;
+                    </div>
+                    <div class="col-lg-4 col-sm-6 planning-4 research-4">
+                        <div class="single-portfolio">
+                            <div class="portfolio-image">
+                                <img th:src="@{/front/landingpage/images/portfolio/4.png}" alt="">
+                                <div class="portfolio-overlay d-flex align-items-center justify-content-center">
+                                    <div class="portfolio-content">
+                                        <div class="portfolio-icon">
+                                            <a class="image-popup" th:href="@{/front/landingpage/images/portfolio/4.png}"><i class="lni lni-zoom-in"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                        <div class="portfolio-icon">
+                                            <a href="#"><i class="lni lni-link"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> &lt;!&ndash; single portfolio &ndash;&gt;
+                    </div>
+                    <div class="col-lg-4 col-sm-6 marketing-4">
+                        <div class="single-portfolio">
+                            <div class="portfolio-image">
+                                <img th:src="@{/front/landingpage/images/portfolio/5.png}" alt="">
+                                <div class="portfolio-overlay d-flex align-items-center justify-content-center">
+                                    <div class="portfolio-content">
+                                        <div class="portfolio-icon">
+                                            <a class="image-popup"th:href="@{/front/landingpage/images/portfolio/5.png}"><i class="lni lni-zoom-in"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                        <div class="portfolio-icon">
+                                            <a href="#"><i class="lni lni-link"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> &lt;!&ndash; single portfolio &ndash;&gt;
+                    </div>
+                    <div class="col-lg-4 col-sm-6 planning-4">
+                        <div class="single-portfolio">
+                            <div class="portfolio-image">
+                                <img th:src="@{/front/landingpage/images/portfolio/6.png}" alt="">
+                                <div class="portfolio-overlay d-flex align-items-center justify-content-center">
+                                    <div class="portfolio-content">
+                                        <div class="portfolio-icon">
+                                            <a class="image-popup" th:href="@{/front/landingpage/images/portfolio/6.png}"><i class="lni lni-zoom-in"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                        <div class="portfolio-icon">
+                                            <a href="#"><i class="lni lni-link"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> &lt;!&ndash; single portfolio &ndash;&gt;
+                    </div>
+                    <div class="col-lg-4 col-sm-6 research-4">
+                        <div class="single-portfolio">
+                            <div class="portfolio-image">
+                                <img th:src="@{/front/landingpage/images/portfolio/7.png}" alt="">
+                                <div class="portfolio-overlay d-flex align-items-center justify-content-center">
+                                    <div class="portfolio-content">
+                                        <div class="portfolio-icon">
+                                            <a class="image-popup" th:href="@{/front/landingpage/images/portfolio/7.png}"><i class="lni lni-zoom-in"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                        <div class="portfolio-icon">
+                                            <a href="#"><i class="lni lni-link"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> &lt;!&ndash; single portfolio &ndash;&gt;
+                    </div>
+                    <div class="col-lg-4 col-sm-6 branding-4 planning-4">
+                        <div class="single-portfolio">
+                            <div class="portfolio-image">
+                                <img th:src="@{/front/landingpage/images/portfolio/8.png}" alt="">
+                                <div class="portfolio-overlay d-flex align-items-center justify-content-center">
+                                    <div class="portfolio-content">
+                                        <div class="portfolio-icon">
+                                            <a class="image-popup" th:href="@{/front/landingpage/images/portfolio/8.png}"><i class="lni lni-zoom-in"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                        <div class="portfolio-icon">
+                                            <a href="#"><i class="lni lni-link"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> &lt;!&ndash; single portfolio &ndash;&gt;
+                    </div>
+                    <div class="col-lg-4 col-sm-6 marketing-4">
+                        <div class="single-portfolio">
+                            <div class="portfolio-image">
+                                <img th:src="@{/front/landingpage/images/portfolio/9.png}" alt="">
+                                <div class="portfolio-overlay d-flex align-items-center justify-content-center">
+                                    <div class="portfolio-content">
+                                        <div class="portfolio-icon">
+                                            <a class="image-popup" th:href="@{/front/landingpage/images/portfolio/9.png}"><i class="lni lni-zoom-in"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                        <div class="portfolio-icon">
+                                            <a href="#"><i class="lni lni-link"></i></a>
+                                            <img th:src="@{/front/landingpage/images/portfolio/shape.svg}" alt="shape" class="shape">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> &lt;!&ndash; single portfolio &ndash;&gt;
+                    </div>
+                </div> &lt;!&ndash; row &ndash;&gt;
+            </div>
+        </div> &lt;!&ndash; row &ndash;&gt;
+    </div> &lt;!&ndash; container &ndash;&gt;
+</section>-->
+
+<!--====== PORTFOLIO PART ENDS ======-->
+
+<!--====== PRINICNG START ======-->
+
+<!--<section id="pricing" class="pricing-area ">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-10">
+                <div class="section-title text-center pb-25">
+                    <h3 class="title">Pricing Plans</h3>
+                    <p class="text">Stop wasting time and money designing and managing a website that doesn’t get results. Happiness guaranteed!</p>
+                </div> &lt;!&ndash; section title &ndash;&gt;
+            </div>
+        </div> &lt;!&ndash; row &ndash;&gt;
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-7 col-sm-9">
+                <div class="pricing-style mt-30">
+                    <div class="pricing-icon text-center">
+                        <img th:src="@{/front/landingpage/images/basic.svg}" alt="">
+                    </div>
+                    <div class="pricing-header text-center">
+                        <h5 class="sub-title">Basic</h5>
+                        <p class="month"><span class="price">$ 199</span>/month</p>
+                    </div>
+                    <div class="pricing-list">
+                        <ul>
+                            <li><i class="lni lni-check-mark-circle"></i> Carefully crafted components</li>
+                            <li><i class="lni lni-check-mark-circle"></i> Amazing page examples</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-btn rounded-buttons text-center">
+                        <a class="main-btn rounded-one" href="#">GET STARTED</a>
+                    </div>
+                </div> &lt;!&ndash; pricing style one &ndash;&gt;
+            </div>
+
+            <div class="col-lg-4 col-md-7 col-sm-9">
+                <div class="pricing-style mt-30">
+                    <div class="pricing-icon text-center">
+                        <img th:src="@{/front/landingpage/images/pro.svg}" alt="">
+                    </div>
+                    <div class="pricing-header text-center">
+                        <h5 class="sub-title">Pro</h5>
+                        <p class="month"><span class="price">$ 399</span>/month</p>
+                    </div>
+                    <div class="pricing-list">
+                        <ul>
+                            <li><i class="lni lni-check-mark-circle"></i> Carefully crafted components</li>
+                            <li><i class="lni lni-check-mark-circle"></i> Amazing page examples</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-btn rounded-buttons text-center">
+                        <a class="main-btn rounded-one" href="#">GET STARTED</a>
+                    </div>
+                </div> &lt;!&ndash; pricing style one &ndash;&gt;
+            </div>
+
+            <div class="col-lg-4 col-md-7 col-sm-9">
+                <div class="pricing-style mt-30">
+                    <div class="pricing-icon text-center">
+                        <img th:src="@{/front/landingpage/images/enterprise.svg}" alt="">
+                    </div>
+                    <div class="pricing-header text-center">
+                        <h5 class="sub-title">Enterprise</h5>
+                        <p class="month"><span class="price">$ 699</span>/month</p>
+                    </div>
+                    <div class="pricing-list">
+                        <ul>
+                            <li><i class="lni lni-check-mark-circle"></i> Carefully crafted components</li>
+                            <li><i class="lni lni-check-mark-circle"></i> Amazing page examples</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-btn rounded-buttons text-center">
+                        <a class="main-btn rounded-one" href="#">GET STARTED</a>
+                    </div>
+                </div> &lt;!&ndash; pricing style one &ndash;&gt;
+            </div>
+        </div> &lt;!&ndash; row &ndash;&gt;
+    </div> &lt;!&ndash; container &ndash;&gt;
+</section>-->
+
+<!--====== PRINICNG ENDS ======-->
+
+<!--====== ABOUT PART START ======-->
+
+<section id="about" class="about-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="faq-content mt-45">
+                    <div class="about-title">
+                        <!--<h6 class="sub-title">A Little More About Us</h6>-->
+                        <h4 class="title">Frequently Asked Questions</h4>
+                    </div> <!-- faq title -->
+                    <div class="about-accordion">
+                        <div class="accordion" id="accordionExample">
+
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <a href="#" class="collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">How can we integrate API to our application ?</a>
+                                </div>
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <p class="text">You can access the API setup document in your account -> Subscription section. For any query, you can reach out to us over csupport@globalvoxinc.com</p>
+                                    </div>
+                                </div>
+                            </div> <!-- card -->
+
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                    <a href="#" class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">I am not finding the data list which i am looking for ?</a>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <p class="text">Please share more details about your requirement to us over csupport@globalvoxinc.com. we will try to incorporate the same in our catalogue soon.</p>
+                                    </div>
+                                </div>
+                            </div> <!-- card -->
+                            <div class="card">
+                                <div class="card-header" id="headingThree">
+                                    <a href="#" class="collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">How to subscribe to a data list?</a>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <p class="text">Select the data list which you wish to subscribe for, make payment and you can get access to your chosen data list.</p>
+                                    </div>
+                                </div>
+                            </div> <!-- card -->
+                            <div class="card">
+                                <div class="card-header" id="headingFore">
+                                    <a href="#" class="collapsed" data-toggle="collapse" data-target="#collapseFore" aria-expanded="false" aria-controls="collapseFore">How will we come to know about data list update?</a>
+                                </div>
+                                <div id="collapseFore" class="collapse" aria-labelledby="headingFore" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <p class="text">As soon as we update any of the data list, all active subscribers would be notified over their registered email address.</p>
+                                    </div>
+                                </div>
+                            </div> <!-- card -->
+                            <div class="card">
+                                <div class="card-header" id="headingFive">
+                                    <a href="#" class="collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Can I get any particular data list in my customized format ?</a>
+                                </div>
+                                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <p class="text">You may reach out to us over csupport@globalvoxinc.com with detailed format requirement. we will try to provide you the same data in your required format.</p>
+                                    </div>
+                                </div>
+                            </div> <!-- card -->
+                        </div>
+                    </div> <!-- faq accordion -->
+                </div> <!-- faq content -->
+            </div>
+            <div class="col-lg-7">
+                <div class="about-image mt-50">
+                    <img th:src="@{/front/landingpage/images/about.jpg}" alt="about">
+                </div> <!-- faq image -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== ABOUT PART ENDS ======-->
+
+<!--====== TESTIMONIAL PART START ======-->
+
+<section id="testimonial" class="testimonial-area">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-xl-5 col-lg-6">
+                <div class="testimonial-left-content mt-45">
+                    <img class="img-fluid csm-abt-logo" th:src="@{/front/extra-images/logoglobal.png}">
+                    <h4 class="title">About Us</h4>
+                    <ul class="testimonial-line">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <p class="text">Managed IT services and solutions from brilliant talents in the business. Since our founding in 2002, Global Vox is committed to offering innovative managed services portfolio and ultimate customer experience that drives innovation and accelerates growth. We leverage IT consulting services and technology solutions that deliver tangible business value and meets the changing needs of the business. Our role is to enhance the efficiency and productivity of your staff so that they can focus on other key business initiatives.</p>
+                </div> <!-- testimonial left content -->
+            </div>
+            <div class="col-lg-6">
+                <div class="testimonial-right-content mt-50">
+                    <div class="quota">
+                        <i class="lni lni-quotation"></i>
+                    </div>
+                    <div class="testimonial-content-wrapper testimonial-active">
+                        <div class="single-testimonial">
+                            <div class="testimonial-text">
+                                <p class="text">“Praesent scelerisque, odio eu fermentum malesuada, nisi arcu volutpat nisl, sit amet convallis nunc turp.”</p>
+                            </div>
+                            <div class="testimonial-author d-sm-flex justify-content-between">
+                                <div class="author-info d-flex align-items-center">
+                                    <div class="author-image">
+                                        <img th:src="@{/front/landingpage/images/author-1.jpg}" alt="author">
+                                    </div>
+                                    <div class="author-name media-body">
+                                        <h5 class="name">Mr. Jems Bond</h5>
+                                        <span class="sub-title">CEO Mbuild Firm</span>
+                                    </div>
+                                </div>
+                                <div class="author-review">
+                                    <ul class="star">
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                    </ul>
+                                    <span class="review">( 7 Reviews )</span>
+                                </div>
+                            </div>
+                        </div> <!-- single testimonial -->
+                        <div class="single-testimonial">
+                            <div class="testimonial-text">
+                                <p class="text">“Praesent scelerisque, odio eu fermentum malesuada, nisi arcu volutpat nisl, sit amet convallis nunc turp.”</p>
+                            </div>
+                            <div class="testimonial-author d-sm-flex justify-content-between">
+                                <div class="author-info d-flex align-items-center">
+                                    <div class="author-image">
+                                        <img th:src="@{/front/landingpage/images/author-2.jpg}" alt="author">
+                                    </div>
+                                    <div class="author-name media-body">
+                                        <h5 class="name">Mr. Jems Bond</h5>
+                                        <span class="sub-title">CEO Mbuild Firm</span>
+                                    </div>
+                                </div>
+                                <div class="author-review">
+                                    <ul class="star">
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                    </ul>
+                                    <span class="review">( 7 Reviews )</span>
+                                </div>
+                            </div>
+                        </div> <!-- single testimonial -->
+                        <div class="single-testimonial">
+                            <div class="testimonial-text">
+                                <p class="text">“Praesent scelerisque, odio eu fermentum malesuada, nisi arcu volutpat nisl, sit amet convallis nunc turp.”</p>
+                            </div>
+                            <div class="testimonial-author d-sm-flex justify-content-between">
+                                <div class="author-info d-flex align-items-center">
+                                    <div class="author-image">
+                                        <img th:src="@{/front/landingpage/images/author-3.jpg}" alt="author">
+                                    </div>
+                                    <div class="author-name media-body">
+                                        <h5 class="name">Mr. Jems Bond</h5>
+                                        <span class="sub-title">CEO Mbuild Firm</span>
+                                    </div>
+                                </div>
+                                <div class="author-review">
+                                    <ul class="star">
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                    </ul>
+                                    <span class="review">( 7 Reviews )</span>
+                                </div>
+                            </div>
+                        </div> <!-- single testimonial -->
+                    </div> <!-- testimonial content wrapper -->
+                </div> <!-- testimonial right content -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== TESTIMONIAL PART ENDS ======-->
+
+<!--====== TEAM START ======-->
+
+<!--<section id="team" class="team-area pt-120 pb-130">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-10">
+                <div class="section-title text-center pb-30">
+                    <h3 class="title">Meet The Team</h3>
+                    <p class="text">Stop wasting time and money designing and managing a website that doesn’t get results. Happiness guaranteed!</p>
+                </div> &lt;!&ndash; section title &ndash;&gt;
+            </div>
+        </div> &lt;!&ndash; row &ndash;&gt;
+        <div class="row">
+            <div class="col-lg-4 col-sm-6">
+                <div class="team-style-eleven text-center mt-30 wow fadeIn" data-wow-duration="1s" data-wow-delay="0s">
+                    <div class="team-image">
+                        <img th:src="@{/front/landingpage/images/team-1.jpg}" alt="Team">
+                    </div>
+                    <div class="team-content">
+                        <div class="team-social">
+                            <ul class="social">
+                                <li><a href="#"><i class="lni lni-facebook-filled"></i></a></li>
+                                <li><a href="#"><i class="lni lni-twitter-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-linkedin-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                        <h4 class="team-name"><a href="#">Jeffery Riley</a></h4>
+                        <span class="sub-title">Art Director</span>
+                    </div>
+                </div> &lt;!&ndash; single team &ndash;&gt;
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="team-style-eleven text-center mt-30 wow fadeIn" data-wow-duration="1s" data-wow-delay="0s">
+                    <div class="team-image">
+                        <img th:href="@{/front/landingpage/images/team-2.jpg}" alt="Team">
+                    </div>
+                    <div class="team-content">
+                        <div class="team-social">
+                            <ul class="social">
+                                <li><a href="#"><i class="lni lni-facebook-filled"></i></a></li>
+                                <li><a href="#"><i class="lni lni-twitter-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-linkedin-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                        <h4 class="team-name"><a href="#">Riley Beata</a></h4>
+                        <span class="sub-title">Web Developer</span>
+                    </div>
+                </div> &lt;!&ndash; single team &ndash;&gt;
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="team-style-eleven text-center mt-30 wow fadeIn" data-wow-duration="1s" data-wow-delay="0s">
+                    <div class="team-image">
+                        <img th:src="@{/front/landingpage/images/team-3.jpg}" alt="Team">
+                    </div>
+                    <div class="team-content">
+                        <div class="team-social">
+                            <ul class="social">
+                                <li><a href="#"><i class="lni lni-facebook-filled"></i></a></li>
+                                <li><a href="#"><i class="lni lni-twitter-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-linkedin-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                        <h4 class="team-name"><a href="#">Mark A. Parker</a></h4>
+                        <span class="sub-title">UX Designer</span>
+                    </div>
+                </div> &lt;!&ndash; single team &ndash;&gt;
+            </div>
+        </div> &lt;!&ndash; row &ndash;&gt;
+    </div> &lt;!&ndash; container &ndash;&gt;
+</section>-->
+
+<!--====== TEAM  ENDS ======-->
+
+<!--====== CONTACT PART START ======-->
+
+<section id="contact" class="contact-area">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-10">
+                <div class="section-title text-center pb-30">
+                    <h3 class="title contct-title">Contact Us</h3>
+                    <!--<p class="text">Stop wasting time and money designing and managing a website that doesn’t get results. Happiness guaranteed!</p>-->
+                </div> <!-- section title -->
+            </div>
+        </div> <!-- row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="contact-map mt-30">
+
+                    <center>
+                    <iframe class="csm-map-frame" id="gmap_canvas" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3104.0436230338937!2d-77.2176315694973!3d38.92298041105519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b64aeaa1e160cb%3A0xeb7a094899d2470e!2s7900%20Westpark%20Dr%2C%20McLean%2C%20VA%2022102!5e0!3m2!1sen!2sus!4v1590323606617!5m2!1sen!2sus" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                    </center>
+                    <!--<iframe id="gmap_canvas" src="https://www.google.com/maps?ll=23.013619,72.517184&z=14&t=m&hl=en&gl=IN&mapclient=embed&cid=11961042576963983403" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>-->
+                </div> <!-- row -->
+            </div>
+        </div> <!-- row -->
+        <div class="contact-info pt-30">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-contact-info contact-color-1 mt-30 d-flex ">
+                        <div class="contact-info-icon">
+                            <i class="lni lni-map-marker"></i>
+                        </div>
+                        <div class="contact-info-content media-body">
+                            <p class="text"> 7900 Westpark Drive,<br> Mclean, VA, USA 22102</p>
+                        </div>
+                    </div> <!-- single contact info -->
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-contact-info contact-color-2 mt-30 d-flex ">
+                        <div class="contact-info-icon">
+                            <i class="lni lni-envelope"></i>
+                        </div>
+                        <div class="contact-info-content media-body">
+                            <p class="text contct-mail">info@globalvoxinc.com</p>
+                            <!--<p class="text">support@uideck.com</p>-->
+                        </div>
+                    </div> <!-- single contact info -->
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-contact-info contact-color-3 mt-30 d-flex ">
+                        <div class="contact-info-icon">
+                            <i class="lni lni-phone"></i>
+                        </div>
+                        <div class="contact-info-content media-body">
+                            <p class="text">+1 559 856 2171 (USA)</p>
+                            <p class="text">+91 92274 57113 (India)</p>
+                        </div>
+                    </div> <!-- single contact info -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- contact info -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="contact-wrapper form-style-two pt-115">
+                    <h4 class="contact-title pb-10"><i class="lni lni-envelope"></i> Leave <span>A Message.</span></h4>
+
+                    <form th:action="@{/sendMessage}" th:object="${daasmsg}" method="post">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-input mt-25">
+                                    <label>Name</label>
+                                    <div class="input-items default">
+                                        <input name="name" id="name" type="text" placeholder="Name">
+                                        <i class="lni lni-user"></i>
+                                    </div>
+                                </div> <!-- form input -->
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-input mt-25">
+                                    <label>Email</label>
+                                    <div class="input-items default">
+                                        <input type="email" id="email" name="email" placeholder="Email">
+                                        <i class="lni lni-envelope"></i>
+                                    </div>
+                                </div> <!-- form input -->
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-input mt-25">
+                                    <label>Phone</label>
+                                    <div class="input-items default">
+                                        <input type="number" minlength="1" maxlength="15" name="phone" id="phone" placeholder="Phone number">
+                                        <i class="lni lni-phone"></i>
+                                    </div>
+                                </div> <!-- form input -->
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-input mt-25">
+                                    <label>Message</label>
+                                    <div class="input-items default">
+                                        <textarea name="message" id="message" placeholder="Message"></textarea>
+                                        <i class="lni lni-pencil-alt"></i>
+                                    </div>
+                                </div> <!-- form input -->
+                            </div>
+                            <p class="form-message"></p>
+                            <div class="col-md-12">
+                                <div class="form-input light-rounded-buttons mt-30">
+                                    <!--<a class="btn btn-primary csm-snd-msg-btn" role="button">Send Message</a>-->
+                                    <input type="submit" class="btn btn-primary loginbutton cstm-btn" value="Send Message">
+                                </div> <!-- form input -->
+                            </div>
+                        </div> <!-- row -->
+                    </form>
+                </div> <!-- contact wrapper form -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== CONTACT PART ENDS ======-->
+
+<!--====== FOOTER PART START ======-->
+
+<section class="footer-area footer-dark cstm-footr">
+    <div class="container">
+        <!--<div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="footer-logo text-center">
+                    <a class="mt-30" href="index.html"><img th:src="@{/front/landingpage/images/global_trade_data_logo.png}" style="height: 3rem;" alt="Logo"></a>
+                </div> &lt;!&ndash; footer logo &ndash;&gt;
+                <ul class="social text-center mt-60">
+                    <li><a href="https://facebook.com/uideckHQ"><i class="lni lni-facebook-filled"></i></a></li>
+                    <li><a href="https://twitter.com/uideckHQ"><i class="lni lni-twitter-original"></i></a></li>
+                    <li><a href="https://instagram.com/uideckHQ"><i class="lni lni-instagram-original"></i></a></li>
+                    <li><a href="#"><i class="lni lni-linkedin-original"></i></a></li>
+                </ul> &lt;!&ndash; social &ndash;&gt;
+                <div class="footer-support text-center">
+                    <span class="number">+8801234567890</span>
+                    <span class="mail">support@uideck.com</span>
+                </div>
+                <div class="copyright text-center mt-35">
+                    <p class="text">Designed by <a href="https://uideck.com" rel="nofollow">UIdeck</a> and Built-with <a rel="nofollow" href="https://ayroui.com">Ayro UI</a> </p>
+                </div> &lt;!&ndash;  copyright &ndash;&gt;
+            </div>
+        </div> &lt;!&ndash; row &ndash;&gt;-->
+        <div class="row">
+            <div class="col-md-12">
+                <p class="csm-copyrit">© <script>document.write(new Date().getFullYear())</script> | All rights reserved by
+                    <a href="https://www.globalvoxinc.com"> GlobalVox</a> |
+                    <a href="#"> Contact Us</a> |
+                    <a href="#">Privacy Policy</a> |
+                    <a href="#">Terms</a>
+                </p>
+            </div>
+        </div>
+    </div> <!-- container -->
+</section>
+
+<!--====== FOOTER PART ENDS ======-->
+
+<!--====== BACK TOP TOP PART START ======-->
+
+<a href="#" class="back-to-top"><i class="lni lni-chevron-up"></i></a>
+
+<!--====== BACK TOP TOP PART ENDS ======-->
+
+<!--====== PART START ======-->
+
+<!--
+    <section class="">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-">
+
+                </div>
+            </div>
+        </div>
+    </section>
+-->
+
+<!--====== PART ENDS ======-->
+
+
+
+
+<!--====== Jquery js ======-->
+<script th:src="@{/front/landingpage/js/vendor/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/front/landingpage/js/vendor/modernizr-3.7.1.min.js}"></script>
+
+<!--====== Bootstrap js ======-->
+<script th:src="@{/front/landingpage/js/popper.min.js}"></script>
+<script th:src="@{/front/landingpage/js/bootstrap.min.js}"></script>
+
+<!--====== Slick js ======-->
+<script th:src="@{/front/landingpage/js/slick.min.js}"></script>
+
+<!--====== Magnific Popup js ======-->
+<script th:src="@{/front/landingpage/js/jquery.magnific-popup.min.js}"></script>
+
+<!--====== Ajax Contact js ======-->
+<script th:src="@{/front/landingpage/js/ajax-contact.js}"></script>
+
+<!--====== Isotope js ======-->
+<script th:src="@{/front/landingpage/js/imagesloaded.pkgd.min.js}"></script>
+<script th:src="@{/front/landingpage/js/isotope.pkgd.min.js}"></script>
+
+<!--====== Scrolling Nav js ======-->
+<script th:src="@{/front/landingpage/js/jquery.easing.min.js}"></script>
+<script th:src="@{/front/landingpage/js/scrolling-nav.js}"></script>
+
+<!--====== Main js ======-->
+<script th:src="@{/front/landingpage/js/main.js}"></script>
+<th:block th:insert="layouts/scripts :: scripts"></th:block>
+<link th:href="@{'/front/jconfirm/confirm.css'}" rel="stylesheet" type="text/css">
+</body>
+
+</html>

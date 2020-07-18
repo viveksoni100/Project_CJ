@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+
+    <th:block th:fragment="sidebar">
+        <div class="sidebar" data-color="white" data-active-color="danger">
+            <!--
+              Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+          -->
+            <div class="logo">
+                <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+                    <div class="logo-image-small">
+                        <img th:src="@{/front/nimda/assets/img/logo-small.png}">
+                    </div>
+                </a>
+                <a href="http://www.creative-tim.com" class="simple-text logo-normal"
+                   th:text="${'Hi ' + @userUtil.getCurrentUser().getFirstName()}">
+                    Creative Tim
+                    <!-- <div class="logo-image-big">
+                      <img th:src="@{../assets/img/logo-big.png">
+                    </div> -->
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li >
+                        <a th:href="@{/home}">
+                            <i class="nc-icon nc-bank"></i>
+                            <p>Home</p>
+                        </a>
+                    </li>
+                    <th:block sec:authorize="hasRole('ROLE_ADMIN')or hasRole('ROLE_SUPERADMIN')">
+                        <li th:classappend="${(@localeHelper.getServletPaht().contains('admin/config/list')) ?  'active' : ''}">
+                            <a th:href="@{/admin/config/list}"
+
+
+                            >
+                                <i class="nc-icon nc-settings-gear-65"></i>
+                                <p>Configurations</p>
+                            </a>
+                        </li>
+                        <li th:classappend="${(@localeHelper.getServletPaht().contains('admin/category/list')) ?  'active' : ''}">
+                            <a th:href="@{/admin/category/list}"
+
+
+                            >
+                                <i class="nc-icon nc-basket"></i>
+                                <p>Categories</p>
+                            </a>
+                        </li>
+                        <li th:classappend="${(@localeHelper.getServletPaht().contains('admin/publications/list')) ?  'active' : ''}">
+                            <a th:href="@{/admin/publications/list}"
+
+
+                            >
+                                <i class="nc-icon nc-book-bookmark"></i>
+                                <p>Publications</p>
+                            </a>
+                        </li>
+
+
+                        <li th:classappend="${(@localeHelper.getServletPaht().contains('admin/notification/list')) ?  'active' : ''}"
+
+
+                            sec:authorize="hasRole('ROLE_ADMIN')"
+                        >
+                            <a th:href="@{/admin/notification/list}">
+                                <i class="nc-icon nc-bell-55"></i>
+                                <p>Notifications</p>
+                            </a>
+                        </li>
+                    </th:block>
+                    <li th:classappend="${(@localeHelper.getServletPaht().contains('corporate/subusers/list')) ?  'active' : ''}"
+
+
+                        sec:authorize="hasRole('ROLE_CORPORATE')"
+                    >
+                        <a th:href="@{/corporate/subusers/list}">
+                            <i class="nc-icon nc-single-02"></i>
+                            <p>Sub Users</p>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/logout}" sec:authorize="isAuthenticated()">
+                            <i class="nc-icon nc-button-power"></i>
+                            <p>Logout</p>
+                        </a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+    </th:block>

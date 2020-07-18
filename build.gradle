@@ -1,0 +1,134 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.6.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+repositories {
+	mavenCentral()
+	mavenLocal()
+	maven {
+		url 'http://www.javaxt.com/maven'
+	}
+}
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.daas'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '8'
+war {
+	enabled = true
+	archiveName 'DAAS.war'
+}
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
+}
+
+
+/*repositories {
+	mavenCentral()
+}*/
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-activemq'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation('org.springframework.boot:spring-boot-starter-log4j2')
+	implementation('org.springframework.boot:spring-boot-starter-batch')
+	// https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox
+	compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.17'
+	// https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox-tools
+	compile group: 'org.apache.pdfbox', name: 'pdfbox-tools', version: '2.0.0-RC1'
+	// https://mvnrepository.com/artifact/org.apache.tika/tika-core
+	compile group: 'org.apache.tika', name: 'tika-core', version: '1.22'
+// https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j
+	compile group: 'net.lingala.zip4j', name: 'zip4j', version: '2.3.2'
+
+
+	// https://mvnrepository.com/artifact/pl.allegro.finance/tradukisto
+	/*library to convert monetary amounts in to words*/
+	compile group: 'pl.allegro.finance', name: 'tradukisto', version: '1.8.0'
+
+
+	//for HTML template to PDF dependencies
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.3.0.RELEASE'
+	//for HTML template to PDF dependencies
+	// https://mvnrepository.com/artifact/org.xhtmlrenderer/flying-saucer-pdf
+	compile group: 'org.xhtmlrenderer', name: 'flying-saucer-pdf', version: '9.1.20'
+
+	//to prevent meta tag error
+	compile 'net.sourceforge.nekohtml:nekohtml:1.9.21'
+
+	/*implementation('org.hibernate:hibernate-ehcache')
+	implementation('org.hibernate:hibernate-envers')
+	implementation('com.h2database:h2')*/
+
+	implementation('org.thymeleaf.extras:thymeleaf-extras-springsecurity5')
+	implementation('org.thymeleaf:thymeleaf-spring5')
+
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'mysql:mysql-connector-java'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+// https://mvnrepository.com/artifact/com.itextpdf/itextpdf
+	compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13'
+
+	compile group: 'org.passay', name: 'passay', version: '1.3.1'
+
+
+	compile 'org.jsoup:jsoup:1.11.3'
+//	compile 'com.oracle:ojdbc8:12.2.0.1'
+	compile 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.3.0'
+
+	// https://mvnrepository.com/artifact/org.springframework/spring-jdbc
+	compile group: 'org.springframework', name: 'spring-jdbc', version: '5.2.2.RELEASE'
+
+
+
+
+	annotationProcessor 'org.projectlombok:lombok:1.18.4'
+
+
+
+
+// https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
+	compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+
+	compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: '2.11.1'
+	/* Following dependency is to use asynclogger for log4j*/
+	compile 'com.lmax:disruptor:3.4.2'
+	
+	//Payments 
+	// https://mvnrepository.com/artifact/com.stripe/stripe-java
+	compile group: 'com.stripe', name: 'stripe-java', version: '10.13.0'
+
+
+	compile group: 'javaxt', name: 'javaxt-core', version: '1.9.1'
+
+	compile 'org.apache.commons:commons-text:1.8'
+
+
+// https://mvnrepository.com/artifact/com.itextpdf/itextpdf
+	compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.1'
+
+
+}

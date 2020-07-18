@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/main}" lang="en">
+
+<th:block layout:fragment="subheader">
+    <div class="ereaders-subheader" th:if="!${productListOnUsersCart.empty}">
+        <div class="ereaders-subheader-text">
+            <span class="ereaders-subheader-transparent"></span>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Cart</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="ereaders-breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul>
+                            <li><a href="index.html">Homepage</a></li>
+                            <li class="active">Login</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+    <div th:if="${productListOnUsersCart.empty}">
+        <script>
+            $(document).ready(function () {
+                $('#ereaders-footer').css({
+                    "bottom": "0",
+                    "position": "fixed"
+                });
+            });
+        </script>
+    </div>
+</th:block>
+
+<body style="color: #000;" onload="recalculateCart()">
+
+<th:block layout:fragment="content">
+
+    <!--// Main Content \\-->
+    <div class="ereaders-main-content">
+
+        <!--// Main Section \\-->
+        <div class="ereaders-main-section">
+            <div class="container">
+                <div class="row">
+                    <center th:if="${productListOnUsersCart.empty}" class="crt-empty">
+                        <img th:src="@{/front/images/empty_cart.png}" alt="order not found image">
+                        <img th:if="${flagForOfferAvailed == 'true'} " th:src="@{/front/images/empty_cart_offer.png}"
+                             alt="order not found image">
+                        <a th:href="@{'/daas/Data'}" class="btn btn-primary empty-crt-btn">Customs Data </a>
+                        <a th:href="@{'/daas/api-as-service'}" th:if="${productListOnUsersCart.empty}"
+                           class="btn btn-primary empty-crt-btn1">Web Services</a>
+                    </center>
+                    <div class="col-md-9 gtd-crt-blk"
+                         th:if="${!productListOnUsersCart.empty}">
+                        <div class="shopping-cart" th:if="${!productListOnUsersCart.empty}">
+
+                            <div class="column-labels gtd-crt-title">
+                                <label class="product-removal" style="color: #FFFFFF">.</label>
+                                <label class="product-image" style="color: #FFFFFF">.</label>
+                                <label class="product-details">Product</label>
+                                <label class="product-quantity">Type</label>
+                                <!--<label class="product-price">Price</label>-->
+                                <label class="product-price">Price</label>
+                                <label class="product-quantity gtd-qty-lbl">Qty</label>
+                                <label class="product-line-price">Total</label>
+                            </div>
+
+                            <!--<li th:each="productListItems : ${productListOnUsersCart}" class="clearfix" style="display: table; clear: both; width: 100%; display: flex !important; align-content: center; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;">
+                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item1.jpg" alt="item1" />
+                                <div style="width: 100%; text-align: right;">f
+                                    <span th:text="${productListItems.productName}" class="item-name" style="display: block; padding-top: 10px; font-size: 16px;" />
+                                    <span th:text="${productListItems.productPrice}" class="item-price" style="color: #6394F8; margin-right: 8px;" />
+                                    <span class="item-quantity" style="color: #ABB0BE;">Quantity: 01</span>
+                                </div>
+                            </li>-->
+
+                            <!--<button class="btn btn-danger" th:href="@{'/deletefromcart/' +${productListItems.product.id}">-->
+                            <ul class="gtd-crt-ttm-dtls">
+                                <!--<li th:if="${productListOnUsersCart.empty}" style="text-align: center; font-weight: bold;" th:value="${'Your cart is empty'}"/>-->
+                                <li th:each="productListItems : ${productListOnUsersCart}">
+                                    <div class="product">
+                                        <!--th:href="@{'/deletefromcart/' +${productListItems.id}}"-->
+                                        <div class="product-removal">
+                                            <a class="btn btn-danger fa fa-trash gtd-crt-trash dblclick"
+                                               id="removeBTN"
+                                               th:attr="data-planid=${productListItems.id}"
+                                               th:href="@{'/deletefromcart/' +${productListItems.id}}"></a>
+                                            <!--<button class="btn btn-danger" th:href="@{'/deletefromcart'}">
+                                                <b>X</b>
+                                            </button>-->
+                                        </div>
+                                        <!--//attempt for solving double click issue-->
+                                        <!--<script>
+                                            $("#removeBTN").on("click", function (e) {
+                                                e.preventDefault();
+                                                var currentElement = $(this);
+                                                console.log("Good Work Vivek...");
+                                                if ($(this).hasClass('dblclick')) {
+                                                    console.log("Ahiya link mukne bhai...");
+                                                    window.location.href = '/deletefromcart/' +currentElement.data('planid');
+                                                    $(this).removeClass('dblclick');
+                                                } else {
+                                                    console.log("Double click thyu bhai...");
+                                                    $(this).addClass('dblclick');
+                                                }
+                                            });
+                                        </script>-->
+
+                                        <div class="product-image">
+                                            <!--<img src="https://s.cdpn.io/3/dingo-dog-bones.jpg">-->
+                                            <img
+                                                    th:if="${@serviceUtil.isThumbnailNull(productListItems.product) == true}"
+                                                    th:src="@{/front/images/product_img_default_no_border.png}">
+                                            <img
+                                                    th:if="${@serviceUtil.isThumbnailNull(productListItems.product) == false}"
+                                                    th:src="@{${'/daas/downloadFile/' + productListItems.product.productId + '/' + productListItems.product.productThumbnailName}}">
+                                        </div>
+                                        <div class="product-details">
+                                            <div class="product-title" style=""
+                                                 th:text="${productListItems.product.productName}"></div>
+                                            <!--<p class="product-description" th:utext="${productListItems.product.productDescription}"></p>-->
+                                            <p class="product-description"
+                                               th:if="${productListItems.productOffer!=null}">
+                                                <label class="product-details"
+                                                       th:text="${productListItems.productOffer.offerName}"></label>
+                                            </p>
+                                        </div>
+
+                                        <div class="product-quantity"
+                                             th:if="${@serviceUtil.getDataType(productListItems.id) == 'Customs Data'}">
+                                            <label class="product-quantity-labl">Data</label>
+                                        </div>
+                                        <div class="product-quantity"
+                                             th:if="${@serviceUtil.getDataType(productListItems.id) == 'Web Service'}">
+                                            <label class="product-quantity-labl">Web Service</label>
+                                        </div>
+
+                                        <!--<div class="product-price" th:if="${productListItems.product.productPrice!=0}"
+                                             th:text="${#numbers.formatDecimal(productListItems.product.productPrice,0,'COMMA',0,'POINT')}"></div>
+                                        <div class="product-price" th:if="${productListItems.product.productPrice==0}"
+                                             th:text="${productListItems.totalPrice/productListItems.quantity}"></div>-->
+
+                                        <div class="product-price" th:if="${productListItems.product.productPrice!=0}"
+                                             th:text="${#numbers.formatDecimal(productListItems.totalPrice/productListItems.quantity,0,'COMMA',0,'POINT')}"></div>
+                                        <div class="product-price" th:if="${productListItems.product.productPrice==0}"
+                                             th:text="${#numbers.formatDecimal(productListItems.totalPrice/productListItems.quantity,1,'COMMA',2,'POINT')+'*'}">
+                                        </div>
+                                        <a th:attr="data-url='/apiPriceCalculation/' + ${productListItems.id}, data-size='medium', data-reload='true', data-title='API Price Calculation'"
+                                           class="readmore" href="javascript:void(0);">
+                                            <i th:if="${productListItems.product.productPrice==0}"
+                                               th:title="'How do we charge API?'"
+                                               class="error-icon fa fa-info-circle apiCalculationInfo"></i></a>
+
+                                        <div class="product-quantity gtd-qty-lbl">
+                                            <label class="product-quantity-labl"
+                                                   th:text="${productListItems.quantity}"></label>
+                                        </div>
+
+
+                                        <div style="display: none;" class="product-line-price"
+                                             th:text="${productListItems.totalPrice}"></div>
+                                        <div style="float: left; width: 12%; text-align: right;"
+                                             th:text="${'$'+#numbers.formatDecimal(productListItems.totalPrice,0,'COMMA',2,'POINT')}"></div>
+                                    </div>
+                                    <!--<label>* Average price per API call</label>-->
+                                </li>
+                            </ul>
+
+                            <!--<div class="product">
+                                <div class="product-image">
+                                    <img src="https://s.cdpn.io/3/large-NutroNaturalChoiceAdultLambMealandRiceDryDogFood.png">
+                                </div>
+                                <div class="product-details">
+                                    <div class="product-title">Nutro™ Adult Lamb and Rice Dog Food</div>
+                                    <p class="product-description">Who doesn't like lamb and rice? We've all hit the halal cart at 3am while quasi-blackout after a night of binge drinking in Manhattan. Now it's your dog's turn!</p>
+                                </div>
+                                <div class="product-price">45.99</div>
+                                <div class="product-quantity">
+                                    <label class="product-quantity">1</label>
+                                </div>
+                                <div class="product-removal">
+                                    <button class="btn btn-danger">
+                                        <b>X</b>
+                                    </button>
+                                </div>
+                                <div class="product-line-price">45.99</div>
+                            </div>
+                            &lt;!&ndash;-extra product for testing&ndash;&gt;
+                            <div class="product">
+                                <div class="product-image">
+                                    <img src="https://s.cdpn.io/3/dingo-dog-bones.jpg">
+                                </div>
+                                <div class="product-details">
+                                    <div class="product-title">Dingo Dog Bones</div>
+                                    <p class="product-description">The best dog bones of all time. Holy crap. Your dog will be begging for these things! I got curious once and ate one myself. I'm a fan.</p>
+                                </div>
+                                <div class="product-price">12.99</div>
+                                <div class="product-quantity">
+                                    <label class="product-quantity">1</label>
+                                </div>
+                                <div class="product-removal">
+                                    <button class="btn btn-danger">
+                                        <b>X</b>
+                                    </button>
+                                </div>
+                                <div class="product-line-price">25.98</div>
+                            </div>
+                            <div class="product">
+                                <div class="product-image">
+                                    <img src="https://s.cdpn.io/3/dingo-dog-bones.jpg">
+                                </div>
+                                <div class="product-details">
+                                    <div class="product-title">Dingo Dog Bones</div>
+                                    <p class="product-description">The best dog bones of all time. Holy crap. Your dog will be begging for these things! I got curious once and ate one myself. I'm a fan.</p>
+                                </div>
+                                <div class="product-price">12.99</div>
+                                <div class="product-quantity">
+                                    <label class="product-quantity">1</label>
+                                </div>
+                                <div class="product-removal">
+                                    <button class="btn btn-danger">
+                                        <b>X</b>
+                                    </button>
+                                </div>
+                                <div class="product-line-price">25.98</div>
+                            </div>-->
+
+
+                            <div class="totals">
+                                <!--<div class="totals-item">
+                                    <label style="font-size: larger;">Subtotal</label>
+                                    <div style="font-size: larger;" class="totals-value" id="cart-subtotal"></div>
+                                </div>-->
+
+                                <!--            <div class="totals-item">
+
+
+                                                <label style="font-size: larger;">Promotional Discount</label>
+                                                <div style="font-size: larger;" class="totals-value" id="cart-discount">
+
+
+                                                </div>
+                                            </div>-->
+
+                                <!--<div class="totals-item">
+                                    <label style="font-size: larger;">Tax (0%)</label>
+                                    <div style="font-size: larger;" class="totals-value" id="cart-tax"></div>
+                                </div>
+                                <div class="totals-item" style="display: none">
+                                    <label style="font-size: larger;">Shipping</label>
+                                    <div style="font-size: larger;" class="totals-value" id="cart-shipping"></div>
+                                </div>-->
+                                <div class="totals-item totals-item-total" style="display: none;">
+                                    <label style="font-size: larger; font-family: 'Lato', sans-serif;">Grand
+                                        Total</label>
+                                    <div style="font-size: larger; font-family: 'Lato', sans-serif;"
+                                         class="totals-value"
+                                         id="cart-total">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <label th:if="${@serviceUtil.isAPIPresentInUsersCart(productListOnUsersCart) == true}">* Average
+                            price per API call</label>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+                        <script>
+                            $(document).ready(function () {
+                                $("a.dblclick").dblclick(function() {
+                                    console.log("god help me...");
+                                    alert("hello");
+                                });
+                            });
+                        </script>
+
+                        <script th:src="@{/front/script/cartpage.js}"></script>
+
+                        <script>
+                            function btnCheckout() {
+                                console.log("stripe payment integration comes here...")
+                            }
+                        </script>
+
+                        <script>
+                            console.log("Hello Profile");
+                            $(document).on("click", ".checkout-login", function (e) {
+                                console.log("Hello Profile");
+                                var currentElement = $(this);
+
+                                cnfbox = $.confirm({
+                                    title: '',
+                                    icon: '',
+                                    columnClass: "small",
+                                    backgroundDismiss: false,
+                                    closeIcon: true,
+                                    content: "URL:" + BASE_URL + currentElement.data("url"),
+                                    buttons: false,
+                                    onContentReady: function () {
+                                        // bind to events
+                                        var jc = this;
+                                        if (jQuery.type(currentElement.data("onload")) != "undefined") {
+                                            callGlobalMethodUsingVariable(currentElement.data("onload"), "", currentElement);
+                                        }
+                                        /*this.$content.find('.edit-inline-btcrate').on('keyup', function (e) {
+                                            var finalMaxLimit = (parseFloat($(this).val().replace(/,/g, "")) * parseFloat(advertiseMax)) / parseFloat(advertiseRate);
+                                            jc.$content.find('.edit-inline-maximum').val(Math.round(finalMaxLimit));
+                                        });*/
+                                        /*this.$content.find('form').on('submit', function (e) {
+
+                                            e.preventDefault();
+                                            jc.$$formSubmit.trigger('click'); // reference the button and click it
+                                        });*/
+                                        /* if (jQuery.type(currentElement.data("after")) != "undefined") {
+                                             callGlobalMethodUsingVariable(currentElement.data("after"), "", currentElement);
+                                         }*/
+                                    }
+                                });
+
+                            });
+
+                        </script>
+
+                        <link rel="stylesheet"
+                              href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+                        <link rel="stylesheet" th:href="@{/front/css/cartpage.css}">
+
+                    </div>
+                    <div class="col-md-3 gtd-crtsumry-blk" th:if="${!productListOnUsersCart.empty}">
+                        <div class="card123 gtd-ord-summry">
+                            <h5 style="">Order Summary</h5>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5>Total</h5>
+                                </div>
+                                <div class="col-md-6">
+                                    <div style="float: right;">
+                                        <h4 class="beforeCurrency" id="total-value-box">
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div>
+                                    <div class="col-md-12">
+                                        <a class="checkout-login checkout" sec:authorize="isAnonymous()"
+                                           th:attr="data-url='/getCheckoutPopup', data-submiturl='/login', data-size='medium',data-close='',data-title='',data-reload='true'"
+                                           href="javascript:void(0);">Checkout</a>
+                                        <a class="checkout" sec:authorize="isAuthenticated()"
+                                           th:href="@{'/stripe/getSCheckoutPage'}">Checkout</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 crt-pymnt-icn">
+                                    <img class="img-fluid"
+                                         th:src="@{/front/images/Visa_Inc.png}"/>
+                                    <img class="img-fluid"
+                                         th:src="@{/front/images/Mastercard.png}">
+                                    <img class="img-fluid"
+                                         th:src="@{/front/images/american_express.png}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// Main Section \\-->
+    </div>
+    <!--// Main Content \\-->
+
+
+</th:block>
+
+</body>
+
+</html>

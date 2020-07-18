@@ -1,0 +1,142 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="dataTables_wrapper dt-bootstrap4">
+    <div class="row">
+        <Div class="col-sm-12">
+            <form th:action="@{${pagingUrl}}"
+                  th:attr="data-baseurl=${pagingUrl},data-formname='locationList',data-replacediv='replace'"
+                  id="locationList" class="paging" autocomplete="off">
+                <table class="table " id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>-</th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('locationName')}">
+                            <a href="javascript:void(0)"
+                               th:value="${locationName}"
+                               th:attr="data-sort='locationName',data-baseurl=${pagingUrl},data-formname='locationList',data-replacediv='replace',data-page='1',
+                            data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                Location</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('address1')}">
+                            <a href="javascript:void(0)"
+                               th:value="${address1}"
+                               th:attr="data-sort='address1',data-baseurl=${pagingUrl},data-formname='locationList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort"
+                            >Address 1</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('address2')}">
+                            <a href="javascript:void(0)"
+                               th:value="${address2}"
+                               th:attr="data-sort='address2',data-baseurl=${pagingUrl},data-formname='locationList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                Address 2</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('city')}">
+                            <a href="javascript:void(0)"
+                               th:value="${city}"
+                               th:attr="data-sort='city',data-baseurl=${pagingUrl},data-formname='locationList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                City</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('state')}">
+                            <a href="javascript:void(0)"
+                               th:value="${state}"
+                               th:attr="data-sort='state',data-baseurl=${pagingUrl},data-formname='locationList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                State</a>
+                        </th>
+
+                        <th th:with="order=${pageable.getSort().getOrderFor('country')}">
+                            <a href="javascript:void(0)"
+                               th:value="${country}"
+                               th:attr="data-sort='country',data-baseurl=${pagingUrl},data-formname='locationList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                Country</a>
+                        </th>
+                        <th th:with="order=${pageable.getSort().getOrderFor('phone')}">
+                            <a href="javascript:void(0)"
+                               th:value="${phone}"
+                               th:attr="data-sort='phone',data-baseurl=${pagingUrl},data-formname='locationList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                               class="page-sort">
+                                Phone</a>
+                        </th>
+                        <th><a href="javascript:void(0)">Time Zone</a></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>-</th>
+
+                        <th>
+                            <input type="text" name="locationName" placeholder="Location"
+                                   class="mark1" autocomplete="nope">
+                        </th>
+                        <th>
+                            <input type="text" name="address1" placeholder="Address 1"
+                                   class="mark1" autocomplete="nope">
+                        </th>
+                        <th>
+                            <input type="text" name="address2" placeholder="Address 2"
+                                   class="mark1" autocomplete="nope">
+                        </th>
+                        <th>
+                            <input type="text" name="city" placeholder="City" class="mark1" autocomplete="nope">
+                        </th>
+                        <th>
+                            <input type="text" name="state" placeholder="Stat   e" class="mark1" autocomplete="nope">
+
+                        </th>
+                        <th>
+                            <input type="text" name="country" placeholder="Country"
+                                   class="mark1" autocomplete="nope">
+                        </th>
+                        <th>
+                            <input type="text" name="phone" placeholder="phone" class="mark1" autocomplete="nope">
+
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+                            <input type="submit" class="btn btn-primary btn-xs" style="">
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="marktext">
+                    <tr th:each="location : ${locations}">
+                        <td th:text="${locationStat.index+1}"></td>
+                        <td th:text="${location.locationName}"></td>
+                        <td th:text="${location.address1}"></td>
+                        <td th:text="${location.address2}"></td>
+                        <td th:text="${location.city}"></td>
+                        <td th:text="${location.state}"></td>
+                        <td th:text="${location.country.getName()}"></td>
+                        <td th:text="${location.phone}"></td>
+                        <td th:text="${(location.zoneId!=null) ? location.zoneId.zoneName : 'None'}"></td>
+                        <td>
+                            <button type="button"
+                                    class="btn btn-xs btn-primary btn-round edit-location"
+                                    th:attr="data-title='Edit ' + ${location.locationName},data-size='medium',data-url='/ajax/location/form/'+${@pathVariableEnc.encrypt(location.id)},
+                                                            data-submiturl='/ajax/location/create/'+${@pathVariableEnc.encrypt(location.id)},
+                                                            data-onload='getCounries',data-after='getCounries',data-close='locationCreated'"
+                            >
+                                <i class="fas fa-pen"></i> Edit
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </form>
+        </div>
+    </Div>
+    <div th:remove="tag" th:include="base/paging :: paging"
+         th:with="pageObj=${locations},replaceDiv='replace',formName='locationList', pagingUrl=${pagingUrl}"></div>
+</div>

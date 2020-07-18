@@ -1,0 +1,67 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<div th:include="mail/layout/head :: mailHead"></div>
+<body style="margin: 0; padding: 0; font-family: Arial ;">
+<div style="width: 800px; margin:auto;background: #f3f3f3">
+    <div style="margin:auto;font-family:Arial !important;">
+        <div th:include="mail/layout/header :: mailHeader"></div>
+        <div style="width:100%; ">
+            <div style="text-align: center; width: 100%;margin-top:20px;margin-bottom:20px; font-size: 26px;color:#4d4d4d;">
+                <h4>Email Verification</h4>
+            </div>
+            <div style="margin: 0px 50px">
+                <div style="font-size:15px;color:#da125c">
+                    <div style="color:#da125c;text-transform: capitalize;" th:text="${'Hello ' + name + ','}"></div>
+                    <div style="color:#4d4d4d;">
+
+                        <p>
+                            Welcome to EaseClick! We're glad you have chosen us as your Visitor Management system. 
+                        </p>
+                        <p>
+                            To get started, download the EaseClick app on your iPad. You will then be ready to:
+                        </p>
+                        <p>
+                        <ul>
+                            <li>
+                                Showcase your brand’s colors, logo and images through a unique welcome screen
+                            </li>
+                            <li>
+                                Welcome your visitors in a professional way with customized screens and questions
+                            </li>
+                            <li>
+                                Notify hosts instantly when a visitor checks-in
+                            </li>
+                            <li>
+                                Notify your visitors in case of Emergencies
+                            </li>
+                        </ul>
+                        </p>
+                        <p>
+                            P.S. If you need some help getting started, check out <a>this useful video guide</a>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div style="margin-top:35px;text-align: center;">
+
+
+                <a th:href="${baseUrl}+'/registration/email/verification?token='+${verificationToken}"
+                   style="text-decoration:none;padding: 10px 25px;color: white;background: green    ;font-size: 20px;border-radius: 3px; font-weight: 100">Verify
+                    Email Address</a>
+            </div>
+            <div style="margin-top:35px;">
+                <div style="background: #605577;height:2px;"></div>
+            </div>
+            <div th:include="mail/layout/footer :: mailFooter"></div>
+
+            <div th:replace="mail/layout/copyright :: mailCopyright"></div>
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{mail/layout/body}">
+
+<th:block layout:fragment="title">Email verification</th:block>
+<th:block layout:fragment="content">
+
+    <div style="margin: 0px 50px">
+        <div style="font-size:15px;">
+            <div class="title" th:text="${'Hello ' + name + ','}"></div>
+            <div style="color:#4d4d4d;">
+
+                <p>
+                    Welcome to
+                    <th:block th:text="${appName}"></th:block>
+                    ! We're glad you have chosen us as your Visitor Management system. 
+                </p>
+                <p>
+                <ul>
+                    <li>
+
+                    </li>
+                </ul>
+                </p>
+                <p>
+                    P.S. If you need some help getting started, check out <a>this useful video guide</a>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div style="margin-top:35px;text-align: center;">
+
+
+        <a style="padding: 8px 24px !important;
+                    font-size: 13px !important;
+                    border-radius: 30px  !important;
+                    height: auto !important;
+                    color: #fff !important;
+                    background-color: #007bff !important;text-decoration: none !important;"
+           th:href="'http://127.0.0.1:8880/registration/email/verification?token='+${verificationToken}" class="btn">
+            Verify Email Address
+        </a>
+    </div>
+
+</th:block>
+</html>

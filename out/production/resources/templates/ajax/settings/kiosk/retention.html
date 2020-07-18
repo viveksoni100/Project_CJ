@@ -1,0 +1,51 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+<div class="row">
+
+    <div class="col-md-12">
+        <form th:action="@{/register}" th:object="${privacy}" method="post" style="width: 99%"
+              th:if="${!success}">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <br/>
+                        <div class="checkbox checkbox-primary">
+                            <input type="radio" th:field="*{retentionPeriod}" id="retentionPeriod" value="0">
+                            <label for="retentionPeriod">Keep visits until the account is closed</label>
+                        </div>
+
+                        <p th:if="${#fields.hasErrors('retentionPeriod')}" class="label text-danger "
+                           th:errors="*{retentionPeriod}"></p>
+                    </div>
+                    <div th:classappend="'col-md-12'">
+                        <br/>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="checkbox checkbox-primary">
+                            <input type="radio" th:field="*{retentionPeriod}" id="retentionPeriod1" value="1">
+                            <label for="retentionPeriod1">Automatically delete visits older than</label>
+                        </div>
+
+                        <p th:if="${#fields.hasErrors('retentionPeriod')}" class="label text-danger "
+                           th:errors="*{retentionPeriod}"></p>
+                    </div>
+                    <div th:class="'col-md-12'" th:style="'margin-top:20px;'" th:classappend="${privacy.retentionPeriod==1 ? '' : 'hide'}"
+                    id="daysdiv"
+                    >
+                        <input type="text" th:field="*{days}" th:placeholder="'Days'">
+                        <p th:if="${#fields.hasErrors('days')}" class="label text-danger "
+                           th:errors="*{days}"></p>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </form>
+
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}"/>
+    </div>
+</div>

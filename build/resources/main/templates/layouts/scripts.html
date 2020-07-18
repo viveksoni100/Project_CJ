@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+</head>
+
+<th:block th:fragment="scripts">
+    <script type="text/javascript" th:src="@{/front/script/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/front/script/jquery-ui.js}"></script>
+    <script type="text/javascript" th:src="@{/front/script/bootstrap.min.js}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/front/script/slick.slider.min.js}"></script>
+    <script type="text/javascript" th:src="@{/front/script/fancybox.pack.js}"></script>
+    <script type="text/javascript" th:src="@{/front/script/isotope.min.js}"></script>
+    <script type="text/javascript" th:src="@{/front/script/progressbar.js}"></script>
+    <script type="text/javascript" th:src="@{/front/script/jquery.countdown.min.js}"></script>
+    <script type="text/javascript" th:src="@{/front/script/circle-chart.js}"></script>
+    <script type="text/javascript" th:src="@{/front/script/numscroller.js}"></script>
+
+    <!--icon: 'fa fa-pencil',
+    icon: 'fas fa-pencil-alt'-->
+
+    <script>
+        BASE_URL = '[[${@serviceUtil.getBaseUrl()}]]';
+        console.log(BASE_URL);
+        var cnfbox;
+        var abc;
+        function confirmAjaxSubmit(currentElement){
+            cnfbox = $.confirm({
+                title: currentElement.data('title'),
+                icon: 'fa fa-pencil',
+                columnClass: (currentElement.data("size")!="") ? currentElement.data("size") : "large",
+                backgroundDismiss: true,
+                content: "URL:" + BASE_URL + currentElement.data("url"),
+                buttons: {
+                    formSubmit: {
+                        text: 'Submit',
+                        btnClass: 'btn-blue',
+                        action: function () {
+
+                            var cntnt = this;
+                            this.showLoading();
+                            $.ajax({
+                                type: "POST",
+                                /*contentType: "application/json",*/
+                                dataType: (currentElement.data("contenttype")!="") ? currentElement.data("contenttype") : "html",
+                                url: BASE_URL + currentElement.data("submiturl"),
+                                data: this.$content.find('form').serialize(),
+                                timeout: 100000,
+                                headers: headers,
+                                success: function (res) {
+                                    cntnt.hideLoading();
+                                    cntnt.setContent(res, true);
+                                    if (jQuery.type(currentElement.data("after")) != "undefined") {
+                                        callGlobalMethodUsingVariable(currentElement.data("after"), res, currentElement);
+                                    }
+                                    //$.alert("<div class='alert alert-success'>Saved!!!</div>");
+
+                                },
+                                error: function (e) {
+                                    cntnt.hideLoading();
+                                    cntnt.setContent(e.responseText, true);
+                                    console.log("ERROR: ", e);
+                                    if (jQuery.type(currentElement.data("after")) != "undefined") {
+                                        callGlobalMethodUsingVariable(currentElement.data("after"), res, currentElement);
+                                    }
+                                },
+                                done: function (e) {
+                                    cntnt.hideLoading();
+                                    console.log("DONE");
+                                    if (jQuery.type(currentElement.data("after")) != "undefined") {
+                                        callGlobalMethodUsingVariable(currentElement.data("after"),res , currentElement);
+                                    }
+                                }
+                            });
+                            return false;
+                        }
+                    },
+                    close: function () {
+                        window.location.href = window.location.href;
+                        //location.reload();
+                    }
+                },
+                onContentReady: function () {
+                    // bind to events
+                    var jc = this;
+                    if (jQuery.type(currentElement.data("onload")) != "undefined") {
+                        callGlobalMethodUsingVariable(currentElement.data("onload"), "", currentElement);
+                    }
+                    /*this.$content.find('.edit-inline-btcrate').on('keyup', function (e) {
+                        var finalMaxLimit = (parseFloat($(this).val().replace(/,/g, "")) * parseFloat(advertiseMax)) / parseFloat(advertiseRate);
+                        jc.$content.find('.edit-inline-maximum').val(Math.round(finalMaxLimit));
+                    });*/
+                    /*this.$content.find('form').on('submit', function (e) {
+
+                        e.preventDefault();
+                        jc.$$formSubmit.trigger('click'); // reference the button and click it
+                    });*/
+                    /* if (jQuery.type(currentElement.data("after")) != "undefined") {
+                         callGlobalMethodUsingVariable(currentElement.data("after"), "", currentElement);
+                     }*/
+                }
+            });
+        }
+
+
+
+        function confirmAjaxSubmitCustom(currentElement){
+            cnfbox = $.confirm({
+                title: currentElement.data('title'),
+                columnClass: (currentElement.data("size")!="") ? currentElement.data("size") : "large",
+                backgroundDismiss: true,
+                buttons: false,
+                content: "URL:" + BASE_URL + currentElement.data("url"),
+                onContentReady: function () {
+                    // bind to events
+                    var jc = this;
+                    if (jQuery.type(currentElement.data("onload")) != "undefined") {
+                        callGlobalMethodUsingVariable(currentElement.data("onload"), "", currentElement);
+                    }
+                    this.$content.find('.edit-inline-btcrate').on('keyup', function (e) {
+                        var finalMaxLimit = (parseFloat($(this).val().replace(/,/g, "")) * parseFloat(advertiseMax)) / parseFloat(advertiseRate);
+                        jc.$content.find('.edit-inline-maximum').val(Math.round(finalMaxLimit));
+                    });
+                    this.$content.find('form').on('submit', function (e) {
+
+                        e.preventDefault();
+                        jc.$$formSubmit.trigger('click'); // reference the button and click it
+                    });
+                     if (jQuery.type(currentElement.data("after")) != "undefined") {
+                         callGlobalMethodUsingVariable(currentElement.data("after"), "", currentElement);
+                     }
+                }
+            });
+        }
+
+        $(document).on("click", ".password-edit", function (e) {
+            console.log("Hello");
+            confirmAjaxSubmit($(this));
+        });
+
+        $(document).on("click", ".ereaders-idea", function (e) {
+            console.log("Ayushman Bhav...");
+            confirmAjaxSubmitCustom($(this));
+        });
+
+        $(document).on("click", ".readmore", function (e) {
+            console.log("Ayushman Bhav...");
+            confirmAjaxSubmitCustom($(this));
+        });
+
+        function closePass(params, currentElement, popup) {
+            var parsed = $.parseHTML(params);
+            var el = $(parsed).find("#closepopup");
+            if (el.val() == "true") {
+                popup.close();
+                $.alert("<div class='alert alert-success'>Password changed</div>", "");
+                return true;
+            }
+            return false;
+
+        }
+
+        function profUpdated(params, currentElement, popup) {
+            var parsed = $.parseHTML(params);
+            var el = $(parsed).find("#closepopup");
+            if (el.val() == "true") {
+                popup.close();
+                $.alert("<div class='alert alert-success'>Profile Updated</div>", "");
+                reloadPage();
+                return true;
+            }
+            return false;
+
+        }
+        /*function callGlobalMethodUsingVariable(methodName, res, thisElement) {
+            window[methodName].apply(null, [res, thisElement]);
+        }*/
+        $(document).on("click", ".edit-profile", function (e) {
+            console.log("Hello Profile");
+            confirmAjaxSubmit($(this));
+        });
+    </script>
+
+    <script type="text/javascript">
+
+        function confirmAjaxSubmitCustom(currentElement){
+            cnfbox = $.confirm({
+                title: currentElement.data('title'),
+                columnClass: (currentElement.data("size")!="") ? currentElement.data("size") : "large",
+                backgroundDismiss: true,
+                buttons: false,
+                content: "URL:" + BASE_URL + currentElement.data("url"),
+                onContentReady: function () {
+                    // bind to events
+                    var jc = this;
+                    if (jQuery.type(currentElement.data("onload")) != "undefined") {
+                        callGlobalMethodUsingVariable(currentElement.data("onload"), "", currentElement);
+                    }
+                    this.$content.find('.edit-inline-btcrate').on('keyup', function (e) {
+                        var finalMaxLimit = (parseFloat($(this).val().replace(/,/g, "")) * parseFloat(advertiseMax)) / parseFloat(advertiseRate);
+                        jc.$content.find('.edit-inline-maximum').val(Math.round(finalMaxLimit));
+                    });
+                    this.$content.find('form').on('submit', function (e) {
+
+                        e.preventDefault();
+                        jc.$$formSubmit.trigger('click'); // reference the button and click it
+                    });
+                    if (jQuery.type(currentElement.data("after")) != "undefined") {
+                        callGlobalMethodUsingVariable(currentElement.data("after"), "", currentElement);
+                    }
+                }
+            });
+        }
+
+    </script>
+
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs_m2ywm-bE8z9YM_WmtPaIQNIosN4Dxo&callback=initMap"></script>
+    <script type="text/javascript" th:src="@{/front/script/functions.js}"></script>
+    <script th:src="@{/front/jconfirm/confirm.js}"></script>
+    <script th:src="@{/front/nimda/js/ajax.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.16.0/locale/bootstrap-table-en-US.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <th:block layout:fragment="extrascripts"></th:block>
+</th:block>

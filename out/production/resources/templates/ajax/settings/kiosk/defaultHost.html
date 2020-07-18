@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+<div class="row">
+
+    <div class="col-md-12">
+        <form th:action="@{/register}" method="post" style="width: 99%"
+              th:if="${!success}">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="form-label-group required">
+
+                            <select class="form-control" name="colleague" id="colleague">
+                                <option th:each="colleague : ${@serviceUtil.getAllColleagues()}"
+                                        th:text="${colleague.getName()}"
+                                        th:value="${@pathVariableEnc.encrypt(colleague.id)}"
+                                ></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}"/>
+        <input type="hidden" id="hostName" th:value="${defaultHost.getName()}" th:if="${success}">
+    </div>
+</div>

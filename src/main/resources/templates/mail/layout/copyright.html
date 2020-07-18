@@ -1,0 +1,8 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <th:block th:fragment="mailCopyright">
+        <div style=" text-align: center;padding-bottom:20px; background:#e5ecfd;color:#616368;padding-top: 20px;">
+            Email sent by <span th:text="${appName}"></span>. Copyright @<th:block th:text="${#dates.year(#dates.createNow())}"></th:block>
+            <a th:href="@{${baseUrl}}"><b><span style="color: #4c5a7e" th:text="${appName} + '.com'"></span></b></b></a>
+        </div>
+    </th:block>

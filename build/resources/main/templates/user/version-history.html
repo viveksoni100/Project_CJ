@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link href="front/css/apislabformat.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+              integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+</head>
+
+<body>
+
+<hr style="margin-top: 0px; margin-bottom: 10px;border: 0; border-top: 1px solid #eee;">
+
+    <table id="versionhistory" style="width: 100%">
+        <thead>
+        <tr>
+            <th scope="col">Version Name</th>
+            <th scope="col">Version No.</th>
+            <th scope="col">Updated At</th>
+            <th scope="col">Download</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pro,i : ${product.productVersions}">
+            <td th:text="${pro.productVersionName}"></td>
+            <td th:text="${pro.productVersion}"></td>
+            <td th:text="${#temporals.day(pro.updatedAt) + '-' + #temporals.monthNameShort(pro.updatedAt) + '-' + #temporals.year(pro.updatedAt)}"></td>
+            <td><a th:href="@{'/downloadRequestFromVersionHistory/'+${@pathVariableEnc.encrypt(pro.id)}}"><i class="fas fa-download" style="margin-left: 25%"></i></a></td>
+        </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>

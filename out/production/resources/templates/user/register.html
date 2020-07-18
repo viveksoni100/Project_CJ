@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+
+<th:block layout:fragment="subheader">
+    <div class="ereaders-subheader">
+        <div class="ereaders-subheader-text">
+            <span class="ereaders-subheader-transparent"></span>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Register here</h1>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ereaders-breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul>
+                            <li><a href="index.html">Homepage</a></li>
+                            <li class="active">Registration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="content">
+    <!--// Main Content \\-->
+    <div class="ereaders-main-content ereaders-error-full">
+
+        <!--// Main Section \\-->
+        <div class="ereaders-main-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>
+                        <div class="ereaders-error-wrap">
+                            <div class="ereaders-error-text" style="padding:51px 0 100px 0;overflow: auto;
+    max-height: 470px;">
+                                <form th:action="@{/register}" th:object="${user}" method="post"
+                                      style="margin: 0 30px 30px 30px;" class="loginform">
+                                    <input type="text" name="temp" class="form-control" style="display:none">
+
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" th:field="*{firstName}" class="form-control"
+                                                   placeholder="First name" id="firstName"
+                                                   autofocus="autofocus">
+                                            <p th:if="${#fields.hasErrors('firstName')}" class="label error"
+                                               th:errors="*{firstName}">
+                                                Incorrect LP</p>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" th:field="*{lastName}" class="form-control"
+                                                   placeholder="Last name" id="lastName"
+                                                   autofocus="autofocus">
+                                            <p th:if="${#fields.hasErrors('lastName')}" class="label error"
+                                               th:errors="*{lastName}">
+                                                Incorrect LP</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" th:field="*{username}" class="form-control"
+                                                   placeholder="Username" id="username" autocomplete="new-password"
+                                                   autofocus="autofocus">
+                                            <p th:if="${#fields.hasErrors('username')}" class="label error"
+                                               th:errors="*{username}">
+                                                Incorrect LP</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" th:field="*{email}" class="form-control"
+                                                   placeholder="Email address" id="email" autocomplete="new-password"
+                                                   autofocus="autofocus">
+                                            <p th:if="${#fields.hasErrors('email')}" class="label error"
+                                               th:errors="*{email}">
+                                                Incorrect LP</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" th:field="*{phone}" class="form-control"
+                                                   placeholder="Phone (Include ISD code)" id="phone"
+                                                   autofocus="autofocus">
+                                            <p th:if="${#fields.hasErrors('phone')}" class="label error"
+                                               th:errors="*{phone}">
+                                                Incorrect LP</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="password" style="margin-top:10px;"
+                                                   id="password" autocomplete="new-password"
+                                                   th:field="*{password}" class="form-control" placeholder="Password">
+                                            <p th:if="${#fields.hasErrors('password')}" class="label error"
+                                               th:errors="*{password}">
+                                                Incorrect LP</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="password" style="margin-top:10px;"
+                                                   id="password"
+                                                   th:field="*{confirmPassword}" class="form-control"
+                                                   placeholder="Confirm password">
+                                            <p th:if="${#fields.hasErrors('confirmPassword')}" class="label error"
+                                               th:errors="*{confirmPassword}">
+                                                Incorrect LP</p>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-md-12" style="margin-top: 50px;">
+
+
+                                        <button class="btn  btn-primary " type="submit">Register</button>
+                                        <a class=" d-flex t-small t-dark mar-15-0 mb-sm-0 btn  btn-success"
+                                           id="login"
+                                           th:href="@{/login}"><b>Login</b></a>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// Main Section \\-->
+
+    </div>
+    <!--// Main Content \\-->
+</th:block>
+
+<th:block layout:fragment="extrascripts">
+    <script type="text/javascript" th:src="@{/front/script/functions.js}"></script>
+</th:block>
+</html>

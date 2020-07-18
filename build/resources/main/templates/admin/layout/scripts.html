@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <th:block th:fragment="scripts">
+        <!--<script th:src="@{/front/nimda/assets/js/core/jquery.min.js}"></script>-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <script th:src="@{/front/nimda/assets/js/core/popper.min.js}"></script>
+
+        <script th:src="@{/front/nimda/assets/js/core/bootstrap.min.js}"></script>
+        <script th:src="@{/front/nimda/assets/js/plugins/perfect-scrollbar.jquery.min.js}"></script>
+        <!--  Google Maps Plugin    -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+        <!-- Chart JS -->
+        <script th:src="@{/front/nimda/assets/js/plugins/chartjs.min.js}"></script>
+        <!--  Notifications Plugin    -->
+        <script th:src="@{/front/nimda/assets/js/plugins/bootstrap-notify.js}"></script>
+        <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+        <script th:src="@{/front/nimda/assets/js/paper-dashboard.min.js?v=2.0.0}" type="text/javascript"></script>
+        <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+        <script th:src="@{/front/nimda/assets/demo/demo.js}"></script>
+        <script th:src="@{/front/jconfirm/confirm.js}"></script>
+        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.16.0/locale/bootstrap-table-en-US.min.js"></script>
+        <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
+
+    </th:block>

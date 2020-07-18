@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="row">
+    <div class="col-md-12">
+
+
+        <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>
+        <form th:action="@{/corporate/subuser/submit}" th:object="${subuser}" method="post" th:if="${!success}">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+
+                        <input type="text" th:attr="data-control='hue'" th:field="*{firstName}"
+                               class="form-control  minicolors-input" id="firstName"
+                               th:classappend="${#fields.hasErrors('firstName') ? 'is-invalid' : ''}"
+                               placeholder="First name*"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('firstName')}" class="label text-danger "
+                           th:errors="*{firstName}"></p>
+                    </div>
+                    <div class="col-md-6">
+
+                        <input type="text" th:attr="data-control='hue'" th:field="*{lastName}"
+                               class="form-control  minicolors-input" id="lastName"
+                               th:classappend="${#fields.hasErrors('lastName') ? 'is-invalid' : ''}"
+                               placeholder="Last name*"
+                               >
+
+                        <p th:if="${#fields.hasErrors('lastName')}" class="label text-danger "
+                           th:errors="*{lastName}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+
+                        <input type="text" th:attr="data-control='hue'" th:field="*{email}"
+                               class="form-control  minicolors-input" id="email" autocomplete="new-password"
+                               th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}"
+                               placeholder="Email*"
+                        >
+
+                        <p th:if="${#fields.hasErrors('email')}" class="label text-danger "
+                           th:errors="*{email}"></p>
+                    </div>
+                    <div class="col-md-6">
+
+                        <input type="text" th:attr="data-control='hue'" th:field="*{phone}"
+                               class="form-control  minicolors-input" id="phone"
+                               th:classappend="${#fields.hasErrors('phone') ? 'is-invalid' : ''}"
+                               placeholder="Phone*"
+                        >
+
+                        <p th:if="${#fields.hasErrors('phone')}" class="label text-danger "
+                           th:errors="*{phone}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+
+                    <div class="col-md-6">
+
+                        <input type="password" th:attr="data-control='hue'" th:field="*{password}" autocomplete="new-password"
+                               class="form-control  minicolors-input" id="password"
+                               th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}"
+                               placeholder="Password*"
+                        >
+                        <p th:if="${#fields.hasErrors('password')}" class="label text-danger "
+                           th:errors="*{password}"></p>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <input type="password" th:attr="data-control='hue'" th:field="*{confirmPassword}" autocomplete="new-password"
+                               class="form-control  minicolors-input" id="confirmPassword"
+                               th:classappend="${#fields.hasErrors('confirmPassword') ? 'is-invalid' : ''}"
+                               placeholder="Confirm password*"
+                        >
+
+                        <p th:if="${#fields.hasErrors('confirmPassword')}" class="label text-danger "
+                           th:errors="*{confirmPassword}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-4">
+
+                        <input type="text" th:attr="data-control='hue'" th:field="*{address1}"
+                               class="form-control  minicolors-input" id="address1"
+                               th:classappend="${#fields.hasErrors('address1') ? 'is-invalid' : ''}"
+                               placeholder="Address 1*"
+                               >
+
+                        <p th:if="${#fields.hasErrors('address1')}" class="label text-danger "
+                           th:errors="*{address1}"></p>
+                    </div>
+                    <div class="col-md-4">
+
+                        <input type="text" th:attr="data-control='hue'" th:field="*{address2}"
+                               class="form-control  minicolors-input" id="address2"
+                               th:classappend="${#fields.hasErrors('address2') ? 'is-invalid' : ''}"
+                               placeholder="Address 2"
+                               >
+
+                        <p th:if="${#fields.hasErrors('address2')}" class="label text-danger "
+                           th:errors="*{address2}"></p>
+                    </div>
+                    <div class="col-md-4">
+
+                        <input type="text" th:attr="data-control='hue'" th:field="*{city}"
+                               class="form-control  minicolors-input" id="city"
+                               th:classappend="${#fields.hasErrors('city') ? 'is-invalid' : ''}"
+                               placeholder="City*"
+                               >
+
+                        <p th:if="${#fields.hasErrors('address1')}" class="label text-danger "
+                           th:errors="*{address1}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+
+                    <div class="col-md-4">
+
+                        <input type="text" th:attr="data-control='hue'" th:field="*{state}"
+                               class="form-control  minicolors-input" id="state"
+                               th:classappend="${#fields.hasErrors('state') ? 'is-invalid' : ''}"
+                               placeholder="State*"
+                               >
+
+                        <p th:if="${#fields.hasErrors('state')}" class="label text-danger "
+                           th:errors="*{state}"></p>
+                    </div>
+                    <div class="col-md-4">
+
+                        <select class="form-control" name="country" id="country" style="margin-top:0px;">
+
+                            <th:block th:if="${subuser.country==null}">
+
+                                <option th:each="type : ${@serviceUtil.getAllCountries()}"
+                                        th:value="${{type}}"
+                                        th:selected="${type.getCode2()=='US'}"
+                                        th:text="${type.name}"></option>
+
+                            </th:block>
+                            <th:block th:if="${subuser.country!=null}">
+                                <option th:each="type : ${@serviceUtil.getAllCountries()}"
+                                        th:value="${{type}}"
+                                        th:selected="${type.id==subuser.country.id}"
+                                        th:text="${type.name}"></option>
+                            </th:block>
+
+                            </option>
+                        </select>
+
+                        <p th:if="${#fields.hasErrors('country')}" class="label text-danger "
+                           th:errors="*{country}"></p>
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <input type="text" th:attr="data-control='hue'" th:field="*{postalCode}"
+                               class="form-control  minicolors-input" id="postalCode"
+                               th:classappend="${#fields.hasErrors('postalCode') ? 'is-invalid' : ''}"
+                               placeholder="Postal code*"
+                               >
+
+                        <p th:if="${#fields.hasErrors('postalCode')}" class="label text-danger "
+                           th:errors="*{postalCode}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <textarea  th:field="*{personalInformation}" data-toggle="toggle" class="form-control"
+                                   placeholder="Personal information"
+                                   th:classappend="${#fields.hasErrors('personalInformation') ? 'is-invalid' : ''}"
+                        ></textarea>
+                        <p th:if="${#fields.hasErrors('personalInformation')}" class="label text-danger "
+                           th:errors="*{personalInformation}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <input type="checkbox" th:field="*{status}" data-toggle="toggle" class="tCheckbox" data-on="Enable" data-off="Disable" data-height="40">
+                        <p th:if="${#fields.hasErrors('status')}" class="label text-danger "
+                           th:errors="*{status}"></p>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}">
+    </div>
+</div>
+</html>

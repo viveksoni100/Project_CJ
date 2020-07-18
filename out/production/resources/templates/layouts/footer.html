@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:fragment="footer">
+    <!--// Footer \\-->
+    <footer id="ereaders-footer" class="ereaders-footer-one">
+
+        <!--// Footer Widget \\-->
+        <!--<div class="ereaders-footer-widget">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="ereaders-footer-newslatter">
+                            <a href="index.html" class="ereaders-footer-logo"><img width="200" th:src="@{/front/extra-images/logoglobal.png}" alt=""></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>-->
+        <!--// Footer Widget \\-->
+
+        <!--// CopyRight \\-->
+        <div class="ereaders-copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!--<p><i class="fa fa-copyright"></i> <th:block th:text="${#dates.year(#dates.createNow())}"></th:block>, All Right Reserved - by <a href="https://www2.ocr-inc.com/" target="_blank">OCR GLOBAL TRADE MANAGEMENT</a>
+                        </p>-->
+                        <p style="float:none; text-align: center;">© <th:block th:text="${#dates.year(#dates.createNow())}"></th:block> | All rights reserved by <a href="https://www.globalvoxinc.com"> Global Vox</a> | <a href="https://www2.ocr-inc.com/connect-with-us/"> Contact Us</a> | <a href="https://www2.ocr-inc.com/privacy-policy/">Privacy Policy</a> | <a href="https://www2.ocr-inc.com/terms/">Terms</a></p>
+                        <!--<ul class="footer-social-network">
+                            <li><a href="https://en-gb.facebook.com/login/" class="fa fa-facebook"></a></li>
+                            <li><a href="https://www.linkedin.com/uas/login" class="fa fa-linkedin"></a></li>
+                            <li><a href="https://twitter.com/login?lang=en" class="fa fa-twitter"></a></li>
+                            <li><a href="https://www.pinterest.com/login/" class="fa fa-pinterest-p"></a></li>
+                            <li><a href="https://en-gb.facebook.com/login/" class="fa fa-google-plus"></a></li>
+                        </ul>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// CopyRight \\-->
+
+    </footer>
+    <!--// Footer \\-->
+</th:block>

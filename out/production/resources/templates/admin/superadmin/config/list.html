@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/main}">
+
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+</head>
+
+<th:block layout:fragment="content">
+    <!--<div th:replace="base/globalmessages :: global-messages">(global-messages)</div>-->
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <a
+                        th:href="'javascript:void(0)'" class="btn btn-primary btn-sm pull-right config-create"
+                        th:attr="data-title='Add config',data-size='medium',data-url='/ajax/super/config/form', data-submiturl='/ajax/super/config/create', data-close='configCreated',data-reload='true'"
+                >Add Config</a>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title"> Configurations</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" id="replace">
+                            <div class="dataTables_wrapper dt-bootstrap4">
+                                <div class="row m-0">
+                                    <Div class="col-sm-12">
+                                        <form th:action="@{${pagingUrl}}"
+                                              th:attr="data-baseurl=${pagingUrl},data-formname='configList',data-replacediv='replace'"
+                                              id="configList" class="paging" autocomplete="off">
+                                            <table class="table " id="dataTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>-</th>
+                                                    <th th:with="order=${pageable.getSort().getOrderFor('configName')}">
+                                                        <a href="javascript:void(0)"
+                                                           th:value="${configName}"
+                                                           th:attr="data-sort='configName',data-baseurl=${pagingUrl},data-formname='configList',data-replacediv='replace',data-page='1',
+                            data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                           class="page-sort">
+                                                            Config name</a>
+                                                    </th>
+                                                    <th th:with="order=${pageable.getSort().getOrderFor('configValue')}">
+                                                        <a href="javascript:void(0)"
+                                                           th:value="${configValue}"
+                                                           th:attr="data-sort='configValue',data-baseurl=${pagingUrl},data-formname='configList',data-replacediv='replace',data-page='1',data-dir='asc',
+                                data-dir=${(order!=null and order.isAscending()) ? 'DESC' : 'ASC'}"
+                                                           class="page-sort"
+                                                        >Config value</a>
+                                                    </th>
+                                                    <th>
+
+                                                    </th>
+                                                    <th style="text-align: center">
+                                                        Status
+                                                    </th>
+                                                    <th style="text-align: right">
+                                                        Edit
+                                                    </th>
+
+                                                </tr>
+                                                <tr>
+                                                    <th>-</th>
+
+                                                    <th>
+                                                        <input type="text" name="configName" placeholder="Config name"
+                                                               class="mark1" autocomplete="off">
+                                                    </th>
+                                                    <th>
+                                                        <input type="text" name="configValue" placeholder="Config value"
+                                                               class="mark1 " autocomplete="nope">
+                                                    </th>
+                                                    <th>
+
+                                                    </th>
+                                                    <th>
+
+                                                    </th>
+                                                    <th>
+                                                        <input type="submit" style="display: none;">
+                                                    </th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody class="marktext">
+                                                <tr th:each="config : ${configs}">
+                                                    <td th:text="${configStat.index+1}"></td>
+                                                    <td th:width="'300px'" th:text="${config.configName}"></td>
+
+                                                    <td th:text="${config.configValue}"></td>
+                                                    <td>
+                                                    <span><i th:attr="data-id=${@pathVariableEnc.encrypt(config.id)},data-after='configSave',
+                                                    data-ele=${'form'+configStat.index}, data-inputid=${'configVal'+configStat.index}"
+                                                             class="fa fa-2x fa-sync configValReload"></i></span>
+                                                    </td>
+                                                    <td th:width="200px" style="text-align: center">
+                                                        <form method="post" th:id="${'formstatus'+configStat.index}">
+                                                            <i class="fa fa-3x configValStatus"
+                                                               th:attr="data-id=${@pathVariableEnc.encrypt(config.id)},data-after='configStatusSave',
+                                                            data-ele=${'form'+configStat.index}"
+                                                               th:classappend="${(!config.status) ? 'fa-toggle-off text-danger' : 'fa-toggle-on text-success'}"></i>
+                                                        </form>
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                                th:href="'javascript:void(0)'"
+                                                                class="btn btn-primary btn-sm pull-right config-create"
+                                                                th:attr="data-onload='editConfig',data-title=${'Edit ' + config.configName},data-size='medium',data-url='/ajax/super/config/form/'+${@pathVariableEnc.encrypt(config.id)}, data-submiturl='/ajax/super/config/create/'+${@pathVariableEnc.encrypt(config.id)}, data-close='configCreated',data-reload='true'"
+                                                        >Edit</a>
+
+
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </form>
+                                    </div>
+                                </Div>
+                                <div th:remove="tag" th:include="layouts/paging :: paging"
+                                     th:with="pageObj=${configs},replaceDiv='replace',formName='configList', pagingUrl=${pagingUrl}"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</th:block>
+<th:block layout:fragment="extrascripts">
+    <script th:src="@{/front/nimda/js/ajax.js}"></script>
+    <script th:src="@{/front/nimda/js/paging.js}"></script>
+
+
+    <script type="text/javascript">
+        $(document).on("click", ".config-create", function (e) {
+            confirmAjaxSubmit($(this));
+        });
+
+        function configCreated(params, currentElement, popup) {
+            closeConfirmPopupWithAlertMessage(params, currentElement, popup, "Config created", "html");
+        }
+
+
+        $(document).on("click", ".configValReload", function (e) {
+            //if ($(this).val() != "") {
+            data = {};
+            data['configVaue'] = $("#" + $(this).data("inputid")).val();
+            data['csrfParameter'] = $("meta[name='_csrf_parameter']").attr("content");
+            data['csrfToken'] = $("meta[name='_csrf']").attr("content");
+            data['csrfHeader'] = $("meta[name='_csrf_header']").attr("content");
+            ajaxPost("post", "/ajax/super/config/change/" + $(this).data("id"), data, $(this), true);
+            //}
+        });
+
+
+        $(document).on("click", ".configValStatus", function (e) {
+            //if ($(this).val() != "") {
+            ajaxPost("post", "/ajax/super/config/status/" + $(this).data("id"), $("#" + $(this).data("ele")).serialize(), $(this), true);
+            //}
+        });
+
+        function configSave(params, currentElement) {
+            if (params.success) {
+                reloadPage();
+            } else {
+                $.alert({
+                    title: false,
+                    content: "<div class='alert alert-danger'>" + params.msg + "</div>",
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-primary',
+                            action: function () {
+
+                            }
+                        },
+                    }
+                });
+            }
+        }
+
+        function configStatusSave(params, currentElement) {
+            if (params.success) {
+                if (params.obj[0]) {
+                    currentElement.removeClass("text-danger").removeClass("fa-toggle-off");
+                    currentElement.addClass("text-success").addClass("fa-toggle-on");
+                } else {
+                    currentElement.removeClass("text-success").removeClass("fa-toggle-on");
+                    currentElement.addClass("text-danger").addClass("fa-toggle-off");
+
+                }
+            } else {
+                $.alert({
+                    title: false,
+                    content: "<div class='alert alert-danger'>" + params.msg + "</div>",
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-primary',
+                            action: function () {
+
+                            }
+                        },
+                    }
+                });
+            }
+        }
+
+        function editConfig(res, currentElement) {
+
+        }
+    </script>
+</th:block>
+</html>

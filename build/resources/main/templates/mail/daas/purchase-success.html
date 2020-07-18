@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Purchase Success Email</title>
+    <!-- build:maincss -->
+    <!--<link href="css/style.css" rel="stylesheet" type="text/css" />-->
+    <!-- endbuild -->
+    <!--[if mso]>
+    <![endif]-->
+</head>
+<body class="o_body o_bg-light"
+      style="background-color: #dbe5ea;">
+<!-- preview-text -->
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <td class="o_hide"
+            style="display: none; font-size: 0; max-height: 0; width: 0; line-height: 0; overflow: hidden; mso-hide: all; visibility: hidden;" align="center">Email Summary (Hidden)</td>
+    </tr>
+    </tbody>
+</table>
+<!-- header-white-link -->
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs o_pt-lg o_xs-pt-xs"
+            style="background-color: #dbe5ea; padding-left: 8px; padding-right: 8px; padding-top: 8px !important;" align="center">
+            <!--[if mso]><table width="800" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]-->
+            <table class="o_block-lg"
+                   style="max-width: 800px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_re o_bg-white o_px o_pb-md o_br-t"
+                        style="font-size: 0; vertical-align: top; background-color: #ffffff; padding-left: 16px; padding-right: 16px; padding-bottom: 24px; border-radius: 4px 4px 0px 0px;" align="center">
+                        <!--[if mso]><table cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td width="200" align="left" valign="top" style="padding:0px 8px;"><![endif]-->
+                        <div class="o_col o_col-2" style="max-width: 100% !important; max-width: 200px;">
+                            <div style="font-size: 24px; line-height: 24px; height: 24px;">&nbsp; </div>
+                            <div class="o_px-xs o_sans o_text o_left o_xs-center"
+                                 style="text-align: center !important; text-align: left; font-size: 16px; line-height: 24px; padding-left: 8px; padding-right: 8px; font-family: 'Roboto', sans-serif !important;">
+                                <!--<p><a class="o_text-primary" style="color: #242b3d; float: left; text-decoration: none; float: left; font-size: 25px;" href="#">
+                                    Global Trade Data
+                                </a></p>-->
+                                <img data-th-src="|cid:${daasLogo}|" style="width: 150px; float: left;" />
+                            </div>
+                        </div>
+                        <!--[if mso]></td><td width="400" align="right" valign="top" style="padding:0px 8px;"><![endif]-->
+                        <div class="o_col o_col-4" style="max-width: 100% !important; max-width: 400px;">
+                            <div style="font-size: 22px; line-height: 22px; height: 22px; float: left">&nbsp; </div>
+                            <div class="o_px-xs" style="padding-left: 8px; padding-right: 8px; float: right;">
+                                <table class="o_right o_xs-center"
+                                       style="text-align: right; text-align: center !important;" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                                    <tbody>
+                                    <tr>
+                                        <td class="o_btn-b o_heading o_text-xs"
+                                            style="font-size: 14px; line-height: 21px; font-size: 32px !important; line-height: 41px !important; mso-padding-alt: 7px 8px; " align="center">
+                                            <a class="o_text-light" style="color: #82899a; text-decoration: none; float: right; font-size: 20px; text-transform: capitalize;"
+                                               href="#"><span th:text="${firstName + ' ' + lastName}"></span>
+                                                <!--<img src="images/person-24-light.png" width="24" height="24" alt="" style="max-width: 24px;">--></a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--[if mso]></td></tr></table><![endif]-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- hero-dark-button -->
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs"
+            style="padding-left: 8px; padding-right: 8px; background-color: #dbe5ea; " align="center">
+            <!--[if mso]><table width="800" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]-->
+            <table class="o_block-lg" style="max-width: 800px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-dark o_px-md o_py-xl o_xs-py-md"
+                        style="padding-top: 24px !important; padding-bottom: 24px !important; padding-top: 64px; padding-bottom: 64px; padding-left: 24px; padding-right: 24px; background-color: #06469E;" align="center">
+                        <!--[if mso]><table width="584" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td align="center"><![endif]-->
+                        <div class="o_col-6s o_center o_sans o_text-md o_text-white"
+                             style="color: #ffffff; font-size: 19px; line-height: 28px; font-family: 'Roboto', sans-serif !important; text-align: center;max-width: 584px;">
+                            <p class="o_heading o_mb-xxs"
+                                style="font-size: 32px !important; line-height: 41px !important; ">Thank You for Your Business!</p>
+                            <!--<p class="o_mb-md" style="margin-bottom: 24px;">Lemming returned cuffed capable unwound some withdrew<br>goodness much so underneath insincerely on gazelle.</p>-->
+                            <table align="center" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                                <tbody>
+                                <tr>
+                                    <td width="300" height="55" class="o_btn o_bg-primary o_br o_heading o_text"
+                                        style="font-size: 12px; height: 3.5rem; line-height: 19px; font-size: 32px !important; line-height: 41px !important;
+                                        background-color: #126de5; mso-padding-alt: 12px 24px; border-radius: 4px;" align="center">
+                                        <a class="o_text-white" style="color: #ffffff; text-decoration: none; font-size: 25px; " th:href="${baseURL} + '/download/invoiceNew/' + ${order.getId().toString()}">Download Invoice</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--[if mso]></td></tr></table><![endif]-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- invoice-details-plain -->
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs" style="background-color: #dbe5ea; padding-left: 8px; padding-right: 8px;" align="center">
+            <!--[if mso]><table width="800" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]-->
+            <table class="o_block-lg"
+                   style="max-width: 800px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_bg-white o_px-md o_py-md"
+                        style="padding-top: 24px; padding-bottom: 24px; padding-left: 24px; padding-right: 24px; background-color: #ffffff;" align="center">
+                        <!--[if mso]><table width="584" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td align="left"><![endif]-->
+                        <div class="o_col-6s o_left o_sans o_text o_text-secondary"
+                             style="color: #424651; font-size: 16px; line-height: 24px; font-family: 'Roboto', sans-serif !important; text-align: left; margin: 0;">
+                            <h3 class="o_heading o_text-dark" style="font-family: 'Roboto', sans-serif !important; color: #242b3d; font-size: 25px; margin-top: 0;"
+                            th:text="${'Invoice #' + order.id}"></h3>
+                            <!--<p class="o_text-xxs o_text-light o_mb">Event Planning Website Relaunch</p>-->
+                            <p class="o_mb" style="margin-bottom: 4px;">
+                                <strong th:text="${'Transaction ID : ' + order.getTransactionNumber()}"></strong><br>
+                                <!--<strong th:text="${'Purchase Date &nbsp;: ' + #temporals.day(order.getPurchaseDate()) + '-' + #temporals.monthNameShort(order.getPurchaseDate()) + '-' + #temporals.year(order.getPurchaseDate())}"></strong><br>
+                                <strong th:text="${'Expiry Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ' + #temporals.day(orderDetail.getProductExpiryDate()) + '-' + #temporals.monthNameShort(orderDetail.getProductExpiryDate()) + '-' + #temporals.year(orderDetail.getProductExpiryDate())}"></strong>-->
+                            </p>
+                        </div>
+                        <!--[if mso]></td></tr></table><![endif]-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- invoice_header-lg -->
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs"
+            style="padding-left: 8px; padding-right: 8px;" align="center">
+            <!--[if mso]><table width="800" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]-->
+            <table class="o_block-lg" style="max-width: 800px; margin: 0 auto; background: #fff;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_re o_bg-white o_px o_pt-xs o_hide-xs"
+                        style="padding-top: 8px; padding-left: 16px; padding-right: 16px; background-color: #ffffff; font-size: 0; vertical-align: top; display: none !important; font-size: 0 !important; max-height: 0 !important; width: 0 !important; line-height: 0 !important; overflow: hidden !important; visibility: hidden !important; height: 0 !important;" align="center">
+                        <!--[if mso]><table cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td width="300" align="left" valign="top" style="padding: 0px 8px;"><![endif]-->
+                        <div class="o_col o_col-3" style="max-width: 300px; display: inline-block; vertical-align: top; width: 25%; float: left;">
+                            <div class="o_px-xs o_sans o_text-xs o_left"
+                                 style="text-align: left; font-size: 14px; line-height: 21px; font-family: 'Roboto', sans-serif !important; padding-left: 8px; padding-right: 8px; border-bottom: 1px solid darkgray;">
+                                <p class="o_text-light" style="color: #82899a;">Item</p>
+                            </div>
+                        </div>
+                        <!--[if mso]></td><td width="100" align="center" valign="top" style="padding: 0px 8px;"><![endif]-->
+                        <div class="o_col o_col-1" style="display: inline-block; vertical-align: top; max-width: 100px; width: 10%; float: left;">
+                            <div class="o_px-xs o_sans o_text-xs o_center"
+                                 style="text-align: center; font-size: 14px; line-height: 21px; font-family: 'Roboto', sans-serif !important; padding-left: 8px; padding-right: 8px; border-bottom: 1px solid darkgray;">
+                                <p class="o_text-light" style="color: #82899a;">Qty</p>
+                            </div>
+                        </div>
+                        <!--[if mso]></td><td width="100" align="center" valign="top" style="padding: 0px 8px;"><![endif]-->
+                        <div class="o_col o_col-1" style="display: inline-block; vertical-align: top; max-width: 100px; width: 15%; float: left;">
+                            <div class="o_px-xs o_sans o_text-xs o_center"
+                                 style="text-align: center; font-size: 14px; line-height: 21px; font-family: 'Roboto', sans-serif !important; padding-left: 8px; padding-right: 8px; border-bottom: 1px solid darkgray;">
+                                <p class="o_text-light" style="color: #82899a;">Download</p>
+                            </div>
+                        </div>
+                        <!--[if mso]></td><td width="100" align="right" valign="top" style="padding: 0px 8px;"><![endif]-->
+                        <div class="o_col o_col-1" style="display: inline-block; vertical-align: top; max-width: 100px; width: 20%; float: right;">
+                            <div class="o_px-xs o_sans o_text-xs o_right"
+                                 style="text-align: right; font-size: 14px; line-height: 21px; font-family: 'Roboto', sans-serif !important; padding-left: 8px; padding-right: 8px; border-bottom: 1px solid darkgray;">
+                                <p class="o_text-light" style="color: #82899a;">Valid Till</p>
+                            </div>
+                        </div>
+                        <!--[if mso]></td><td width="100" align="right" valign="top" style="padding: 0px 8px;"><![endif]-->
+                        <div class="o_col o_col-1" style="display: inline-block; vertical-align: top; max-width: 100px; width: 15%; float: right;">
+                            <div class="o_px-xs o_sans o_text-xs o_right"
+                                 style="text-align: right; font-size: 14px; line-height: 21px; font-family: 'Roboto', sans-serif !important; padding-left: 8px; padding-right: 8px; border-bottom: 1px solid darkgray;">
+                                <p class="o_text-light" style="color: #82899a;">Total</p>
+                            </div>
+                        </div>
+                        <!--[if mso]></td><td width="100" align="right" valign="top" style="padding: 0px 8px;"><![endif]-->
+                        <div class="o_col o_col-1" style="display: inline-block; vertical-align: top; max-width: 100px; width: 15%; float: right;">
+                            <div class="o_px-xs o_sans o_text-xs o_right"
+                                 style="text-align: right; font-size: 14px; line-height: 21px; font-family: 'Roboto', sans-serif !important; padding-left: 8px; padding-right: 8px; border-bottom: 1px solid darkgray;">
+                                <p class="o_text-light" style="color: #82899a;">Price</p>
+                            </div>
+                        </div>
+                        <!--[if mso]></td></tr><tr><td colspan="5" style="padding: 0px 8px;"><![endif]-->
+                        <div class="o_px-xs" style="padding-left: 8px; padding-right: 8px;">
+                            <table cellspacing="0" cellpadding="0" border="0" role="presentation">
+                                <tbody>
+                                <tr>
+                                    <td width="70rem" class="o_re o_bb-light" style="width: 70rem; border-bottom: 1px solid #d3dce0; vertical-align: top; font-size: 181rem; line-height: 9px; height: 9px;">&nbsp; </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--[if mso]></td></tr></table><![endif]-->
+                    </td>
+                </tr><hr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- invoice_row-lg -->
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs"
+            style="padding-left: 8px; padding-right: 8px;background-color: #dbe5ea;" align="center">
+            <!--[if mso]><table width="800" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]-->
+            <table class="o_block-lg"
+                   style="max-width: 800px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr th:each="product : ${orderDetailList}">
+                    <td class="o_re o_bg-white o_px o_pt"
+                        style="padding-left: 16px; padding-right: 16px; background-color: #ffffff; font-size: 0; vertical-align: top;" align="center">
+                        <!--[if mso]><table cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td width="300" align="left" valign="top" style="padding: 0px 8px;"><![endif]-->
+                        <div class="o_col o_col-3 o_col-full"
+                             style="max-width: 100% !important; max-width: 300px; display: inline-block; vertical-align: top; width: 25%; float: left;">
+                            <div class="o_px-xs o_sans o_text-xs o_left"
+                                 style="text-align: left; font-size: 14px; line-height: 21px; font-family: 'Roboto', sans-serif !important; padding-left: 8px; padding-right: 8px;">
+                                <!--Jubilantly Goodness-->
+                                <p class="o_text o_text-secondary"
+                                   style="color: #424651; font-size: 14px; line-height: 24px;"><strong th:text="${product.getProductName()}"></strong></p>
+                                <!--<p class="o_text-light"
+                                   style="color: #82899a;">Gazelle bucolically the this sour far dear the after among gradually far mongoose militant and blanched much.</p>-->
+                            </div>
+                        </div>
+                        <!--[if mso]></td><td width="100" align="center" valign="top" style="padding: 0px 8px;"><![endif]-->
+                        <div class="o_col o_col-1 o_col-full"
+                             style="max-width: 100% !important; max-width: 100px; display: inline-block; vertical-align: top; width: 10%; float: left;">
+                            <div class="o_px-xs o_sans o_text o_center o_xs-left"
+                                 style="text-align: left !important; text-align: center; font-size: 14px; line-height: 24px; font-family: 'Roboto', sans-serif !important; padding-left: 8px; padding-right: 8px;">
+                                <p class="o_text-secondary" style="color: #424651;">
+                                    <strong th:text="${product.productQty}"></strong>
+                                    <!--<span th:text="${product.productQty}" class="o_hide-lg" style="display: none; font-size: 0; max-height: 0; width: 0; line-height: 0; overflow: hidden; mso-hide: all; visibility: hidden;"></span>-->
+                                </p>
+                            </div>
+                        </div>
+                        <!--[if mso]></td><td width="100" align="center" valign="top" style="padding: 0px 8px;"><![endif]-->
+                        <div class="o_col o_col-1 o_col-full"
+                             style="max-width: 100% !important; max-width: 100px; display: inline-block; vertical-align: top; width: 15%; float: left;">
+                            <div class="o_px-xs o_sans o_text o_center o_xs-left"
+                                 style="text-align: left !important; text-align: center; font-size: 14px; line-height: 24px; font-family: 'Roboto', sans-serif !important; padding-left: 8px; padding-right: 8px;">
+                                <p class="o_text-secondary" style="color: #424651;">
+                                    <!--<span class="o_hide-lg" style="display: none; font-size: 0; max-height: 0; width: 0; line-height: 0; overflow: hidden; mso-hide: all; visibility: hidden;">Tax:&nbsp; </span>$20</p>-->
+                                    <!--<a th:if="${product.getProduct().getProductCategoryDetail().getProductType().getProductTypeName() == 'DATA'}"
+                                       th:href="${baseUrl} + '/downloadRequest/' + ${product.getProduct().getId()}">Click Here</a>
+                                    <a th:if="${product.getProduct().getProductCategoryDetail().getProductType().getProductTypeName() == 'API'}"
+                                       th:href="${baseUrl} + '/daas/downloadRequest/' + ${product.getProduct().getId()}">Click Here</a>-->
+                                <a th:if="${product.getProduct().getProductPrice() != 0}" th:href="${baseUrl} + '/login'">Click Here</a>
+                                    <a th:if="${product.getProduct().getProductPrice() == 0}" th:href="${baseUrl} + '/loginAPI'">Click Here</a>
+                            </div>
+                        </div>
+                        <!--[if mso]></td><td width="100" align="right" valign="top" style="padding: 0px 8px;"><![endif]-->
+                        <div class="o_col o_col-1 o_col-full"
+                             style="max-width: 100% !important; max-width: 100px; display: inline-block; vertical-align: top; width: 15%; float: left;">
+                            <div class="o_px-xs o_sans o_text o_right o_xs-left"
+                                 style="text-align: left !important; text-align: right; font-size: 14px; line-height: 24px; font-family: 'Roboto', sans-serif !important; padding-left: 8px; padding-right: 8px;">
+                                <p class="o_text-secondary" style="color: #424651;">
+                                    <strong th:if="${product.getProduct().getProductPrice() != 0}"
+                                            th:text="${'$'+#numbers.formatDecimal(product.getProduct().getProductPrice(),0,'COMMA',0,'POINT')}"></strong></p>
+                                <strong th:if="${product.getProduct().getProductPrice() == 0}"
+                                        th:text="${'$'+#numbers.formatDecimal(product.getNetPrice() / product.getProductQty(),1,'COMMA',2,'POINT')}"></strong></p>
+                            </div>
+                        </div>
+                        <!--[if mso]></td><td width="100" align="right" valign="top" style="padding: 0px 8px;"><![endif]-->
+                        <div class="o_col o_col-1 o_col-full"
+                             style="max-width: 100% !important; max-width: 100px; display: inline-block; vertical-align: top; width: 15%; float: left;">
+                            <div class="o_px-xs o_sans o_text o_right o_xs-left"
+                                 style="text-align: left !important; text-align: right; font-size: 14px; line-height: 24px; font-family: 'Roboto', sans-serif !important; padding-left: 8px; padding-right: 8px;">
+                                <p class="o_text-secondary" style="color: #424651;">
+                                    <strong th:text="${'$' + #numbers.formatDecimal(product.getNetPrice(),0,'COMMA',2,'POINT')}"></strong>
+                                </p>
+                            </div>
+                        </div>
+                        <!--[if mso]></td><td width="100" align="right" valign="top" style="padding: 0px 8px;"><![endif]-->
+                        <div class="o_col o_col-1 o_col-full"
+                             style="max-width: 100% !important; max-width: 100px; display: inline-block; vertical-align: top; width: 20%; float: left;">
+                            <div class="o_px-xs o_sans o_text o_right o_xs-left"
+                                 style="text-align: right !important; text-align: right; font-size: 14px; line-height: 24px; font-family: 'Roboto', sans-serif !important; padding-left: 8px; padding-right: 8px;">
+                                <p class="o_text-secondary" style="color: #424651;">
+                                    <strong th:text="${#temporals.day(orderDetail.getProductExpiryDate()) + '-' + #temporals.monthNameShort(orderDetail.getProductExpiryDate()) + '-' + #temporals.year(orderDetail.getProductExpiryDate())}"></strong><!--expiry date-->
+                                </p>
+                            </div>
+                        </div>
+                        <!--[if mso]></td></tr><tr><td colspan="6" style="padding: 0px 8px;"><![endif]-->
+                        <div class="o_px-xs"
+                             style="padding-left: 8px; padding-right: 8px;">
+                            <table cellspacing="0" cellpadding="0" border="0" role="presentation">
+                                <tbody>
+                                <tr>
+                                    <!--<td width="70rem" class="o_re o_bb-light" style="width: 70rem; border-bottom: 1px solid #d3dce0; vertical-align: top; font-size: 16px; line-height: 16px; height: 16px;">&nbsp; </td>-->
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--[if mso]></td></tr></table><![endif]-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- invoice_row-lg -->
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs"
+            style="background-color: #dbe5ea; padding-left: 8px; padding-right: 8px;" align="center">
+            <!--[if mso]><table width="800" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td><![endif]-->
+            <table class="o_block-lg"
+                   style="max-width: 800px; margin: 0 auto;" width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="o_re o_bg-white o_px-md o_py"
+                        style="background-color: #ffffff; font-size: 0; vertical-align: top; " align="center">
+                        <!--[if mso]><table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td align="right"><![endif]-->
+                        <div class="o_col-6s o_right" style="text-align: right;">
+                            <table class="o_right" style="text-align: right; width: 100%" role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <table width="100%" role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                            <tr>
+                                                <td class="o_re o_bb-light" style="border-bottom: 1px solid darkgray; vertical-align: top; width: 100%; line-height: 9px; height: 9px;">&nbsp; </td>
+                                                <!--<td class="o_pt o_bb-light" style="padding-top: 16px; border-bottom: 1px solid #d3dce0;">&nbsp; </td>
+                                                <td class="o_pt o_bb-light" style="padding-top: 16px; border-bottom: 1px solid darkgray;">&nbsp; </td>-->
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" align="right">
+                                        <table style="padding-right: 20px;width: 100%;padding-left: 20px;" role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                            <tbody>
+                                            <!--<tr>
+                                                <td width="50%" class="o_pt-xs" style="padding-top: 8px;" align="left">
+                                                    <p class="o_sans o_text o_text-secondary" style="color: #424651; font-family: 'Roboto', sans-serif !important; font-size: 12px; line-height: 19px;">
+                                                        Subtotal
+                                                    </p>
+                                                </td>
+                                                <td width="50%" class="o_pt-xs" style="padding-top: 8px;" align="right">
+                                                    <p th:text="${'$' + order.getNetPrice() + ' USD'}"
+                                                            class="o_sans o_text o_text-secondary" style="color: #424651; font-family: 'Roboto', sans-serif !important; font-size: 12px; line-height: 19px;"></p>
+                                                </td>
+                                            </tr>-->
+                                            <!--<tr>
+                                                <td width="50%" class="o_pt-xs" align="left">
+                                                    <p class="o_sans o_text o_text-secondary">Tax</p>
+                                                </td>
+                                                <td width="50%" class="o_pt-xs" align="right">
+                                                    <p class="o_sans o_text o_text-secondary">$2,000 USD</p>
+                                                </td>
+                                            </tr>-->
+
+                                            <tr>
+                                                <td width="40%" class="o_pt" align="left">
+                                                    <p class="o_sans o_text o_text-secondary" style="color: #424651; font-family: 'Roboto', sans-serif !important; font-size: 14px; line-height: 19px;"><strong>Total Amount</strong></p>
+                                                </td>
+                                                <td width="60%" class="o_pt" align="right">
+                                                    <p th:text="${'$' + #numbers.formatDecimal(order.getNetPrice(),0,'COMMA',2,'POINT') + ' USD'}"
+                                                            class="o_sans o_text o_text-primary" style="color: #424651; font-family: 'Roboto', sans-serif !important; font-size: 14px; line-height: 19px;"><strong></strong></p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="40%" class="o_pt" align="left">
+                                                    <p class="o_sans o_text o_text-secondary" style="color: #424651; font-family: 'Roboto', sans-serif !important; font-size: 14px; line-height: 19px;"><strong>Amount Paid</strong></p>
+                                                </td>
+                                                <td width="60%" class="o_pt" align="right">
+                                                    <p th:text="${orderNetPriceInWords}"
+                                                       class="o_sans o_text o_text-primary" style="color: #424651; font-family: 'Roboto', sans-serif !important; font-size: 14px; line-height: 19px;"><strong></strong></p>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--[if mso]></td></tr></table><![endif]-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- footer-white-3cols -->
+<table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+    <tbody>
+    <tr>
+        <td class="o_bg-light o_px-xs o_pb-lg o_xs-pb-xs" align="center">
+            <table class="o_block-lg" width="800" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tbody>
+                <!--<tr>
+                    <td class="o_re o_bg-white o_px o_pb-lg o_bt-light" align="center">
+                        <table cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td width="200" align="center" valign="top" style="padding:0px 8px;">
+                        <div class="o_col o_col-2 o_col-full">
+                            <div style="font-size: 32px; line-height: 32px; height: 32px;">&nbsp; </div>
+                            <div class="o_px-xs o_sans o_text-xs o_center">
+                                <p><a class="o_text-light" href="https://example.com/"><strong>Help Center</strong></a></p>
+                            </div>
+                        </div>
+                        </td><td width="200" align="center" valign="top" style="padding:0px 8px;">
+                        <div class="o_col o_col-2 o_col-full">
+                            <div style="font-size: 24px; line-height: 24px; height: 24px;">&nbsp; </div>
+                            <div class="o_px-xs o_sans o_text-xs o_center">
+                                <p>
+                                    <a class="o_text-light" href="https://example.com/"><img src="images/facebook-light.png" width="36" height="36" alt="fb" style="max-width: 36px;"></a><span> &nbsp;</span>
+                                    <a class="o_text-light" href="https://example.com/"><img src="images/twitter-light.png" width="36" height="36" alt="tw" style="max-width: 36px;"></a><span> &nbsp;</span>
+                                    <a class="o_text-light" href="https://example.com/"><img src="images/instagram-light.png" width="36" height="36" alt="ig" style="max-width: 36px;"></a><span> &nbsp;</span>
+                                    <a class="o_text-light" href="https://example.com/"><img src="images/snapchat-light.png" width="36" height="36" alt="sc" style="max-width: 36px;"></a>
+                                </p>
+                            </div>
+                        </div>
+                        </td><td width="200" align="center" valign="top" style="padding:0px 8px;">
+                        <div class="o_col o_col-2 o_col-full">
+                            <div style="font-size: 32px; line-height: 32px; height: 32px;">&nbsp; </div>
+                            <div class="o_px-xs o_sans o_text-xs o_center">
+                                <p><a class="o_text-light" href="https://example.com/"><strong>Preferences</strong></a></p>
+                            </div>
+                        </div>
+                        </td></tr></table>
+                    </td>
+                </tr>-->
+                <tr>
+                    <td class="o_bg-white o_px-md o_pb-lg o_br-b o_sans o_text-xs o_text-light"
+                        style="color: #82899a; font-size: 14px; line-height: 21px; font-family: 'Roboto', sans-serif !important; border-radius: 0px 0px 4px 4px; background-color: #fff; padding-left: 24px; padding-right: 24px; padding-bottom: 32px; border-top: 1px solid #a9a9a9;" align="center">
+                        <!--<p class="o_mb">
+                            <a class="o_text-light" href="https://example.com/"><img src="images/badge_appstore-light.png" width="135" height="56" alt="AppStore" style="max-width: 135px;"></a>
+                            <a class="o_text-light" href="https://example.com/"><img src="images/badge_googleplay-light.png" width="135" height="56" alt="Google Play" style="max-width: 135px;"></a>
+                        </p>-->
+                        <p class="o_mb" style="margin-bottom: 16px; margin-top: 30px;">© GlobalVox Inc</p>
+                        <p class="o_mb" style="margin-bottom: 16px;">
+                            7900 Westpark Drive,<br>
+                            Mclean, VA, USA 22102
+                        </p>
+                        <a style="color: #82899a; text-decoration: none;" href="#">www.globaltradesdata.com</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--[if mso]></td></tr></table><![endif]-->
+            <div class="o_hide-xs" style="font-size: 64px; line-height: 64px; height: 64px;">&nbsp; </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{mail/layout/body}">
+
+<head>
+    <link href="front/css/invoice-success.css" rel="stylesheet">
+</head>
+
+<th:block layout:fragment="title">Purchase Success</th:block>
+<th:block layout:fragment="content">
+
+    <div style="margin: 0px 50px">
+        <div style="font-size:15px;">
+            <div class="title" th:text="${'Hello ' + name + ','}"></div>
+            <div style="color:#4d4d4d;">
+
+                <p>
+                    This is purchase success email<br/>
+                    along with invoice
+                    from Global Trade Data<br/>
+                </p>
+                <p>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <body class="bodyClass">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+        <tr>
+            <td height="20"></td>
+        </tr>
+        <tr>
+            <td>
+                <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff" style="border-radius: 10px 10px 0 0;">
+                    <tr>
+                        <td>
+                            <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <table width="220" border="0" cellpadding="0" cellspacing="0" align="right" class="col">
+                                            <tbody>
+                                            <tr>
+                                                <td style="font-size: 40px; color: #ff0000; letter-spacing: -1px; font-family: 'Open Sans', sans-serif; line-height: 1; vertical-align: top; text-align: right;">
+                                                    <br><br>
+                                                    Invoice
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                            <tr class="hiddenMobile">
+                                                <td height="50"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size: 18px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: right;">
+                                                    <small th:text="${'Transaction id : ' + order.getTransactionNumber()}" /><br>
+
+                                                    <small th:text="${'Purchase Date : ' + #temporals.day(order.getPurchaseDate()) + '-' + #temporals.monthNameShort(order.getPurchaseDate()) + '-' +
+                                                    #temporals.year(order.getPurchaseDate())}" /><br>
+                                                    <small th:text="${'Expiry Date : ' + #temporals.day(orderDetail.getProductExpiryDate()) + '-' + #temporals.monthNameShort(orderDetail.getProductExpiryDate()) + '-' +
+                                                    #temporals.year(orderDetail.getProductExpiryDate())}" />
+                                                    <br><br><br><br><br>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+        <tbody>
+        <tr>
+            <td>
+                <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                    <tbody>
+                    <tr>
+                    <tr>
+                        <td>
+                            <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding" >
+                                <tbody>
+                                <tr>
+                                    <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 10px 7px 0;" width="52%" align="left">
+                                        Product Name
+                                    </th>
+                                    <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 10px 7px 0;" width="52%" align="left">
+                                        Download
+                                    </th>
+                                    <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+                                        Quantity
+                                    </th>
+                                    <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+                                        Price
+                                    </th>
+                                    <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px; min-width: 65px;" align="center" >
+                                        Discount Rate
+                                    </th>
+                                    <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="right">
+                                        Subtotal
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td height="1" style="background: #bebebe;" colspan="6"></td>
+                                </tr>
+                                <tr>
+                                    <td height="10" colspan="6"></td>
+                                </tr>
+                                <tr th:each="product : ${orderDetailList}">
+                                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #ff0000;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article" th:text="${product.getProductName()}"></td>
+                                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #ff0000;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article">
+
+                                        <a th:if="${product.getProduct().getProductCategoryDetail().getProductType().getProductTypeName() == 'DATA'}"
+                                           th:href="${baseUrl} + '/downloadRequest/' + ${product.getProduct().getId()}">Click Here</a>
+                                        <a th:if="${product.getProduct().getProductCategoryDetail().getProductType().getProductTypeName() == 'API'}"
+                                           th:href="${baseUrl} + '/daas/downloadRequest/' + ${product.getProduct().getId()}">Click Here</a>
+                                    </td>
+                                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center" th:text="${product.productQty}"></td>
+
+                                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center"
+                                        th:if="${product.getProduct().getProductPrice() != 0}"
+                                        th:text="${'$'+product.getProduct().getProductPrice()}"></td>
+                                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center"
+                                        th:if="${product.getProduct().getProductPrice() == 0}"
+                                        th:text="${'$'+product.getOriginalPrice() / product.getProductQty()}"></td>
+
+                                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0; position: relative; left: -3px;"
+                                        align="center" th:text="${#numbers.formatDecimal(product.getDiscount(),1,'POINT',2,'POINT') + '%'}"></td>
+                                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="right" th:text="${'$' + product.getNetPrice()}"></td>
+                                    <td height="1" colspan="6"></td>
+                                </tr>
+                                <tr>
+                                    <td height="1" style="background: #bebebe;" colspan="6"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="20"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+        <tbody>
+        <tr>
+            <td>
+                <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                    <tbody>
+                    <tr>
+                        <td>
+
+                            <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                <tbody>
+                                <tr>
+
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="font-size: 15px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                                        <strong style="margin-left: -75px; float: right; padding-right: 10px;">Grand Total </strong>
+                                    </td>
+                                    <td style="font-size: 15px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; width: 9%;">
+                                        <strong th:text="${'$' + order.getNetPrice()}"></strong>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+
+        <tr>
+            <td>
+                <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff" style="border-radius: 0 0 10px 10px;">
+                    <tr>
+                        <td>
+                            <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                <tbody>
+                                <tr>
+                                    <td style="font-size: 20px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: left;">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="spacer">
+                        <td height="50"></td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td height="20"></td>
+        </tr>
+    </table>
+    </body>
+
+    <div style="margin-top:35px;text-align: center;">
+
+    </div>
+
+</th:block>
+</html>-->
+
+<!--Vivek is cool-->

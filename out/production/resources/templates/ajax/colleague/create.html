@@ -1,0 +1,245 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="row">
+    <div class="col-md-12">
+
+        <div th:replace="base/globalmessages :: global-messages">(global-messages)</div>
+        <form th:action="@{/register}" th:object="${colleague}" method="post" style="width: 99%" th:if="${!success}" autocomplete="off">
+            <input id="username" style="display:none" type="text" name="fakeusernameremembered">
+            <input id="password-fake" style="display:none" type="password" name="fakepasswordremembered">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <input name="tagslocationC" placeholder="Type location name .." autofocus
+                               th:classappend="${#fields.hasErrors('locations') ? 'is-invalid' : ''}"
+                               class="form-control locationtagsC"
+
+
+                        >
+                        <!--th:value="${(colleague.location!=null) ? colleague.locations.locationName : ''}"-->
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('locations')}" class="label text-danger "
+                           th:errors="*{locations}" style="top: -10px;left: auto;padding: 5px !important;"></p>
+                        <select class="form-control" name="locations" style="display: none" id="locationC" multiple="multiple">
+                            <option value=""></option>
+                            <option th:each="type : ${@serviceUtil.getAllLocationByCompany(@serviceUtil.getCurrentUser().getCompany())}"
+                                    th:value="${{type}}"
+                                    th:attr="data-id=${type.id}"
+                                    th:selected="${locationIds.contains(type.id) ? true : false}"
+                                    th:text="${type.locationName}"></option>
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+
+                        <input type="text" th:field="*{firstName}" class="form-control" id="firstName"
+                               th:classappend="${#fields.hasErrors('firstName') ? 'is-invalid' : ''}"
+                               placeholder="First name*"
+                               >
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('firstName')}" class="label text-danger "
+                           th:errors="*{firstName}"></p>
+
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <input type="text" th:field="*{lastName}" class="form-control"
+                               placeholder="Last name*" id="lastName"
+                               th:classappend="${#fields.hasErrors('lastName') ? 'is-invalid' : ''}"
+                        >
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('lastName')}" class="label text-danger"
+                           th:errors="*{lastName}"></p>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+
+                        <input type="text" class="form-control" placeholder="Email address*" id="email"
+
+                               th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}"
+                               th:field="*{email}" autocomplete="nope">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('email')}" class="label text-danger"
+                           th:errors="*{email}"></p>
+
+                    </div>
+                    <!--<div class="col-md-6">
+
+                        <input type="password" class="form-control" placeholder="Password" id="password"
+
+                               th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}"
+                               th:field="*{password}" autocomplete="new-password">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('password')}" class="label text-danger"
+                           th:errors="*{password}"></p>
+
+                    </div>-->
+
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-2">
+
+                        <input type="text" class="form-control" placeholder="Code"
+                               th:classappend="${#fields.hasErrors('countryCode') ? 'is-invalid' : ''}"
+                               th:field="*{countryCode}" id="countryCode">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('countryCode')}" class="label text-danger "
+                           th:errors="*{countryCode}"></p>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <input type="text" class="form-control" placeholder="Phone"
+                               th:classappend="${#fields.hasErrors('phone') ? 'is-invalid' : ''}"
+                               th:field="*{phone}" id="phone">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('phone')}" class="label text-danger "
+                           th:errors="*{phone}"></p>
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <input type="text" th:field="*{mobile}" class="form-control" id="mobile"
+                               placeholder="Mobile"
+                               th:classappend="${#fields.hasErrors('mobile') ? 'is-invalid' : ''}"
+                               >
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('mobile')}" class="label text-danger "
+                           th:errors="*{mobile}"></p>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="form-group colleague-roles">
+                            <div class="form-row">
+                                <div class="col-md-12">
+
+                                    <p>Select role</p>
+                                    <select multiple="multiple" class="selectpicker width-100"
+
+                                            th:classappend="${#fields.hasErrors('roles') ? 'is-invalid' : ''}"
+                                            data-actions-box="true" name="roles">
+
+                                        <option th:each="type : ${@serviceUtil.getUserroles()}"
+                                                th:value="${{type}}"
+
+                                                th:selected="${roleIds.contains(type.id)}"
+
+                                                th:text="${type.label}"></option>
+                                        </option>
+                                    </select>
+                                    <i class="fas fa-exclamation-triangle"></i>
+
+                                </div>
+                            </div>
+
+                            <p th:if="${#fields.hasErrors('roles')}" class="label text-danger"
+                               th:errors="*{roles}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+
+<!--                    <div class="col-md-12">-->
+
+<!--                        <input type="text" th:field="*{assistant}" class="form-control"-->
+<!--                               placeholder="Assistant of" id="assistant"-->
+<!--                               th:classappend="${#fields.hasErrors('assistant') ? 'is-invalid' : ''}"-->
+<!--                               >-->
+<!--                        <i class="fas fa-exclamation-triangle"></i>-->
+<!--                        <p th:if="${#fields.hasErrors('assistant')}" class="label text-danger "-->
+<!--                           th:errors="*{assistant}"></p>-->
+
+
+<!--                    </div>-->
+
+                    <div class="col-md-12">
+
+                        <input name="tagshosthost" id="tagsHostHost" placeholder="Type host name here .."
+                               th:classappend="${(#fields.hasErrors('host')) ? 'is-invalid' : ''}"
+                               class="form-control hosttags"
+                               th:value="${(host!=null) ? host.firstName + ' ' +host.lastName : ''}">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p th:if="${#fields.hasErrors('host')}" class="label text-danger "
+                           th:errors="*{host}"></p>
+                        <div id="replacehosts">
+                            <select class="form-control rhosts" th:field="*{host}"
+                                    style="margin-top:0px;display: none;"
+                                    th:classappend="${(#fields.hasErrors('host')) ? 'is-invalid' : ''}"
+                            >
+                                <option th:value="''">Select host</option>
+                                <option th:each="type : ${@serviceUtil.getAllColleagues()}"
+                                        th:value="${{type}}"
+
+                                        th:selected="${host!=null && host.id==type.id}"
+                                        th:text="${type.firstName + ' ' + type.lastName}"></option>
+                                </option>
+                            </select><i class="fas fa-exclamation-triangle"></i>
+                            <p th:if="${#fields.hasErrors('host')}" class="label text-danger "
+                               th:errors="*{host}"></p>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox" th:field="*{status}" id="status">
+                            <label for="status">Enabled ?</label>
+                        </div>
+
+                        <p th:if="${#fields.hasErrors('status')}" class="label text-danger "
+                           th:errors="*{status}"></p>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}">
+        <input type="hidden" id="createdHost"
+               th:value="${colleague.firstName +' '+colleague.lastName + '::'+@pathVariableEnc.encrypt(colleague.id)}"
+               th:if="${success}">
+        <input type="hidden" id="ajaxhostList" th:value="${visitorsList}">
+        <div id="replace-hosts">
+            <select class=" width-100 form-control" data-actions-box="true"
+                    name="host" id="host" style="display: none;"
+
+            >
+
+                <option th:each="type : ${@serviceUtil.getAllColleagues()}"
+                        th:value="${{type}}"
+                        th:text="${type.firstName + ' ' + type.lastName}"
+                ></option>
+                </option>
+            </select>
+        </div>
+    </div>
+
+</div>
+</html>

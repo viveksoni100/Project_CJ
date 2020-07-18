@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<th:block layout:fragment="content">
+    <div class="col-md-12">
+        <input type="hidden" id="currentPage" th:value="${pageNo}">
+        <li class="col-md-4" th:each="pub : ${publications}" style="list-style: none !important;">
+            <h2>
+                <p th:text="${pub.publicationTitle}">
+
+                </p>
+            </h2>
+            <img th:src="${'/subuser/publications/tocdetail/' + @pathVariableEnc.encrypt(pub.id)}"></img>
+            <!--<embed th:src="${'/subuser/publications/tocdetail/' + @pathVariableEnc.encrypt(pub.id)}"
+                 alt="">-->
+            <!--<span th:text="${#response.getOutputStream().flush()}"></span>-->
+            <!--th:data="${'/subuser/publications/tocdetail/' + @pathVariableEnc.encrypt(publications.id)-->
+            <!--<embed th:src="${'/subuser/publications/tocdetail/' + @pathVariableEnc.encrypt(publications.id)}" th:width="1000px" th:height="1000px">-->
+        </li>
+    </div>
+</th:block>>
+</html>

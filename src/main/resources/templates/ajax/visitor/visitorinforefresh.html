@@ -1,0 +1,356 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2 visitor" th:with="img=${visitor.image}">
+            <i class="far fa-user ico-user fa-4x bg-gray" th:if="${visitor.image==null || visitor.image==''}"></i>
+            <img class="ico-user fa-4x" th:src="@{'/ajax/visitor/image/'+${@pathVariableEnc.encrypt(visitor.id)}}"
+                 th:if="${visitor.image!=null && visitor.image!=''}"
+            >
+            <a class="edit-icon" href="javascript:void(0);">
+                <i class="fas fa-edit"></i>
+            </a>
+        </div>
+
+        <div class="col-md-10">
+            <div class="row mb-20">
+                <div class="col-md-6">
+                    <h4><b th:text="${visitor.firstName + ' ' + visitor.lastName}">Alex Cooper</b></h4>
+                    <h5 th:text="${(visitor.cmpny!='') ? visitor.cmpny : 'Unknown company'}"></h5>
+                </div>
+                <div class="col-md-6 text-right">
+                    <!--                    <a class="btn btn-vsm btn-primary-outline mb-5">-->
+                    <!--                        Edit-->
+                    <!--                    </a>-->
+                    <button class="btn btn-xs btn-primary edit-visitor mb-5" type="button"
+                            th:if="${@serviceUtil.hasPrivilege(T(com.easelobby.constants.Constants).ROLE_VISITORS_CREATE)}"
+                            th:attr="data-replacecontent='t',data-replacediv='visitorinfo',data-backgroundrefreshurl='/ajax/visitor/info/refresh/'+ ${@pathVariableEnc.encrypt(visitor.id)}+'/'+${@pathVariableEnc.encrypt(visit.id)},data-title='Edit '+${visitor.firstName},data-submiturl='/ajax/visitor/create/'+${@pathVariableEnc.encrypt(visitor.id)},data-url='/ajax/visitor/form/'+${@pathVariableEnc.encrypt(visitor.id)},data-onload=getCounries,data-after=getCounries,data-close=closeOnlyEditVisitorPopup"
+
+                    ><i class="fas fa-pen"></i> Edit
+                    </button>
+                    <br>
+                    <div class="btn-group visit-status">
+                        <th:block th:switch="${visitVisitor.visitStatus}">
+                            <th:block th:case="0">
+                                <button type="button" class="btn btn-secondary btn-sm">
+                                    Scheduled
+                                </button>
+                                <button type="button"
+                                        class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split"
+                                        data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false"><span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                            </th:block>
+                            <th:block th:case="1">
+                                <button type="button" class="btn btn-success btn-sm">Checked
+                                    In
+                                </button>
+                                <button type="button"
+                                        class="btn btn-success btn-sm dropdown-toggle dropdown-toggle-split"
+                                        data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false"><span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                            </th:block>
+                            <th:block th:case="2">
+                                <button type="button" class="btn btn-danger btn-sm">Checked
+                                    Out
+                                </button>
+                                <button type="button"
+                                        class="btn btn-danger btn-sm dropdown-toggle dropdown-toggle-split"
+                                        data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false"><span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                            </th:block>
+
+                        </th:block>
+                        <div class="dropdown-menu" th:style="'display:none;'">
+                            <a class="dropdown-item change-status"
+                               href="javascript:void(0);"
+                               th:attr="data-status='1', data-id=${@pathVariableEnc.encrypt(visitVisitor.id)},data-url='/ajax/visit/change/status',data-after='statusChanged'"
+                            >Change to
+                                checked in</a>
+                            <a class="dropdown-item change-status"
+                               href="javascript:void(0);"
+                               th:attr="data-status='2', data-id=${@pathVariableEnc.encrypt(visitVisitor.id)},data-url='/ajax/visit/change/status',data-after='statusChanged'"
+                            >Change to
+                                checked out</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item edit-visit"
+                               th:attr="data-submiturl=${submiturl +'/'+ @pathVariableEnc.encrypt(visitVisitor.id)},data-url=@{'/ajax/visit/edit/'+ ${@pathVariableEnc.encrypt(visitVisitor.id)}},
+                                            data-title=${vvisit.visitor.firstName+'''s info'},data-size='large',data-after='visitEditLoaded',data-onload='visitEditLoaded'"
+
+                               href="javascript:void(0);">Edit</a>
+                            <a class="dropdown-item edit-visit"
+                               th:attr="data-submiturl=${duplicatesubmiturl},data-url=@{'/ajax/visit/form/'+ ${@pathVariableEnc.encrypt(vvisit.id)}},
+                                            data-title=${vvisit.visitor.firstName+'''s info'},data-size='large',data-after='visitEditLoaded',data-onload='visitEditLoaded'"
+
+                               href="javascript:void(0);">Duplicate</a>
+                            <a class="dropdown-item edit-delete"
+                               th:attr="data-submiturl=@{'/ajax/visit/delete/'+ ${@pathVariableEnc.encrypt(vvisit.id)}},data-title=false,data-size='large',data-after='visitEditLoaded'"
+                               href="javascript:void(0);">Delete</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item add-to-calendar"
+                               th:attr="data-location=${vvisit.visit.location.city +','+vvisit.visit.location.state+','+vvisit.visit.location.country.name},data-start=${vvisit.visit.appointmentDateTime},data-end=${vvisit.visit.checkInDateTime},data-title=${vvisit.visit.title}"
+                               href="javascript:void(0);">Add to calendar</a>
+                        </div>
+                    </div>
+                    <!--<select class="selectpicker" data-show-subtext="false">-->
+                    <!--<option class="check-in" data-icon="fas fa-circle"-->
+                    <!--th:selected="${(visitVisitor.visitStatus==1)}">Checked In-->
+                    <!--</option>-->
+                    <!--<option class="check-out" data-icon="fas fa-circle"-->
+                    <!--th:selected="${(visitVisitor.visitStatus==2)}">Checked Out-->
+                    <!--</option>-->
+                    <!--<option class="expected" data-icon="fas fa-circle"-->
+                    <!--th:selected="${(visitVisitor.visitStatus==0)}">Expected-->
+                    <!--</option>-->
+                    <!--</select>-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <nav>
+                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist" style="position: relative;">
+                            <a class="nav-item nav-link Tabs__tab active" id="nav-home-tab" data-toggle="tab"
+                               href="#visitorDetails" role="tab" aria-controls="nav-home"
+                               aria-selected="true">Details</a>
+                            <a class="nav-item nav-link Tabs__tab" id="nav-profile-tab" data-toggle="tab"
+                               href="#visitorHistory" role="tab" aria-controls="nav-profile" aria-selected="false">Visit
+                                History</a>
+                            <a class="nav-item nav-link Tabs__tab" id="nav-profile-tab" data-toggle="tab"
+                               href="#visitorScheduled" role="tab" aria-controls="nav-profile" aria-selected="false">Visit
+                                Scheduled</a>
+                            <li class="Tabs__presentation-slider" role="presentation"></li>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="visitorDetails" role="tabpanel"
+                             aria-labelledby="nav-home-tab">
+                            <div class="table-responsive">
+                                <table class="table table-fixed">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="2"><b
+                                                th:text="${#temporals.format(visit.getAppointmentDateTime(), 'dd MMMM, YYYY')}"></b>
+                                        </th>
+                                        <th class="text-right" colspan="2"><span th:remove="tag"
+                                                                                 th:text="${#temporals.format(visit.appointmentDateTime, 'hh:mm a')}"></span>
+                                            - <span th:remove="tag"
+                                                    th:text="${#temporals.format(visit.checkInDateTime, 'hh:mm a')}"></span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="4"><b>Host: </b> <i class="far fa-user ico-user"></i> <span
+                                                th:remove="tag"
+                                                th:text="${visit.host.firstName + ' ' + visit.host.lastName}"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td><b>First Visit: </b></td>
+                                        <td th:if="${firstVisit != null}" th:text="${ (firstVisit.getStatusUpdatedtoCheckInAt() != null) ? #temporals.format(firstVisit.getStatusUpdatedtoCheckInAt(), 'MM/dd/yyyy hh:mm a') : 'None yet'}">
+                                            02/14/19
+                                        </td>
+                                        <td th:if="${firstVisit == null}" th:text="${ 'None yet'}">
+                                            02/14/19
+                                        </td>
+                                        <td><b>About: </b></td>
+                                        <td>None yet</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Last Visit: </b></td>
+                                        <td th:if="${lastVisit != null}" th:text="${ (lastVisit.getStatusUpdatedtoCheckInAt() != null) ? #temporals.format(lastVisit.getStatusUpdatedtoCheckInAt(), 'MM/dd/yyyy hh:mm a') : 'None yet'}">
+                                            02/14/19
+                                        </td>
+                                        <td th:if="${lastVisit == null}" th:text="${ 'None yet'}">
+                                            02/14/19
+                                        </td>
+                                        <td><b>Invitation email sent on: </b></td>
+                                        <td>None yet</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Email: </b></td>
+                                        <td th:text="${(!emails.empty) ? emails.getContent().get(0).email : 'Unknown'}"></td>
+                                        <td><b>Text reminder sent on: </b></td>
+                                        <td>Unknown</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Group: </b></td>
+                                        <td>None</td>
+                                        <td><b>Shared in address book: </b></td>
+                                        <td>
+                                            <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Mobile: </b></td>
+                                        <td th:text="${(!phones.empty) ? phones.getContent().get(0).phone : 'Unknown'}"></td>
+                                        <td><b>Remembered in kiosk: </b></td>
+                                        <td>
+                                            <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Language: </b></td>
+                                        <td>English</td>
+                                        <td><b>Agreement/NDA: </b></td>
+                                        <td>Unknown</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Speciality Notes</b></td>
+                                        <td colspan="3" th:text="${visitor.specialityNotes}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="visitorHistory" role="tabpanel"
+                             aria-labelledby="nav-profile-tab">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="checkbox checkbox-primary">
+                                                <input type="checkbox" id="mAll">
+                                                <label for="mAll"></label>
+                                            </div>
+                                        </th>
+                                        <th width="140">Date</th>
+                                        <th>Check-In</th>
+                                        <th>Check-Out</th>
+                                        <th>Host</th>
+                                        <!--<th>Duration</th>-->
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="v : ${visitorVisits}">
+                                        <td>
+                                            <div class="checkbox checkbox-primary">
+                                                <input type="checkbox" id="m1">
+                                                <label for="m1"></label>
+                                            </div>
+                                        </td>
+                                        <td th:text="${#temporals.format(v.visit.getAppointmentDateTime(), 'MM/dd/yyyy')}">
+                                            02/14/19
+                                        </td>
+                                        <td th:text="${#temporals.format(v.visit.getAppointmentDateTime(), 'hh:mm a')}">
+                                            02:30PM
+                                        </td>
+                                        <td th:text="${#temporals.format(v.visit.getCheckInDateTime(), 'hh:mm a')}">
+                                            02:30PM
+                                        </td>
+                                        <td th:text="${v.visit.host.firstName+' ' + v.visit.host.lastName}"></td>
+                                        <!--<td>1 Hour</td>-->
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="visitorScheduled" role="tabpanel"
+                             aria-labelledby="nav-profile-tab">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="checkbox checkbox-primary">
+                                                <input type="checkbox" id="mAll">
+                                                <label for="mAll"></label>
+                                            </div>
+                                        </th>
+                                        <th width="140">Date</th>
+                                        <th>Check-In</th>
+                                        <th>Check-Out</th>
+                                        <th>Host</th>
+                                        <!--<th>Duration</th>-->
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="vs : ${visitorVisitsScheduled}">
+                                        <td>
+                                            <div class="checkbox checkbox-primary">
+                                                <input type="checkbox" id="m1">
+                                                <label for="m1"></label>
+                                            </div>
+                                        </td>
+                                        <td th:text="${#temporals.format(vs.visit.getAppointmentDateTime(), 'MM/dd/yyyy')}">
+                                            02/14/19
+                                        </td>
+                                        <td th:text="${#temporals.format(vs.visit.getAppointmentDateTime(), 'hh:mm a')}">
+                                            02:30PM
+                                        </td>
+                                        <td th:text="${#temporals.format(vs.visit.getCheckInDateTime(), 'hh:mm a')}">
+                                            02:30PM
+                                        </td>
+                                        <td th:text="${vs.visit.host.firstName+' ' + vs.visit.host.lastName}"></td>
+                                        <!--<td>1 Hour</td>-->
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $('.selectpicker').selectpicker();
+
+    var tabs = document.getElementsByClassName('Tab');
+    Array.prototype.forEach.call(tabs, function (tab) {
+        tab.addEventListener('click', setActiveClass);
+    });
+
+    function setActiveClass(evt) {
+        Array.prototype.forEach.call(tabs, function (tab) {
+            tab.classList.remove('active');
+        });
+        evt.currentTarget.classList.add('active');
+    }
+
+    function setTabSlider(ele) {
+        var eleWidth = ele.outerWidth();
+        var position = ele.position();
+        ele.parent('.nav-tabs').find('.Tabs__presentation-slider').css({
+            "left": position.left,
+            "width": eleWidth
+        });
+    }
+
+    var tabEle = $('.Tabs__tab.active:first');
+    setTabSlider(tabEle);
+
+    $('.Tabs__tab').click(function () {
+        setTabSlider($(this));
+    });
+
+
+    $('.edit-icon').click(function () {
+        $.dialog({
+            title: 'Upload/Edit Photo',
+            content: 'url:edit-photo.html',
+            onContentReady: function () {
+                var self = this;
+            },
+            columnClass: 'col-md-6',
+            closeIcon: true,
+            buttons: {}
+        });
+    });
+
+
+</script>

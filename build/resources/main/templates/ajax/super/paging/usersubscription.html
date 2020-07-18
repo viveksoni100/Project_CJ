@@ -1,0 +1,18 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div class="dataTables_wrapper dt-bootstrap4">
+    <div class="row m-0">
+        <Div class="col-sm-12">
+            <form th:action="@{${pagingUrl}}"
+                  th:attr="data-baseurl=${pagingUrl},data-formname='usersList',data-replacediv='replace'"
+                  id="usersList" class="paging" autocomplete="off">
+
+
+            </form>
+        </div>
+    </Div>
+    <div th:remove="tag" th:include="layouts/paging :: paging"
+         th:with="pageObj=${usersubscription},replaceDiv='replace',formName='usersList', pagingUrl=${pagingUrl}"></div>
+
+</div>

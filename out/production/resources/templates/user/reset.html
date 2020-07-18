@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<div layout:fragment="content" id="page_content">
+
+    <style>
+        .correct-ins{
+            color: green;
+            text-decoration: line-through;
+        }
+    </style>
+
+    <div class="container-fluid">
+        <div class="row mar-tb15 middle">
+            <div class="col-md-6">
+                <h5 class="uppercase themecolor mb-0"> Reset password</h5>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="">
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>
+                            <form method="post" th:action="@{'/forgot/password/token'}" th:object="${resetPasswordForm}"
+                            th:if="${!expired}"
+                            >
+                                <div class="form-group">
+
+                                    <input type="password" th:field="*{password}"  id="pass" name="pass" placeholder="Password"
+                                           th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}"
+                                    >
+                                    <i class="fa fa-thumbs-o-up col-md-1" id="correct1" style="color:green; display:none;font-size: 22px;margin-top: 3px;"></i>
+                                    <div th:if="${#fields.hasErrors('password')}" class="label text-danger "
+                                       th:errors="*{password}"></div>
+
+                                    <h6 id="ins1">Atleast 1 uppercase letter (A-Z)</h6>
+                                    <h6 id="ins2">Atleast 1 number (0-9)</h6>
+                                    <h6 id="ins3">Atleast 8 characters</h6>
+
+                                    <input type="hidden" th:field="*{token}">
+                                    <input type="hidden" th:field="*{uid}">
+
+                                </div>
+                                <div class="form-group">
+
+                                    <input type="password" th:field="*{resetPassword}" id="cpass" name="cpass" placeholder="Retype password"
+                                           th:classappend="${#fields.hasErrors('resetPassword') ? 'is-invalid' : ''}"
+                                    >
+                                    <i class="fa fa-thumbs-o-up col-md-1" id="correct2" style="color:green; display:none;font-size: 22px;margin-top: 3px;"></i>
+                                    <i class="fa fa-thumbs-o-down col-md-1" id="wrong" style="color:green; display:none;font-size: 22px;margin-top: 3px;"></i>
+                                    <br><p id="msg" class="row" style="color:red; font-size:18px; display: none">Passwords do not match</p>
+                                    <div th:if="${#fields.hasErrors('resetPassword')}" class="label text-danger "
+                                       th:errors="*{resetPassword}"></div>
+
+                                </div>
+                                <div class="form-group">
+
+                                    <button type="submit" class="btn btn-primary btn-sm">Reset</button>
+
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+
+    </div>
+</div>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/easeClick-theme/js/paging.js}"></script>
+
+    <script type="text/javascript">
+        $("#cpass").on('keyup', function(e) {
+            if($("#cpass").val()===$("#pass").val()){
+                $('#cpass').css('border-color', 'green');
+                $('#cpass').css('color', 'green');
+                $('#correct2').css('display','block');
+                $('#wrong').css('display','none');
+                $('#msg').css('display','none');
+                $('#btn').removeAttr('disabled');
+            }else{
+                $('#cpass').css('border-color', 'red');
+                $('#cpass').css('color', 'red');
+                $('#correct2').css('display','none');
+                $('#wrong').css('display','block');
+                $('#wrong').css('color','red');
+                $('#msg').css('display','block');
+                $('#btn').attr('disabled','disabled');
+            }
+        });
+        $("#pass").on('keyup', function(e) {
+            var u = 0;
+            var n = 0;
+            var l = 0;
+            var text = document.getElementById("pass").value;
+            if(e.keyCode == 8 || e.keyCode == 46){
+                //var text = document.getElementById("pass").value;
+                for(ch of text) {
+                    if($.isNumeric(ch))
+                        n=1;
+
+                    if(isUpperCase(ch))
+                        u=1;
+                }
+                if(n==0)
+                    $("#ins2").removeClass("correct-ins");
+                else
+                    $("#ins2").addClass("correct-ins");
+
+                if(u==0)
+                    $("#ins1").removeClass("correct-ins");
+                else
+                    $("#ins1").addClass("correct-ins");
+            }
+            for(c of text) {
+                if($.isNumeric(c))
+                    n=1;
+
+                if(isUpperCase(c))
+                    u=1;
+
+                if(n==0)
+                    $("#ins2").removeClass("correct-ins");
+                else
+                    $("#ins2").addClass("correct-ins");
+
+                if(u==0)
+                    $("#ins1").removeClass("correct-ins");
+                else
+                    $("#ins1").addClass("correct-ins");
+            }
+            if($("#pass").val().length >= 8){
+                $("#ins3").addClass("correct-ins");
+                l=1;
+            }
+            else{
+                $("#ins3").removeClass("correct-ins");
+                l=0;
+            }
+            if(u==1 && l==1 && n==1){
+                $('#pass').css('border-color', 'green');
+                $('#pass').css('color', 'green');
+                $('#correct1').css('display','block');
+            }else{
+                $('#pass').css('border-color', 'none');
+                $('#pass').css('color', 'none');
+                $('#correct1').css('display','none');
+            }
+            function isUpperCase(str) {
+                if($.isNumeric(str)){
+                    return false;
+                }
+                return str === str.toUpperCase();
+            }
+        });
+    </script>
+
+</th:block>
+</html>

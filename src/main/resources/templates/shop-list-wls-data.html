@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{layouts/main}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Ereaders Shop List WLS</title>
+
+    <!-- Css Files -->
+    <link href="front/css/bootstrap.css" rel="stylesheet">
+    <link href="front/css/font-awesome.css" rel="stylesheet">
+    <link href="front/css/flaticon.css" rel="stylesheet">
+    <link href="front/css/slick-slider.css" rel="stylesheet">
+    <link href="front/css/fancybox.css" rel="stylesheet">
+    <link href="front/css/style.css" rel="stylesheet">
+    <link href="front/css/color.css" rel="stylesheet">
+    <link href="front/css/responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<th:block layout:fragment="content">
+
+    <!--// Main Wrapper \\-->
+    <div class="ereaders-main-wrapper">
+
+        <!--// SubHeader \\-->
+        <div class="ereaders-subheader">
+            <div class="ereaders-subheader-text">
+                <span class="ereaders-subheader-transparent"></span>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 style="margin-top: 10px;">Data List</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--// SubHeader \\-->
+
+        <!--// Main Content \\-->
+        <div class="ereaders-main-content" style="padding: 0px 0px 60px 0px;">
+
+            <!--// Main Section \\-->
+            <div class="ereaders-main-section">
+                <div class="container">
+                    <div class="row">
+
+                        <!--// Sidebar \\-->
+                        <aside class="col-md-3">
+
+                            <div class="widget widget_cetagories widget_border" style="margin-top: 30px;">
+                                <h2 class="ereaders-widget-title">Categories</h2>
+
+                                <ul>
+                                    <li>
+                                        <a th:href="@{'/daas/Data/all'}" th:text="All"></a>
+                                    </li>
+                                    <li th:each="category:${datacategories}">
+                                        <a th:href="@{'/daas/Data/' +${category.id}}"
+                                           th:text="${category.productCategory.productCategoryName}"></a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="widget widget_cetagories widget_border" style="margin-top: 30px;">
+                                <h2 class="ereaders-widget-title">Price</h2>
+
+                                <ul>
+                                    <li>
+                                        <form th:action="@{${pagingUrl}}" th:object="${productSearch}">
+                                            <div class="form-group mt-5">
+                                                <div class="form-control">
+                                                    <input type="text" id="rangePrimary" value=""/>
+                                                    <p id="priceRangeSelected"></P>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <div>
+                                                <input id="minPrice" name="minPrice" th:field="*{minPrice}"
+                                                       hidden="hidden">
+                                                <input id="maxPrice" name="maxPrice" th:field="*{maxPrice}"
+                                                       hidden="hidden">
+                                                <label><input type="submit" value="Apply"
+                                                              class="btn btn-primary"></label>
+                                            </div>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="widget widget_cetagories widget_border" style="margin-top: 30px;">
+                                <h2 class="ereaders-widget-title">Added</h2>
+                                <form th:action="@{${pagingUrl}}">
+                                    <select class="form-control" name="timeAdded" id="timeAdded"
+                                            onchange="this.form.submit()">
+                                        <option value="week">This Week</option>
+                                        <option value="month">This Month</option>
+                                        <option value="year">This Year</option>
+                                        <option value="all" selected="selected">All Time</option>
+                                    </select>
+                                </form>
+                            </div>
+
+                        </aside>
+
+                        <div class="col-md-9">
+                            <div class="ereaders-shop-filter" style="padding: 40px 18px 0px 30px; margin-top: 30px;">
+                                <div class="widget widget_search">
+                                    <form th:action="@{${pagingUrl}}" th:object="${productSearch}">
+                                        <input value="Search" onblur="if(this.value == '') { this.value ='Search'; }"
+                                               onfocus="if(this.value =='Search') { this.value = ''; }" tabindex="0"
+                                               type="text" style="width: 780px;"
+                                               th:field="${productSearch.productName}">
+                                        <label><input type="submit" value=""></label>
+                                    </form>
+                                </div>
+                                <div class="widget widget_sort_price">
+                                    <form th:action="@{${pagingUrl}}">
+                                        <div class="row">
+                                            <label>Sort by:</label>
+                                            <select class="form-control" name="sortProductBy" id="sortProductBy"
+                                                    onchange="this.form.submit()">
+                                                <option value="productPriceAsc">Price -- Low to High</option>
+                                                <option value="productPriceDesc">Price -- High to Low</option>
+                                                <option value="createdAt">Newest Added</option>
+                                                <option value="updatedAt">Last Updated</option>
+                                                <option value="none" selected="selected">None</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="home">
+                                    <div class="ereaders-shop ereaders-shop-list">
+                                        <ul class="row">
+                                            <li th:if="${daasDatas.empty}" style="font-weight: bold; margin-left: 40px;"
+                                                th:text="${'Sorry! No items to show in this category.'}"/>
+                                            <li th:each="daasData : ${daasDatas}" class="col-md-12"
+                                                style="list-style: none; border: 1px solid #ececec; padding: 20px 20px 20px 20px;"
+                                                sec:authorize="isAnonymous()">
+
+                                                <figure>
+                                                    <!--<span>sale</span>-->
+                                                    <!--th:src="@{${@environment.getProperty('daas.filepath')+'/'+daasData.productId+'/'+daasData.productThumbnailName}}"-->
+                                                    <!--<a href="shop-detail.html">-->
+                                                    <img
+                                                            style="width: 267px; height: 270px;"
+                                                            th:if="${@serviceUtil.isThumbnailNull(daasData) == true}"
+                                                            th:src="@{/front/images/product_img_default_no_border.png}"
+                                                            alt="">
+                                                    <img
+                                                            style="width: 267px; height: 270px;"
+                                                            th:if="${@serviceUtil.isThumbnailNull(daasData) == false}"
+                                                            th:src="@{${'/daas/downloadFile/' + daasData.productId + '/' + daasData.productThumbnailName}}"
+                                                            alt="">
+                                                    <!--</a>-->
+                                                    <figcaption>
+                                                        <!--<a href="#" class="icon ereaders-shopping-bag"
+                                                           data-toggle="tooltip"
+                                                           title="Add To Cart"></a>-->
+                                                        <!--<a th:href="@{'/addToWishlist?pid=' + ${daasData.id} + '&productType=1'}" class="icon ereaders-add" data-toggle="tooltip"
+                                                           title="Add To Wishlist"></a>-->
+                                                        <a th:attr="data-url=@{'/moreinfo/data/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
+                                                           href="javascript:void(0);"
+                                                           class="icon ereaders-idea"
+                                                           data-toggle="tooltip"
+                                                           title="More Info"></a>
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="ereaders-shop-list-text">
+                                                    <h2 style="font-size: 20px;"
+                                                        th:text="${daasData.getProductName()}"/>
+                                                    <span th:text="${'$' + daasData.getProductPrice() + '  / year'}"/>
+                                                    <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),50)}"/>
+                                                    <a th:attr="data-url=@{'/moreinfo/data/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
+                                                       href="javascript:void(0);" class="readmore">read more</a>
+                                                    <br/>
+                                                    <p th:text="'Last updated on: '+${#temporals.format(daasData.createdAt,'dd-MM-yyyy')}"></p>
+                                                    <input type="hidden" th:value="${daasData.getProductId()}"
+                                                           id="productIdUnauthorised" name="productId"/>
+                                                    <br><br>
+                                                    <!--<a th:href="@{'/login'}"
+                                                       class="btn btn-primary" style="width: 40%">Add To Cart&lt;!&ndash; <i
+                                                            class="icon ereaders-shopping-bag"></i>&ndash;&gt;</a>-->
+                                                    <a th:href="@{'/addtocart/' +${daasData.id}}"
+                                                       th:if="${@serviceUtil.isAvailableInCart(daasData.id, #request) == false}"
+                                                       class="btn btn-primary"
+                                                       style="width: 40%" id="btnAddToCart">Add To Cart<!-- <i
+                                                            class="icon ereaders-shopping-bag"></i>--></a>
+                                                    <a th:href="@{'/getCartPage'}"
+                                                       th:if="${@serviceUtil.isAvailableInCart(daasData.id, #request) == true}"
+                                                       class="btn btn-primary"
+                                                       style="width: 40%"
+                                                    >Added in Cart</a>
+                                                </div>
+
+                                            </li>
+
+                                            <!--if not already added to cart-->
+                                            <li th:each="daasData : ${daasDatas}" class="col-sm-12"
+                                                style="list-style: none; border: 1px solid #ececec; padding: 20px 20px 20px 20px;"
+                                                sec:authorize="isAuthenticated()">
+                                                <figure>
+                                                    <!--<span>sale</span>-->
+                                                    <!--<a href="shop-detail.html">-->
+                                                    <img
+                                                            style="width: 267px; height: 270px;"
+                                                            th:if="${@serviceUtil.isThumbnailNull(daasData) == true}"
+                                                            th:src="@{/front/images/product_img_default_no_border.png}"
+                                                            alt="">
+                                                    <img
+                                                            style="width: 267px; height: 270px;"
+                                                            th:if="${@serviceUtil.isThumbnailNull(daasData) == false}"
+                                                            th:src="@{${'/daas/downloadFile/' + daasData.productId + '/' + daasData.productThumbnailName}}"
+                                                            alt="">
+                                                    <!--</a>-->
+                                                    <figcaption>
+                                                        <!--<a href="#" class="icon ereaders-shopping-bag"
+                                                           data-toggle="tooltip"
+                                                           title="Add To Cart"></a>-->
+                                                        <!--<a th:href="@{'/addToWishlist?pid=' + ${daasData.id} + '&productType=1'}" class="icon ereaders-add" data-toggle="tooltip"
+                                                           title="Add To Wishlist"></a>-->
+                                                        <a th:attr="data-url=@{'/moreinfo/data/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
+                                                           href="javascript:void(0);"
+                                                           class="icon ereaders-idea"
+                                                           data-toggle="tooltip"
+                                                           title="More Info"></a>
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="ereaders-shop-list-text">
+                                                    <h2 style="font-size: 20px;"
+                                                        th:text="${daasData.getProductName()}"/>
+                                                    <span th:text="${'$' + daasData.getProductPrice() + '  / year'}"/>
+                                                    <p th:utext="${#strings.abbreviate(daasData.getProductDescription(),50)}"/>
+                                                    <a th:attr="data-url=@{'/moreinfo/data/' + ${daasData.id}}, data-size='medium', data-title='Detailed info of this product', data-reload='true'"
+                                                       href="javascript:void(0);" class="readmore">read more</a>
+                                                    <br/>
+                                                    <p th:text="'Last updated on: '+${#temporals.format(daasData.createdAt,'dd-MM-yyyy')}"></p>
+                                                    <!--<input type="hidden" th:value="${daasData.getProductId()}"
+                                                           id="productIdAuthorised" name="productId"/>-->
+                                                    <br><br>
+                                                    <!--if not already added to cart-->
+                                                    <!--class="ereaders-simple-btn ereaders-bgcolor"-->
+                                                    <a th:href="@{'/addtocart/' +${daasData.id}}"
+                                                       th:if="${@serviceUtil.isAvailableInCart(daasData.id, #request) == false and @serviceUtil.isAvailableInOrder(daasData.id) == false}"
+                                                       class="btn btn-primary"
+                                                       style="width: 40%"
+                                                       id="btnAddToCart">Add To Cart<!-- <i
+                                                            class="icon ereaders-shopping-bag"></i>--></a>
+                                                    <!--if already added to cart-->
+                                                    <a th:href="@{'/getCartPage'}"
+                                                       th:if="${@serviceUtil.isAvailableInCart(daasData.id, #request) == true and @serviceUtil.isAvailableInOrder(daasData.id) == false}"
+                                                       class="btn btn-primary"
+                                                       style="width: 40%"
+                                                    >Added in Cart</a>
+                                                    <!--if in order but not in cart-->
+                                                    <a th:href="@{'/downloadRequest/'+${daasData.id}}"
+                                                       th:if="${@serviceUtil.isAvailableInCart(daasData.id, #request) == false and @serviceUtil.isAvailableInOrder(daasData.id) == true}"
+                                                       class="btn btn-primary"
+                                                       style="width: 40%"
+                                                    >Download <i class="icon ereaders-download-content"></i></a>
+                                                </div>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+
+
+                                    <div class="ereaders-pagination">
+                                        <ul class="page-numbers">
+
+                                            <li th:if="${daasDatas.hasPrevious()}"><a class="previous page-numbers"
+                                                                                      th:href="@{${pagingUrl}(size=${daasDatas.size}, page=${daasDatas.number-1})}"
+                                            ><span aria-label="Next"><i
+                                                    class="icon ereaders-arrow-point-to-right"></i></span></a>
+                                            </li>
+                                            <li class="page-numbers" th:if="${daasDatas.totalPages>0}"
+                                                th:each="pageNumber : ${pageNumbers}">
+                                                <a th:class="${pageNumber==daasDatas.number + 1} ? active"
+                                                   th:th:text="${pageNumber}"
+                                                   th:href="@{${pagingUrl}(size=${daasDatas.size}, page=${pageNumber-1})}"
+                                                ></a>
+                                            </li>
+                                            <li th:if="${daasDatas.hasNext()}"><a class="next page-numbers"
+                                                                                  th:href="@{${pagingUrl}(size=${daasDatas.size}, page=${daasDatas.number+1})}"
+                                            ><span aria-label="Next"><i
+                                                    class="icon ereaders-arrow-point-to-right"></i></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!--
+                                                                        <div class="ereaders-pagination">
+                                                                            <ul class="page-numbers" >
+
+                                                                                <li class="ereaders-pagination page-numbers"
+                                                                                    th:if="${daasDatas.hasPrevious()}">
+                                                                                    <a th:href="@{/daas/Data(size=${daasDatas.size}, page=${daasDatas.number-1})}"
+                                                                                       th:text="Previous"></a>
+                                                                                </li>
+
+                                                                                <li class="ereaders-pagination page-numbers" th:if="${daasDatas.hasNext()}">
+                                                                                    <a th:href="@{/daas/Data(size=${daasDatas.size}, page=${daasDatas.number+1})}"
+                                                                                       th:text="Next"></a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                    -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--// Main Section \\-->
+
+    </div>
+    <!--// Main Content \\-->
+
+    <div class="clearfix"></div>
+
+    </div>
+    <!--// Main Wrapper \\-->
+
+    <!-- jQuery (necessary for JavaScript plugins) -->
+    <script type="text/javascript" src="script/jquery.js"></script>
+    <script type="text/javascript" src="script/jquery-ui.js"></script>
+    <script type="text/javascript" src="script/bootstrap.min.js"></script>
+    <script type="text/javascript" src="script/slick.slider.min.js"></script>
+    <script type="text/javascript" src="script/fancybox.pack.js"></script>
+    <script type="text/javascript" src="script/isotope.min.js"></script>
+    <script type="text/javascript" src="script/progressbar.js"></script>
+    <script type="text/javascript" src="script/jquery.countdown.min.js"></script>
+    <script type="text/javascript" src="script/circle-chart.js"></script>
+    <script type="text/javascript" src="script/numscroller.js"></script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs_m2ywm-bE8z9YM_WmtPaIQNIosN4Dxo&callback=initMap"></script>
+    <script type="text/javascript" src="script/functions.js"></script>
+
+    <!--Plugin CSS file with desired skin-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
+
+    <!--jQuery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!--Plugin JavaScript file-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+
+
+    <script>
+        $(document).on("click", "#btnAddToCart", function () {
+            var self = $(this);
+            self.html('Adding . . .');
+        });
+
+        $("#rangePrimary").ionRangeSlider({
+            type: "double",
+            grid: true,
+            min: 0,
+            max: 100000,
+            from: 0,
+            to: 100000,
+            prefix: "$"
+        });
+
+        $("#rangePrimary").on("change", function () {
+            var $this = $(this),
+                value = $this.prop("value").split(";");
+            var minPrice = value[0];
+            var maxPrice = value[1];
+            $("#minPrice").val(minPrice);
+            $("#maxPrice").val(maxPrice);
+        });
+
+    </script>
+
+</th:block>
+</body>
+</html>

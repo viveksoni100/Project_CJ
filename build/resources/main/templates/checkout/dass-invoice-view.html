@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GTD Invoice</title>
+    <style type="text/css">
+        @import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,900,700,500,300,100);
+        *{
+            margin: 0;
+            box-sizing: border-box;
+
+        }
+        body{
+            background: #E0E0E0;
+            font-family: 'Roboto', sans-serif;
+            background-image: url('');
+            background-repeat: repeat-y;
+            background-size: 100%;
+        }
+        ::selection {background: #f31544; color: #FFF;}
+        ::moz-selection {background: #f31544; color: #FFF;}
+        h1{
+            font-size: 1.5em;
+            color: #222;
+        }
+        h2{font-size: .9em;}
+        h3{
+            font-size: 1.2em;
+            font-weight: 300;
+            line-height: 2em;
+        }
+        p{
+            font-size: 12px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        #invoiceholder{
+            width:100%;
+            height: 100%;
+            padding-top: 50px;
+        }
+        #headerimage{
+            z-index:-1;
+            position:relative;
+            top: -50px;
+            height: 350px;
+            background-image: url('http://michaeltruong.ca/images/invoicebg.jpg');
+            /*background-image: url('https://raw.githubusercontent.com/viveksoni100/images.blogs/master/other/blue-blank-world-map-vector-21528491.jpg');*/
+
+            -webkit-box-shadow:inset 0 2px 4px rgba(0,0,0,.15), inset 0 -2px 4px rgba(0,0,0,.15);
+            -moz-box-shadow:inset 0 2px 4px rgba(0,0,0,.15), inset 0 -2px 4px rgba(0,0,0,.15);
+            box-shadow:inset 0 2px 4px rgba(0,0,0,.15), inset 0 -2px 4px rgba(0,0,0,.15);
+            overflow:hidden;
+            background-attachment: fixed;
+            background-size: 1920px 80%;
+            background-position: 50% -90%;
+            display: block;
+        }
+        #invoice{
+            position: relative;
+            top: -290px;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 700px;
+            background: #FFF;
+        }
+
+        [id*='invoice-']{ /* Targets all id with 'col-' */
+            border-bottom: 1px solid #EEE;
+            padding: 15px 20px;
+        }
+
+        #invoice-top{
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+        }
+        #invoice-mid{
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+        }
+        #invoice-bot{ min-height: 250px;}
+
+        .logo{
+            float: left;
+            height: 80px;
+            width: 220px;
+            margin-left: 0;
+            background: url(https://raw.githubusercontent.com/viveksoni100/images.blogs/master/other/daas-logo.png) no-repeat;
+            background-size: contain;
+            background-position: -22px 100%;
+        }
+        .clientlogo{
+            float: left;
+            height: 60px;
+            width: 60px;
+            background: url(http://michaeltruong.ca/images/client.jpg) no-repeat;
+            background-size: 60px 60px;
+            border-radius: 50px;
+        }
+        .info{
+            display: block;
+            float:left;
+            margin-left: 20px;
+        }
+        .title{
+            float: right;
+            text-align: right;
+            flex: 1 0 auto;
+        }
+        .title p{text-align: right;}
+        #project{margin-left: 0;text-align: right;flex: 1 0 auto;}
+        table{
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td{
+            padding: 5px 10px;
+            border: 1px solid #EEE
+        }
+        .tabletitle{
+            padding: 5px;
+            background: #EEE;
+        }
+        .service{border: 1px solid #EEE;}
+        .item{width: 50%;}
+        .itemtext{font-size: 13px;}
+
+        #legalcopy{
+            margin-top: 30px;
+        }
+        form{
+            float:right;
+            margin-top: 30px;
+            text-align: right;
+        }
+
+
+        .effect2
+        {
+            position: relative;
+        }
+        .effect2:before, .effect2:after
+        {
+            z-index: -1;
+            position: absolute;
+            content: "";
+            bottom: 15px;
+            left: 10px;
+            width: 50%;
+            top: 80%;
+            max-width:300px;
+            background: #777;
+            -webkit-box-shadow: 0 15px 10px #777;
+            -moz-box-shadow: 0 15px 10px #777;
+            box-shadow: 0 15px 10px #777;
+            -webkit-transform: rotate(-3deg);
+            -moz-transform: rotate(-3deg);
+            -o-transform: rotate(-3deg);
+            -ms-transform: rotate(-3deg);
+            transform: rotate(-3deg);
+        }
+        .effect2:after
+        {
+            -webkit-transform: rotate(3deg);
+            -moz-transform: rotate(3deg);
+            -o-transform: rotate(3deg);
+            -ms-transform: rotate(3deg);
+            transform: rotate(3deg);
+            right: 10px;
+            left: auto;
+        }
+
+        .legal{
+            width:70%;
+        }
+        .tabletitle td, .service td {text-align: center;}
+        .tabletitle td:first-child, .service td:first-child {text-align: left;}
+        .tabletitle td:last-child, .service td:last-child {text-align: right;}
+        .inv-vw-btm{text-align: center; margin: 20px 0; width: 100%;}
+        .inv-vw-btm a {text-decoration: none;margin-top: 10px;display: block;font-size: 13px;color: #0478c0;font-weight: 400;}
+
+        @media  screen and (max-width:640px) {
+            #invoice{width: 98%}
+            [id*='invoice-']{padding: 10px;}
+            #invoice-top,#invoice-mid {min-height: inherit;}
+            .title {float: none;display: inline-block;text-align: right;}
+            .title h1 {font-size: 18px;}
+            .clientlogo{float: none;height: 50px;width: 50px;background-size: contain;border-radius: 100px;margin: 0;display: inline-block;position: relative;top: 0; display: none}
+            #project{margin-left: 0;clear: both; display: block;margin-top: 0;}
+            #invoice-mid{text-align: center;}
+            .info {display: inline-block;float: none;margin-left: 0;text-align: left;}
+            #table {overflow-x: auto;}
+            #table td{padding: 5px;font-size: 12px;min-width: 90px;}
+            .logo{height: 60px;width: 140px;background-position: -15px center;position: relative;left: 0;}
+        }
+    </style>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="invoiceholder" class="invoic-gnrat-blk">
+
+    <div id="headerimage"></div>
+    <div id="invoice" class="effect2">
+
+        <div id="invoice-top">
+            <div class="logo"></div>
+            <div class="info">
+                <!--<h2>Global Trade Data</h2>
+                <p> info@globalvoxinc.com </br>
+                    +1 559 856 2171 (USA) </br>
+                    +91 92274 57113 (India)
+                </p>-->
+            </div><!--End Info-->
+            <div class="title">
+                <h1 th:text="${'Invoice #' + order.id}"></h1>
+                <p th:text="${'Transaction ID : ' + order.getTransactionNumber()}"></p>
+                <p th:text="${'Purchased Date : ' + #temporals.day(order.getPurchaseDate()) + '-' + #temporals.monthNameShort(order.getPurchaseDate()) + '-' + #temporals.year(order.getPurchaseDate())}"></p>
+            </div><!--End Title-->
+        </div><!--End InvoiceTop-->
+
+
+
+        <div id="invoice-mid">
+
+            <div class="clientlogo"></div>
+            <div class="info">
+                <h2 th:text="${user.getFirstName() + ' ' + user.getLastName()}">Client Name</h2>
+                <p th:text="${order.getEmailId()}"></p>
+                <p th:text="${user.getPhone()}"></p>
+            </div>
+
+            <div id="project">
+                <h2>Global Trade Data</h2>
+                <p>info@globalvoxinc.com </p>
+                <p>+1 559 856 2171 (USA) </p>
+                <p>+91 92274 57113 (India)</p>
+            </div>
+
+        </div><!--End Invoice Mid-->
+
+        <div id="invoice-bot">
+
+            <div id="table">
+                <table>
+                    <tr class="tabletitle">
+                        <td class="item"><h2>Product Name</h2></td>
+                        <td class="Hours"><h2>Qty</h2></td>
+                        <td class="Rate"><h2>Price</h2></td>
+                        <td class="subtotal"><h2>Valid till</h2></td>
+                        <td class="subtotal"><h2>Total</h2></td>
+                    </tr>
+
+                    <tr class="service" th:each="product : ${productDetails}">
+                        <td class="tableitem"><p class="itemtext" th:text="${product.getProductName()}"></p></td>
+                        <td class="tableitem"><p class="itemtext" th:text="${product.productQty}"></p></td>
+                        <td class="tableitem" th:if="${product.getProduct().getProductPrice() == 0}" ><p class="itemtext" th:text="${'$'+#numbers.formatDecimal(product.getNetPrice() / product.getProductQty(),1,'COMMA',2,'POINT')+'*'}"></p></td>
+                        <td class="tableitem" th:if="${product.getProduct().getProductPrice() != 0}" ><p class="itemtext" th:text="${'$'+#numbers.formatDecimal(product.getProduct().getProductPrice(),0,'COMMA',0,'POINT')}"></p></td>
+                        <td class="tableitem"><p class="itemtext" th:text="${#temporals.day(product.getProductExpiryDate()) + '-' + #temporals.monthNameShort(product.getProductExpiryDate()) + '-' + #temporals.year(product.getProductExpiryDate())}"></p></td>
+                        <td class="tableitem"><p class="itemtext" th:text="${'$' + #numbers.formatDecimal(product.getNetPrice(),0,'COMMA',2,'POINT')}"></p></td>
+                    </tr>
+
+                    <tr class="tabletitle">
+                        <td class="Rate"><h2 th:text="${'Grand Total $' + #numbers.formatDecimal(order.getNetPrice(),0,'COMMA',2,'POINT')}"></h2></td>
+                        <td colspan="4"><h2 th:text="${orderNetPriceInWords + ' USD'}"></h2></td>
+                    </tr>
+                </table>
+                <label style="float: left" th:if="${@serviceUtil.isAPIPresentInUsersOrder(productDetails) == true}">* Average price per API call</label>
+            </div><!--End Table-->
+
+            <!-- <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+              <input type="hidden" name="cmd" value="_s-xclick">
+              <input type="hidden" name="hosted_button_id" value="QRZ7QTM9XRPJ6">
+              <input type="image" src="http://michaeltruong.ca/images/paypal.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+            </form> -->
+
+
+            <!-- <div id="legalcopy">
+              <p class="legal"><strong>Thank you for your business!</strong>  Payment is expected within 31 days; please process this invoice within that time. There will be a 5% interest charge per month on late invoices.
+              </p>
+            </div> -->
+
+            <div class="inv-vw-btm">
+                <p>© GlobalVox Inc</p>
+                <p>7900 Westpark Drive,<br>Mclean, VA, USA 22102</p>
+                <a href="#">www.globaltradesdata.com</a>
+            </div>
+
+        </div><!--End InvoiceBot-->
+    </div><!--End Invoice-->
+</div><!-- End Invoice Holder-->
+<!-- partial -->
+
+</body>
+</html>

@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      >
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+
+<!--
+
+<th:block layout:fragment="subheader">
+    <div class="ereaders-subheader">
+        &lt;!&ndash;<div class="ereaders-subheader-text">
+            <span class="ereaders-subheader-transparent"></span>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Login here</h1>
+                    </div>
+                </div>
+            </div>
+        </div>&ndash;&gt;
+        &lt;!&ndash;<div class="ereaders-breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul>
+                            <li><a href="index.html">Homepage</a></li>
+                            <li class="active">Login</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>&ndash;&gt;
+    </div>
+</th:block>
+-->
+
+<!--VIVEK-->
+<th:block layout:fragment="content">
+    <style id="compiled-css" type="text/css">
+
+        .slider-2 {
+            padding-top: 7rem;
+            padding-bottom: 7rem;
+            background: url('./front/images/testimonials-background.jpg') center center no-repeat;
+            background-size: cover;
+        }
+
+        .slider-2 .image-container {
+            margin-bottom: 4rem;
+        }
+
+        .slider-2 h2 {
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .slider-2 .slider-container {
+            position: relative;
+        }
+
+        .slider-2 .swiper-container {
+            position: static;
+            width: 90%;
+            text-align: center;
+        }
+
+        .slider-2 .swiper-button-prev:focus,
+        .slider-2 .swiper-button-next:focus {
+            /* even if you can't see it chrome you can see it on mobile device */
+            outline: none;
+        }
+
+        .slider-2 .swiper-button-prev {
+            left: -0.5rem;
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2028%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23626262'%2F%3E%3C%2Fsvg%3E");
+            background-size: 1.125rem 1.75rem;
+        }
+
+        .slider-2 .swiper-button-next {
+            right: -0.5rem;
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2028%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23626262'%2F%3E%3C%2Fsvg%3E");
+            background-size: 1.125rem 1.75rem;
+        }
+
+        .slider-2 .card {
+            position: relative;
+            border: none;
+            background-color: transparent;
+        }
+
+        .slider-2 .card-image {
+            width: 7rem;
+            height: 7rem;
+            margin-right: auto;
+            margin-bottom: 0.25rem;
+            margin-left: auto;
+            border-radius: 50%;
+        }
+
+        .slider-2 .card-body {
+            padding-bottom: 0;
+        }
+
+        .slider-2 .testimonial-author {
+            margin-bottom: 0;
+        }
+
+
+
+
+        :root {
+            --input-padding-x: 1.5rem;
+            --input-padding-y: .75rem;
+        }
+
+        /*body {
+            background: #007bff;
+            background: linear-gradient(to right, #0062E6, #33AEFF);
+        }*/
+
+        .card-signin {
+            border: 0;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .card-signin .card-title {
+            margin-bottom: 2rem;
+            font-weight: 300;
+            font-size: 1.5rem;
+        }
+
+        .card-signin .card-body {
+            padding: 2rem;
+        }
+
+        .form-signin {
+            width: 100%;
+        }
+
+        .form-signin .btn {
+            font-size: 80%;
+            border-radius: 5rem;
+            letter-spacing: .1rem;
+            font-weight: bold;
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-label-group {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .form-label-group input {
+            height: auto;
+            border-radius: 2rem;
+        }
+
+        .form-label-group>input,
+        .form-label-group>label {
+            padding: var(--input-padding-y) var(--input-padding-x);
+        }
+
+        .form-label-group>label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            margin-bottom: 0;
+            /* Override default `<label>` margin */
+            line-height: 1.5;
+            color: #495057;
+            border: 1px solid transparent;
+            border-radius: .25rem;
+            transition: all .1s ease-in-out;
+        }
+
+        .form-label-group input::-webkit-input-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input:-ms-input-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input::-ms-input-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input::-moz-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input::placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input:not(:placeholder-shown) {
+            padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+            padding-bottom: calc(var(--input-padding-y) / 3);
+        }
+
+        .form-label-group input:not(:placeholder-shown)~label {
+            padding-top: calc(var(--input-padding-y) / 3);
+            padding-bottom: calc(var(--input-padding-y) / 3);
+            font-size: 12px;
+            color: #777;
+        }
+
+        .btn-google {
+            color: white;
+            background-color: #ea4335;
+        }
+
+        .btn-facebook {
+            color: white;
+            background-color: #3b5998;
+        }
+
+        /* Fallback for Edge
+        -------------------------------------------------- */
+
+        @supports (-ms-ime-align: auto) {
+            .form-label-group>label {
+                display: none;
+            }
+            .form-label-group input::-ms-input-placeholder {
+                color: #777;
+            }
+        }
+
+        /* Fallback for IE
+        -------------------------------------------------- */
+
+        @media all and (-ms-high-contrast: none),
+        (-ms-high-contrast: active) {
+            .form-label-group>label {
+                display: none;
+            }
+            .form-label-group input:-ms-input-placeholder {
+                color: #777;
+            }
+        }
+
+        /*.login {
+            background: url('./front/extra-images/login-photo.png');
+            background-repeat: no-repeat;
+            height: 100%;
+            background-position: center;
+            background-size: cover;
+            min-height: 100vh;
+        }*/
+
+        @media screen and (min-width:480px) {
+            .middle {
+                display: flex;
+                align-items: center;
+            }
+            .middle.center {
+                justify-content: center;
+            }
+        }
+
+        @media screen and (min-width:980px) {
+            .full-height {
+                min-height: calc(100vh - 50px);
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .login {
+                padding: 30px 0 0;
+            }
+            div[class*="col-"] {
+                margin-bottom: 15px;
+            }
+            .card {
+                padding: 32px 20px;
+            }
+            .login img.logo {
+                width: 75%;
+                height: auto;
+            }
+            .seperator {
+                margin: 20px auto;
+            }
+            .login h1 {
+                font-size: 22px;
+            }
+            input.form-control {
+                margin-bottom: 15px;
+            }
+            div .mb-sm-0 {
+                margin-bottom: 0;
+            }
+            div .mb-sm-10 {
+                margin-bottom: 10px;
+            }
+        }
+
+        /*.login:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: rgba(6, 22, 51, 0.64);
+        }*/
+        footer {
+            background: #f7fdfd;
+            z-index: 1;
+            padding: 0px 0;
+            margin-bottom: 0;
+            position: relative;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /*.footer1-login {
+            z-index: 1;
+            padding: 7px 0;
+            margin-bottom: 0;
+            position: relative;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+        }
+*/
+        .card12 {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
+            transition: 0.3s;
+            border-radius: 18px;
+            margin-left: 10%;
+            background: white;
+        }
+
+        .card12:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+        .container12 {
+            padding: 2px 16px;
+        }
+
+
+        .formclass {
+            padding: 2rem;
+        }
+
+        .form-label {
+            text-align: center;
+            /*text-decoration: underline;*/
+            margin-bottom: 2.5rem;
+        }
+
+        .input-label{
+            font-size: 16px;
+            margin-left: 1.25rem;
+
+        }
+
+        .form-group input[type=email] {
+            height: 5rem;
+            font-size: 2rem;
+            border-radius: 3rem;
+            border: 1px solid #00000050;
+        }
+
+        .form-group input[type=password] {
+            height: 5rem;
+            font-size: 2rem;
+            border-radius: 3rem;
+            border: 1px solid #00000050;
+        }
+
+        .login-button {
+            width: 100%;
+            border-radius: 0.5rem;
+            height: 5rem;
+            font-size: 2rem;
+            background-color: #00aff0;
+        }
+
+        .login-button:hover {
+            width: 100%;
+            border-radius: 0.5rem;
+            height: 5rem;
+            font-size: 2rem;
+            background-color: #000000;
+            color: #FFFFFF;
+        }
+
+        .padding-bottom{
+            padding-bottom: 2rem;
+        }
+    </style>
+
+               <!-- <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-lg-5">
+                                <div class="card12">
+                                    <div class="container12">
+                                        <div class="formclass">
+                                            <div class="siginincard">
+                                                <div class="form-label"><h1 style="font-weight: bold">Sign in</h1></div>
+                                                <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>
+                                                <form th:action="@{/login}" th:object="${user}" method="post">
+                                                    <div class="form-group">
+                                                        <label for="email" class="input-label">Email address</label>
+                                                        <input type="email" class="form-control input-box1" id="email"
+                                                               style="font-size: 16px;"
+                                                               tabindex="0"
+                                                               name="username">
+                                                    </div>
+                                                    <div class="form-group padding-bottom">
+                                                        <label for="password" class="input-label">Password</label>
+                                                        <input class="form-control input-box1"
+                                                               style="font-size: 16px;"
+                                                               autofocus="autofocus"
+                                                               tabindex="0"
+                                                               type="password"
+                                                               id="password"
+                                                               th:field="*{password}"
+                                                               name="password"
+                                                        >
+                                                    </div>
+                                                    <div class="row" style="margin-bottom: 18px; margin-left: 1rem;">
+                                                        <div class="col-md-6">
+                                                            <button type="submit" class="btn btn-primary login-button" style="background-color: #06469E;"
+                                                            >Sign in</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="custom-control mb-3" style="margin-top: 1rem; margin-bottom: 10px;">
+                                                        <span>Don't have an account ? </span><a th:href="@{/register}" id="register" style="font-weight: bold">Register Now</a>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <div class="forgetcard" style="display: none;">
+                                                <div class="form-label"><h1 style="font-weight: bold">Reset Your Password</h1></div>
+                                                <div class="messages" id="invalidEmailBlock" style="display: none">
+                                                    <div style="margin-top:10px;">
+                                                        <div class="alert alert-danger alert-dismissable">
+                                                            <a href="#" class="close no-loading" data-dismiss="alert" aria-label="close">×</a>
+                                                            <i class="fa fa-times"></i> <span>Please enter valid email id<br></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-10">
+                                                    <div class="col-md-12" style="padding-bottom: 1rem; color: #06469E;" >
+                                                        <a href="javascript:void(0);" class="backbtn t-small" style="color: #06469E;">
+                                                            <i class="fa fa-long-arrow-left"></i> Back
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <form class="form-signin" th:action="@{'/forgot/password'}" method="get" onsubmit="return validateEmail(document.getElementById('inputFgEmail'))">
+                                                    <div class="form-group padding-bottom">
+                                                        <input type="email" class="form-control input-box1" id="inputFgEmail"
+                                                               style="font-size: 16px;"
+                                                               placeholder="Email Address"
+                                                               tabindex="0"
+                                                               name="userEmail">
+                                                    </div>
+                                                    <button type="submit" class="btn-primary login-button"
+                                                            style="margin-bottom: 20px; background-color: #06469E; font-size: 17px;">Send Password Reset Link</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> &lt;!&ndash; end of col &ndash;&gt;
+                    </div>
+                </div>-->
+
+
+    <form th:action="@{/login}" th:object="${user}" method="post">
+        <div style="display: flex; justify-content: center; margin-bottom: 5%;">
+        <img class="img-fluid" th:src="@{/front/landingpage/images/global_trade_data_logo.png}"></img>
+        </div>
+        <div class="form-group">
+            <label for="email">Email address:</label>
+            <input type="email" class="form-control input-box1" id="email"
+                   style="font-size: 16px;"
+                   tabindex="0"
+                   name="username">
+        </div>
+        <div class="form-group">
+            <label for="pwd">Password:</label>
+            <input class="form-control input-box1"
+                   style="font-size: 16px;"
+                   autofocus="autofocus"
+                   tabindex="0"
+                   type="password"
+                   id="password"
+                   th:field="*{password}"
+                   name="password"
+            >
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="background-color: #06469E; color: white;">Login</button>
+        <a role="button" class="btn btn-primary" th:href="@{/register}" style="background-color: #06469E; color: white;">Register</a>
+    </form>
+
+
+
+    <!--====== Jquery js ======-->
+    <script th:src="@{/front/landingpage/js/vendor/jquery-1.12.4.min.js}"></script>
+    <script th:src="@{/front/landingpage/js/vendor/modernizr-3.7.1.min.js}"></script>
+
+    <!--====== Bootstrap js ======-->
+    <script th:src="@{/front/landingpage/js/popper.min.js}"></script>
+    <script th:src="@{/front/landingpage/js/bootstrap.min.js}"></script>
+
+    <!--====== Slick js ======-->
+    <script th:src="@{/front/landingpage/js/slick.min.js}"></script>
+
+    <!--====== Magnific Popup js ======-->
+    <script th:src="@{/front/landingpage/js/jquery.magnific-popup.min.js}"></script>
+
+    <!--====== Ajax Contact js ======-->
+    <script th:src="@{/front/landingpage/js/ajax-contact.js}"></script>
+
+    <!--====== Isotope js ======-->
+    <script th:src="@{/front/landingpage/js/imagesloaded.pkgd.min.js}"></script>
+    <script th:src="@{/front/landingpage/js/isotope.pkgd.min.js}"></script>
+
+    <!--====== Scrolling Nav js ======-->
+    <script th:src="@{/front/landingpage/js/jquery.easing.min.js}"></script>
+    <script th:src="@{/front/landingpage/js/scrolling-nav.js}"></script>
+
+    <!--====== Main js ======-->
+    <script th:src="@{/front/landingpage/js/main.js}"></script>
+    <th:block th:insert="layouts/scripts :: scripts"></th:block>
+    <link th:href="@{'/front/jconfirm/confirm.css'}" rel="stylesheet" type="text/css">
+</th:block>
+
+<!--ANAND-->
+<!--<th:block layout:fragment="content">
+
+    <div class="ereaders-main-content ereaders-error-full">
+
+        &lt;!&ndash;// Main Section \\&ndash;&gt;
+        <div class="ereaders-main-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>
+                        <div class="ereaders-error-wrap">
+                            <div class="ereaders-error-text" >
+                                <form th:action="@{/login}" th:object="${user}" method="post"
+                                      style="margin: 0 30px 70px 30px;" class="loginform" autocomplete="disabled">
+                                    <input type="text" name="temp" class="form-control" style="display:none">
+
+
+                                    <div class="form-group">
+                                        <input type="text" name="username" class="form-control"
+                                               placeholder="Email" id="email" autocomplete="new-password"
+                                               autofocus="autofocus">
+                                        <p th:if="${#fields.hasErrors('email')}" class="label error"
+                                           th:errors="*{email}">
+                                            Incorrect LP</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" style="margin-top:10px;"
+                                               id="password" autocomplete="new-password"
+                                               th:field="*{password}" class="form-control" placeholder="Password">
+                                        <p th:if="${#fields.hasErrors('password')}" class="label error"
+                                           th:errors="*{password}">
+                                            Incorrect LP</p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="g-recaptcha"
+                                             data-sitekey="6Ld2Gr8SAAAAABV6gZ_0ZxRS2UggoKgamLJrxleJ"></div>
+                                        <p th:if="${captchaTokenError!=null}" class="label label-danger"
+                                           th:text="${captchaTokenError}">
+                                            Invalid captcha</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row middle">
+                                            <div class="col-md-12 mb-sm-10" style="margin-top:50px;">
+                                                <a href="javascript:void(0);" id="forgetPass"
+                                                   class="t-small t-gray forgotpassword">
+                                                    Forgot Password?</a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <div class="">
+                                            <input type="checkbox" id="check2">
+                                            <label for="check2">Remember password</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row middle">
+
+                                        <div class="col-md-12">
+                                            <button class="btn  btn-primary " type="submit">Login</button>
+                                            <a class="d-flex t-small t-dark mar-15-0 mb-sm-0 btn  btn-success"
+                                               id="register"
+                                               th:href="@{/register}"><b>Register Now</b></a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-sm-0">
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        &lt;!&ndash;// Main Section \\&ndash;&gt;
+
+    </div>
+    &lt;!&ndash;// Main Content \\&ndash;&gt;
+</th:block>-->
+
+<th:block layout:fragment="extrascripts">
+    <script type="text/javascript" th:src="@{/front/script/functions.js}"></script>
+    <script type="text/javascript">
+        $(document).on("click", ".forgotpassword", function (e) {
+            $.confirm({
+                title: 'Forgot password!',
+                content: $("#forgotpassword-form").html(),
+                buttons: {
+                    ok: {
+                        text: 'Send password reset link',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            var email = this.$content.find('#inputFgEmail').val();
+                            if (email != '') {
+                                this.$content.find('#forgot-submit').click();
+                            }else{
+                                this.$content.find('.fp').show();
+                            }
+                            return false;
+                        }
+                    },
+                    cancel: function () {
+                        //close
+                    },
+                },
+
+            });
+        });
+
+        $(document).ready(function () {
+            $('#ereaders-footer').css({
+                "bottom" : "0",
+                "position" : "fixed"
+            });
+        });
+        // Login Script
+        $('#forgetPass').click(function () {
+            $('.siginincard').hide();
+            $('.forgetcard').show();
+        });
+
+
+        $('.backbtn').click(function () {
+            $('.forgetcard').hide();
+            $('.siginincard').show();
+        });
+
+        function isEmail(email) {
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
+        }
+
+        //validation of email address
+        function validateEmail(emailField){
+            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+            if (reg.test(emailField.value) === false)
+            {
+                document.getElementById('invalidEmailBlock').style.display="block";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+    </script>
+    <div style="display: none;" id="forgotpassword-form">
+        <form id="forgotpass" th:action="@{'/forgot/password'}"
+              method="get">
+            <div class="alert alert-danger fp" style="display: none;">Please enter email id</div>
+            <label for="inputFgEmail" class="sr-only">Email</label>
+
+            <input type="email" id="inputFgEmail" name="userEmail"
+                   class="form-control" placeholder="Email"
+                   autofocus="">
+            <input type="submit" id="forgot-submit" style="display: none;">
+        </form>
+    </div>
+
+    <!--VIVEK-CSS-JS-->
+    <!--<script th:src="@{front/script/loginscript.js}"></script>-->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script type="text/javascript" th:src="@{/front/script/functions.js}"></script>
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">-->
+    <!--<link rel="stylesheet" th:href="@{front/css/loginstyle.css}">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+    <!--ANAND-CSS-JS-->
+
+    <!--====== Jquery js ======-->
+    <script th:src="@{/front/landingpage/js/vendor/jquery-1.12.4.min.js}"></script>
+    <script th:src="@{/front/landingpage/js/vendor/modernizr-3.7.1.min.js}"></script>
+
+    <!--====== Bootstrap js ======-->
+    <script th:src="@{/front/landingpage/js/popper.min.js}"></script>
+    <script th:src="@{/front/landingpage/js/bootstrap.min.js}"></script>
+
+    <!--====== Slick js ======-->
+    <script th:src="@{/front/landingpage/js/slick.min.js}"></script>
+
+    <!--====== Magnific Popup js ======-->
+    <script th:src="@{/front/landingpage/js/jquery.magnific-popup.min.js}"></script>
+
+    <!--====== Ajax Contact js ======-->
+    <script th:src="@{/front/landingpage/js/ajax-contact.js}"></script>
+
+    <!--====== Isotope js ======-->
+    <script th:src="@{/front/landingpage/js/imagesloaded.pkgd.min.js}"></script>
+    <script th:src="@{/front/landingpage/js/isotope.pkgd.min.js}"></script>
+
+    <!--====== Scrolling Nav js ======-->
+    <script th:src="@{/front/landingpage/js/jquery.easing.min.js}"></script>
+    <script th:src="@{/front/landingpage/js/scrolling-nav.js}"></script>
+
+    <!--====== Main js ======-->
+    <script th:src="@{/front/landingpage/js/main.js}"></script>
+    <th:block th:insert="layouts/scripts :: scripts"></th:block>
+    <link th:href="@{'/front/jconfirm/confirm.css'}" rel="stylesheet" type="text/css">
+
+</th:block>
+</html>

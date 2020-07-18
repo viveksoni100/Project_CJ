@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="row">
+    <div class="col-md-12">
+
+
+        <div th:replace="layouts/globalmessages :: global-messages">(global-messages)</div>
+        <form th:action="@{/super/category/submit}" th:object="${productcategory}" method="post" th:if="${!success}"
+              id="categoryForm">
+
+
+            <div class="form-group">
+                <div class="form-row">
+
+                    <!--<div class="col-md-12">
+                        <select th:attr="data-control='hue'" th:field="*{categoryType}" class="form-control  minicolors-input" id="categoryType"
+                                th:classappend="${#fields.hasErrors('categoryType') ? 'is-invalid' : ''}"
+                                placeholder="Category Type*"
+                                autofocus="autofocus">
+                            <option value="0" >(Select Category Type)</option>
+                            <option value="API">API Category</option>
+                            <option value="DATA">Data Category</option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('categoryType')}" class="label text-danger "
+                           th:errors="*{categoryType}"></p>
+                    </div>-->
+
+                    <div class="col-md-12">
+                        <div class="checkbox checkbox-primary">
+                            <tr>
+                                <td>
+                                    Category Type* :
+
+                                </td>
+                                <td th:each="type : ${producttype}">
+                                    <input type="radio" name="typeValues" th:value="${type.getProductTypeName()}"
+                                           style="margin-left: 60px;"
+                                           th:checked="${producttype.size()==1}"
+                                           th:readonly="${producttype.size()==1}"/>
+                                    <label th:text="${type.getProductTypeName()}"></label>
+                                </td>
+                            </tr>
+
+<!--                            <p th:if="${#fields.hasErrors('typevalueerror')}" class="label text-danger "
+                               th:errors="*{productCategoryName}"></p>-->
+                        </div>
+
+
+                        <!--                        <div class="checkbox checkbox-primary">
+                                                    Category Type : &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <input type="checkbox" th:field="*{status}" id="datachbox">&nbsp;
+                                                    <label for="status">Data</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <input type="checkbox" th:field="*{status}" id="apichbox">&nbsp;
+                                                    <label for="status">Api</label>
+                                                </div>-->
+
+                        <!--                        <p th:if="${#fields.hasErrors('status')}" class="label text-danger "
+                                                   th:errors="*{status}"></p>-->
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+
+                        <label style="width: 35%; margin-top: 5px;">Category Name* : </label>
+
+                        <input type="text" th:attr="data-control='hue'" th:field="*{productCategoryName}"
+                               style="width: 65%; float: right;"
+                               class="form-control  minicolors-input" id="productCategoryName"
+                               th:classappend="${#fields.hasErrors('productCategoryName') ? 'is-invalid' : ''}"
+                               autofocus="autofocus">
+
+                        <p th:if="${#fields.hasErrors('productCategoryName')}" class="label text-danger "
+                           th:errors="*{productCategoryName}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+
+                        <label style="width: 35%; margin-top: 5px;">Category Description* <Description></Description> : </label>
+
+                        <textarea th:field="*{productCategoryDescription}"
+                                  class="form-control colorpicker"
+                               style="width: 65%; float: right;"
+                               id="productCategoryDescription"
+                               th:classappend="${#fields.hasErrors('productCategoryDescription') ? 'is-invalid' : ''}"
+                                  autofocus="autofocus"> </textarea>
+
+                        <p th:if="${#fields.hasErrors('productCategoryDescription')}" class="label text-danger "
+                           th:errors="*{productCategoryDescription}"></p>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+
+                    <!--<div class="col-md-6">
+                        <input checked type="checkbox" th:field="*{status}" data-toggle="toggle" class="tCheckbox"
+                               data-on="Enable" data-off="Disable" data-height="40" id="tg" />
+                        <p th:if="${#fields.hasErrors('status')}" class="label text-danger "
+                           th:errors="*{status}"></p>
+                </div>-->
+            </div>
+
+        </form>
+        <input type="hidden" id="closepopup" th:value="${success ? 'true' : 'false'}">
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#categoryForm').validate({
+            rules: {
+                checkboxes: {
+                    //required: true,
+                    //minlength: 1
+                    required: function (elem) {
+                        return $("input.select:checked").length > 0;
+                    }
+                }
+            }
+        });
+        $('#status').prop('checked', true).change();
+    });
+</script>
+
+</html>

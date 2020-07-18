@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <th:block th:insert="admin/layout/head :: head"></th:block>
+
+    <body class="">
+        <div class="wrapper ">
+            <th:block th:insert="admin/layout/sidebar :: sidebar"></th:block>
+            <div class="main-panel">
+                <th:block th:insert="admin/layout/nav :: nav"></th:block>
+                <!-- <div class="panel-header panel-header-sm">
+
+
+          </div> -->
+
+                <th:block layout:fragment="content">
+
+                </th:block>
+
+
+                <th:block th:insert="admin/layout/footer :: footer">
+
+                </th:block>
+            </div>
+        </div>
+        <!--   Core JS Files   -->
+        <th:block th:insert="admin/layout/scripts :: scripts"></th:block>
+        <th:block layout:fragment="extrascripts"></th:block>
+    </body>
+
+</html>
